@@ -1,0 +1,9 @@
+Imagen
+c:\imagen.jpg
+@1@
+Servicios
+GIN PED TRAM
+@2@
+Texto
+Los consentimientos se suben a la consulta
+@3@

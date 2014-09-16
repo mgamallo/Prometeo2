@@ -1,0 +1,12 @@
+Imagen
+C:\imagen.jpg
+@1@
+NombreNormalizado
+Consent. inf.
+@2@
+Servicios
+NRL
+@3@
+Obs
+Se sube pocas veces
+@4@

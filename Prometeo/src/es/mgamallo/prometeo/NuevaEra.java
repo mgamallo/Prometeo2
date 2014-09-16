@@ -13,6 +13,9 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -34,6 +37,8 @@ public class NuevaEra {
 	protected static final String LS = System.getProperty("line.separator");
 
 	static int pasos = 1;
+	
+	static String sessionId = "";
 	
   public static JComponent createContent() {
 	  
@@ -84,7 +89,7 @@ public class NuevaEra {
 	final String seleccionarNodoConsulta = 
 			"var framePrincipal = window.frames;" + LS +
 			"var frameArbol = framePrincipal['principal'].frames['datos'].frames['arbol'].frames['despliegue'];" + LS +
-			// "alert(frameArbol.location);" + LS +
+			"alert(frameArbol.location);" + LS +
 			//"var nodo = frameArbol.document.selectElementById('link10');" + LS + 
 			
 			"var nodo = frameArbol.document.anchors;" + LS +
@@ -139,7 +144,13 @@ public class NuevaEra {
 			
 			"var framePrincipal = window.frames;" + LS +
 			"var frameAsociar = framePrincipal['principal'].frames['datos'].frames['ficha'].frames['menu'];" + LS +
-			// "alert(frameArbol.location);" + LS +
+			// "alert(frameAsociar.location);" + LS +
+			"var anchors = frameAsociar.document.anchors;" + LS +
+			"for(var i=2;i<anchors.length;i++){" + LS +
+				"alert(anchors[i].href)" + LS +
+				"}" + LS +
+				
+			"alert(parent.parent.arbol.despliegue.document.length)" + LS +	
 			//"var nodo = frameArbol.document.selectElementById('link10');" + LS + 
 
 			/*
@@ -164,6 +175,85 @@ public class NuevaEra {
 
 			;
 	
+	final String getJsessionId = "" +
+			"function getJSessionId(){" + LS +
+				"var framePrincipal = window.frames;" + LS +
+				"var frameAsociar = framePrincipal['principal'].frames['datos'].frames['ficha'].frames['menu'];" + LS +
+				"var accion = frameAsociar.document.getElementsByTagName('script')" + LS +
+				"var idSesion = accion[0].src;" + LS + 
+				"var inicio = idSesion.lastIndexOf('=');" + LS +
+				"sessionId = idSesion.substring(inicio+1);" + LS +
+			"}" + LS +
+			"var sessionId = 'hola';" + LS +
+			"getJSessionId();" + LS +
+			"return sessionId;" + LS +
+			"";
+	
+	
+	final String htmlNuevoDocumentoExterno1 = 
+			"<FRAMESET id = multimedia frameSpacing=0 border=0 frameBroder=NO rows=101,*,*,30,50,0>" + LS +
+				"<FRAME noResize border=0 src='http://ianuschop.sergas.local/ianus_chp_pro/jsps/estructura/multimedia/ficha_doExterno_head.jsp' name=datos scrolling=no>" + LS +
+				"<FRAME noResize border=0 src='http://ianuschop.sergas.local/ianus_chp_pro/jsps/estructura/multimedia/ficha_doExterno_main1.jsp?FiltroTipoDocumento=true' name=main1 scrolling=no>" + LS +
+				"<FRAME noResize border=0 src='http://ianuschop.sergas.local/ianus_chp_pro/jsps/comun/busqueda_cargando.jsp;jsessionid=";
+
+	
+	final String htmlNuevoDocumentoExterno2 = "" +
+						" name=cargando scrolling=no>" + LS +
+				"<FRAME noResize border=1 src='http://ianuschop.sergas.local/ianus_chp_pro/jsps/estructura/multimedia/docExterno_barraProgreso.jsp' name=progreso scrolling=no>" + LS +
+				"<FRAME noResize border=0 src='http://ianuschop.sergas.local/ianus_chp_pro/jsps/estructura/multimedia/ficha_doExterno_menu.jsp' name=botonera scrolling=no>" + LS +
+				"<FRAME noResize border=0 src='' name=hide scrolling=no>" + LS +
+			"</FRAMESET>" + LS +
+			"";
+	
+	final String asociarDocumentoHtmlIntermedio = 
+			
+			
+			
+			"function asociarDocumentoV(){" + LS +
+			"var especificaciones_ventana = 'dialogWidth:650px;dialogHeight:500px;status=yes;location=yes';" + LS +
+			//"var especificaciones_ventana = 'width=650,height=500,toolbar=yes,location=yes';" + LS +
+			"var tipoEpisodio='URG';" + LS +
+			"var direccion = '/ianus_chp_pro/multimedia/NuevoDocumentoExterno.do;jsessionid=';" + LS +
+			"direccion = direccion + idSesionExtraido;" + LS +
+			"direccion = direccion + '?accion=A&tipoEpisodio='+ tipoEpisodio;" + LS +
+			// "alert(direccion);" + LS +
+			"var rtn = window.showModalDialog(direccion,top.principal.datos.arbol.despliegue,especificaciones_ventana);" + LS +
+			
+			/*
+			"var rtn = window.open( direccion,'',especificaciones_ventana);" + LS +
+			*/
+			
+			"}" + LS +
+			
+			
+			
+			"var framePrincipal = window.frames;" + LS +
+			"var frameAsociar = framePrincipal['principal'].frames['datos'].frames['ficha'].frames['menu'];" + LS +
+
+			// "alert(frameArbol.location);" + LS +
+			//"var nodo = frameArbol.document.selectElementById('link10');" + LS + 
+
+			/*
+			"var anclas = frameAsociar.document.anchors;" + LS +
+			"var numeroAncla = 0;" + LS +
+			"for(var i=0;i<anclas.length;i++){" + LS +
+					
+					"alert('Ancla en ' + i + ' vale: ' + anclas[i].innerHTML); " + LS +
+					// "alert(numeroAncla);" + LS +
+			"}" + LS + ""
+	
+			*/
+			
+			"var accion = frameAsociar.document.getElementsByTagName('script')" + LS +
+			// "alert(accion[0].src);" + LS +
+			"var idSesion = accion[0].src;" + LS + 
+			"var inicio = idSesion.lastIndexOf('=');" + LS +
+			"var idSesionExtraido = idSesion.substring(inicio+1);" + LS +
+			
+			// "alert('El id es: ' + idSesionExtraido);"
+			"asociarDocumentoV();"
+
+			;
 	
 	final String codigoDentroVentanaModal = 
 			"javascript:window.frames['main1'].document.estructuraMultimedia.cdu.value='29';" + // consentimiento inf.
@@ -200,7 +290,33 @@ public class NuevaEra {
     	  }
     	  if(pasos == 4){
     		 webBrowser.executeJavascript(asociarDocumentoV);
- 
+    		  
+    		  /*
+    		  Object resultado = webBrowser.executeJavascriptWithResult(getJsessionId);
+    		  System.out.println(resultado.toString());
+    		  sessionId = resultado.toString();
+    		  String html = htmlNuevoDocumentoExterno1 + sessionId + htmlNuevoDocumentoExterno2;
+    		  
+    		  FileWriter fichero = null;
+    		  PrintWriter pw = null;
+    		  
+    		  try {
+				fichero = new FileWriter("d:/prueba.html");
+				pw = new PrintWriter(fichero);
+				pw.print(html);
+				
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}finally{
+					try{
+						if(null!=fichero)
+							fichero.close();
+					}catch(Exception e2){
+						e2.printStackTrace();
+					}
+				}
+    		  */
     	  }
     	  if(pasos == 5){
     		 // webBrowser.navigate("javascript:alert('hola');");

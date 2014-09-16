@@ -1,0 +1,12 @@
+Imagen
+c:\imagen.jpg
+@1@
+NombreNormalizado
+Interconsulta
+@2@
+Servicios
+GIN PED TRAM
+@3@
+Obs
+Es un documento muy habitual
+@4@
