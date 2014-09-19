@@ -53,7 +53,8 @@ public class LeerArchivos {
 		return arrayUsuarios;
 	}
 
-	static public String obtenerHtml(String ruta) throws IOException{
+	
+	static public String obtenerHtml(String ruta){
 		File archivo = new File(ruta);
 		
 		FileReader fr = null;
@@ -68,10 +69,13 @@ public class LeerArchivos {
 			String linea;
 
 			while((linea=br.readLine()) != null){
-				System.out.println(linea);
+				//System.out.println(linea);
 				texto += linea;
 			}
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
@@ -83,18 +87,13 @@ public class LeerArchivos {
 				e2.printStackTrace();
 			}
 		}
-		System.out.println(texto);
+		//System.out.println(texto);
 		return texto;
 	}
 	
 	static public void main(String args[]){
 
-			try {
-				LeerArchivos.obtenerHtml("Htmls/control.html");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			LeerArchivos.obtenerHtml("Htmls/control.html");
 
 	}
 }

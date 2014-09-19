@@ -9,9 +9,7 @@ public class InicioIanus {
 	static final String RUTAURG ="j:/DIGITALIZACIÓN/01 INFORMES URG (Colectiva)"; 
 	static final String RUTAURGB ="H:/DIGITALIZACIÓN/01 INFORMES URG (Colectiva)";	
 	static final String RUTAPC = "c:/ianus/ianus.txt"; 
-	
-	static String usuario = "Invitado";
-	
+		
 	static int documentacion= 0;  // 0	Urgencias
 								  // 1 	Documentacion	
 	
@@ -19,5 +17,5 @@ public class InicioIanus {
 	static File[] tandaDePdfs;
 	static public int pdfSeleccionado = 0;
 
-	
+
 }

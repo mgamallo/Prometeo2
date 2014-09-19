@@ -22,6 +22,10 @@ public class AbrirCarpeta {
 			ruta = InicioIanus.RUTAURG;
 			rutab = InicioIanus.RUTAURGB;
 		}
+		
+
+ruta = "K:/Desarrollo Zona Pruebas/03 Firmado";
+		
 		directorioSeleccionado = listaPdfs();
 	}
 
@@ -50,7 +54,7 @@ public class AbrirCarpeta {
 		//	Renombrar directorio
 		if(renombrar){
 			File nombreViejo = new File(explorador.getSelectedFile().toString());
-			File nombreNuevo = new File(explorador.getSelectedFile().toString() + " " + InicioIanus.usuario);
+			File nombreNuevo = new File(explorador.getSelectedFile().toString() + " " + Inicio.usuario.alias);
 			
 			boolean renombrado = nombreViejo.renameTo(nombreNuevo);
 			if(renombrado){

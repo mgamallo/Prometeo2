@@ -15,7 +15,7 @@ public class CargaListaPdfs {
 	CargaListaPdfs(boolean renombrar) {
 		
 		AbrirCarpeta carpeta = new AbrirCarpeta(renombrar);
-		
+				
 		if(carpeta.directorioSeleccionado == true){
 			cargado = true;
 			File[] ficheros = carpeta.getPdfs(renombrar);

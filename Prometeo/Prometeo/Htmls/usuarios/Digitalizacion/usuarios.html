@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+		<meta charset="UTF-8" />
+
+        <title>Panel Usuarios</title>
+        <link rel="shortcut icon" href="../favicon.ico"> 
+		<link href='http://fonts.googleapis.com/css?family=Alegreya+SC:700,400italic' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <script src="js/modernizr.custom.97074.js"></script>
+		<noscript><link rel="stylesheet" type="text/css" href="css/noJS.css"/></noscript>
+    </head>
+    <body>
+    	<script languaje ="Javascript">
+    		document.oncontextmenu = function(){return false;};
+    	</script>
+        <div class="container">
+			<!-- Codrops top bar -->
+ 
+ 			<header>
+            <div class="header">
+                <a href="command://salir"><strong>SALIR X&emsp;</strong></a>
+                <div class="clr"></div>
+            </div>
+		</header>
+			<section id="seccion">
+
+			</section>
+        </div>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.hoverdir.js"></script>	
+		<script type="text/javascript">
+			$(function() {
+			
+				$(' #da-thumbs > li ').each( function() { $(this).hoverdir({
+					hoverDelay : 50,
+					inverse : true
+				}); } );
+
+			});
+		</script>
+    </body>
+</html>
