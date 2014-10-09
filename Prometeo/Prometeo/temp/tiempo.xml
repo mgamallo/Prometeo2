@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:Concellos="Concellos" version="2.0">
+  <channel>
+    <title>Predicción de ayuntamientos para corto plazo</title>
+    <link>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?request_locale=es</link>
+    <description>Predicción de ayuntamientos para corto plazo</description>
+    <item>
+      <title>Predicción para  Pontevedra para el lunes 22 de septiembre</title>
+      <link>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=0</link>
+      <description>&lt;div  id="divestActual" class="datos"&gt;&lt;table class="tableloc" border=1 bordercolor="#cfcfcf" cellpadding=5 cellspacing=0 width=450&gt;&lt;thead&gt;	&lt;tr&gt;&lt;th colspan="4"&gt;&lt;span class="horapred"&gt;[creada el lunes, 22 de septiembre , 19:00 ]&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;th&gt;Franja horaria&lt;/th&gt;		&lt;th abbr title="Mañana"&gt;&lt;span&gt;Mañana&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Tarde"&gt;&lt;span&gt;Tarde&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Noche"&gt;&lt;span&gt;Noche&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;	&lt;tr&gt;		&lt;td align=center&gt;Estado del cielo&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/103.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/103.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/203_fondo.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Viento&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/299.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/300.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/303.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Probabilidad de ocurrencia de lluvia(%)&lt;/td&gt;		&lt;td align=center&gt;40&lt;/td&gt;		&lt;td align=center&gt;40&lt;/td&gt;		&lt;td align=center&gt;35&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Temperaturas&lt;/td&gt;		&lt;td align=center colspan=3&gt;			&lt;div id="tabTempLoc"&gt;				&lt;table&gt;					&lt;tr&gt;						&lt;td&gt;&lt;span&gt;MIN&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span&gt;MAX&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;					&lt;tr&gt;						&lt;td align=center bgcolor="#C8FF6F"&gt;						&lt;span&gt;&amp;nbsp;17&amp;deg;&lt;/span&gt;						&lt;/td&gt;						&lt;td align=center bgcolor="#FFC62F"&gt;						&lt;span&gt;&amp;nbsp;24&amp;deg;&lt;/span&gt;						&lt;/td&gt;					&lt;/tr&gt;				&lt;/table&gt;			&lt;/div&gt;		&lt;/td&gt;		&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;br/&gt;&lt;br/&gt;</description>
+      <pubDate>Mon, 22 Sep 2014 17:00:00 GMT</pubDate>
+      <guid>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=0</guid>
+      <dc:date>2014-09-22T17:00:00Z</dc:date>
+      <Concellos:nomeConcello descricion="Nombre del ayuntamiento">Pontevedra</Concellos:nomeConcello>
+      <Concellos:idConcello descricion="Identificador del ayuntamiento">36038</Concellos:idConcello>
+      <Concellos:dataCreacion>2014-09-22T17:00:00Z</Concellos:dataCreacion>
+      <Concellos:dataPredicion formato="dd/MM/yyyy">22/09/2014</Concellos:dataPredicion>
+      <Concellos:tMax descricion="Temperatura máxima">24</Concellos:tMax>
+      <Concellos:tMin descricion="Temperatura mínima">17</Concellos:tMin>
+      <Concellos:ceoM descricion="Icono del estado del cielo por la mañana">103</Concellos:ceoM>
+      <Concellos:ceoT descricion="Icono del estado del cielo por la tarde">103</Concellos:ceoT>
+      <Concellos:ceoN descricion="Icono del estado del cielo por la noche">203</Concellos:ceoN>
+      <Concellos:ventoM descricion="Icono del viento por la mañana">299</Concellos:ventoM>
+      <Concellos:ventoT descricion="Icono del viento por la tarde">300</Concellos:ventoT>
+      <Concellos:ventoN descricion="Icono del viento por la noite">303</Concellos:ventoN>
+      <Concellos:pChoivaM descricion="Probabilidad de lluvia por la mañana">40</Concellos:pChoivaM>
+      <Concellos:pChoivaT descricion="Probabilidad de lluvia por la tarde">40</Concellos:pChoivaT>
+      <Concellos:pChoivaN descricion="Probabilidad de lluvia por la noche">35</Concellos:pChoivaN>
+    </item>
+    <item>
+      <title>Predicción para  Pontevedra para el martes 23 de septiembre</title>
+      <link>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=1</link>
+      <description>&lt;div  id="divestActual" class="datos"&gt;&lt;table class="tableloc" border=1 bordercolor="#cfcfcf" cellpadding=5 cellspacing=0 width=450&gt;&lt;thead&gt;	&lt;tr&gt;&lt;th colspan="4"&gt;&lt;span class="horapred"&gt;[creada el lunes, 22 de septiembre , 10:00 ]&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;th&gt;Franja horaria&lt;/th&gt;		&lt;th abbr title="Mañana"&gt;&lt;span&gt;Mañana&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Tarde"&gt;&lt;span&gt;Tarde&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Noche"&gt;&lt;span&gt;Noche&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;	&lt;tr&gt;		&lt;td align=center&gt;Estado del cielo&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/103.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/103.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/203_fondo.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Viento&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/299.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/300.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/302.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Probabilidad de ocurrencia de lluvia(%)&lt;/td&gt;		&lt;td align=center&gt;5&lt;/td&gt;		&lt;td align=center&gt;40&lt;/td&gt;		&lt;td align=center&gt;10&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Temperaturas&lt;/td&gt;		&lt;td align=center colspan=3&gt;			&lt;div id="tabTempLoc"&gt;				&lt;table&gt;					&lt;tr&gt;						&lt;td&gt;&lt;span&gt;MIN&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span&gt;MAX&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;					&lt;tr&gt;						&lt;td align=center bgcolor="#BAFF6F"&gt;						&lt;span&gt;&amp;nbsp;16&amp;deg;&lt;/span&gt;						&lt;/td&gt;						&lt;td align=center bgcolor="#FF9F2F"&gt;						&lt;span&gt;&amp;nbsp;26&amp;deg;&lt;/span&gt;						&lt;/td&gt;					&lt;/tr&gt;				&lt;/table&gt;			&lt;/div&gt;		&lt;/td&gt;		&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;br/&gt;&lt;br/&gt;</description>
+      <pubDate>Mon, 22 Sep 2014 08:00:00 GMT</pubDate>
+      <guid>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=1</guid>
+      <dc:date>2014-09-22T08:00:00Z</dc:date>
+      <Concellos:nomeConcello descricion="Nombre del ayuntamiento">Pontevedra</Concellos:nomeConcello>
+      <Concellos:idConcello descricion="Identificador del ayuntamiento">36038</Concellos:idConcello>
+      <Concellos:dataCreacion>2014-09-22T08:00:00Z</Concellos:dataCreacion>
+      <Concellos:dataPredicion formato="dd/MM/yyyy">23/09/2014</Concellos:dataPredicion>
+      <Concellos:tMax descricion="Temperatura máxima">26</Concellos:tMax>
+      <Concellos:tMin descricion="Temperatura mínima">16</Concellos:tMin>
+      <Concellos:ceoM descricion="Icono del estado del cielo por la mañana">103</Concellos:ceoM>
+      <Concellos:ceoT descricion="Icono del estado del cielo por la tarde">103</Concellos:ceoT>
+      <Concellos:ceoN descricion="Icono del estado del cielo por la noche">203</Concellos:ceoN>
+      <Concellos:ventoM descricion="Icono del viento por la mañana">299</Concellos:ventoM>
+      <Concellos:ventoT descricion="Icono del viento por la tarde">300</Concellos:ventoT>
+      <Concellos:ventoN descricion="Icono del viento por la noite">302</Concellos:ventoN>
+      <Concellos:pChoivaM descricion="Probabilidad de lluvia por la mañana">5</Concellos:pChoivaM>
+      <Concellos:pChoivaT descricion="Probabilidad de lluvia por la tarde">40</Concellos:pChoivaT>
+      <Concellos:pChoivaN descricion="Probabilidad de lluvia por la noche">10</Concellos:pChoivaN>
+    </item>
+    <item>
+      <title>Predicción para  Pontevedra para el miércoles 24 de septiembre</title>
+      <link>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=2</link>
+      <description>&lt;div  id="divestActual" class="datos"&gt;&lt;table class="tableloc" border=1 bordercolor="#cfcfcf" cellpadding=5 cellspacing=0 width=450&gt;&lt;thead&gt;	&lt;tr&gt;&lt;th colspan="4"&gt;&lt;span class="horapred"&gt;[creada el lunes, 22 de septiembre , 11:00 ]&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;th&gt;Franja horaria&lt;/th&gt;		&lt;th abbr title="Mañana"&gt;&lt;span&gt;Mañana&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Tarde"&gt;&lt;span&gt;Tarde&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Noche"&gt;&lt;span&gt;Noche&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;	&lt;tr&gt;		&lt;td align=center&gt;Estado del cielo&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/101.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/101.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/201_fondo.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Viento&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/299.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/300.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/303.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Probabilidad de ocurrencia de lluvia(%)&lt;/td&gt;		&lt;td align=center&gt;5&lt;/td&gt;		&lt;td align=center&gt;5&lt;/td&gt;		&lt;td align=center&gt;5&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Temperaturas&lt;/td&gt;		&lt;td align=center colspan=3&gt;			&lt;div id="tabTempLoc"&gt;				&lt;table&gt;					&lt;tr&gt;						&lt;td&gt;&lt;span&gt;MIN&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span&gt;MAX&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;					&lt;tr&gt;						&lt;td align=center bgcolor="#C8FF6F"&gt;						&lt;span&gt;&amp;nbsp;17&amp;deg;&lt;/span&gt;						&lt;/td&gt;						&lt;td align=center bgcolor="#FF8C2F"&gt;						&lt;span&gt;&amp;nbsp;27&amp;deg;&lt;/span&gt;						&lt;/td&gt;					&lt;/tr&gt;				&lt;/table&gt;			&lt;/div&gt;		&lt;/td&gt;		&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;br/&gt;&lt;br/&gt;</description>
+      <pubDate>Mon, 22 Sep 2014 09:00:00 GMT</pubDate>
+      <guid>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=2</guid>
+      <dc:date>2014-09-22T09:00:00Z</dc:date>
+      <Concellos:nomeConcello descricion="Nombre del ayuntamiento">Pontevedra</Concellos:nomeConcello>
+      <Concellos:idConcello descricion="Identificador del ayuntamiento">36038</Concellos:idConcello>
+      <Concellos:dataCreacion>2014-09-22T09:00:00Z</Concellos:dataCreacion>
+      <Concellos:dataPredicion formato="dd/MM/yyyy">24/09/2014</Concellos:dataPredicion>
+      <Concellos:tMax descricion="Temperatura máxima">27</Concellos:tMax>
+      <Concellos:tMin descricion="Temperatura mínima">17</Concellos:tMin>
+      <Concellos:ceoM descricion="Icono del estado del cielo por la mañana">101</Concellos:ceoM>
+      <Concellos:ceoT descricion="Icono del estado del cielo por la tarde">101</Concellos:ceoT>
+      <Concellos:ceoN descricion="Icono del estado del cielo por la noche">201</Concellos:ceoN>
+      <Concellos:ventoM descricion="Icono del viento por la mañana">299</Concellos:ventoM>
+      <Concellos:ventoT descricion="Icono del viento por la tarde">300</Concellos:ventoT>
+      <Concellos:ventoN descricion="Icono del viento por la noite">303</Concellos:ventoN>
+      <Concellos:pChoivaM descricion="Probabilidad de lluvia por la mañana">5</Concellos:pChoivaM>
+      <Concellos:pChoivaT descricion="Probabilidad de lluvia por la tarde">5</Concellos:pChoivaT>
+      <Concellos:pChoivaN descricion="Probabilidad de lluvia por la noche">5</Concellos:pChoivaN>
+    </item>
+    <item>
+      <title>Predicción para  Pontevedra para el jueves 25 de septiembre</title>
+      <link>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=3</link>
+      <description>&lt;div  id="divestActual" class="datos"&gt;&lt;table class="tableloc" border=1 bordercolor="#cfcfcf" cellpadding=5 cellspacing=0 width=450&gt;&lt;thead&gt;	&lt;tr&gt;&lt;th colspan="4"&gt;&lt;span class="horapred"&gt;[creada el lunes, 22 de septiembre , 11:00 ]&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;th&gt;Franja horaria&lt;/th&gt;		&lt;th abbr title="Mañana"&gt;&lt;span&gt;Mañana&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Tarde"&gt;&lt;span&gt;Tarde&lt;/span&gt;&lt;/th&gt;		&lt;th abbr title="Noche"&gt;&lt;span&gt;Noche&lt;/span&gt;&lt;/th&gt;	&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;	&lt;tr&gt;		&lt;td align=center&gt;Estado del cielo&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/101.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/101.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/ceo/201_fondo.png"  alt="Estado del cielo" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Viento&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/303.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/300.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;		&lt;td align=center&gt;&lt;img  src="/datosred/infoweb/meteo/imagenes/meteoros/vento/combo/304.png"  alt="Viento" class="imgmeteo"/&gt;&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Probabilidad de ocurrencia de lluvia(%)&lt;/td&gt;		&lt;td align=center&gt;5&lt;/td&gt;		&lt;td align=center&gt;5&lt;/td&gt;		&lt;td align=center&gt;5&lt;/td&gt;	&lt;/tr&gt;	&lt;tr&gt;		&lt;td align=center&gt;Temperaturas&lt;/td&gt;		&lt;td align=center colspan=3&gt;			&lt;div id="tabTempLoc"&gt;				&lt;table&gt;					&lt;tr&gt;						&lt;td&gt;&lt;span&gt;MIN&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span&gt;MAX&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;					&lt;tr&gt;						&lt;td align=center bgcolor="#BAFF6F"&gt;						&lt;span&gt;&amp;nbsp;16&amp;deg;&lt;/span&gt;						&lt;/td&gt;						&lt;td align=center bgcolor="#FF652F"&gt;						&lt;span&gt;&amp;nbsp;29&amp;deg;&lt;/span&gt;						&lt;/td&gt;					&lt;/tr&gt;				&lt;/table&gt;			&lt;/div&gt;		&lt;/td&gt;		&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;br/&gt;&lt;br/&gt;</description>
+      <pubDate>Mon, 22 Sep 2014 09:00:00 GMT</pubDate>
+      <guid>http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=36038&amp;request_locale=es&amp;dia=3</guid>
+      <dc:date>2014-09-22T09:00:00Z</dc:date>
+      <Concellos:nomeConcello descricion="Nombre del ayuntamiento">Pontevedra</Concellos:nomeConcello>
+      <Concellos:idConcello descricion="Identificador del ayuntamiento">36038</Concellos:idConcello>
+      <Concellos:dataCreacion>2014-09-22T09:00:00Z</Concellos:dataCreacion>
+      <Concellos:dataPredicion formato="dd/MM/yyyy">25/09/2014</Concellos:dataPredicion>
+      <Concellos:tMax descricion="Temperatura máxima">29</Concellos:tMax>
+      <Concellos:tMin descricion="Temperatura mínima">16</Concellos:tMin>
+      <Concellos:ceoM descricion="Icono del estado del cielo por la mañana">101</Concellos:ceoM>
+      <Concellos:ceoT descricion="Icono del estado del cielo por la tarde">101</Concellos:ceoT>
+      <Concellos:ceoN descricion="Icono del estado del cielo por la noche">201</Concellos:ceoN>
+      <Concellos:ventoM descricion="Icono del viento por la mañana">303</Concellos:ventoM>
+      <Concellos:ventoT descricion="Icono del viento por la tarde">300</Concellos:ventoT>
+      <Concellos:ventoN descricion="Icono del viento por la noite">304</Concellos:ventoN>
+      <Concellos:pChoivaM descricion="Probabilidad de lluvia por la mañana">5</Concellos:pChoivaM>
+      <Concellos:pChoivaT descricion="Probabilidad de lluvia por la tarde">5</Concellos:pChoivaT>
+      <Concellos:pChoivaN descricion="Probabilidad de lluvia por la noche">5</Concellos:pChoivaN>
+    </item>
+  </channel>
+</rss>
+

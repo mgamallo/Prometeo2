@@ -1,0 +1,42 @@
+<html>
+<head>
+
+</head>
+<body>
+
+	<script type="text/javascript">
+		function loadXMLDoc(dname) {
+			var xmlDoc;
+			// code for IE
+			if (window.ActiveXObject) {
+				xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+			}
+			// code for Mozilla, Firefox, Opera, etc.
+			else if (document.implementation
+					&& document.implementation.createDocument) {
+				xmlDoc = document.implementation.createDocument("", "", null);
+			} else {
+				alert('Your browser cannot handle this script');
+			}
+			xmlDoc.async = false;
+			xmlDoc.load(dname);
+			return (xmlDoc);
+		}
+
+		alert('hola');
+		
+		xmlDoc = loadXMLDoc("xml/tiempo.xml");
+		
+		alert('hola2');
+		
+		var x = xmlDoc.getElementsByTagName('year');
+		
+		alert('hola3');
+
+		for (i = 0; i < x.length; i++) {
+			document.write(x[i].getAttribute('title'));
+			document.write("<br />");
+		}
+	</script>
+</body>
+</html>

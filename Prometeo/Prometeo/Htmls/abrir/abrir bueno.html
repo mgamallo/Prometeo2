@@ -7,7 +7,6 @@
 		<script type="text/javascript" src="js/modernizr.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/estilo.css" />
 		<script type="text/javascript" src="js/jquery.min.js" />
-		<script type="text/javascript" src="js/jquery.xml2json.js" />
 	</head>
 
 	<body>
@@ -17,8 +16,6 @@
 		<header>
 			Panel Abrir
  		</header>
-
-		<h1>Hola mundo</h1>
 
 		<!--	Barra de navegación -->
 		<nav>
@@ -85,50 +82,5 @@
 				<li> <a class="carpetas" href="#"> Pendientes </a></li>
 			</ul>
 		</section>
-		
-		El Tiempo
-		<div>
-		
-			
-			
-			http://servizos.meteogalicia.es/rss/predicion/rssLocalidades.action?idZona=36038&dia=-1&request_locale=es
-			
-			company
-				employee
-			
-		</div>
-		
-		
-		<div>
-			<script type="text/javascript">
-			
-	
-			var xmlDoc;
-			$(document).ready(function(){
-				  xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-				  xmlDoc.async = "false";
-				  xmlDoc.load("xml/tiempo.xml");
-				 
-				  alert(xmlDoc.getElementsByTagName("company")[0].nodeValue;);
-			});
-			
-			function readXML(){
-				if(xmlDoc.readyState == 4){
-					alert("xml cargado");
-				}
-				alert('adios');
-			}
-			</script>
-		</div>
-		
-		
-		<script type="text/javascript">
-			$('h1').css({
-				'fontSize': '50px',
-				'color': 'red'
-			});
-			
-			
-		</script>
 	</body>
 </html>

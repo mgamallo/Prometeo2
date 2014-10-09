@@ -10,7 +10,8 @@ public class EscribirArchivos {
 		PrintWriter pw = null;
 		
 		try {
-			fichero = new FileWriter("K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
+			// fichero = new FileWriter("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
+			fichero = new FileWriter(Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
 			pw = new PrintWriter(fichero);
 			pw.print(textoHtml);
 		} catch (IOException e) {

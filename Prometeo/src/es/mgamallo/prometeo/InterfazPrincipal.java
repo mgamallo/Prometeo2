@@ -8,9 +8,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -21,11 +24,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -43,9 +48,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.eclipse.swt.events.MouseMoveListener;
+
 
 //import org.eclipse.swt.widgets.Slider;
+
 
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
@@ -74,16 +80,18 @@ public class InterfazPrincipal implements MouseListener{
 
 	public static String panelActivo = "Usuarios";
 
-	final String DIR_CONTROL = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
-	final String DIR_OPERACIONES = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
+	final String DIR_CONTROL = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
+	final String DIR_OPERACIONES = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
 
-	final String DIR_ABRIR = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
-	final String DIR_AYUDA = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
-	final String DIR_NORMAS = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas/normas.html";
-	final String DIR_AVISOS = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
-	final String DIR_USUARIO = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
-	final String DIR_SALIR = "K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir/salir.html";
+	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
+	final String DIR_AYUDA = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
+	final String DIR_NORMAS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas/normas.html";
+	final String DIR_AVISOS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
+	final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
+	final String DIR_SALIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir/salir.html";
 
+
+	
 	public JWebBrowser webBrowserControl;
 	public JWebBrowser webBrowserOperaciones;
 
@@ -120,25 +128,31 @@ public class InterfazPrincipal implements MouseListener{
 						+ (parameters.length > 0 ? " "
 								+ Arrays.toString(parameters) : ""));
 				if ("abrir".equals(command)) {
+					webBrowserOperaciones.setVisible(true);
 					webBrowserOperaciones.navigate(DIR_ABRIR);
 					panelActivo = ABRIR;
 				} else if ("ayuda".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_AYUDA);
+					webBrowserOperaciones.setVisible(true);
 					panelActivo = AYUDA;
 				} else if ("normas".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_NORMAS);
+					webBrowserOperaciones.setVisible(true);
 					panelActivo = NORMAS;
 				} else if ("avisos".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_AVISOS);
+					webBrowserOperaciones.setVisible(true);
 					panelActivo = AVISOS;
 				}
 				if ("usuario".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_USUARIO);
+					webBrowserOperaciones.setVisible(true);
 					MiHilo miHilo = new MiHilo(Inicio.usuario.alias);
 					miHilo.start();
 					panelActivo = USUARIO;
 				} else if ("salir".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_SALIR);
+					webBrowserOperaciones.setVisible(true);
 					panelActivo = SALIR;
 					// frame.dispose();
 				} else if ("minimizar".equals(command)) {
@@ -180,6 +194,7 @@ public class InterfazPrincipal implements MouseListener{
 					MiHilo miHilo = new MiHilo(Inicio.usuario.alias);
 					miHilo.start();
 
+					frame.setBounds(Inicio.rVentanaInterfazPrincipal);
 					Inicio.panelPrincipal.panelControl.setVisible(true);
 					// panelActivo = "Usuario";
 				} else if (panelActivo.equals(ABRIR)) {
@@ -187,11 +202,22 @@ public class InterfazPrincipal implements MouseListener{
 
 					if (command.equals("abrir")) {
 						CargaListaPdfs pdfs = new CargaListaPdfs(true);
+						Inicio.carpetasSeleccionadas.add(pdfs.rutaCarpeta);
+						if(!pdfs.cancelado){
+							Inicio.inicioIanus = new InicioIanus(pdfs);
+							Inicio.ventanasCargadas = true;
+							//webBrowserOperaciones.navigate("K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/ocr.pdf");
+							webBrowserOperaciones.setVisible(false);
+							
+						}
+
 					}
 				} else if (panelActivo.equals(SALIR)) {
 					frame.dispose();
+					System.exit(0);
 				} else if (command.contains("salir")) {
 					frame.dispose();
+					System.exit(0);
 				}
 			}
 		});
@@ -375,14 +401,20 @@ public class InterfazPrincipal implements MouseListener{
 				barraPanelControlVisible = barraControl;
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(createContent());
-				frame.setSize(860, 1000);
+				frame.setSize(850, 1000);
+				frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+				
 				frame.setMinimumSize(new Dimension(800, 300));
 				frame.setLocationByPlatform(true);
 
 				panelOperaciones.setBackground(color);
-				frame.setUndecorated(true);
+				// frame.setUndecorated(true);
 				frame.setLocationRelativeTo(null);
 
+				 //URL pathIcon = this.getClass().getClassLoader().getResource("prometeo/ico/icono.png");
+				// Toolkit kit = Toolkit.getDefaultToolkit();
+				// Image img = kit.createImage(pathIcon);
+			//	frame.setIconImage(new ImageIcon(getClass().getResource("/prometeo/ico/ico.png")).getImage());
 				frame.setVisible(true);
 
 			}

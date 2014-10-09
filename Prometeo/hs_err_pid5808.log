@@ -1,7 +1,7 @@
 #
 # An unexpected error has been detected by Java Runtime Environment:
 #
-#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x6d897266, pid=2116, tid=2792
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x6d897266, pid=5808, tid=4996
 #
 # Java VM: Java HotSpot(TM) Client VM (10.0-b23 mixed mode, sharing windows-x86)
 # Problematic frame:
@@ -13,7 +13,7 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x00306000):  JavaThread "main" [_thread_in_vm, id=2792, stack(0x008f0000,0x00940000)]
+Current thread (0x00306000):  JavaThread "main" [_thread_in_vm, id=4996, stack(0x008f0000,0x00940000)]
 
 siginfo: ExceptionCode=0xc0000005, reading address 0x00000000
 
@@ -27,9 +27,9 @@ Top of Stack: (sp=0x0093f6ec)
 0x0093f6fc:   00306000 00000000 0093f810 6d983ef0
 0x0093f70c:   6d9852f0 ffffffff 00000000 6d7c10df
 0x0093f71c:   00306000 00306000 6d890fad 00306000
-0x0093f72c:   00000006 00000004 00000000 0312122f
+0x0093f72c:   00000006 00000004 00000000 0311122f
 0x0093f73c:   003060f4 00000000 00000000 0093f77c
-0x0093f74c:   0093f7f4 03390000 00000000 00000000
+0x0093f74c:   0093f7f4 03380000 00000000 00000000
 0x0093f75c:   00000000 00000000 00000000 003060f4 
 
 Instructions: (pc=0x6d897266)
@@ -63,34 +63,35 @@ v  ~BufferBlob::StubRoutines (1)
 ---------------  P R O C E S S  ---------------
 
 Java Threads: ( => current thread )
-  0x02f95400 JavaThread "NativeSwing[1] Non-UI Message [17] Executor" daemon [_thread_blocked, id=3836, stack(0x06340000,0x06390000)]
-  0x02f51800 JavaThread "Registry cleanup thread-0" daemon [_thread_blocked, id=2812, stack(0x042b0000,0x04300000)]
-  0x02f75400 JavaThread "NativeSwing[1] SWT Receiver" daemon [_thread_in_native, id=3384, stack(0x03410000,0x03460000)]
-  0x02ade400 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=3392, stack(0x02d90000,0x02de0000)]
-  0x02ad8c00 JavaThread "CompilerThread0" daemon [_thread_blocked, id=2440, stack(0x02d40000,0x02d90000)]
-  0x02ad7800 JavaThread "Attach Listener" daemon [_thread_blocked, id=1880, stack(0x02cf0000,0x02d40000)]
-  0x02ad6800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=2512, stack(0x02ca0000,0x02cf0000)]
-  0x02ad1c00 JavaThread "Finalizer" daemon [_thread_blocked, id=3436, stack(0x02c50000,0x02ca0000)]
-  0x02acd800 JavaThread "Reference Handler" daemon [_thread_blocked, id=2704, stack(0x02c00000,0x02c50000)]
-=>0x00306000 JavaThread "main" [_thread_in_vm, id=2792, stack(0x008f0000,0x00940000)]
+  0x02f36400 JavaThread "NativeSwing[1] Non-UI Message [18] Executor" daemon [_thread_blocked, id=5400, stack(0x05a20000,0x05a70000)]
+  0x02f72400 JavaThread "Registry cleanup thread-0" daemon [_thread_blocked, id=4896, stack(0x042b0000,0x04300000)]
+  0x02f35c00 JavaThread "NativeSwing[1] SWT Receiver" daemon [_thread_in_native, id=5916, stack(0x03400000,0x03450000)]
+  0x02b81c00 JavaThread "NativeSwing Shutdown" daemon [_thread_blocked, id=2888, stack(0x02ec0000,0x02f10000)]
+  0x02ae1800 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=5520, stack(0x02d90000,0x02de0000)]
+  0x02adc000 JavaThread "CompilerThread0" daemon [_thread_blocked, id=4324, stack(0x02d40000,0x02d90000)]
+  0x02adac00 JavaThread "Attach Listener" daemon [_thread_blocked, id=3440, stack(0x02cf0000,0x02d40000)]
+  0x02ad9c00 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=6064, stack(0x02ca0000,0x02cf0000)]
+  0x02ad5400 JavaThread "Finalizer" daemon [_thread_blocked, id=2948, stack(0x02c50000,0x02ca0000)]
+  0x02acd800 JavaThread "Reference Handler" daemon [_thread_blocked, id=4788, stack(0x02c00000,0x02c50000)]
+=>0x00306000 JavaThread "main" [_thread_in_vm, id=4996, stack(0x008f0000,0x00940000)]
 
 Other Threads:
-  0x02acc400 VMThread [stack: 0x02bb0000,0x02c00000] [id=1020]
-  0x02af0000 WatcherThread [stack: 0x02de0000,0x02e30000] [id=716]
+  0x02acc400 VMThread [stack: 0x02bb0000,0x02c00000] [id=3532]
+  0x02aeb400 WatcherThread [stack: 0x02de0000,0x02e30000] [id=5120]
 
 VM state:not at safepoint (normal execution)
 
 VM Mutex/Monitor currently owned by a thread: None
 
 Heap
- def new generation   total 960K, used 35K [0x229e0000, 0x22ae0000, 0x22ec0000)
-  eden space 896K,   1% used [0x229e0000, 0x229e3a10, 0x22ac0000)
-  from space 64K,  32% used [0x22ad0000, 0x22ad5448, 0x22ae0000)
-  to   space 64K,   0% used [0x22ac0000, 0x22ac0000, 0x22ad0000)
- tenured generation   total 4096K, used 390K [0x22ec0000, 0x232c0000, 0x269e0000)
-   the space 4096K,   9% used [0x22ec0000, 0x22f21b70, 0x22f21c00, 0x232c0000)
+ def new generation   total 960K, used 171K [0x229e0000, 0x22ae0000, 0x22ec0000)
+  eden space 896K,  17% used [0x229e0000, 0x22a077b0, 0x22ac0000)
+  from space 64K,  20% used [0x22ac0000, 0x22ac3538, 0x22ad0000)
+  to   space 64K,   0% used [0x22ad0000, 0x22ad0000, 0x22ae0000)
+ tenured generation   total 4096K, used 394K [0x22ec0000, 0x232c0000, 0x269e0000)
+   the space 4096K,   9% used [0x22ec0000, 0x22f229f8, 0x22f22a00, 0x232c0000)
  compacting perm gen  total 12288K, used 2216K [0x269e0000, 0x275e0000, 0x2a9e0000)
-   the space 12288K,  18% used [0x269e0000, 0x26c0a198, 0x26c0a200, 0x275e0000)
+   the space 12288K,  18% used [0x269e0000, 0x26c0a058, 0x26c0a200, 0x275e0000)
     ro space 8192K,  62% used [0x2a9e0000, 0x2aee2ba0, 0x2aee2c00, 0x2b1e0000)
     rw space 12288K,  52% used [0x2b1e0000, 0x2b8288e0, 0x2b828a00, 0x2bde0000)
 
@@ -120,7 +121,7 @@ Dynamic libraries:
 0x719d0000 - 0x71a10000 	C:\WINDOWS\system32\mswsock.dll
 0x66740000 - 0x66799000 	C:\WINDOWS\system32\hnetcfg.dll
 0x71a10000 - 0x71a18000 	C:\WINDOWS\System32\wshtcpip.dll
-0x03120000 - 0x03190000 	C:\Documents and Settings\cahcpon\.swt\lib\win32\x86\swt-win32-4332.dll
+0x03110000 - 0x03180000 	C:\Documents and Settings\cahcpon\.swt\lib\win32\x86\swt-win32-4332.dll
 0x774b0000 - 0x775ee000 	C:\WINDOWS\system32\ole32.dll
 0x770f0000 - 0x7717b000 	C:\WINDOWS\system32\OLEAUT32.dll
 0x76360000 - 0x763aa000 	C:\WINDOWS\system32\comdlg32.dll
@@ -130,7 +131,7 @@ Dynamic libraries:
 0x72f80000 - 0x72fa6000 	C:\WINDOWS\system32\WINSPOOL.DRV
 0x74d20000 - 0x74d8b000 	C:\WINDOWS\system32\USP10.dll
 0x3fa00000 - 0x3fae7000 	C:\WINDOWS\system32\WININET.dll
-0x031a0000 - 0x031a9000 	C:\WINDOWS\system32\Normaliz.dll
+0x03190000 - 0x03199000 	C:\WINDOWS\system32\Normaliz.dll
 0x44430000 - 0x44564000 	C:\WINDOWS\system32\urlmon.dll
 0x400a0000 - 0x4028c000 	C:\WINDOWS\system32\iertutil.dll
 0x77a50000 - 0x77ae8000 	C:\WINDOWS\system32\CRYPT32.dll
@@ -152,21 +153,9 @@ Dynamic libraries:
 0x75dd0000 - 0x75e61000 	C:\WINDOWS\system32\MLANG.dll
 0x3f940000 - 0x3f9f4000 	C:\WINDOWS\system32\jscript.dll
 0x74680000 - 0x746aa000 	C:\WINDOWS\system32\msimtf.dll
-0x71aa0000 - 0x71ab2000 	C:\WINDOWS\system32\MPR.dll
-0x60f80000 - 0x60f86000 	C:\Archivos de programa\Symantec\Symantec Endpoint Protection\SnacNp.dll
-0x75f10000 - 0x75f17000 	C:\WINDOWS\System32\drprov.dll
-0x71bb0000 - 0x71bbe000 	C:\WINDOWS\System32\ntlanman.dll
-0x597f0000 - 0x59845000 	C:\WINDOWS\System32\NETAPI32.dll
-0x71c70000 - 0x71c87000 	C:\WINDOWS\System32\NETUI0.dll
-0x71c30000 - 0x71c70000 	C:\WINDOWS\System32\NETUI1.dll
-0x71c20000 - 0x71c27000 	C:\WINDOWS\System32\NETRAP.dll
-0x71b90000 - 0x71ba3000 	C:\WINDOWS\System32\SAMLIB.dll
-0x75f20000 - 0x75f2a000 	C:\WINDOWS\System32\davclnt.dll
 0x778f0000 - 0x779e7000 	C:\WINDOWS\system32\SETUPAPI.dll
-0x76630000 - 0x766e5000 	C:\WINDOWS\system32\USERENV.dll
-0x1b000000 - 0x1b00c000 	C:\WINDOWS\system32\ImgUtil.dll
-0x1b060000 - 0x1b06e000 	C:\WINDOWS\system32\pngfilt.dll
 0x5b150000 - 0x5b188000 	C:\WINDOWS\system32\uxtheme.dll
+0x76630000 - 0x766e5000 	C:\WINDOWS\system32\USERENV.dll
 0x72ca0000 - 0x72ca9000 	C:\WINDOWS\system32\wdmaud.drv
 0x76bf0000 - 0x76c1e000 	C:\WINDOWS\system32\WINTRUST.dll
 0x76c50000 - 0x76c79000 	C:\WINDOWS\system32\IMAGEHLP.dll
@@ -175,29 +164,21 @@ Dynamic libraries:
 0x77ba0000 - 0x77ba7000 	C:\WINDOWS\system32\midimap.dll
 0x76ea0000 - 0x76edc000 	C:\WINDOWS\system32\RASAPI32.dll
 0x76e50000 - 0x76e62000 	C:\WINDOWS\system32\rasman.dll
+0x597f0000 - 0x59845000 	C:\WINDOWS\system32\NETAPI32.dll
 0x76e70000 - 0x76e9f000 	C:\WINDOWS\system32\TAPI32.dll
 0x76e40000 - 0x76e4e000 	C:\WINDOWS\system32\rtutils.dll
 0x72250000 - 0x72255000 	C:\WINDOWS\system32\sensapi.dll
 0x76f80000 - 0x76f86000 	C:\WINDOWS\system32\rasadhlp.dll
 0x76ee0000 - 0x76f07000 	C:\WINDOWS\system32\DNSAPI.dll
 0x76d20000 - 0x76d39000 	C:\WINDOWS\system32\iphlpapi.dll
-0x71f20000 - 0x71f24000 	C:\WINDOWS\system32\security.dll
-0x35c50000 - 0x35c89000 	C:\WINDOWS\system32\Dxtrans.dll
-0x76ae0000 - 0x76af1000 	C:\WINDOWS\system32\ATL.DLL
-0x063a0000 - 0x063aa000 	C:\WINDOWS\system32\ddrawex.dll
-0x736e0000 - 0x7372b000 	C:\WINDOWS\system32\DDRAW.dll
-0x73b40000 - 0x73b46000 	C:\WINDOWS\system32\DCIMAN32.dll
-0x35cb0000 - 0x35d07000 	C:\WINDOWS\system32\Dxtmsft.dll
-0x4eba0000 - 0x4ed4b000 	C:\WINDOWS\WinSxS\x86_Microsoft.Windows.GdiPlus_6595b64144ccf1df_1.0.6002.23084_x-ww_f3f35550\gdiplus.dll
-0x738c0000 - 0x73990000 	C:\WINDOWS\system32\D3DIM700.DLL
 
 VM Arguments:
-jvm_args: -Dnativeswing.localhostAddress=127.0.0.1 -Djava.library.path=C:\Archivos de programa\Java\jre1.6.0_07\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Archivos de programa/Java/jre1.6.0_07/bin/client;C:/Archivos de programa/Java/jre1.6.0_07/bin;C:/Archivos de programa/Java/jre1.6.0_07/lib/i386;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\Archivos de programa\Symantec\pcAnywhere\;C:\Archivos de programa\Enterprise Vault\EVClient\;C:\Archivos de programa\Oberthur Technologies\AuthentIC Webpack\Dlls;D:\Programas\eclipse Juno; 
-java_command: chrriis.dj.nativeswing.swtimpl.NativeInterface 1 1553
+jvm_args: -Dnativeswing.localhostAddress=127.0.0.1 -Djava.library.path=C:\Archivos de programa\Java\jre1.6.0_07\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Archivos de programa/Java/jre1.6.0_07/bin/client;C:/Archivos de programa/Java/jre1.6.0_07/bin;C:/Archivos de programa/Java/jre1.6.0_07/lib/i386;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\Archivos de programa\Symantec\pcAnywhere\;C:\Archivos de programa\Enterprise Vault\EVClient\;C:\Archivos de programa\Oberthur Technologies\AuthentIC Webpack\Dlls;D:\Programas\eclipse-jee-luna-SR1-win32\eclipse; 
+java_command: chrriis.dj.nativeswing.swtimpl.NativeInterface 1 2999
 Launcher Type: SUN_STANDARD
 
 Environment Variables:
-PATH=C:/Archivos de programa/Java/jre1.6.0_07/bin/client;C:/Archivos de programa/Java/jre1.6.0_07/bin;C:/Archivos de programa/Java/jre1.6.0_07/lib/i386;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\Archivos de programa\Symantec\pcAnywhere\;C:\Archivos de programa\Enterprise Vault\EVClient\;C:\Archivos de programa\Oberthur Technologies\AuthentIC Webpack\Dlls;D:\Programas\eclipse Juno;
+PATH=C:/Archivos de programa/Java/jre1.6.0_07/bin/client;C:/Archivos de programa/Java/jre1.6.0_07/bin;C:/Archivos de programa/Java/jre1.6.0_07/lib/i386;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\Archivos de programa\Symantec\pcAnywhere\;C:\Archivos de programa\Enterprise Vault\EVClient\;C:\Archivos de programa\Oberthur Technologies\AuthentIC Webpack\Dlls;D:\Programas\eclipse-jee-luna-SR1-win32\eclipse;
 USERNAME=cahcpon
 OS=Windows_NT
 PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 10, GenuineIntel
@@ -210,10 +191,10 @@ OS: Windows XP Build 2600 Service Pack 3
 
 CPU:total 2 (2 cores per cpu, 1 threads per core) family 6 model 7 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3
 
-Memory: 4k page, physical 2077872k(1155284k free), swap 4017672k(3130776k free)
+Memory: 4k page, physical 2077872k(1132852k free), swap 4017672k(3099868k free)
 
 vm_info: Java HotSpot(TM) Client VM (10.0-b23) for windows-x86 JRE (1.6.0_07-b06), built on Jun 10 2008 01:14:11 by "java_re" with MS VC++ 7.1
 
-time: Wed Sep 17 09:20:30 2014
-elapsed time: 15 seconds
+time: Mon Oct 06 16:10:06 2014
+elapsed time: 6 seconds
 

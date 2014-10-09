@@ -7,7 +7,9 @@ public class CargaListaPdfs {
 	String[] nombrePdfs;	//Sólo el nombre
 	String[] rutaPdfs;		//path + nombre
 	String rutaCarpeta;
+	
 	boolean cargado = false;
+	boolean cancelado = true;
 	
 	
 
@@ -18,6 +20,7 @@ public class CargaListaPdfs {
 				
 		if(carpeta.directorioSeleccionado == true){
 			cargado = true;
+			cancelado = false;
 			File[] ficheros = carpeta.getPdfs(renombrar);
 			
 			int tamañoDir = ficheros.length;
@@ -28,7 +31,14 @@ public class CargaListaPdfs {
 			for(int i=0;i<tamañoDir;i++){
 				nombrePdfs[i] = ficheros[i].getName();
 				rutaPdfs[i] = ficheros[i].getAbsolutePath();
+				System.out.println("nombresPdfs " + nombrePdfs[i]);
 			}
+		}
+		else{
+			nombrePdfs = null;
+			rutaPdfs = null;
+			rutaCarpeta = null;
+			cancelado = true;
 		}
 	}
 	
