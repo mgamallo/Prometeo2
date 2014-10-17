@@ -109,7 +109,6 @@ public class VentanaExplorador extends javax.swing.JFrame {
         );
 
         jSplitPane1.setTopComponent(panelPdfs);
-
         
         jButton1.setText("Inicio 2 ianus");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +118,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
 
+        
         jButton2.setText("Salir o imprimir");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,16 +126,41 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
 
+        
         jButton3.setText("Imprimir en ianus");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	asociaDocumento();
+            	// asociaDocumento();
             }
         });
 
+        
+        jButton11.setText("Ianus 1");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	GestionJacob.setVisible(Inicio.ianus1);
+            }
+        });
+        
+        
+        jButton12.setText("Ianus 2");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	System.out.println("Hacer visible ianus 2");
+            	GestionJacob.setVisible(Inicio.ianus2);
+            }
+        });
+        
+        
         jButton4.setText("abrir ficha");
 
         jButton5.setText("buscar consulta");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	System.out.println("Busca el servicio");
+            	// GestionJacob.buscaNodo(Inicio.ianus1);
+            }
+        });
 
         jButton6.setText("abrir asociar");
 
@@ -146,10 +171,6 @@ public class VentanaExplorador extends javax.swing.JFrame {
         jButton9.setText("jButton9");
 
         jButton10.setText("jButton10");
-
-        jButton11.setText("jButton11");
-
-        jButton12.setText("jButton12");
 
         botonAsociar.setText("Asociar");
 
@@ -304,14 +325,13 @@ public class VentanaExplorador extends javax.swing.JFrame {
     	}
     }
     
-    public void asociaDocumento(){
+    public void asociaDocumento(String titulo){
     	
     	System.out.println("Imprimimos en ianus");
     	
     	RobotIanus robot = new RobotIanus();
-    	robot.asocia("Consentimento informado");
+    	robot.asocia(titulo);
     	
-    	System.out.println("Despues de asociar.......");
     	
         int tamañoLista = listaPdfs.getModel().getSize();
 
@@ -326,23 +346,17 @@ public class VentanaExplorador extends javax.swing.JFrame {
           		
 
         		try{
-
-        			System.out.println("Aqui 1");
         			
         			Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
-        			
-        			System.out.println("Aqui 2");
-        			
+         			
         			SwingUtilities.invokeLater(new Runnable() {
-        				public void run() {
+        				public void run() {  
         					Inicio.panelPrincipal.webBrowserOperaciones.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
         				}
-        			});
-        			System.out.println("Aqui 3");
+        			});  
         			
         			Inicio.vControlIanus.panelBotones.setBackground(new Color(80,200,120));
-        			
-        			System.out.println("Aqui 4");
+ 
         			
             		if(!Inicio.vNombres.comboServicio.getSelectedItem().toString().equals(Inicio.documento[Inicio.indiceArchivoSelecc])){
             			Inicio.vControlIanus.botonServicio.setBackground(Color.red);

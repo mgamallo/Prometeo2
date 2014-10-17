@@ -126,9 +126,9 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botonNHC, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                    .addComponent(botonNombreDocumento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonServicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botonNHC, 60, 60, 60)
+                    .addComponent(botonNombreDocumento, 60, 60, 60)
+                    .addComponent(botonServicio, 60, 60, 60))
                 .addContainerGap())
         );
 
@@ -255,6 +255,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
                     .addGap(0, 6, Short.MAX_VALUE)))
         );
 
+        setSize(1024, 200);
         this.setUndecorated(false);
         
         pack();

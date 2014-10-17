@@ -47,7 +47,7 @@ public class CadenasJavascript {
 		return cadena;
 		
 	}
-	
+/*	
 	static public final String buscaNodoPrincipal(Servicio servicio){
 		
 		final String seleccionarNodoConsulta = 
@@ -76,7 +76,7 @@ public class CadenasJavascript {
 		
 		return seleccionarNodoConsulta;
 	}
-	
+*/	
 	static public final String introducirUsuario(Usuario usuario){
 		
 		System.out.println(usuario.alias);
@@ -107,7 +107,13 @@ public class CadenasJavascript {
 			"frameNHC.buscar();"
 			;
 		
-		return introducirNHCPulido;
+		String introducirNHCresumido = 
+				"javascript:var nhc = window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " +
+		        nhc + ";window.principal.mainFrame.buscar();";
+		
+		String aux = "window.frames['principal'].frames['mainFrame'].document.buscarPacienteForm.ID_NHC.value=1000;";
+		
+		return introducirNHCresumido;
 	}
 
 	static public final String salirDelPaciente(){
@@ -120,6 +126,52 @@ public class CadenasJavascript {
 				;
 		
 		return salirPaciente;
+	}
+	
+	
+	static public final String buscarBotonAsociar(){
+		
+		final String botonAsociar = 
+				"javascript:" +
+				"var consultas = false;" +
+				"var rutas = [];" +
+				"rutas[0] = principal.datos.ficha.hosp_botonera;" +
+				"rutas[1] = principal.datos.ficha.inf_botonera;" +
+				"rutas[2] = principal.datos.ficha.cex_botonera;" +
+				"rutas[3] = principal.datos.ficha.menu;" +
+
+				"for(var i=0;i<4;i++){" +
+					"if(!(rutas[i] === undefined)){" +
+						"if(i==3){ " +
+							"if(principal.datos.ficha.menu.document.anchors.length === 3){" +
+								"rutas[3].parent.parent.arbol.despliegue.crearDocExtServicioCEX();break;" +
+							"}" + 
+						"}" +
+						"rutas[i].asociarDocumento(); break;" +
+					"}" +
+				"}"		
+				
+				;
+		return botonAsociar;
+	}
+
+	static public final String buscarNodo01(String servicio){
+		
+		final String nodo = 
+
+				  "var nodo = principal.datos.arbol.despliegue.document.anchors;"
+			//	+ "alert('numero de anclas ' + nodo.length);"
+				+ "var numeroAncla = 0;"
+				+ "for(var i=0;i<nodo.length;i++){"
+					+ "if(nodo[i].innerHTML.indexOf('" + servicio + "') != -1){"
+						+ "numeroAncla = i;"
+					+ "}"
+				+ "}"
+				+ "nodo[numeroAncla].click();" 
+	
+				;
+		
+		return nodo;
 	}
 	
 }

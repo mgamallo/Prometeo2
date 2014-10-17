@@ -25,7 +25,7 @@ public class Inicio {
 	
 	static Rectangle rVentanaInterfazPrincipal = new Rectangle(0, 0, 850, 1000);
 	static Rectangle rVentanaExplorador = new Rectangle(851, 0, 175, 1000);
-	static Rectangle rVentanaNombres = new Rectangle(0, 1001, 1024, 270);
+	static Rectangle rVentanaNombres = new Rectangle(0, 1001, 1024, 250);
 	static Rectangle rVentanaControlIanus = new Rectangle();
 	
 	static public InicioIanus inicioIanus;
@@ -62,6 +62,7 @@ public class Inicio {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
 		
 		NativeInterface.open(); 
 		

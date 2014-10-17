@@ -20,6 +20,8 @@ public class LeerExcel {
 	private String[][] asociacionesDocumentos;
 	private String[][] habituales;
 	
+	private Nodo[] nodos;
+	
 	public void leer(String archivoFuente){
 		
 		WorkbookSettings wbSettings = new WorkbookSettings();
@@ -130,6 +132,25 @@ public class LeerExcel {
 	        }
 	        */
 	        
+	        //	Obtiene los nombres de los nodos
+	        
+	        hoja = archivoExcel.getSheet(1);
+	        numFilas = 0;
+	        while(!hoja.getCell(0,numFilas).getContents().toString().equals("@finV")){
+	        	numFilas++;
+	        }
+	        
+	        System.out.println("numero de filas es... " + numFilas);
+	        
+	        nodos = new Nodo[numFilas];
+	        
+	        //	Array con los nombres de los nodos
+	        for(int fila=0;fila<nodos.length;fila++){
+	        		nodos[fila] = new Nodo();
+	        		nodos[fila].alias = hoja.getCell(0,fila).getContents().toString();
+	        		nodos[fila].nombre = hoja.getCell(1,fila).getContents().toString();
+	        }
+	        
 	        
 		} catch (BiffException e) {
 			// TODO Auto-generated catch block
@@ -159,6 +180,15 @@ public class LeerExcel {
 	
 	public String[][] getAsociaciones(){
 		return asociacionesDocumentos;
+	}
+	
+	public Nodo[] getNodos(){
+		/*
+		for(int i=0;i<nodos.length;i++){
+			System.out.println(nodos[i].alias);
+		}
+		*/
+		return nodos;
 	}
 	
 	static public void main(String args[]){

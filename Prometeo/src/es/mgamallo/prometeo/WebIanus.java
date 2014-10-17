@@ -286,7 +286,7 @@ public class WebIanus implements MouseListener{
 			        
 			        Inicio.teclashabilitadas = true;
 			        
-			        Hilo introUsuario = new Hilo(webBrowser,introducirUsuarioPulido,retardo);
+			        HiloNHCyNodo introUsuario = new HiloNHCyNodo(webBrowser,introducirUsuarioPulido,retardo);
 				    introUsuario.start();
 			        
 			        frame.setUndecorated(true);

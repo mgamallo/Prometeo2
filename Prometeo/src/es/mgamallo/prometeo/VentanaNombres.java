@@ -362,7 +362,7 @@ public class VentanaNombres extends javax.swing.JFrame {
 		}
 
 		for (int i = 0; i < listaNombresDocumentos.length; i++) {
-			if (tablaDocumentos[i][numServicio].toLowerCase().equals("x")) {
+			if (!tablaDocumentos[i][numServicio].toLowerCase().equals("")) {
 				if (tablaHabituales[i][0].toLowerCase().equals("n")
 						&& tablaHabituales[i][1].toLowerCase().equals("n")
 						&& tablaHabituales[i][2].toLowerCase().equals("n")

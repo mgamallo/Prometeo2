@@ -94,7 +94,7 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("NativeKeyPressed " + e.getKeyCode());
-		System.out.println("Tecla ... " + e.getKeyCode());
+		System.out.println("Tecla ... " + ((char) e.getKeyCode()));
 
 		teclaAnterior = teclaActual;
 		teclaActual = e.getKeyCode();
@@ -194,7 +194,9 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			});
 	********************************************************/		
 			break;
-		case 115:
+/*
+ 		case 115:
+
 			System.out.println("Pulsado f4");
 			break;
 
@@ -210,11 +212,13 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 		case 82: // r
 			System.out.println("Pulsado r");
 			break;
-		
+*/
+/*		
 	case 66: // b
 		System.out.println("Pulsado b");
 		Inicio.gestion.gestion();
 		break;
+*/
 /*	case 86: // v
 		System.out.println("Pulsado v");
 	//	if(barraEspaciadoraOn){
@@ -234,10 +238,33 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 		
 		break;
 */
+			/*
+		case 67: // c
+			System.out.println("Pulsado c");
+			GestionJacob.pulsaBotonAsociar();
+			break;	
+		*/
+
 		default:
 			//  V, cuando no utilizamos ctrl + v
 			if(teclaAnterior != 17 && teclaActual == 86){
-				Inicio.vExplorador.asociaDocumento();
+				// Inicio.vExplorador.asociaDocumento();
+				GestionJacob.pulsaBotonAsociar();
+				
+				if(true){
+					try {
+						Thread.sleep(1400);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
+			}
+			//	space, cuando no utilizamos tab - space
+			else if(teclaAnterior != 9 && teclaActual == 32){
+				Inicio.gestion.gestion();
 			}
 	}		
 
@@ -246,13 +273,13 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	@Override
 	public void nativeKeyReleased(NativeKeyEvent arg0) {
 		// TODO Auto-generated method stub
-		 System.out.println("NativeKeyReleased " + arg0.getKeyCode());
+	//	 System.out.println("NativeKeyReleased " + arg0.getKeyCode());
 	}
 
 	@Override
 	public void nativeKeyTyped(NativeKeyEvent arg0) {
 		// TODO Auto-generated method stub
-		 System.out.println("NativeKeyTyped " + arg0.getKeyCode());
+	//	 System.out.println("NativeKeyTyped " + arg0.getKeyCode());
 	}
 
 	

@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 public class RobotIanus {
 	
 	public final String DOC_ANULADO = "Documento anulado";
-	public final String RUTA_PRUEBAS = "j:\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
+	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDD + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
 	public void asocia(String titulo){
 		
@@ -91,8 +91,14 @@ public class RobotIanus {
 		
 		
 		//	9 Pega ruta
-		copiar.copiarAlPortapapeles(RUTA_PRUEBAS);
-		robot.delay(50);
+		
+		if(titulo.toLowerCase().contains(InicioIanus.DOC_ANULADO.toLowerCase())){
+			copiar.copiarAlPortapapeles(RUTA_DOC_ANULADO);
+		}else{
+			copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+		}
+
+		robot.delay(100);
 		
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
@@ -215,6 +221,8 @@ public class RobotIanus {
 			}
 			else{
 				
+				System.out.println("Este es el código a imprimir " + ((char)codigo));
+				
 				switch (codigo) {
 				case KeyEvent.VK_SPACE:
 					imprimeAscii(32);
@@ -239,6 +247,7 @@ public class RobotIanus {
 					break;
 				case KeyEvent.VK_C:
 					imprimeAscii(99);
+					System.out.println("Imprime ascii");
 					break;
 				case KeyEvent.VK_V:
 					imprimeAscii(118);
@@ -247,6 +256,7 @@ public class RobotIanus {
 				default:
 					robot.keyPress(codigo);
 					robot.keyRelease(codigo);
+					System.out.println("Imprime por defecto: " + ((char) codigo));
 					break;
 				}
 							}
@@ -343,7 +353,7 @@ public class RobotIanus {
 		
 		
 		default:
-			codigo = KeyEvent.VK_C;
+		//	codigo = KeyEvent.VK_C;
 		}
 		
 		this.imprimeChar(inverso,codigo, acento);

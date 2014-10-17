@@ -83,11 +83,13 @@ public class InterfazPrincipal implements MouseListener{
 	final String DIR_CONTROL = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
 	final String DIR_OPERACIONES = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
 
-	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
+//	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
+	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir.html";
 	final String DIR_AYUDA = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
 	final String DIR_NORMAS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas/normas.html";
 	final String DIR_AVISOS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
-	final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
+	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
+	final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuario.html";
 	final String DIR_SALIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir/salir.html";
 
 
@@ -408,7 +410,7 @@ public class InterfazPrincipal implements MouseListener{
 				frame.setLocationByPlatform(true);
 
 				panelOperaciones.setBackground(color);
-				// frame.setUndecorated(true);
+				frame.setUndecorated(true);
 				frame.setLocationRelativeTo(null);
 
 				 //URL pathIcon = this.getClass().getClassLoader().getResource("prometeo/ico/icono.png");
@@ -485,7 +487,7 @@ class MiHilo extends Thread {
 
 	public void run() {
 		try {
-			Thread.sleep(50);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -504,9 +506,13 @@ class MiHilo extends Thread {
 
 				final String cadena = CadenasJavascript
 						.putUsuario(cadenaJavascript);
+				
+			//	Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("alert('hola');");
 
 				Inicio.panelPrincipal.webBrowserOperaciones
 						.executeJavascript(cadena);
+				
+				
 			}
 		});
 	}

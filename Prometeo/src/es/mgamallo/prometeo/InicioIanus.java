@@ -25,6 +25,29 @@ public class InicioIanus {
 	static final String RUTAURGB = "H:/DIGITALIZACIÓN/01 INFORMES URG (Colectiva)";
 static final String RUTAPC = "c:/ianus/ianus.txt";
 
+	static final String CONSENTIMIENTO = "Consentimento informado";
+	static final String EKG = "ECG";
+	static final String ECO = "Ecografía";
+	static final String LISTAESPERA = "Folla inclusión LE";
+	static final String MANOMETRIA = "Manometría";
+	static final String PHMETRIA = "Phmetría";
+	static final String ENFERMERIA_ENDOSCOPIAS = "Folla enfermaría endoscopias";
+	static final String ENDOSCOPIA_DIGESTIVA = "Endoscopia Digestiva";
+	static final String INTERCONSULTA = "Interconsulta";
+	
+	static final String PRUEBAS_DIAGNOSTICAS = "Proba diagnóstica";
+	static final String PRICK = "Prick test";
+	static final String ESPIROMETRIA = "Espirometría";
+	static final String PRUEBAS_EPICUTANEAS = "Probas epicutáneas";
+	static final String PRUEBAS_PROVOCACION = "Probas provocación";
+	
+	static final String INFORMEURG = "Informe alta";
+	static final String ENFERMERIAURG = "Folla enfermaría urxencias";
+	
+	static final String DOC_ANULADO = "Documento anulado";
+
+
+
 	static int documentacion = 0; // 0 Urgencias
 									// 1 Documentacion
 
@@ -36,6 +59,8 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 
 	LeerExcel leerExcel;
 
+	static Nodo listaNodos[];
+	
 	static DefaultListModel listaModelNombresComunes = new DefaultListModel();
 	static DefaultListModel listaModelHabituales1 = new DefaultListModel();
 	static DefaultListModel listaModelHabituales2 = new DefaultListModel();
@@ -56,47 +81,8 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 		setDefaultsModels();
 
 		if(!Inicio.ventanasCargadas){
-			
-			ComThread.InitSTA();
-			
-	        ActiveXComponent oShell = new ActiveXComponent("Shell.Application"); 
-	        ActiveXComponent oWindows = oShell.invokeGetComponent("Windows");
 
-	        
-	        try {
-				Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
-				Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
-				Thread.sleep(2000);
-	        } catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        
-	        int iCount = oWindows.getProperty("Count").getInt();
-	        System.out.println("iCount: " + iCount);        
-			
-	        for (int i=iCount-1,j= 1; i >iCount-3 ; i--,j++) {
-	            ActiveXComponent oWindow = oWindows.invokeGetComponent("Item", new Variant(i));     
-	            String sLocName = oWindow.getProperty("LocationName").getString();
-	            String sFullName = oWindow.getProperty("FullName").getString();
-	            boolean isIE = sFullName.toLowerCase().endsWith("iexplore.exe");
-	            boolean bVisible = oWindow.getProperty("Visible").getBoolean();
-	            System.out.println("i: " + i + ", loc: " + sLocName + ", name: " + sFullName + ", isIE: " + isIE + ", vis: " + bVisible);
-	            /*
-	            if ((isIE)&&(sLocName.startsWith("about:blank"))) {
-	                oIE = oWindow;
-	            }
-	            */
-	            if(j==1){
-	            	Inicio.ianus1 = oWindow;
-	            }
-	            if(j==2){
-	            	Inicio.ianus2 = oWindow;
-	            }
-	        }
+			GestionJacob.capturaWebs();
 			
 			Inicio.vNombres = new VentanaNombres(listaServicios,
 					listaNombresDocumentos, tablaDocumentos, tablaHabituales);
@@ -115,47 +101,6 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			int alto = rectangulo.height;
 			
 			Inicio.vControlIanus.setBounds(1024, 0, ancho, alto);
-			
-			
-			Dispatch.call(Inicio.ianus1, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
-
-			
-			try {
-			
-			Thread.sleep(2000);	
-				
-			Dispatch.call(Inicio.ianus2, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
-
-			
-			if(Inicio.contraseña){
-				Dispatch.call(Inicio.ianus1, "Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
-				Thread.sleep(4000);
-				
-				Dispatch.put(Inicio.ianus1,"Visible",true);
-				Dispatch.put(Inicio.ianus1,"menubar",false);
-				Dispatch.put(Inicio.ianus1,"toolbar",false);
-				
-			    Dispatch.put(Inicio.ianus1,"height",1079);
-			    Dispatch.put(Inicio.ianus1,"top",200);
-			    Dispatch.put(Inicio.ianus1,"left",1024);
-				
-				Dispatch.call(Inicio.ianus2, "Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
-			
-				Thread.sleep(4000);
-				
-				Dispatch.put(Inicio.ianus2,"Visible",true);	
-				Dispatch.put(Inicio.ianus2,"menubar",false);
-				Dispatch.put(Inicio.ianus2,"toolbar",false);
-				
-			    Dispatch.put(Inicio.ianus2,"height",1079);
-			    Dispatch.put(Inicio.ianus2,"top",200);
-			    Dispatch.put(Inicio.ianus2,"left",1024);
-			}
-			
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		else{
 			Inicio.vExplorador.setPdfs(pdfs);
@@ -165,6 +110,8 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 
 	private void setDefaultsModels() {
 
+		listaNodos = leerExcel.getNodos();
+		
 		listaServicios = leerExcel.getServicios();
 		listaNombresDocumentos = leerExcel.getNombres();
 		tablaHabituales = leerExcel.getHabituales();
@@ -194,7 +141,10 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 
 	}
 
+	
 	static public void main(String args[]) {
 		new InicioIanus(null);
 	}
 }
+
+
