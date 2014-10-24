@@ -45,6 +45,9 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static final String ENFERMERIAURG = "Folla enfermaría urxencias";
 	
 	static final String DOC_ANULADO = "Documento anulado";
+	static final String DESCONOCIDO = "Des";
+	static final String HOSP = "HOSP";
+	static final String HOSP_JACOB = "HOS:";
 
 
 
@@ -55,7 +58,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static String[] rutaCompletaPdfs;
 	static File[] tandaDePdfs;
 	
-
+	
 
 	LeerExcel leerExcel;
 

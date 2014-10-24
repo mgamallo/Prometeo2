@@ -42,7 +42,7 @@ import chrriis.dj.nativeswing.swtimpl.components.JWebBrowser;
 /**
  * @author Christopher Deckers
  */
-public class WebIanus implements MouseListener{
+public class WebIanusNoSeUtiliza implements MouseListener{
 
 	protected final String LS = System.getProperty("line.separator");
 	
@@ -237,7 +237,7 @@ public class WebIanus implements MouseListener{
 		return contentPane;
 	}
 
-	public WebIanus(final String nombreIanus, final Color color){
+	public WebIanusNoSeUtiliza(final String nombreIanus, final Color color){
 		  try {
 	          for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 	              if ("Nimbus".equals(info.getName())) {
@@ -286,8 +286,8 @@ public class WebIanus implements MouseListener{
 			        
 			        Inicio.teclashabilitadas = true;
 			        
-			        HiloNHCyNodo introUsuario = new HiloNHCyNodo(webBrowser,introducirUsuarioPulido,retardo);
-				    introUsuario.start();
+			   //     HiloNHCyNodo introUsuario = new HiloNHCyNodo(webBrowser,introducirUsuarioPulido,retardo);
+				//    introUsuario.start();
 			        
 			        frame.setUndecorated(true);
 			        

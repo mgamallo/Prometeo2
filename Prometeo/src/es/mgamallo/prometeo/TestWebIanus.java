@@ -30,9 +30,9 @@ public class TestWebIanus {
 	
 	public static void main(String[] args){
 		NativeInterface.open();
-		WebIanus web1 = new WebIanus("Ianus 1", new Color(255,246,143));
+		WebIanusNoSeUtiliza web1 = new WebIanusNoSeUtiliza("Ianus 1", new Color(255,246,143));
 		
-		WebIanus web2 = new WebIanus("Ianus 2",new Color(255,222,173));
+		WebIanusNoSeUtiliza web2 = new WebIanusNoSeUtiliza("Ianus 2",new Color(255,222,173));
 
 	    NativeInterface.runEventPump();
 	}

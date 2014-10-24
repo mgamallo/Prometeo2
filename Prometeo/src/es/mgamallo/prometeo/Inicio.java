@@ -40,6 +40,9 @@ public class Inicio {
 	static ActiveXComponent ianus1;
 	static ActiveXComponent ianus2;
 	
+	static public DatosFicha datosPaciente1 = new DatosFicha();
+	static public DatosFicha datosPaciente2 = new DatosFicha();
+	
 	static boolean ventanasCargadas = false;
 	
 	static public Documento[] documento;  //	Array de documentos de la tanda

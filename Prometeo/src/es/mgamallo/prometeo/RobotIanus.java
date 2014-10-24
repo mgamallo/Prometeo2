@@ -66,7 +66,7 @@ public class RobotIanus {
 		robot.delay(50);
 		
 		//	5 Pega título
-		CopEnPortapapeles copiar = new CopEnPortapapeles();
+		Portapapeles copiar = new Portapapeles();
 		copiar.copiarAlPortapapeles(titulo);
 		
 		robot.delay(50);

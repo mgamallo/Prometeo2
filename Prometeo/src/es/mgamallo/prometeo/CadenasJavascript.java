@@ -108,10 +108,9 @@ public class CadenasJavascript {
 			;
 		
 		String introducirNHCresumido = 
-				"javascript:var nhc = window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " +
+				"javascript:window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " +
 		        nhc + ";window.principal.mainFrame.buscar();";
 		
-		String aux = "window.frames['principal'].frames['mainFrame'].document.buscarPacienteForm.ID_NHC.value=1000;";
 		
 		return introducirNHCresumido;
 	}
@@ -155,7 +154,7 @@ public class CadenasJavascript {
 		return botonAsociar;
 	}
 
-	static public final String buscarNodo01(String servicio){
+	static public final String buscarNodoConsultas(String servicio){
 		
 		final String nodo = 
 
@@ -172,6 +171,92 @@ public class CadenasJavascript {
 				;
 		
 		return nodo;
+	}
+	
+	static public final String buscarNodoHosp(String servicio){
+		
+		String servicioH = servicio;
+		
+		if(servicio.contains(InicioIanus.HOSP_JACOB)){
+			servicioH = "HOS:";
+			System.out.println("servicio a buscar en hosp es: " + servicioH);
+		}
+		
+		final String nodo = 
+
+				  "var nodo = principal.datos.arbol.despliegue.document.anchors;"
+			//	+ "alert('numero de anclas ' + nodo.length);"
+				+ "var numeroAncla = 0;"
+				+ "for(var i=0;i<nodo.length;i++){"
+					+ "if(nodo[i].innerHTML.indexOf('" + servicioH + "') != -1){"
+						+ "numeroAncla = i;"
+						+ "break;"
+					+ "}"
+				+ "}"
+				+ "nodo[numeroAncla].click();" 
+	
+				;
+		
+		return nodo;
+	}
+	
+	
+	static public final String seleccionarFichaHosp(){
+		
+		return  "principal.datos.ficha.hosp_main.cambiar('pFicha');alert('ficha abierta')";
+	}
+	
+	static public final String obtieneDatosFichaHosp(int parte){
+		DatosFicha datos = new DatosFicha();
+		
+		String datosFicha = ""
+				
+				+ "var tablas = principal.datos.ficha.hosp_main.episodio.document.getElementsByTagName('table');"
+				+ "var celdas = tablas[6].getElementsByTagName('td');"
+				+ "var fechaIngreso = celdas[5].innerHTML;"
+				+ "var horaIngreso = celdas[7].innerHTML;"
+				+ "celdas = tablas[2].getElementsByTagName('td');"
+				+ "var nombre = celdas[3].innerHTML;"
+				+ "var fechaNacimiento = celdas[9].innerHTML;"
+				+ "var nss = celdas[15].innerHTML;"				
+				+ "var cadena = '1@' + fechaIngreso + '@' + horaIngreso +'@' + nombre + '@' + fechaNacimiento + '@' + nss;"
+				+ "window.clipboardData.setData('Text', cadena);"
+				;
+			
+	
+		
+		String datosFichaHosp1 = ""
+				+ "var tablas = principal.datos.ficha.hosp_main.episodio.document.getElementsByTagName('table');"
+				+ "var celdas = tablas[6].getElementsByTagName('td');"
+				+ "var fechaIngreso = celdas[5].innerHTML;"
+				+ "var horaIngreso = '1@' + fechaIngreso + '@' + celdas[7].innerHTML;"
+
+				+ "var hola = window.clipboardData.setData('Text', horaIngreso);"
+				;
+			//	+ "alert(cadena);";
+		
+		String datosFichaHosp2 = ""
+				+ "celdas = tablas[2].getElementsByTagName('td');"
+				+ "var nombre = celdas[3].innerHTML;"
+				+ "var fechaNacimiento = celdas[9].innerHTML;"
+				+ "var nss = celdas[15].innerHTML;"				
+				+ "window.clipboardData.setData('Text', nss);"
+				;
+		
+		String datosEnteros = ""
+				+ "var tablas = principal.datos.ficha.hosp_main.episodio.document.getElementsByTagName('table');"
+				+ "var celdas = '1@' + tablas[6].innerHTML + '@' + tablas[2].innerHTML;"
+				+ "var hola = window.clipboardData.setData('Text', celdas);"
+				;
+		
+		if(parte == 1){
+			return datosEnteros;
+		}
+		else{
+			return datosEnteros;
+		}
+		
+		
 	}
 	
 }

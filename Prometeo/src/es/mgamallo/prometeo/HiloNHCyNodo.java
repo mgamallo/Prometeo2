@@ -35,13 +35,17 @@ public class HiloNHCyNodo extends Thread{
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 
-				Dispatch.call(ianus, "navigate",cadenaJavascript);
+				 Dispatch.call(ianus, "navigate",cadenaJavascript);
 				
 				try {
 					Thread.sleep(4000);
-					if(primerDocumento)
+				/*	if(primerDocumento)
 						GestionJacob.buscaNodoYpulsaBotonAsociar(ianus,servicio);
-					else
+					else  */
+						System.out.println("Buscando nodo en hilo...");
+						
+				//		Thread.sleep(1500);
+						
 						GestionJacob.buscaNodo(ianus, servicio);
 
 				} catch (InterruptedException e) {

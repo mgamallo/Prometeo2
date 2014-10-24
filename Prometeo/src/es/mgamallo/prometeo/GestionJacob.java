@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.swing.SwingUtilities;
 
 import com.jacob.activeX.ActiveXComponent;
+import com.jacob.com.ComThread;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
@@ -54,19 +55,24 @@ public class GestionJacob {
             }
         }
         
+
 		Dispatch.call(Inicio.ianus1, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
 
 		
 		try {
 		
-		Thread.sleep(500);	
+		Thread.sleep(900);	
 			
 		Dispatch.call(Inicio.ianus2, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
 
 		
 		if(Inicio.contraseña){
-			Dispatch.call(Inicio.ianus1, "Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
-			Thread.sleep(1000);
+			
+			// introduceUsuarioJacob(Inicio.ianus1, Inicio.usuario);
+			
+			Dispatch.call(Inicio.ianus1,"Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
+			
+			Thread.sleep(1500);
 			
 			Dispatch.put(Inicio.ianus1,"Visible",true);
 			Dispatch.put(Inicio.ianus1,"menubar",false);
@@ -76,9 +82,11 @@ public class GestionJacob {
 		    Dispatch.put(Inicio.ianus1,"top",200);
 		    Dispatch.put(Inicio.ianus1,"left",1024);
 			
-			Dispatch.call(Inicio.ianus2, "Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
+//		    introduceUsuarioJacob(Inicio.ianus2, Inicio.usuario);
+			Dispatch.call(Inicio.ianus2,"Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
+
 		
-			Thread.sleep(400);
+			Thread.sleep(900);
 			
 			Dispatch.put(Inicio.ianus2,"Visible",true);	
 			Dispatch.put(Inicio.ianus2,"menubar",false);
@@ -110,10 +118,100 @@ public class GestionJacob {
 	//		public void run() {
 				
 				//	Busca nodo
-				System.out.println("El servicio es: " + servicio);
-		
-				Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodo01(servicio));
+				System.out.println("El servicio en GEstionJacob.buscaNodo es: " + servicio);
+				if(servicio.equals(InicioIanus.HOSP_JACOB)){
+					
+
+					try {
+						
+						Thread.sleep(1500);
+						
+						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoHosp(servicio));
+						
+						Thread.sleep(2500);
+						System.out.println("Abrimos ficha paciente");
+						Dispatch.call(ianus,"Navigate","javascript:principal.datos.ficha.hosp_main.cambiar('pFicha');");
 				
+						Thread.sleep(1000);
+						
+						Portapapeles cbTemporal = new Portapapeles();
+					//	cbTemporal.getDatosPortapapelesTemporal();
+					//	System.out.println("Los datos temporales del portapapeles son: " + cbTemporal.valorTemporal);
+						
+						System.out.println("Obtenemos datos de la ficha");
+						Dispatch.call(ianus, "navigate","javascript:" + CadenasJavascript.obtieneDatosFichaHosp(1));
+						
+						Thread.sleep(400);
+						String cadena = cbTemporal.getDatosPaciente();
+	
+						
+						if(Inicio.ianus1onTop){
+							Inicio.datosPaciente1.setDatosFicha( cadena);
+						}
+						else{
+							Inicio.datosPaciente2.setDatosFicha( cadena);
+						}
+						
+					//	cbTemporal.setDatosOriginales();
+						
+						/*		
+						Thread.sleep(1500);
+						Dispatch documento = Dispatch.call(ianus,"document").toDispatch();
+						
+						Dispatch frames = Dispatch.call(documento, "getElementsByTagName","frame").toDispatch();
+						
+						int numFrames = Dispatch.get(frames,"length").getInt();
+						
+						System.out.println(numFrames);
+						
+						for(int i= 0;i<numFrames;i++){
+							String numero = String.valueOf(i);
+							Dispatch frame = Dispatch.get(frames,numero).toDispatch();
+							System.out.println("El frame " + i+ ", se llama " + Dispatch.get(frame,"name"));
+						}
+						
+					//	Dispatch all = Dispatch.get(tablas,"0").toDispatch();
+					//	System.out.println(Dispatch.get(all,"innerHTML"));
+					
+  				        
+					      Dispatch framePrincipal = Dispatch.get(frames,"1").toDispatch();
+					      System.out.println("El framePrincipal, se llama " + Dispatch.get(framePrincipal,"name"));
+					      Dispatch documentPrincipal = Dispatch.call(framePrincipal,"document").toDispatch();
+					      Dispatch framesPrincipal = Dispatch.call(documentPrincipal,"getElementsByTagName","frame").getDispatch();
+					      
+					      numFrames = Dispatch.get(framesPrincipal,"length").getInt();
+					      System.out.println("hola " + numFrames);
+							for(int i= 0;i<numFrames;i++){
+								String numero = String.valueOf(i);
+								Dispatch frame = Dispatch.get(framesPrincipal,numero).toDispatch();
+								System.out.println("El frame " + i+ ", dentro de principal se llama " + Dispatch.get(frame,"name"));
+							}
+					      
+					     
+					      
+					      Dispatch frameFicha = Dispatch.get(frameDatos,"ficha").getDispatch();
+					      Dispatch frameHosp_main = Dispatch.get(frameFicha,"hosp_main").getDispatch();
+					      Dispatch frameEpisodio = Dispatch.get(frameHosp_main,"episodio").toDispatch();					     
+					      Dispatch document = Dispatch.get(frameEpisodio,"document").toDispatch();
+					      Dispatch tablas = Dispatch.call(document,"getElementsByTagName","table").toDispatch();
+					      Dispatch tabla6 = Dispatch.get(tablas,"6").toDispatch();
+					      System.out.println(Dispatch.get(tabla6,"innerHTML"));
+					      
+					      
+				*/
+						
+					//	javascript:var tabla = principal.datos.ficha.hosp_main.episodio.document.getElementsByTagName('TABLE');
+
+						
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(!servicio.equals(InicioIanus.DESCONOCIDO)){
+					Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultas(servicio));
+				}
+
 
 		//	}
 	//	});
@@ -125,7 +223,7 @@ public class GestionJacob {
 	//		public void run() {
 				
 				//	Busca nodo
-				Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodo01(servicio));
+				Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultas(servicio));
 				
 				//	Pulsa boton asociar
 				try {
@@ -190,4 +288,30 @@ public class GestionJacob {
 		});
 	}
 	
+	
+	public static void introduceUsuarioJacob(final ActiveXComponent ianus, final Usuario user){
+		
+		user.usuario = "mgamgul1";
+		user.password = "archivo0";
+
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				
+			//	ComThread.InitSTA();
+				
+			      Dispatch documento = Dispatch.call(ianus,"document").getDispatch();
+	      
+			      Dispatch frames = Dispatch.get(documento, "frames").toDispatch();
+			      Dispatch framePrincipal = Dispatch.get(frames,"principal").toDispatch();
+			      Dispatch frameMain = Dispatch.get(framePrincipal,"main").toDispatch();
+			      Dispatch frameLogin = Dispatch.get(frameMain,"document").toDispatch();
+			      Dispatch login = Dispatch.call(frameLogin,"getElementById", "login").toDispatch();
+			      Dispatch.put(login,"value",user.usuario);
+			      Dispatch password = Dispatch.call(frameLogin,"getElementById", "password").toDispatch();
+			      Dispatch.put(password,"value",user.password);
+			      Dispatch.call(frameMain, "eval","aceptar()");
+			}
+		});		
+	}
 }

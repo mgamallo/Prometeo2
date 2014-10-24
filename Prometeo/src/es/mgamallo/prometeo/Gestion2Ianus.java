@@ -65,7 +65,7 @@ public class Gestion2Ianus {
 		
 		Inicio.vNombres.comboServicio.setSelectedItem(Inicio.documentoActivo.servicio);
 		System.out.println("Introduce el nhc 1 " + Inicio.nhcDelIanus1);
-		introduceNHC(Inicio.ianus1,Inicio.nhcDelIanus1,"OFTAL",50,false);
+		introduceNHC(Inicio.ianus1,Inicio.nhcDelIanus1,Inicio.documento[indiceNhc1].servicio,50,false);
 	
 		/*
 	//	Inicio.ianus2.botonNHC.setText(Inicio.documento[indiceNhc2].nhc);
@@ -77,7 +77,7 @@ public class Gestion2Ianus {
 		System.out.println("Introduce el nhc 2 " + Inicio.nhcDelIanus2);
 		
 		Dispatch.put(Inicio.ianus2,"visible",false);
-		introduceNHC(Inicio.ianus2,Inicio.nhcDelIanus2,"OFTAL",2000,false);
+		introduceNHC(Inicio.ianus2,Inicio.nhcDelIanus2,Inicio.documento[indiceNhc2].servicio,2000,false);
 	//	Dispatch.put(Inicio.ianus2,"visible",false);
 		
 		Inicio.ianus1onTop = true;
@@ -102,11 +102,16 @@ public class Gestion2Ianus {
 	
 	
 	private String buscaNombreNodoServicio(String servicio){
+		
+		System.out.println("Empieza a buscar el nombre del servicio");
+		
 		for(int i=0;i< InicioIanus.listaNodos.length;i++){
 			if(InicioIanus.listaNodos[i].alias.contains(servicio)){
+				System.out.println("Encontró el nombre del servicio y es :" + InicioIanus.listaNodos[i].nombre);
 				return InicioIanus.listaNodos[i].nombre;
 			}
 		}
+		System.out.println("No encontró el nombre del servicio");
 		return null;
 	}
 	
@@ -179,7 +184,7 @@ public class Gestion2Ianus {
 							if(indiceNhc1 != -1){
 								Inicio.nhcDelIanus1 = Inicio.documento[indiceNhc1].nhc;
 								
-								introduceNHC(Inicio.ianus1, Inicio.nhcDelIanus1, "OFTAL",1000,false);
+								introduceNHC(Inicio.ianus1, Inicio.nhcDelIanus1, Inicio.documento[indiceNhc1].servicio,1000,false);
 								// Inicio.ianus1.frame.setAlwaysOnTop(false);
 								// Inicio.ianus2.frame.setAlwaysOnTop(true);
 								
@@ -247,7 +252,7 @@ public class Gestion2Ianus {
 							if(indiceNhc2 != -1){
 								Inicio.nhcDelIanus2 = Inicio.documento[indiceNhc2].nhc;
 								
-								introduceNHC(Inicio.ianus2, Inicio.nhcDelIanus2,"OFTAL", 1000,false);
+								introduceNHC(Inicio.ianus2, Inicio.nhcDelIanus2,Inicio.documento[indiceNhc2].servicio, 1000,false);
 								// Inicio.ianus2.frame.setAlwaysOnTop(false);
 								// Inicio.ianus1.frame.setAlwaysOnTop(true);
 								
