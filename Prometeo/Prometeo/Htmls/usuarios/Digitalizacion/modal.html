@@ -1,0 +1,87 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title> Ventana Modal</title>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/estilo.css" />
+<script src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('a.login-window').click(function() {
+		
+		// Getting the variable's value from a link 
+		var loginBox = $(this).attr('href');
+
+		//Fade in the Popup and add close button
+		$(loginBox).fadeIn(300);
+		
+		//Set the center alignment padding + border
+		var popMargTop = ($(loginBox).height() + 24) / 2; 
+		var popMargLeft = ($(loginBox).width() + 24) / 2; 
+		
+		$(loginBox).css({ 
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+		
+		// Add the mask to body
+		$('body').append('<div id="mask"></div>');
+		$('#mask').fadeIn(300);
+		
+		return false;
+	});
+	
+	// When clicking on the button close or the mask layer the popup closed
+	$('a.close, #mask, a.forgot').live('click', function() { 
+	  $('#mask , .login-popup').fadeOut(300 , function() {
+		$('#mask').remove();  
+	}); 
+	return false;
+	});
+});
+</script>
+</head>
+<body>
+<h1>Simulación de ventana modal<small>Tutorial by Alessio Atzeni | <a href="http://www.alessioatzeni.com/blog/login-box-modal-dialog-window-with-css-and-jquery/">View Tutorial</a></small></h1>
+<div class="container">
+	<div id="content">
+    
+		<div class="post">
+    	<h2>Usuario Pepito</h2>
+        	<div class="btn-sign">
+				<a href="#login-box" class="login-window">Login</a>
+        	</div>
+		</div>
+        
+        <div id="login-box" class="login-popup">
+        <a href="#" class="close"><img src="img/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+          <form method="post" class="signin" action="#">
+          		<br>
+                <fieldset class="textbox">
+            	<label class="username">
+                <span>Usuario</span>
+                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="mgamgul1">
+                </label>
+                
+                <label class="password">
+                <span>Password</span>
+                <input id="password" name="password" value="" type="password" placeholder="Password">
+                </label>
+                
+                <a class="button" href="command://revisar">Revisar</a>
+                <a class="button" href="command://asociar">Asociar</a>
+                
+                <p>
+            	  <a class="forgot" href="#">Salir</a>  
+        	    </p>
+                
+                </fieldset>
+          </form>
+		</div>
+    
+    </div>
+</div>
+
+</body>
+</html>

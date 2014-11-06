@@ -42,7 +42,22 @@ public class CargaListaPdfs {
 		}
 	}
 	
+	CargaListaPdfs(boolean renombrar, File directorio){
+		AbrirCarpeta carpeta = new AbrirCarpeta(renombrar,true);
+		
+		File[] ficheros = carpeta.getPdfsMetro(renombrar,directorio);
+		
+		int tamañoDir = ficheros.length;
+		nombrePdfs = new String[tamañoDir];
+		rutaPdfs = new String[tamañoDir];
+		rutaCarpeta = carpeta.nombreCarpeta;
 	
+		for(int i=0;i<tamañoDir;i++){
+			nombrePdfs[i] = ficheros[i].getName();
+			rutaPdfs[i] = ficheros[i].getAbsolutePath();
+			System.out.println("nombresPdfs " + nombrePdfs[i]);
+		}
+	}
 	
 	String[] getNombresPdfs(){
 		return nombrePdfs;

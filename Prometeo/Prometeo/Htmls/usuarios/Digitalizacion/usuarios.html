@@ -8,8 +8,47 @@
 	<!--	<link href='http://fonts.googleapis.com/css?family=Alegreya+SC:700,400italic' rel='stylesheet' type='text/css' /> -->
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilo1.css" />
         <script src="js/modernizr.custom.97074.js"></script>
 		<noscript><link rel="stylesheet" type="text/css" href="css/noJS.css"/></noscript>
+    
+    	<script type="text/javascript">
+			$(document).ready(function() {
+				$('a.login-window').click(function() {
+					
+					// Getting the variable's value from a link 
+					var loginBox = $(this).attr('href');
+			
+					//Fade in the Popup and add close button
+					$(loginBox).fadeIn(300);
+					
+					//Set the center alignment padding + border
+					var popMargTop = ($(loginBox).height() + 24) / 2; 
+					var popMargLeft = ($(loginBox).width() + 24) / 2; 
+					
+					$(loginBox).css({ 
+						'margin-top' : -popMargTop,
+						'margin-left' : -popMargLeft
+					});
+					
+					// Add the mask to body
+					$('body').append('<div id="mask"></div>');
+					$('#mask').fadeIn(300);
+					
+					return false;
+				});
+				
+				// When clicking on the button close or the mask layer the popup closed
+				$('a.close, #mask, a.forgot').live('click', function() { 
+				  $('#mask , .login-popup').fadeOut(300 , function() {
+					$('#mask').remove();  
+				}); 
+				return false;
+				});
+			});
+		</script>
+    
+    
     </head>
     <body>
     	<script languaje ="Javascript">
@@ -27,6 +66,33 @@
 			<section id="seccion">
 
 			</section>
+			
+			<div id="login-box" class="login-popup">
+		        <a href="#" class="close"><img src="img/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+		          <form method="post" class="signin" action="#">
+		          		<br>
+		                <fieldset class="textbox">
+		            	<label class="username">
+		                <span>Usuario</span>
+		                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="mgamgul1">
+		                </label>
+		                
+		                <label class="password">
+		                <span>Password</span>
+		                <input id="password" name="password" value="" type="password" placeholder="Password">
+		                </label>
+		                
+		                <a class="button" href="command://revisar">Revisar</a>
+		                <a class="button" href="command://asociar">Asociar</a>
+		                
+		                <p>
+		            	  <a class="forgot" href="#">Salir</a>  
+		        	    </p>
+		                
+		                </fieldset>
+		          </form>
+			</div>
+        
         </div>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery.hoverdir.js"></script>	

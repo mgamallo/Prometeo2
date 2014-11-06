@@ -48,6 +48,8 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static final String DESCONOCIDO = "Des";
 	static final String HOSP = "HOSP";
 	static final String HOSP_JACOB = "HOS:";
+	static final String URG_JACOB = "URG:";
+	static final String CIA_JACOB = "CIA:";
 
 
 

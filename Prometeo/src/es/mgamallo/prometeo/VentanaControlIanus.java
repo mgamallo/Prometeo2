@@ -1,5 +1,9 @@
 package es.mgamallo.prometeo;
 
+import java.awt.Color;
+
+import javax.swing.JButton;
+
 public class VentanaControlIanus extends javax.swing.JFrame {
 
     /**
@@ -32,6 +36,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         panelControlesAux = new javax.swing.JPanel();
         labelFecha = new javax.swing.JLabel();
         botonFecha = new javax.swing.JButton();
+        botonHora = new JButton();
         jPanel3 = new javax.swing.JPanel();
         labelNombrePaciente = new javax.swing.JLabel();
         labelCIP = new javax.swing.JLabel();
@@ -41,9 +46,10 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         labelNSSextraida = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1024, 260));
+        setPreferredSize(new java.awt.Dimension(1024, 200));
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1024, 220));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1024, 180));
+        jPanel1.setBackground(new java.awt.Color(255, 228, 181));
 
         panelControlIanus.setBackground(new java.awt.Color(0, 0, 0));
         panelControlIanus.setPreferredSize(new java.awt.Dimension(1024, 20));
@@ -88,20 +94,20 @@ public class VentanaControlIanus extends javax.swing.JFrame {
                 .addGap(0, 5, Short.MAX_VALUE))
         );
 
-        panelBotones.setBackground(new java.awt.Color(255, 255, 102));
-        panelBotones.setPreferredSize(new java.awt.Dimension(0, 60));
+        panelBotones.setBackground(new java.awt.Color(255, 228, 181));//
+        panelBotones.setPreferredSize(new java.awt.Dimension(0, 70));
 
-        botonNHC.setBackground(new java.awt.Color(0, 204, 51));
+        botonNHC.setBackground(new java.awt.Color(0, 255, 0));
         botonNHC.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        botonNHC.setText("2.345.678");
 
-        botonServicio.setBackground(new java.awt.Color(0, 204, 51));
+
+        botonServicio.setBackground(new java.awt.Color(0, 255, 0));
         botonServicio.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        botonServicio.setText("CARC");
 
-        botonNombreDocumento.setBackground(new java.awt.Color(0, 204, 51));
-        botonNombreDocumento.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        botonNombreDocumento.setText("Consentimiento informado");
+
+        botonNombreDocumento.setBackground(new java.awt.Color(0, 255, 0));
+        botonNombreDocumento.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
+
         botonNombreDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonNombreDocumentoActionPerformed(evt);
@@ -114,7 +120,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(botonNHC, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botonNHC, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -126,19 +132,19 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botonNHC, 60, 60, 60)
-                    .addComponent(botonNombreDocumento, 60, 60, 60)
-                    .addComponent(botonServicio, 60, 60, 60))
+                		.addComponent(botonNHC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonNombreDocumento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonServicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        panelControlesAux.setBackground(new java.awt.Color(255, 204, 153));
-        panelControlesAux.setPreferredSize(new java.awt.Dimension(0, 20));
+        panelControlesAux.setBackground(new java.awt.Color(255, 228, 181));
+        panelControlesAux.setPreferredSize(new java.awt.Dimension(0, 80));
 
-        labelFecha.setText("Fecha seleccionada:");
 
-        botonFecha.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        botonFecha.setText("14 / 08 /1999");
+        botonFecha.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+
+        botonFecha.setBackground(new java.awt.Color(255, 255, 102));
 
         labelNombrePaciente.setText("Nombre paciente:");
 
@@ -146,13 +152,15 @@ public class VentanaControlIanus extends javax.swing.JFrame {
 
         labelNSS.setText("NSS:");
 
-        labelNombreExtraido.setText("Ga Gu Pepe");
+ //       labelNombreExtraido.setText("Ga Gu Pepe");
 
-        labelCIPextraido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelCIPextraido.setText("710101 GG AU 5 016");
+ //       labelCIPextraido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+ //       labelCIPextraido.setText("710101 GG AU 5 016");
 
-        labelNSSextraida.setText("36/0092549403");
+ //       labelNSSextraida.setText("36/0092549403");
 
+        jPanel3.setBackground(new Color(176,224,230));
+        
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -184,8 +192,12 @@ public class VentanaControlIanus extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNSS)
                     .addComponent(labelNSSextraida))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+        
+        botonHora.setFont(new java.awt.Font("Tahoma", 1, 32)); // NOI18N
+     
+        botonHora.setBackground(new java.awt.Color(255, 255, 102));
 
         javax.swing.GroupLayout panelControlesAuxLayout = new javax.swing.GroupLayout(panelControlesAux);
         panelControlesAux.setLayout(panelControlesAuxLayout);
@@ -194,22 +206,25 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlesAuxLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
                 .addComponent(labelFecha)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonHora, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelControlesAuxLayout.setVerticalGroup(
             panelControlesAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelControlesAuxLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelControlesAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelControlesAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(4, 4, 4)
+                .addGroup(panelControlesAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(botonHora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelControlesAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelFecha))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelFecha)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -218,22 +233,23 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelControlesAux, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
-                    .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
-                    .addComponent(panelControlIanus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE))
+                    .addComponent(panelControlesAux, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+                    .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+                    .addComponent(panelControlIanus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(panelControlIanus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelControlesAux, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(panelControlIanus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(panelControlesAux, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(36, Short.MAX_VALUE))
+            );
+        
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -247,18 +263,20 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 231, Short.MAX_VALUE)
+            .addGap(0, 203, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 5, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 6, Short.MAX_VALUE)))
+                    .addGap(0, 0, 0)
+             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                    .addGap(0, 0, 0)))
         );
 
-        setSize(1024, 200);
-        this.setUndecorated(false);
+      //  pack();
         
-        pack();
+        setSize(1024, 180);
+        this.setUndecorated(true);
+        
+        
     }// </editor-fold>                        
 
     private void botonNombreDocumentoActionPerformed(java.awt.event.ActionEvent evt) {                                                     
@@ -300,7 +318,8 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify 
+    public javax.swing.JButton botonHora;
     public javax.swing.JButton botonFecha;
     public javax.swing.JButton botonNHC;
     public javax.swing.JButton botonNombreDocumento;

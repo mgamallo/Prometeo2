@@ -22,7 +22,24 @@ public class DatosFicha {
 		String[] datos = cadena.split("@");
 		String minicadena = "";
 		if(datos.length > 0){
-			if(datos[0].equals("1")){    // Ingresos
+			
+			if(datos[0].equals("0")){
+				nombreCompleto = datos[1];
+				
+				int indexCip = datos[2].indexOf(CIP);
+				minicadena = datos[2].substring(indexCip + CIP.length() + 1); 
+				int indexFinCip = minicadena.indexOf(";");
+				
+				cip = minicadena.substring(0,indexFinCip-1);
+				
+				fechaNacimiento = datos[3];
+				//nss = datos[4];
+				
+				System.out.println("El cip es " + cip);
+			}
+			else if(datos[0].equals("1")){    // Ingresos
+				
+				/*
 				int indexFechaIngreso = datos[1].indexOf(FECHA_INGRESO);
 				minicadena = datos[1].substring(indexFechaIngreso + FECHA_INGRESO.length() + 1); 
 				indexFechaIngreso = minicadena.indexOf(">");
@@ -70,19 +87,20 @@ public class DatosFicha {
 				nss = minicadena.substring(indexNSS + 1, indexFinNSS);
 				System.out.println(nss);
 				
-				
-				/*	horaIngreso = datos[2];
-				nombreCompleto = datos[3];
-				fechaNacimiento = datos[4];
-				nss = datos[5]; */
+				*/
+				fechaIngreso = datos[1];
+				horaIngreso = datos[2];
+
 			}
+			else if(datos[0].equals("2")){    // URG
+				fechaIngreso = datos[1];
+				horaIngreso = datos[2];
 			
-			/*
-			System.out.println("Datos extraidos");
-			for(int i=0;i<datos.length;i++){
-				System.out.println(datos[i]);
+				System.out.println("Hora de ingreso " + datos[2]);
 			}
-			*/
+			else if(datos[0].equals("3")){    // cia
+
+			}
 		}
 		
 		
@@ -107,4 +125,11 @@ public class DatosFicha {
  * 
  * 			javascript:var tabla = principal.datos.ficha.hosp_main.episodio.document.getElementsByTagName('table');var celdas =tabla[6].getElementsByTagName('td');alert(celdas[5].innerHTML);
  *
+ *
+ *	Urgencias:
+ *
+ *		Datos alta:		tabla[6]
+ *
+ * 			Fecha ingreso:  tabla[6].celda[5]
+ * 			Hora ingreso:	tabla[6].celda[7]*
 */

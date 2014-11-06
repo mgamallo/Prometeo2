@@ -24,11 +24,18 @@ public class AbrirCarpeta {
 		}
 		
 
-ruta = "K:/Desarrollo Zona Pruebas/03 Firmado";
+ruta = "d:/02 Area Pruebas/03 Firmado";
 		
 		directorioSeleccionado = listaPdfs();
 	}
 
+	AbrirCarpeta(boolean renombrar, boolean metro){
+		if(InicioIanus.documentacion == 0){
+			ruta = InicioIanus.RUTAURG;
+			rutab = InicioIanus.RUTAURGB;
+		}	
+
+	}
 	
 	boolean listaPdfs(){
 		explorador = new JFileChooser();
@@ -47,14 +54,14 @@ ruta = "K:/Desarrollo Zona Pruebas/03 Firmado";
 		else
 			return false;
 	}
-	
+
 	
 	public File[] getPdfs(boolean renombrar){
 		
 		//	Renombrar directorio
 		if(renombrar){
 			File nombreViejo = new File(explorador.getSelectedFile().toString());
-			File nombreNuevo = new File(explorador.getSelectedFile().toString() + " " + Inicio.usuario.alias);
+			File nombreNuevo = new File(explorador.getSelectedFile().toString() + " @" + Inicio.usuario.alias);
 			
 			boolean renombrado = nombreViejo.renameTo(nombreNuevo);
 			if(renombrado){
@@ -85,6 +92,47 @@ ruta = "K:/Desarrollo Zona Pruebas/03 Firmado";
 		return pdfs;
 	}
 	
+	
+	public File[] getPdfsMetro(boolean renombrar, File directori){
+		
+		File nombreViejo = directori;
+		File nombreNuevo = new File(directori.getAbsolutePath().toString() + " @" + Inicio.usuario.alias);
+		//	Renombrar directorio
+		if(renombrar){
+			
+			nombreNuevo = new File(directori.getAbsolutePath().toString() + " @" + Inicio.usuario.alias);
+			
+			boolean renombrado = nombreViejo.renameTo(nombreNuevo);
+			if(!renombrado){
+
+				JOptionPane.showMessageDialog( null,"Directorio en uso. No se ha podido renombrar.");
+			}
+		}
+		
+		//	Eliminamos los espacios en blanco duplicados de la ruta
+		File nombreConEspacios = nombreNuevo;
+		String cadenaSinEspaciosDobles = eliminarEspaciosEnBlanco(nombreConEspacios);
+		
+		System.out.println(directori.getAbsolutePath().toString());
+		System.out.println(cadenaSinEspaciosDobles);
+		
+		//	Obtener ficheros pdf
+		File directorio = new File(cadenaSinEspaciosDobles);
+
+		String rutaLarga = cadenaSinEspaciosDobles;
+		int i = rutaLarga.lastIndexOf("\\");
+		nombreCarpeta = rutaLarga.substring(i+1);
+
+		File[] pdfs = directorio.listFiles(new FilenameFilter(){
+				public boolean accept(File directorio, String name){
+					return name.toLowerCase().endsWith(".pdf");
+				}
+		});
+		
+		System.out.println("numero de pdfs metro " + pdfs.length);
+		
+		return pdfs;
+	}
 	
 	
 	public File[] getPdfsDudas(){

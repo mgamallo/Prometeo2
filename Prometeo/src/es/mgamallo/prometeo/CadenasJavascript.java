@@ -1,5 +1,7 @@
 package es.mgamallo.prometeo;
 
+import java.util.ArrayList;
+
 import com.jacob.activeX.ActiveXComponent;
 
 public class CadenasJavascript {
@@ -27,11 +29,17 @@ public class CadenasJavascript {
 				numUsuario = String.valueOf(i);
 			}
 			
-			
-			String ca = "<li><a href=\'command://user_" + numUsuario + "_" + Inicio.usuarios[i].alias + "\'>" +
+			/*
+			String ca = "<li><a class='login-window' href=\'command://user_" + numUsuario + "_" + Inicio.usuarios[i].alias + "\'>" +
 								"<img src=\'images/" + Inicio.usuarios[i].imagen + ".jpg\' width=\'200px\'/>" +
 									"<div><span>" + Inicio.usuarios[i].alias + "</span></div>" +
 							"</a></li>" + LS;
+			*/
+			
+			String ca = "<li><a class='login-window' href=\'command://user_" + numUsuario + "_" + Inicio.usuarios[i].alias + "\'>" +
+					"<img src=\'images/" + Inicio.usuarios[i].imagen + ".jpg\' width=\'200px\'/>" +
+						"<div><span>" + Inicio.usuarios[i].alias + "</span></div>" +
+				"</a></li>" + LS;
 			
 			cadena = cadena + ca;
 		}
@@ -46,6 +54,56 @@ public class CadenasJavascript {
 		
 		return cadena;
 		
+	}
+	
+	static public String getCarpetas(boolean firmado, boolean libres, ArrayList<Directorio> carpetas){
+		
+		
+		String cadena = "";
+		
+		for(int i=0;i<carpetas.size();i++){
+			
+			String numero = "0";
+			if(i<10){
+				numero += String.valueOf(i);
+			}
+			else{
+				numero = String.valueOf(i);
+			}
+			
+			cadena += ""
+					+ "<a href='command://carpeta_" + numero + "' class='tile ";
+			if(carpetas.get(i).numeroPdfs > 89){
+				cadena += "double double-vertical ";
+			}
+			else if(carpetas.get(i).numeroPdfs >49){
+				cadena += "double ";
+			}
+			else if(carpetas.get(i).numeroPdfs <20){
+				cadena += "half ";
+			}
+			
+			cadena += carpetas.get(i).color;
+			
+			cadena += " bg-hover-lightGreen'>" + 
+					    "<div class='tile-content'>" + 
+					    	"<div class='padding10'>" +  
+					    		"<h1 class='fg-white'></h1>" + 
+					    		"<h2 class='fg-white center'>" + carpetas.get(i).servicio + "</h2>" + 
+					    	"</div>" + 
+					    "</div>" + 
+					    "<div class='brand'>" + 
+					    	"<span class='label fg-white'><strong>" + carpetas.get(i).usuario + "</strong></span>" + 
+					    	"<div class='badge fg-white'><strong>" + carpetas.get(i).numeroPdfs + "</strong></div>" + 
+					    "</div></a>" + 
+					    	
+					    	"";
+					
+		}
+		
+		System.out.println(cadena);
+		
+		return cadena;
 	}
 /*	
 	static public final String buscaNodoPrincipal(Servicio servicio){
@@ -108,8 +166,17 @@ public class CadenasJavascript {
 			;
 		
 		String introducirNHCresumido = 
-				"javascript:window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " +
-		        nhc + ";window.principal.mainFrame.buscar();";
+				"javascript:window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " 
+				+ nhc + ";window.principal.mainFrame.buscar();"
+		       /* + "var cargado = false;" 
+				+ "while(!cargado){"
+					+ "if (document.readyState === 3){"
+						+ "alert('cargado');"
+						+ "cargado = true;"
+						+ "break;}"
+				+ "}"
+				+ "alert('salimos del bucle');"   */
+						;
 		
 		
 		return introducirNHCresumido;
@@ -176,11 +243,7 @@ public class CadenasJavascript {
 	static public final String buscarNodoHosp(String servicio){
 		
 		String servicioH = servicio;
-		
-		if(servicio.contains(InicioIanus.HOSP_JACOB)){
-			servicioH = "HOS:";
-			System.out.println("servicio a buscar en hosp es: " + servicioH);
-		}
+
 		
 		final String nodo = 
 
@@ -206,8 +269,7 @@ public class CadenasJavascript {
 		return  "principal.datos.ficha.hosp_main.cambiar('pFicha');alert('ficha abierta')";
 	}
 	
-	static public final String obtieneDatosFichaHosp(int parte){
-		DatosFicha datos = new DatosFicha();
+	static public final String obtieneDatosFichaHosp(){
 		
 		String datosFicha = ""
 				
@@ -225,7 +287,7 @@ public class CadenasJavascript {
 			
 	
 		
-		String datosFichaHosp1 = ""
+		String datosFichaSimple = ""
 				+ "var tablas = principal.datos.ficha.hosp_main.episodio.document.getElementsByTagName('table');"
 				+ "var celdas = tablas[6].getElementsByTagName('td');"
 				+ "var fechaIngreso = celdas[5].innerHTML;"
@@ -249,14 +311,136 @@ public class CadenasJavascript {
 				+ "var hola = window.clipboardData.setData('Text', celdas);"
 				;
 		
-		if(parte == 1){
-			return datosEnteros;
-		}
-		else{
-			return datosEnteros;
-		}
+
+			return datosFichaSimple;
+
 		
 		
 	}
 	
+	
+	static public final String obtieneDatosFichaURG(){
+		
+		String datosFicha = ""
+				
+				+ "var tablas = principal.datos.ficha.main.myFrame.document.getElementsByTagName('table');"
+				+ "var celdas = tablas[6].getElementsByTagName('td');"
+				+ "var cadena = '2@' + celdas[5].innerHTML + '@' + celdas[7].innerHTML;"
+				+ "var hola = window.clipboardData.setData('Text', cadena);"
+				;
+	
+			return datosFicha;
+	
+		
+		
+	}
+	
+	static public final String obtieneDatosFichaCIA(){
+		
+		String datosFicha = ""
+				
+				+ "var tablas = principal.datos.ficha.inf_main.episodio.noprogramado.document.getElementsByTagName('table');"
+				+ "var celdas = tablas[6].getElementsByTagName('td');"
+				+ "var cadena = '3@' + celdas[3].innerHTML + '@' + celdas[5].innerHTML + '@' + celdas[9].innerHTML + '@' + celdas[15].innerHTML;"
+				+ "var hola = window.clipboardData.setData('Text', cadena);"
+				+ "alert('hola');"
+				;
+	
+			return datosFicha;
+
+	}
+	
+	static public final String seleccionaFichaPaciente(){
+		
+		String datosFicha = ""
+				
+				+ "var hola = principal.datos.ficha.cambiar('pPruebas');"
+			//	+ "while(principal.datos.ficha.pruebas.document.readyState != 3)"
+				
+				;
+		
+		return datosFicha;
+	}
+	
+/*	static public final String getDatosPaciente(){
+		
+		String datosFicha = ""
+				+ "var hola = principal.datos.ficha.cambiar('pPruebas');"
+				+ "while(principal.datos.ficha.pruebas.document.readyState < 3){}"
+	
+				+ "var tablas = principal.datos.ficha.pruebas.document.getElementsByTagName('table');"
+				+ "var celdas = tablas[2].getElementsByTagName('td');"
+				+ "var cadena = '0@' + celdas[1].innerHTML + '@' + celdas[3].innerHTML + '@' + celdas[7].innerHTML ;"
+				+ "var hola = window.clipboardData.setData('Text', cadena);"
+				;
+		
+		return datosFicha;
+	}
+*/
+	static public final String inicializacionPacienteIntegral01(){
+		
+		String cadenaFinal = "";
+		
+		String seleccionaFichaPaciente = "var hola = principal.datos.ficha.cambiar('pPruebas');";
+		
+		String getFichaPersonal = ""
+				+ "while(principal.datos.ficha.pruebas.document.readyState < 3){}"
+				
+				+ "var tablas = principal.datos.ficha.pruebas.document.getElementsByTagName('table');"
+				+ "var celdas = tablas[2].getElementsByTagName('td');"
+				+ "var cadena = '0@' + celdas[1].innerHTML + '@' + celdas[3].innerHTML + '@' + celdas[7].innerHTML ;"
+				+ "var hola = window.clipboardData.setData('Text', cadena);"
+				;
+		
+		cadenaFinal = seleccionaFichaPaciente + getFichaPersonal;
+		
+		return cadenaFinal;
+	}
+	
+	static public final String inicializacionPacienteNodoHosp(String servicio){
+		
+		String cadenaFinal = "";
+		
+		String arbolCargado = "while(principal.datos.arbol.despliegue.document.readyState < 3){}";
+		
+		String nodoHosp = ""
+		//	+ "alert(principal.datos.arbol.despliegue.document.readyState);"	
+			+ "var nodo = principal.datos.arbol.despliegue.document.anchors;"
+			+ "var numeroAncla = 0;"
+			+ "for(var i=0;i<nodo.length;i++){"
+				+ "if(nodo[i].innerHTML.indexOf('" + servicio + "') != -1){"
+					+ "numeroAncla = i;"
+					+ "break;"
+				+ "}"
+			+ "}"
+			+ "nodo[numeroAncla].click();"
+			+ "var cargado = 0"; 
+		//	+ "alert(principal.datos.arbol.despliegue.document.readyState);"
+			;
+
+		
+		cadenaFinal = arbolCargado + nodoHosp; //+ nodoHosp + nodoSeleccionadoHosp + fichaSeleccionada + fichaCargada + datosFichaHosp;
+		
+		return cadenaFinal;
+	}
+	
+	static public final String inicializacionPacienteSetFichaHosp(){
+		
+		String cadenaFinal = "";
+		
+	
+		String compruebaEstado = ""
+
+						+ "var ficha = principal.datos.ficha.hosp_main.cambiar('pFicha');"
+
+							;
+
+
+		
+		cadenaFinal = compruebaEstado; 
+		
+		return cadenaFinal;
+	}
 }
+
+

@@ -37,11 +37,10 @@ public class Inicio {
 	static public VentanaNombres vNombres;
 	static public VentanaExplorador vExplorador;
 	static public VentanaControlIanus vControlIanus;
-	static ActiveXComponent ianus1;
-	static ActiveXComponent ianus2;
 	
-	static public DatosFicha datosPaciente1 = new DatosFicha();
-	static public DatosFicha datosPaciente2 = new DatosFicha();
+	static public Paciente paciente1= new Paciente();
+	static public Paciente paciente2 = new Paciente();
+	
 	
 	static boolean ventanasCargadas = false;
 	

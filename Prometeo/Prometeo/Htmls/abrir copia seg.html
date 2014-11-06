@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="utf-8" />
+<title>Abrir carpeta</title>
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro-button-set.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-hint.js"></script>
+<script src="js/metro/metro-input-control.js"></script>
+</head>
+<body class="metro">
+	<div class="tile-area tile-area-dark" style="width: 600px">
+		<!-- tile-area-dark -->
+
+		<h1 class="tile-area-title fg-white">
+			Abrir <span id="firmado">Firmado</span>
+		</h1>
+
+
+		<div class="grid fluid">
+			<div class="row">
+				<div class="span2">
+					<nav class="sidebar (light)">
+						<ul>
+							<li class="title bg-crimson">Carpetas</li>
+							<li class="stick bg-red">
+								<a class="dropdown-toggle" href="#">
+									<i class="icon-pencil"></i>
+									Firmado
+								</a>
+								<ul class="dropdown-menu" data-role="dropdown">
+									<li><a href="">Carpetas sin coger</a></li>
+									<li class="active"><a href="">Todas las carpetas</a></li>
+									<li class="divider"></li>
+								</ul>
+							</li>
+							<li class="stick bg-yellow">
+								<a class="dropdown-toggle" href="#">
+									<i class="icon-drawer"></i>
+									Escaneado
+								</a>
+								<ul class="dropdown-menu" data-role="dropdown">
+									<li><a href="">Carpetas sin coger</a></li>
+									<li><a href="">Todas las carpetas</a></li>
+									<li class="divider"></li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+					
+					<br>
+					
+					<div class="row">
+						<div class="span12">
+							<a class="tile half bg-magenta bg-hover-cyan"
+								data-hint="Apartado|Apartado en la carpeta revisado"
+								data-hint-position="bottom">
+								<div class="tile-content icon">
+									<i class="icon-cone"></i>
+								</div>
+							</a> 
+							<a class="tile half bg-violet bg-hover-cyan"
+								data-hint="Apartado|Apartado en la carpeta firmado"
+								data-hint-position="bottom">
+								<div class="tile-content icon">
+									<i class=" icon-wrench"></i>
+								</div>
+							</a> 
+							<a class="tile half bg-orange bg-hover-lightGreen"
+								data-hint="Dudas|Dudas resueltas"
+								data-hint-position="bottom">
+								<div class="tile-content icon">
+									<i class="icon-help"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="span12">
+							<a class="tile half bg-crimson" href="command://abrir">
+								<div class="tile-content icon">
+									<i class="icon-windows"></i>
+								</div>
+							</a> 
+							<a class="tile half bg-emerald">
+								<div class="tile-content icon">
+									<i class="icon-folder"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					<br>
+					<span class="fg-white">Documentos totales: <strong class="fg-crimson"> 589</strong></span>
+					<br>
+					<span class="fg-white">Documentos pendientes: <strong class="fg-crimson"> 209</strong></span>
+				</div>
+				<div class="span8">
+
+
+					<a class="tile double double-vertical bg-teal bg-hover-lightGreen">
+						<div class="tile-content">
+							<div class="padding10">
+								<h1 class="fg-white">
+									<br>
+								</h1>
+								<h1 class="fg-white center">CARC</h1>
+							</div>
+						</div>
+						<div class="brand">
+							<span class="label"><strong>Asun</strong></span>
+							<div class="badge fg-white">
+								<strong>120</strong>
+							</div>
+						</div>
+					</a> 
+					<a class="tile double bg-red bg-hover-lightGreen">
+						<div class="tile-content">
+							<div class="padding10">
+								<h1 class="fg-white"></h1>
+								<h2 class="fg-white center">
+									ANRC
+									</h1>
+							</div>
+						</div>
+						<div class="brand">
+							<span class="label fg-white"><strong>Man</strong></span>
+							<div class="badge fg-white">
+								<strong>75</strong>
+							</div>
+						</div>
+					</a> 
+					<a class="tile bg-orange bg-hover-lightGreen">
+						<div class="tile-content">
+							<div class="padding10">
+								<h1 class="fg-white"></h1>
+								<h2 class="fg-white center">
+									REUC
+									</h1>
+							</div>
+						</div>
+						<div class="brand">
+							<div class="label ">
+								<strong>Oscar</strong>
+							</div>
+							<div class="badge fg-white">
+								<strong>43 </strong>
+							</div>
+						</div>
+					</a> 
+					<a class="tile bg-emerald bg-hover-lightGreen">
+						<div class="tile-content">
+							<div class="padding10">
+								<h1 class="fg-white"></h1>
+								<h2 class="fg-white center">
+									OFTC
+									</h1>
+							</div>
+						</div>
+						<div class="brand">
+							<div class="label ">
+								<strong></strong>
+							</div>
+							<div class="badge fg-white">
+								<strong>38 </strong>
+							</div>
+						</div>
+					</a> 
+					<a class="tile bg-crimson">
+						<div class="tile-content">
+							<div class="padding10">
+								<h1 class="fg-white"></h1>
+								<h2 class="fg-white center">
+									Const.
+									</h1>
+							</div>
+						</div>
+						<div class="brand">
+							<div class="label ">
+								<strong></strong>
+							</div>
+							<div class="badge fg-white">
+								<strong>40 </strong>
+							</div>
+						</div>
+					</a> 
+					<a class="tile double bg-cobalt">
+						<div class="tile-content">
+							<div class="padding10">
+								<h1 class="fg-white"></h1>
+								<h2 class="fg-white center">
+									ORLC
+									</h1>
+							</div>
+						</div>
+						<div class="brand">
+							<span class="label fg-white"><strong></strong></span>
+							<div class="badge fg-white">
+								<strong>71</strong>
+							</div>
+						</div>
+					</a> 
+					<a class="tile bg-magenta">
+							<div class="tile-content">
+								<div class="padding10">
+									<h1 class="fg-white"></h1>
+									<h2 class="fg-white center">Ingresos</h2>
+								</div>
+							</div>
+							<div class="brand">
+								<span class="label fg-white"><strong></strong></span>
+								<div class="badge fg-white">
+									<strong>31</strong>
+								</div>
+							</div>
+					</a>
+					<a class="tile double bg-amber">
+							<div class="tile-content">
+								<div class="padding10">
+									<h1 class="fg-white"></h1>
+									<h2 class="fg-white center">Ingresos</h2>
+								</div>
+							</div>
+							<div class="brand">
+								<span class="label fg-white"><strong></strong></span>
+								<div class="badge fg-white">
+									<strong>71</strong>
+								</div>
+							</div>
+					</a> 
+					<a class="tile bg-green">
+							<div class="tile-content">
+								<div class="padding10">
+									<h1 class="fg-white"></h1>
+									<h2 class="fg-white center">
+										OFTC
+										</h1>
+								</div>
+							</div>
+							<div class="brand">
+								<div class="label ">
+									<strong></strong>
+								</div>
+								<div class="badge fg-white">
+									<strong>38 </strong>
+								</div>
+							</div>
+					</a> 
+					<a class="tile half bg-lightBlue">
+							<div class="tile-content">
+								<div class="padding10">
+									<h7 class="fg-white">Const.
+									</h5>
+								</div>
+							</div>
+							<div class="brand">
+								<div class="label ">
+									<strong>Ruben</strong>
+								</div>
+								<!-- <div class="badge fg-white"><strong>40 </strong> </div> -->
+							</div>
+					</a> 
+					<a class="tile half bg-yellow">
+							<div class="tile-content">
+								<div class="padding10">
+									<h7 class="fg-white">Trac</h7>
+								</div>
+							</div>
+							<div class="brand">
+								<div class="label ">
+									<strong></strong>
+								</div>
+								<!-- <div class="badge fg-white"><strong>40 </strong> </div> -->
+							</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+			<button id="createWindow"> Abrir ventana Modal</button>
+		
+	</div>
+	
+
+	
+	<script>
+		$("#createWindow").on('click', function(){
+		    $.Dialog({
+		        shadow: true,
+		        overlay: true,
+		        flat: true,
+		        icon: '<span class="icon-rocket"></span>',
+		        title: 'Usuario',
+		        width: 200,
+		        padding: 10,
+		        content: '',
+		        onShow: function(_dialog){
+		        	var content = 
+		        			'<div class="input-control text">' +
+		        				'<input type="text" class="usuario" value="" placeholder="Nombre">' +
+		        				'<button class="btn-clear"></button>' + 
+		        			'</div>' +
+							'<div class="input-control password">' +
+		        				'<input type="password" class="pass" value="" placeholder="Password">' +
+		        				'<button class="btn-reveal"></button>' +
+		        			'</div>' +
+		             		'<div><button class="large bg-darkGreen fg-white">Revisar</button> '+
+		                    '<button class="large bg-cobalt fg-white">Digitalizar</button> </div>';
+		                   <!-- '<button class="large bg-olive fg-white" onclick="$.Dialog.close()">Cancelar</button>' -->
+            		
+		          		
+		        	$.Dialog.content(content);
+		        }
+		    });
+		});
+	</script>
+</body>
+</html>

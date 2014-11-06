@@ -53,6 +53,8 @@ import javax.swing.event.ChangeListener;
 //import org.eclipse.swt.widgets.Slider;
 
 
+
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -110,6 +112,8 @@ public class InterfazPrincipal implements MouseListener{
 	public boolean barraPanelControlVisible;
 
 	public JFrame frame;
+	
+	public Carpetas carpeta;
 
 	public JComponent createContent() {
 
@@ -132,6 +136,7 @@ public class InterfazPrincipal implements MouseListener{
 				if ("abrir".equals(command)) {
 					webBrowserOperaciones.setVisible(true);
 					webBrowserOperaciones.navigate(DIR_ABRIR);
+					
 					panelActivo = ABRIR;
 				} else if ("ayuda".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_AYUDA);
@@ -214,6 +219,49 @@ public class InterfazPrincipal implements MouseListener{
 						}
 
 					}
+					if(command.equals("firmado")){
+						
+						carpeta = new Carpetas(true);
+						
+						String codigoCarpetasmetro = carpeta.getCodigoJavascript();
+						
+						
+						codigoCarpetasmetro = 	"" +
+								 "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
+								 "document.getElementById('pdfspendientes').innerHTML='" + carpeta.numeroPdfsPendientes + "';" + LS +
+								 "var oldNodo = document.getElementById('nuevo');" + LS +
+								 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+								 "var nodo = document.createElement('div');" + LS +
+												"nodo.id='nuevo';" + LS + 
+												"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
+												"var contenedor = document.getElementById('insertar');" + LS +
+												"contenedor.appendChild(nodo);" + 
+												"";// <a href='#' >holaaaa</a>";
+						
+						String codigoCompleto= ""
+								+ "var hola = setTimeout(function(){document.all.insertar.innerHTML='" 
+								+ codigoCarpetasmetro + "';},2000);";
+						
+						webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
+					}
+					if(command.contains("carpeta_")){
+						System.out.println(command);
+						int numCarpeta = Integer.parseInt(command.substring(8, 10));
+
+						Directorio dir = carpeta.arrayCarpetas.get(numCarpeta);
+						
+						System.out.println(dir.directorio.getAbsolutePath());
+						
+						CargaListaPdfs pdfs = new CargaListaPdfs(true,dir.directorio);
+						Inicio.carpetasSeleccionadas.add(pdfs.rutaCarpeta);
+			
+						Inicio.inicioIanus = new InicioIanus(pdfs);
+						Inicio.ventanasCargadas = true;
+							//webBrowserOperaciones.navigate("K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/ocr.pdf");
+						webBrowserOperaciones.setVisible(false);
+			
+					}
+					
 				} else if (panelActivo.equals(SALIR)) {
 					frame.dispose();
 					System.exit(0);

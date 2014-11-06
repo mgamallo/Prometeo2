@@ -13,7 +13,9 @@ public class RobotIanus {
 
 	public void asocia(String titulo){
 		
-		String alias = titulo.substring(0,5);
+		System.out.println(titulo);
+		
+		// String alias = titulo.substring(0,5);
 		
 		Robot robot;
 		try {
@@ -35,6 +37,8 @@ public class RobotIanus {
 		// 	3.0 Escribe título
 		
 			/********** codificar *****  Asumimos siempre consent. info *****/
+		
+		titulo = "Consentim";
 		
 		if(!titulo.contains(DOC_ANULADO)){
 			for(int k = 0; k< titulo.length();k++){

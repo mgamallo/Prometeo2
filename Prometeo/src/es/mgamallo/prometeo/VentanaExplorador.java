@@ -138,7 +138,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         jButton11.setText("Ianus 1");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	GestionJacob.setVisible(Inicio.ianus1);
+            	GestionJacob.setVisible(Inicio.paciente1.ianus);
             }
         });
         
@@ -147,7 +147,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("Hacer visible ianus 2");
-            	GestionJacob.setVisible(Inicio.ianus2);
+            	GestionJacob.setVisible(Inicio.paciente2.ianus);
             }
         });
         

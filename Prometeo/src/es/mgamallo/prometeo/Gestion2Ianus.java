@@ -65,19 +65,18 @@ public class Gestion2Ianus {
 		
 		Inicio.vNombres.comboServicio.setSelectedItem(Inicio.documentoActivo.servicio);
 		System.out.println("Introduce el nhc 1 " + Inicio.nhcDelIanus1);
-		introduceNHC(Inicio.ianus1,Inicio.nhcDelIanus1,Inicio.documento[indiceNhc1].servicio,50,false);
+		introduceNHC(Inicio.paciente1.ianus,Inicio.nhcDelIanus1,Inicio.documento[indiceNhc1].servicio,50,false);
 	
 		/*
 	//	Inicio.ianus2.botonNHC.setText(Inicio.documento[indiceNhc2].nhc);
 	//	Inicio.ianus2.botonServicio.setText(Inicio.documento[indiceNhc2].servicio);
 	//	Inicio.ianus2.botonNombreDocumento.setText(Inicio.documento[indiceNhc2].nombreNormalizado);
 	 * */
-
-		
+	
 		System.out.println("Introduce el nhc 2 " + Inicio.nhcDelIanus2);
 		
-		Dispatch.put(Inicio.ianus2,"visible",false);
-		introduceNHC(Inicio.ianus2,Inicio.nhcDelIanus2,Inicio.documento[indiceNhc2].servicio,2000,false);
+		Dispatch.put(Inicio.paciente2.ianus,"visible",false);
+		introduceNHC(Inicio.paciente2.ianus,Inicio.nhcDelIanus2,Inicio.documento[indiceNhc2].servicio,2000,false);
 	//	Dispatch.put(Inicio.ianus2,"visible",false);
 		
 		Inicio.ianus1onTop = true;
@@ -150,7 +149,7 @@ public class Gestion2Ianus {
 							// Inicio.vExplorador.asociaDocumento();
 
 							try {
-								Thread.sleep(1000);
+								Thread.sleep(1500);
 								Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -163,7 +162,7 @@ public class Gestion2Ianus {
 							
 							SwingUtilities.invokeLater(new Runnable() {
 								public void run() {
-								Dispatch.call(Inicio.ianus1, "navigate","javascript:window.frames.principal.botonera.inicio()");
+								Dispatch.call(Inicio.paciente1.ianus, "navigate","javascript:window.frames.principal.botonera.inicio()");
 								Inicio.ianus1onTop = false;
 								}																	
 								
@@ -184,29 +183,29 @@ public class Gestion2Ianus {
 							if(indiceNhc1 != -1){
 								Inicio.nhcDelIanus1 = Inicio.documento[indiceNhc1].nhc;
 								
-								introduceNHC(Inicio.ianus1, Inicio.nhcDelIanus1, Inicio.documento[indiceNhc1].servicio,1000,false);
+								introduceNHC(Inicio.paciente1.ianus, Inicio.nhcDelIanus1, Inicio.documento[indiceNhc1].servicio,1000,false);
 								// Inicio.ianus1.frame.setAlwaysOnTop(false);
 								// Inicio.ianus2.frame.setAlwaysOnTop(true);
 								
 								System.out.println("Introdujimos el nhc del ianus 1: " + Inicio.nhcDelIanus1);
 
 								
-								Dispatch.put(Inicio.ianus1,"Visible",false);
+								Dispatch.put(Inicio.paciente1.ianus,"Visible",false);
 								retardo(250);
-								Dispatch.put(Inicio.ianus2,"Visible",true);
+								Dispatch.put(Inicio.paciente2.ianus,"Visible",true);
 								Inicio.ianus1onTop = false;
 
 							}
 							else{
 								// Inicio.ianus1.frame.setAlwaysOnTop(false);
-								// Inicio.ianus2.frame.setAlwaysOnTop(true);
+								// Inicio.paciente2.ianus.frame.setAlwaysOnTop(true);
 								// System.out.println("No hay más pacientes");
 								
 								System.out.println("No hay mas pacientes.");
 								
-								Dispatch.put(Inicio.ianus1,"Visible",true);
+								Dispatch.put(Inicio.paciente1.ianus,"Visible",true);
 								retardo(250);
-								Dispatch.put(Inicio.ianus2,"Visible",true);
+								Dispatch.put(Inicio.paciente2.ianus,"Visible",true);
 								Inicio.ianus1onTop = true;
 								
 							}
@@ -219,7 +218,7 @@ public class Gestion2Ianus {
 							GestionJacob.pulsaBotonAsociar();
 							
 							try {
-								Thread.sleep(1000);
+								Thread.sleep(1500);
 								Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -233,7 +232,7 @@ public class Gestion2Ianus {
 							
 							//	Salir del paciente
 							// boolean aux = GestionJacob.salirDelPaciente();
-							Dispatch.call(Inicio.ianus2, "navigate","javascript:window.frames.principal.botonera.inicio()");
+							Dispatch.call(Inicio.paciente2.ianus, "navigate","javascript:window.frames.principal.botonera.inicio()");
 							Inicio.ianus1onTop = true;
 							
 							Inicio.vControlIanus.panelControlesAux.setBackground(new Color(80,200,120));
@@ -252,15 +251,15 @@ public class Gestion2Ianus {
 							if(indiceNhc2 != -1){
 								Inicio.nhcDelIanus2 = Inicio.documento[indiceNhc2].nhc;
 								
-								introduceNHC(Inicio.ianus2, Inicio.nhcDelIanus2,Inicio.documento[indiceNhc2].servicio, 1000,false);
+								introduceNHC(Inicio.paciente2.ianus, Inicio.nhcDelIanus2,Inicio.documento[indiceNhc2].servicio, 1000,false);
 								// Inicio.ianus2.frame.setAlwaysOnTop(false);
 								// Inicio.ianus1.frame.setAlwaysOnTop(true);
 								
 								System.out.println("Introdujimos el nhc del ianus 2: " + Inicio.nhcDelIanus2);
 								
-								Dispatch.put(Inicio.ianus2,"Visible",false);
+								Dispatch.put(Inicio.paciente2.ianus,"Visible",false);
 								retardo(250);
-								Dispatch.put(Inicio.ianus1,"Visible",true);
+								Dispatch.put(Inicio.paciente1.ianus,"Visible",true);
 								Inicio.ianus1onTop = true;
 								
 							}
@@ -270,9 +269,9 @@ public class Gestion2Ianus {
 								
 								System.out.println("No hay mas pacientes.");
 								
-								Dispatch.put(Inicio.ianus2,"Visible",true);
+								Dispatch.put(Inicio.paciente2.ianus,"Visible",true);
 								retardo(250);
-								Dispatch.put(Inicio.ianus1,"Visible",true);
+								Dispatch.put(Inicio.paciente1.ianus,"Visible",true);
 								Inicio.ianus1onTop = true;
 							}
 						}
