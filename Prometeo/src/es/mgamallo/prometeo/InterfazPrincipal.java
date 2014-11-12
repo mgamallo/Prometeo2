@@ -92,7 +92,7 @@ public class InterfazPrincipal implements MouseListener{
 	final String DIR_AVISOS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
 	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
 	final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuario.html";
-	final String DIR_SALIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir/salir.html";
+	final String DIR_SALIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
 
 
 	

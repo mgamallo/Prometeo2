@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class Carpetas {
 	
-	 //static String path = "d:/02 Area Pruebas/03 Firmado";
-	 static String path = "J:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
+	 static String path = "d:/02 Area Pruebas/03 Firmado";
+	 // static String path = "J:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
 	
 	private Directorio[] conjuntoCarpetas;
 	

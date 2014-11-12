@@ -89,4 +89,31 @@ public class Portapapeles {
 		return "";
 	}
 
+	
+	public String getTipoDeSubida() {
+		Clipboard portapapeles = Toolkit.getDefaultToolkit()
+				.getSystemClipboard();
+		Transferable datoActual = portapapeles.getContents(this);
+
+		DataFlavor flavorString;
+		try {
+			flavorString = new DataFlavor(
+					"application/x-java-serialized-object; class=java.lang.String");
+
+			if (datoActual.isDataFlavorSupported(flavorString)) {
+				return (String) datoActual.getTransferData(flavorString);
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedFlavorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "";
+	}
 }

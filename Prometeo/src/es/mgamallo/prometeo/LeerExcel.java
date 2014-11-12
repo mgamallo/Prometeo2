@@ -17,7 +17,7 @@ public class LeerExcel {
 	private String[] servicios;
 	private String[] nombres;
 	private String[][] tablaDocumentos;
-	private String[][] asociacionesDocumentos;
+	public String[][] asociacionesDocumentos;
 	private String[][] habituales;
 	
 	private Nodo[] nodos;

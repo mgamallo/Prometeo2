@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -51,7 +53,15 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static final String URG_JACOB = "URG:";
 	static final String CIA_JACOB = "CIA:";
 
-
+	static boolean botonAsociarAuto = true;
+	static boolean buscaNodoAuto = true;
+	static boolean buscaDatosPacientesAuto = true;
+	
+	static boolean ventanaModalUp = false;
+	
+	
+    static ActiveXComponent oShell;  
+    static ActiveXComponent oWindows; 
 
 	static int documentacion = 0; // 0 Urgencias
 									// 1 Documentacion
@@ -60,7 +70,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static String[] rutaCompletaPdfs;
 	static File[] tandaDePdfs;
 	
-	
+	static String tipoSubida = "";
 
 	LeerExcel leerExcel;
 
@@ -72,7 +82,15 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static DefaultListModel listaModelNombresServicio = new DefaultListModel();
 	static DefaultListModel listaModelTodosLosNombres = new DefaultListModel();
 	static DefaultComboBoxModel listaModelServicios = new DefaultComboBoxModel();
+	
+	static TreeMap<String, String> titCons = new TreeMap<String, String>();
+	static TreeMap<String, String> titHosp = new TreeMap<String, String>();
+	static TreeMap<String, String> titCIA = new TreeMap<String, String>();
+	static TreeMap<String, String> titQui = new TreeMap<String, String>();
+	static TreeMap<String, String> titUrg = new TreeMap<String, String>();
 
+	static ArrayList<ExcepcionesServicio> tablaExcepciones = new ArrayList<ExcepcionesServicio>();
+	
 	String[][] tablaDocumentos;
 	String[] listaServicios;
 	String[] listaNombresDocumentos;
@@ -84,6 +102,8 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 		leerExcel = new LeerExcel();
 		leerExcel.leer("Documentos.xls");
 		setDefaultsModels();
+		setConjuntosTitulos();
+		setExcepciones();
 
 		if(!Inicio.ventanasCargadas){
 
@@ -113,6 +133,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 
 	}
 
+	
 	private void setDefaultsModels() {
 
 		listaNodos = leerExcel.getNodos();
@@ -145,7 +166,66 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 		}
 
 	}
+	
+	private void setExcepciones(){
+		
+		boolean servicioConExcepcion = false;
+		ExcepcionesServicio excpServicio = new ExcepcionesServicio();
+		
+		for(int i=0;i<listaServicios.length;i++){
+			servicioConExcepcion = false;
+			for(int j=0;j<listaNombresDocumentos.length;j++){
+				if(		tablaDocumentos[j][i].toLowerCase().equals("q") ||
+						tablaDocumentos[j][i].toLowerCase().equals("f") ||
+						tablaDocumentos[j][i].toLowerCase().equals("e") ||
+						tablaDocumentos[j][i].toLowerCase().equals("i")     ){
+					if(!servicioConExcepcion){
+						servicioConExcepcion = true;
+						excpServicio = new ExcepcionesServicio();
+						excpServicio.servicio = listaServicios[i];
+						excpServicio.excepciones = new ArrayList<Excepcion>();
+					}
+					Excepcion excepcion = new Excepcion(listaNombresDocumentos[j], tablaDocumentos[j][i]);
+					excpServicio.excepciones.add(excepcion);
+				}
+			}
+			if(servicioConExcepcion){
+				tablaExcepciones.add(excpServicio);
+			}
+		}
+		
+		for(int i=0;i<tablaExcepciones.size();i++){
+			
+			System.out.println("Excepciones del servicio " + tablaExcepciones.get(i).servicio);
+			for(int j=0;j<tablaExcepciones.get(i).excepciones.size();j++){
+				System.out.println(tablaExcepciones.get(i).excepciones.get(j).nombreDocumento 
+						+ ", " + tablaExcepciones.get(i).excepciones.get(j).tipoExcepcion	);
+			}
+			System.out.println();
+		}
+		
+	}
 
+	
+	private void setConjuntosTitulos(){
+		for(int i=0;i<listaNombresDocumentos.length;i++){
+			if(leerExcel.asociacionesDocumentos[i][1].toLowerCase().equals("s")){
+				titCons.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			}
+			if(leerExcel.asociacionesDocumentos[i][2].toLowerCase().equals("s")){
+				titHosp.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			}
+			if(leerExcel.asociacionesDocumentos[i][3].toLowerCase().equals("s")){
+				titCIA.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			}
+			if(leerExcel.asociacionesDocumentos[i][4].toLowerCase().equals("s")){
+				titQui.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			}
+			if(leerExcel.asociacionesDocumentos[i][5].toLowerCase().equals("s")){
+				titUrg.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			}
+		}
+	}
 	
 	static public void main(String args[]) {
 		new InicioIanus(null);

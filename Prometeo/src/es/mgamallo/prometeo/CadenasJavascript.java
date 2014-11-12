@@ -199,7 +199,7 @@ public class CadenasJavascript {
 		
 		final String botonAsociar = 
 				"javascript:" +
-				"var consultas = false;" +
+				"var tipoSubida = '';" +
 				"var rutas = [];" +
 				"rutas[0] = principal.datos.ficha.hosp_botonera;" +
 				"rutas[1] = principal.datos.ficha.inf_botonera;" +
@@ -208,20 +208,102 @@ public class CadenasJavascript {
 
 				"for(var i=0;i<4;i++){" +
 					"if(!(rutas[i] === undefined)){" +
+						"tipoSubida = 'HOS';" +
 						"if(i==3){ " +
 							"if(principal.datos.ficha.menu.document.anchors.length === 3){" +
+								"tipoSubida='CEX';" +
+								"var hola = window.clipboardData.setData('Text', tipoSubida);"+
 								"rutas[3].parent.parent.arbol.despliegue.crearDocExtServicioCEX();break;" +
 							"}" + 
+							"tipoSubida='URG';" +
+							"var hola = window.clipboardData.setData('Text', tipoSubida);"+
+							"rutas[i].asociarDocumento(); break;" +
 						"}" +
+						"if(i==2){" +
+						   "tipoSubida='EPI';"  +
+						"}"	+
+						"if(i==1){" +
+							"if(!(rutas[i].pulsadoQuirofano === undefined)){" +
+								"tipoSubida='QUI';" + 
+							"}else{" +
+								"tipoSubida='CIA';" +
+							"}" +
+						"}"	+
+
+						"var hola = window.clipboardData.setData('Text', tipoSubida);"+
 						"rutas[i].asociarDocumento(); break;" +
 					"}" +
+						
 				"}"		
 				
 				;
 		return botonAsociar;
 	}
 
-	static public final String buscarNodoConsultas(String servicio){
+	
+	static public final String buscarNodoConsultasInicial(String servicio){
+		
+		final String cadena = 
+				  "var nodo = principal.datos.arbol.despliegue.document.anchors;"
+					+ "var anclaPadre = 0;"
+					+ "var anclaHijo = 0;"
+					+ "var numeroAncla = 0;"
+					+ "for(var i=0;i<nodo.length;i++){"
+						+ "if(nodo[i].innerHTML.indexOf('" + servicio + "') != -1){"
+							+ "numeroAncla = i;"
+							+ "break;"
+						+ "}"
+					+ "}"
+					+ "if(numeroAncla != 0){"
+						+ "anclaPadre = numeroAncla;"
+						+ "nodo[numeroAncla].click();" 
+					+ "}"	
+					
+					;
+		
+		return cadena;
+	}
+	
+	static public final String buscarNodoConsHijo(String clave){
+		String cadena = ""
+				+ "if(anclaHijo != 0){"
+					+ "nodo[anclaHijo].click();"
+				+ "}else{"
+					+ "numeroAncla = 0;"
+					+ "for(var i=0;i<nodo.length;i++){"
+						+ "if(nodo[i].innerHTML.indexOf('" + clave + "') != -1){"
+								+ "numeroAncla = i;"
+								+ "break;"
+						+ "}"
+					+ "}"
+					+ "if(numeroAncla != 0){"
+						+ "anclaHijo = numeroAncla;"
+						+ "nodo[numeroAncla].click();"
+					+ "}"
+				+ "}";
+		
+		
+		return cadena;
+	}
+	
+	static public final String pulsaNodoPadre(){
+		String cadena = ""
+
+					+ "nodo[anclaPadre].click();"
+					;
+		
+		
+		return cadena;
+	}
+	
+	
+	static public final String buscarNodoConsultas(String servicio, String tipoNodo){
+		
+		String nodoHijo = "false";
+		
+		if(!tipoNodo.equals("x")){
+			nodoHijo = "true";
+		}
 		
 		final String nodo = 
 
@@ -231,10 +313,31 @@ public class CadenasJavascript {
 				+ "for(var i=0;i<nodo.length;i++){"
 					+ "if(nodo[i].innerHTML.indexOf('" + servicio + "') != -1){"
 						+ "numeroAncla = i;"
+						+ "break;"
 					+ "}"
 				+ "}"
 				+ "nodo[numeroAncla].click();" 
-	
+				+ "if(" + nodoHijo + "){"
+					+ "numeroAncla = 0;"
+					+ "var tipoNodo = '" + tipoNodo + "';"
+					+ "if(tipoNodo === 'f'){"
+						+ "for(var i=0;i<nodo.length;i++){"
+							+ "if(nodo[i].innerHTML.indexOf('ltima Consulta') != -1){"
+								+ "numeroAncla = i;"
+								+ "break;"
+							+ "}"
+						+ "}"
+					+ "}else if(tipoNodo === 'e'){"
+						+ "for(var i=0;i<nodo.length;i++){"
+							+ "if(nodo[i].innerHTML.indexOf('nfermer') != -1){"
+								+ "numeroAncla = i;"
+								+ "break;"
+							+ "}"
+						+ "}"
+					+ "}"
+					+ "if(numeroAncla != 0){nodo[numeroAncla].click();}" 
+				+ "}"
+
 				;
 		
 		return nodo;

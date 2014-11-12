@@ -16,8 +16,8 @@ public class GestionJacob {
 		
 		//	ComThread.InitSTA();
 		
-        ActiveXComponent oShell = new ActiveXComponent("Shell.Application"); 
-        ActiveXComponent oWindows = oShell.invokeGetComponent("Windows");
+	    InicioIanus.oShell = new ActiveXComponent("Shell.Application"); 
+	    InicioIanus.oWindows = InicioIanus.oShell.invokeGetComponent("Windows");
 
         
         try {
@@ -33,11 +33,11 @@ public class GestionJacob {
 			e.printStackTrace();
 		}
         
-        int iCount = oWindows.getProperty("Count").getInt();
+        int iCount = InicioIanus.oWindows.getProperty("Count").getInt();
         System.out.println("iCount: " + iCount);        
 		
         for (int i=iCount-1,j= 1; i >iCount-3 ; i--,j++) {
-            ActiveXComponent oWindow = oWindows.invokeGetComponent("Item", new Variant(i));     
+            ActiveXComponent oWindow = InicioIanus.oWindows.invokeGetComponent("Item", new Variant(i));     
             String sLocName = oWindow.getProperty("LocationName").getString();
             String sFullName = oWindow.getProperty("FullName").getString();
             boolean isIE = sFullName.toLowerCase().endsWith("iexplore.exe");
@@ -157,7 +157,7 @@ public class GestionJacob {
 		}
 	}
 
-	public static void buscaNodo(final ActiveXComponent ianus, final String servicio){
+	public static void buscaNodo(final ActiveXComponent ianus, final String servicio, final String tipoNodo, boolean inicializar){
 	//	SwingUtilities.invokeLater(new Runnable() {
 	//		public void run() {
 				
@@ -266,7 +266,43 @@ public class GestionJacob {
 						}
 				}
 				else if(!servicio.equals(InicioIanus.DESCONOCIDO)){
-					Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultas(servicio));
+					
+					if(inicializar){
+						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultasInicial(servicio));
+						if(!tipoNodo.equals("x")){
+							try {
+								Thread.sleep(1500);
+								String clave = "";
+								if(tipoNodo.equals("f")){
+									clave = "ltima Consulta";
+								}
+								else if(tipoNodo.equals("e")){
+									clave = "nfermer";
+								}
+								Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.buscarNodoConsHijo(clave));
+								
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}else{
+						if(!tipoNodo.equals("x")){
+							String clave = "";
+							if(tipoNodo.equals("f")){
+								clave = "ltima Consulta";
+							}
+							else if(tipoNodo.equals("e")){
+								clave = "nfermer";
+							}
+							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.buscarNodoConsHijo(clave));
+						}
+						else{
+							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.pulsaNodoPadre());
+						}
+					}
+				
+		
 				}
 
 
@@ -275,12 +311,12 @@ public class GestionJacob {
 	}
 	
 	
-	public static void buscaNodoYpulsaBotonAsociar(final ActiveXComponent ianus, final String servicio){
+	public static void buscaNodoYpulsaBotonAsociar(final ActiveXComponent ianus, final String servicio, final String tipoNodo){
 	//	SwingUtilities.invokeLater(new Runnable() {
 	//		public void run() {
 				
 				//	Busca nodo
-				Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultas(servicio));
+				Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultas(servicio,tipoNodo));
 				
 				//	Pulsa boton asociar
 				try {
@@ -306,21 +342,20 @@ public class GestionJacob {
 	}
 	
 	
-	public static void introduceNHC(final ActiveXComponent ianus, final String nhc){
+	public static void introduceNHC(final ActiveXComponent ianus, final String nomIanus, final String nhc){
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 
-				Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.introducirNHC(nhc));
-				
-				/*
 				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
+					Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.introducirNHC(nhc));
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					System.out.println("Jacob break al introducir un nhc. Restaurando.");
+					
+					rescateJacob(nomIanus);
 				}
-				Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodo01());
-				*/
+				
 			}
 		});
 	}
@@ -332,14 +367,30 @@ public class GestionJacob {
 				
 				
 				ActiveXComponent ianusActivo = new ActiveXComponent("InternetExplorer.Application");
+				String aux = "";
 				
-				if(Inicio.ianus1onTop){
-					ianusActivo = Inicio.paciente1.ianus;
-					Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.buscarBotonAsociar());
-				}
-				else{
-					ianusActivo = Inicio.paciente2.ianus;
-					Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.buscarBotonAsociar());
+				
+				try {
+					if(Inicio.ianus1onTop){
+						aux = "Ianus 1";
+						ianusActivo = Inicio.paciente1.ianus;
+						Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.buscarBotonAsociar());
+						
+
+					}
+					else{
+						aux = "Ianus 2";
+						ianusActivo = Inicio.paciente2.ianus;
+						Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.buscarBotonAsociar());
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Falló el ianus a la hora de asociar. " + aux);
+					
+					rescateJacob(aux);
+					
 				}
 			}
 		});
@@ -370,5 +421,15 @@ public class GestionJacob {
 			      Dispatch.call(frameMain, "eval","aceptar()");
 			}
 		});		
+	}
+	
+	public static void rescateJacob(String ianus){
+		int iCount = InicioIanus.oWindows.getProperty("Count").getInt();
+		
+		int i = 1;
+		if(!ianus.equals("Ianus 1")){
+			i = 2;
+		}
+		InicioIanus.oWindows.invokeGetComponent("Item", new Variant(iCount-i)); 
 	}
 }

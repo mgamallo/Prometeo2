@@ -93,8 +93,8 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("NativeKeyPressed " + e.getKeyCode());
-		System.out.println("Tecla ... " + ((char) e.getKeyCode()));
+	//	System.out.println("NativeKeyPressed " + e.getKeyCode());
+	//	System.out.println("Tecla ... " + ((char) e.getKeyCode()));
 
 		teclaAnterior = teclaActual;
 		teclaActual = e.getKeyCode();
@@ -259,6 +259,12 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 						e1.printStackTrace();
 					}
 				}
+				
+				Portapapeles cbTemporal = new Portapapeles();
+				String tipoSubida = cbTemporal.getTipoDeSubida();
+				Inicio.inicioIanus.tipoSubida = tipoSubida;
+				
+				System.out.println("El tipo de subida es..... " + tipoSubida);
 				
 				Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
 			}

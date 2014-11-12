@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 
 public class RobotIanus {
 	
+	public final int retardo_antes_examinar = 250;
+	
 	public final String DOC_ANULADO = "Documento anulado";
 	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDD + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
@@ -15,7 +17,37 @@ public class RobotIanus {
 		
 		System.out.println(titulo);
 		
+		String alias = "";
+		
 		// String alias = titulo.substring(0,5);
+		
+		
+		if(Inicio.inicioIanus.tipoSubida.equals("HOS")){
+			if(Inicio.inicioIanus.titHosp.containsKey(titulo)){
+				alias = Inicio.inicioIanus.titHosp.get(titulo);
+			}
+		}
+		else if(Inicio.inicioIanus.tipoSubida.equals("CEX") || 
+				Inicio.inicioIanus.tipoSubida.equals("EPI")){
+					if(Inicio.inicioIanus.titCons.containsKey(titulo)){
+						alias = Inicio.inicioIanus.titCons.get(titulo);
+					}
+		}
+		else if(Inicio.inicioIanus.tipoSubida.equals("URG")){
+			if(Inicio.inicioIanus.titUrg.containsKey(titulo)){
+				alias = Inicio.inicioIanus.titUrg.get(titulo);
+			}
+		}
+		else if(Inicio.inicioIanus.tipoSubida.equals("QUI")){
+			if(Inicio.inicioIanus.titQui.containsKey(titulo)){
+				alias = Inicio.inicioIanus.titQui.get(titulo);
+			}
+		}
+		else if(Inicio.inicioIanus.tipoSubida.equals("CIA")){
+			if(Inicio.inicioIanus.titCIA.containsKey(titulo)){
+				alias = Inicio.inicioIanus.titCIA.get(titulo);
+			}
+		}
 		
 		Robot robot;
 		try {
@@ -35,14 +67,11 @@ public class RobotIanus {
 		robot.delay(50);
 		
 		// 	3.0 Escribe título
-		
-			/********** codificar *****  Asumimos siempre consent. info *****/
-		
-		titulo = "Consentim";
+
 		
 		if(!titulo.contains(DOC_ANULADO)){
-			for(int k = 0; k< titulo.length();k++){
-				getChar(titulo.charAt(k));
+			for(int k = 0; k< alias.length();k++){
+				getChar(alias.charAt(k));
 				robot.delay(10);
 				// System.out.println(titulo.charAt(k));
 			}
@@ -57,41 +86,57 @@ public class RobotIanus {
 			System.out.println("anulando");
 		}
 		
+		
+//  Creo que se puede prescindir de este enter, cambiandolo por un tabulador		
+	/*	
 		//	3.1	Enter
 		robot.delay(100);
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		robot.delay(100);		
-		
+	*/	
 		
 		// 4 Tabulador
 		robot.keyPress(KeyEvent.VK_TAB);
 		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(50);
+		robot.delay(100);
 		
 		//	5 Pega título
 		Portapapeles copiar = new Portapapeles();
 		copiar.copiarAlPortapapeles(titulo);
 		
-		robot.delay(50);
+
+		
+		if(titulo.toLowerCase().contains(Inicio.inicioIanus.DOC_ANULADO.toLowerCase())){
+			robot.delay(100);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			robot.delay(100);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			robot.delay(75);
+			robot.keyPress(KeyEvent.VK_CLEAR);
+		}
+		
+		robot.delay(100);
 		
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_CONTROL);
-		robot.delay(50);
+		robot.delay(75);
 		
 		//	6-7 Tabulador
 		for(int i=0;i<2;i++){
 			robot.keyPress(KeyEvent.VK_TAB);
 			robot.keyRelease(KeyEvent.VK_TAB);
-			robot.delay(50);
+			robot.delay(75);
 		}
 		
 		//	8 Barra espaciadora;
 		robot.keyPress(KeyEvent.VK_SPACE);
 		robot.keyRelease(KeyEvent.VK_SPACE);
-		robot.delay(50);
+		robot.delay(retardo_antes_examinar);
 		
 		
 		//	9 Pega ruta
@@ -102,7 +147,7 @@ public class RobotIanus {
 			copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
 		}
 
-		robot.delay(100);
+		robot.delay(150);
 		
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
@@ -126,6 +171,7 @@ public class RobotIanus {
 		}
 		
 		//	12 Aceptar
+
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		robot.delay(200);
@@ -148,10 +194,6 @@ public class RobotIanus {
 		
 	}
 	
-	public static void main(String args[]){
-		RobotIanus robot = new RobotIanus();
-		robot.asocia("Consentimento informado");
-	}
 	
 	public static void imprimeAscii(int codigoAscii){
 		String digitos = String.valueOf(codigoAscii);
@@ -225,7 +267,7 @@ public class RobotIanus {
 			}
 			else{
 				
-				System.out.println("Este es el código a imprimir " + ((char)codigo));
+			//	System.out.println("Este es el código a imprimir " + ((char)codigo));
 				
 				switch (codigo) {
 				case KeyEvent.VK_SPACE:
@@ -251,7 +293,6 @@ public class RobotIanus {
 					break;
 				case KeyEvent.VK_C:
 					imprimeAscii(99);
-					System.out.println("Imprime ascii");
 					break;
 				case KeyEvent.VK_V:
 					imprimeAscii(118);

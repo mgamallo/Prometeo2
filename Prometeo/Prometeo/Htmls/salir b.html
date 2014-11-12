@@ -3,18 +3,33 @@
 
 <head>
 <meta charset="utf-8" />
-<title>Salir</title>
-<link rel="stylesheet" href="css/metro-bootstrap.css">
-<link rel="stylesheet" href="css/iconFont.css">
-<script src="js/jquery/jquery.min.js"></script>
-<script src="js/jquery/jquery.widget.min.js"></script>
-<script src="js/metro/metro.min.js"></script>
-<script src="js/metro/metro-scroll.js"></script>
-<script src="js/metro/metro-listview.js"></script>
-
+<title>Abrir carpeta</title>
+<script src="js/modernizr.js"></script>
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
+<link rel="stylesheet" type="text/css" href="js/jquery.min.js" />
 </head>
 
-<body class="metro">
+<body>
+	<script languaje="Javascript">
+		document.oncontextmenu = function() {
+			return false;
+		};
+	</script>
+	<header> Panel Salir </header>
+
+	<!--	Barra de navegación -->
+	<nav>
+		<!--	Construimos una lista -->
+
+		Selecciona la lista de carpetas para archivar:
+
+		<ul class="menu">
+			<li><a class="yellow" href="#"> Primera </a></li>
+			<li><a class="green" href="#"> Segunda </a></li>
+			<li><a class="salir" href="command://salir"> Salir </a></li>
+		</ul>
+	</nav>
 
 	<div class="listview">
 		<a href="#" class="list">

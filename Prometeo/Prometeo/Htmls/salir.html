@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="utf-8" />
+<title>Salir</title>
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-scroll.js"></script>
+<script src="js/metro/metro-listview.js"></script>
+
+<script>
+	function descartar(identificador) {
+		
+		var index = identificador.substr(5);
+		var lista = document.getElementById(identificador);
+		var check = document.getElementById(identificador + "c");
+		var seleccionado = check.checked;
+
+		if (seleccionado === true) {
+			check.checked = false;
+			lista.style.backgroundColor = "DarkSlateGray";
+		}
+
+		else {
+			check.checked = true;
+			lista.style.backgroundColor = "red";
+		}
+
+	}
+
+	function aviso() {
+		alert('hola');
+	}
+</script>
+
+</head>
+
+<body class="metro">
+
+	<!--  <div class="tile double double-vertical"></div> -->
+
+	<div class="tile-area tile-area-dark"
+		style="width: 800px; height: 1000px">
+
+		<h1 class="fg-white">Salir</h1>
+		
+		<br> <br> <br> <br> <br>
+
+		<div class="row">
+			<div class="span12">
+				<a href= "#" class="tile half bg-orange" style="margin-left: 20px" title="Abrir carpeta firmado" href="command://abrir">
+					<div class="tile-content icon">
+						<i class="icon-folder"></i>
+					</div>
+				</a> 
+				<a class="tile half bg-crimson" title="Salir sin archivar" href="command://salir"> 
+					<div class="tile-content icon">
+						<i class="icon-switch"></i>
+					</div>
+				</a>
+				<a class="tile half bg-emerald" title="Enviar a asociados" href="command://firmado">
+					<div class="tile-content icon">
+						<i class=" icon-download"></i>
+					</div>
+				</a>
+				<br>
+				<span class="fg-white">Número de carpetas: <strong class="fg-crimson" id="pdfstotales"> 8</strong></span>
+				<br>
+				<span class="fg-white">Documentos subidos: <strong class="fg-crimson" id="pdfspendientes"> 209</strong></span>
+			</div>
+		</div>
+
+
+		<div class="listview" style="margin-top: 60px">
+			<a class="list" style="float: left; margin-right: 20px;" onclick="descartar('lista0');">
+				<div class="list-content data" style="background: red;" id="lista0">
+					<label class="">
+						<input type="checkbox" id="lista0c" value="" checked style="float: right" />
+					</label> 
+					<span class="icon icon-file-pdf fg-white"></span>
+					<div class="fg-white">
+						<span class="list-title "><strong>#27 ALGC @Asun</strong></span> 
+						<span class="list-remark">Pdfs: 57</span>
+					</div>
+				</div> 
+			</a>	
+			<a class="list" style="float: left; margin-right: 20px;" onclick="descartar('lista1');">
+				<div class="list-content data" style="background: red;" id="lista1">
+					<label class="">
+						<input type="checkbox" id="lista1c" value="" checked style="float: right" />
+					</label> 
+					<span class="icon icon-file-pdf fg-white"></span>
+					<div class="fg-white">
+						<span class="list-title "><strong>#22 CARC @Asun</strong></span> 
+						<span class="list-remark">Pdfs: 53</span>
+					</div>
+				</div> 
+			</a>
+						<a class="list" style="float: left; margin-right: 20px;" onclick="descartar('lista2');">
+				<div class="list-content data" style="background: red;" id="lista2">
+					<label class="">
+						<input type="checkbox" id="lista2c" value="" checked style="float: right" />
+					</label> 
+					<span class="icon icon-file-pdf fg-white"></span>
+					<div class="fg-white">
+						<span class="list-title "><strong>#27 ALGC @Asun</strong></span> 
+						<span class="list-remark">Pdfs: 57</span>
+					</div>
+				</div> 
+			</a>	
+			<a class="list" style="float: left; margin-right: 20px;" onclick="descartar('lista3');">
+				<div class="list-content data" style="background: red;" id="lista3">
+					<label class="">
+						<input type="checkbox" id="lista3c" value="" checked style="float: right" />
+					</label> 
+					<span class="icon icon-file-pdf fg-white"></span>
+					<div class="fg-white">
+						<span class="list-title "><strong>#22 CARC @Asun</strong></span> 
+						<span class="list-remark">Pdfs: 53</span>
+					</div>
+				</div> 
+			</a>	
+						<a class="list" style="float: left; margin-right: 20px;" onclick="descartar('lista4');">
+				<div class="list-content data" style="background: red;" id="lista4">
+					<label class="">
+						<input type="checkbox" id="lista4c" value="" checked style="float: right" />
+					</label> 
+					<span class="icon icon-file-pdf fg-white"></span>
+					<div class="fg-white">
+						<span class="list-title "><strong>#27 ALGC @Asun</strong></span> 
+						<span class="list-remark">Pdfs: 57</span>
+					</div>
+				</div> 
+			</a>	
+			<a class="list" style="float: left; margin-right: 20px;" onclick="descartar('lista5');">
+				<div class="list-content data" style="background: red;" id="lista5">
+					<label class="">
+						<input type="checkbox" id="lista5c" value="" checked style="float: right" />
+					</label> 
+					<span class="icon icon-file-pdf fg-white"></span>
+					<div class="fg-white">
+						<span class="list-title "><strong>#22 CARC @Asun</strong></span> 
+						<span class="list-remark">Pdfs: 53</span>
+					</div>
+				</div> 
+			</a>		
+		</div>
+		
+	</div>
+	
+</body>
+</html>
