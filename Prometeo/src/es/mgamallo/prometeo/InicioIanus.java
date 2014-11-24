@@ -63,10 +63,11 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
     static ActiveXComponent oShell;  
     static ActiveXComponent oWindows; 
 
-	static int documentacion = 0; // 0 Urgencias
+	static int documentacion = 1; // 0 Urgencias
 									// 1 Documentacion
 
 	
+	String rutaCarpeta = "";
 	static String[] rutaCompletaPdfs;
 	static File[] tandaDePdfs;
 	
@@ -95,6 +96,10 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	String[] listaServicios;
 	String[] listaNombresDocumentos;
 	String[][] tablaHabituales;
+	
+	int coordenadasAsociar[][];
+	
+	Retardo retardo = new Retardo();
 
 	public InicioIanus(CargaListaPdfs pdfs) {
 		// TODO Auto-generated constructor stub
@@ -104,6 +109,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 		setDefaultsModels();
 		setConjuntosTitulos();
 		setExcepciones();
+		
 
 		if(!Inicio.ventanasCargadas){
 
@@ -112,10 +118,10 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			Inicio.vNombres = new VentanaNombres(listaServicios,
 					listaNombresDocumentos, tablaDocumentos, tablaHabituales);
 			Inicio.vNombres.setBounds(Inicio.rVentanaNombres);
-			Inicio.vNombres.setVisible(true);
+			Inicio.vNombres.setVisible(false);
 			
 			Inicio.vExplorador = new VentanaExplorador(pdfs);
-			Inicio.vExplorador.setBounds(Inicio.rVentanaExplorador);
+			Inicio.vExplorador.setBounds(Inicio.rVentanaExploradorMax);
 			Inicio.vExplorador.setVisible(true);
 			Inicio.vExplorador.setPdfs(pdfs);
 			
@@ -131,12 +137,14 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			Inicio.vExplorador.setPdfs(pdfs);
 		}
 
+		Inicio.teclasHabilitadas = true;
 	}
 
 	
 	private void setDefaultsModels() {
 
 		listaNodos = leerExcel.getNodos();
+		coordenadasAsociar = leerExcel.getCoordenadasAsociar();
 		
 		listaServicios = leerExcel.getServicios();
 		listaNombresDocumentos = leerExcel.getNombres();

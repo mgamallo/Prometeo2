@@ -7,6 +7,7 @@ public class CargaListaPdfs {
 	String[] nombrePdfs;	//Sólo el nombre
 	String[] rutaPdfs;		//path + nombre
 	String rutaCarpeta;
+	String rutaCompletaCarpeta;
 	
 	boolean cargado = false;
 	boolean cancelado = true;
@@ -17,6 +18,7 @@ public class CargaListaPdfs {
 	CargaListaPdfs(boolean renombrar) {
 		
 		AbrirCarpeta carpeta = new AbrirCarpeta(renombrar);
+
 				
 		if(carpeta.directorioSeleccionado == true){
 			cargado = true;
@@ -27,6 +29,7 @@ public class CargaListaPdfs {
 			nombrePdfs = new String[tamañoDir];
 			rutaPdfs = new String[tamañoDir];
 			rutaCarpeta = carpeta.nombreCarpeta;
+			rutaCompletaCarpeta = carpeta.rutaCompletaCarpeta;
 		
 			for(int i=0;i<tamañoDir;i++){
 				nombrePdfs[i] = ficheros[i].getName();
@@ -51,6 +54,7 @@ public class CargaListaPdfs {
 		nombrePdfs = new String[tamañoDir];
 		rutaPdfs = new String[tamañoDir];
 		rutaCarpeta = carpeta.nombreCarpeta;
+		rutaCompletaCarpeta = carpeta.rutaCompletaCarpeta;
 	
 		for(int i=0;i<tamañoDir;i++){
 			nombrePdfs[i] = ficheros[i].getName();

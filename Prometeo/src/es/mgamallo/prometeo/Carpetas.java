@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class Carpetas {
 	
-	 static String path = "d:/02 Area Pruebas/03 Firmado";
-	 // static String path = "J:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
+	 // static String path = "d:/02 Area Pruebas/03 Firmado";
+	 static String path = "j:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
 	
 	private Directorio[] conjuntoCarpetas;
 	
@@ -20,6 +20,12 @@ public class Carpetas {
 	public int numeroPdfsPendientes = 0;
 	
 	Carpetas(boolean carpetaFirmados){
+		
+		File caminito = new File(path);
+		if(!caminito.exists()){
+			path = "h:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
+		}
+		
 		if(!carpetaFirmados){
 			path = "d:/02 Area Pruebas/01 Escaneado";
 		}
@@ -88,6 +94,8 @@ public class Carpetas {
 		ArrayList<Directorio> arrayCarpetasM = new ArrayList<Directorio>();
 		ArrayList<Directorio> arrayCarpetasS = new ArrayList<Directorio>();
 		
+		boolean terminar = false;
+		
 		for(int i=0;i<conjuntoCarpetas.length;i++){
 			if(conjuntoCarpetas[i].numeroPdfs > 89 ){
 				arrayCarpetasXL.add(conjuntoCarpetas[i]);
@@ -150,17 +158,18 @@ public class Carpetas {
 					}					
 					arrayCarpetas.addAll(arrayCarpetasS);
 					arrayCarpetasS.clear();
+					terminar = true;
 				}
 			}
 		}
 		
 		
 		
-		if(arrayCarpetasL.size() > 0){
+		if(arrayCarpetasL.size() > 0 && !terminar){
 				arrayCarpetas.add(arrayCarpetasL.get(0));
 				arrayCarpetasL.remove(0);
 		}
-		else{
+		else if(!terminar){
 			arrayCarpetas.addAll(arrayCarpetasM);
 			arrayCarpetasM.clear();
 			if(arrayMimpar){
@@ -169,28 +178,30 @@ public class Carpetas {
 			}					
 			arrayCarpetas.addAll(arrayCarpetasS);
 			arrayCarpetasS.clear();
+			terminar = true;
 		}
 		
 		
 			
-		if(arrayCarpetasM.size() > 1){
+		if(arrayCarpetasM.size() > 1 && !terminar){
 				arrayCarpetas.add(arrayCarpetasM.get(0));
 				arrayCarpetasM.remove(0);
 				arrayCarpetas.add(arrayCarpetasM.get(0));
 				arrayCarpetasM.remove(0);				
 		}
-		else{
+		else if(!terminar){
 			arrayCarpetas.addAll(arrayCarpetasL);
 			if(arrayMimpar){
 				arrayCarpetas.add(ultimoM);
 				arrayMimpar = false;
 			}
 			arrayCarpetas.addAll(arrayCarpetasS);
+			terminar = true;
 		}
 		
 		int claveAnterior = 0;  //  numero fuera de rango
 			
-		while(arrayCarpetasM.size() > 1 && arrayCarpetasL.size() > 0){
+		while(arrayCarpetasM.size() > 1 && arrayCarpetasL.size() > 0 && !terminar){
 				int clave = (int) (Math.random()*(4 - 1)) + 1;
 				
 				if(clave != claveAnterior){
@@ -236,16 +247,18 @@ public class Carpetas {
 
 		}
 		
-		
-		arrayCarpetas.addAll(arrayCarpetasL);
-		arrayCarpetasL.clear();
-		arrayCarpetas.addAll(arrayCarpetasM);
-		arrayCarpetasM.clear();
-		if(arrayMimpar){
-			arrayCarpetas.add(ultimoM);
-		}					
-		arrayCarpetas.addAll(arrayCarpetasS);
-		arrayCarpetasS.clear();
+		if(!terminar){
+			arrayCarpetas.addAll(arrayCarpetasL);
+			arrayCarpetasL.clear();
+			arrayCarpetas.addAll(arrayCarpetasM);
+			arrayCarpetasM.clear();
+			if(arrayMimpar){
+				arrayCarpetas.add(ultimoM);
+			}					
+			arrayCarpetas.addAll(arrayCarpetasS);
+			arrayCarpetasS.clear();
+		}
+
 		
 		System.out.println("El numero de carpetas añadido es " + arrayCarpetas.size());
 		

@@ -122,7 +122,7 @@ public class CadenasJavascript {
 					"numeroAncla = i;" + LS +
 				"}" + LS +	
 				// "alert('N en ' + i + ' vale: ' + n); " + LS +
-				// "alert(numeroAncla);" + LS +
+				// "alert(numeroAncla);" + LS +		
 			"}" + LS +
 		
 			// "alert(nodo[numeoAncla].innerHTML);" + LS +
@@ -139,8 +139,10 @@ public class CadenasJavascript {
 		
 		System.out.println(usuario.alias);
 		
+		/*
 		usuario.usuario = "mgamgul1";
-		usuario.password = "archivo0";
+		usuario.password = "archivo1";
+		*/
 		
 		final String introducirUsuarioPulido = 
 				"var framePrincipal = window.frames;" + LS +
@@ -205,10 +207,14 @@ public class CadenasJavascript {
 				"rutas[1] = principal.datos.ficha.inf_botonera;" +
 				"rutas[2] = principal.datos.ficha.cex_botonera;" +
 				"rutas[3] = principal.datos.ficha.menu;" +
-
-				"for(var i=0;i<4;i++){" +
+				"rutas[4] = principal.datos.ficha.pro_botonera;" +
+				
+				"for(var i=0;i<5;i++){" +
 					"if(!(rutas[i] === undefined)){" +
 						"tipoSubida = 'HOS';" +
+						"if(i==4){" +
+							"tipoSubida='CEX';" +
+						"}" +
 						"if(i==3){ " +
 							"if(principal.datos.ficha.menu.document.anchors.length === 3){" +
 								"tipoSubida='CEX';" +
@@ -243,13 +249,18 @@ public class CadenasJavascript {
 	
 	static public final String buscarNodoConsultasInicial(String servicio){
 		
+		
 		final String cadena = 
-				  "var nodo = principal.datos.arbol.despliegue.document.anchors;"
+				  	"var nodo = principal.datos.arbol.despliegue.document.anchors;"
 					+ "var anclaPadre = 0;"
 					+ "var anclaHijo = 0;"
 					+ "var numeroAncla = 0;"
+					+ "var nodoCEX = 0;"
 					+ "for(var i=0;i<nodo.length;i++){"
-						+ "if(nodo[i].innerHTML.indexOf('" + servicio + "') != -1){"
+						+ "if(nodo[i].innerHTML.indexOf('externas') != -1){"
+							+ "nodoCEX = i;"
+						+ "}"
+						+ "if(nodo[i].innerHTML.indexOf('" + servicio + "') == 6){"
 							+ "numeroAncla = i;"
 							+ "break;"
 						+ "}"
@@ -257,6 +268,8 @@ public class CadenasJavascript {
 					+ "if(numeroAncla != 0){"
 						+ "anclaPadre = numeroAncla;"
 						+ "nodo[numeroAncla].click();" 
+					+ "}else if(nodoCEX !=0){"
+						+ "nodo[nodoCEX].click();"
 					+ "}"	
 					
 					;
@@ -268,10 +281,11 @@ public class CadenasJavascript {
 		String cadena = ""
 				+ "if(anclaHijo != 0){"
 					+ "nodo[anclaHijo].click();"
-				+ "}else{"
+				+ "}else{"		
 					+ "numeroAncla = 0;"
+					+ "var nodo=principal.datos.arbol.despliegue.document.anchors;"
 					+ "for(var i=0;i<nodo.length;i++){"
-						+ "if(nodo[i].innerHTML.indexOf('" + clave + "') != -1){"
+						+ "if(nodo[i].innerHTML.toLowerCase().indexOf('" + clave + "') != -1){"
 								+ "numeroAncla = i;"
 								+ "break;"
 						+ "}"
@@ -280,8 +294,12 @@ public class CadenasJavascript {
 						+ "anclaHijo = numeroAncla;"
 						+ "nodo[numeroAncla].click();"
 					+ "}"
-				+ "}";
-		
+					+ "else{"
+						+ "nodo[anclaPadre].click();"
+					+ "}"
+				+ "}"
+				;
+				
 		
 		return cadena;
 	}
@@ -293,9 +311,21 @@ public class CadenasJavascript {
 					;
 		
 		
-		return cadena;
+		return cadena;		
 	}
 	
+	static public final String creaNodoCEX(String servicio){
+		
+		String siglasServicio = Inicio.documento[Inicio.indiceArchivoSelecc].servicio;
+		
+		String cadena = ""
+				+ "if(nodoCEX != 0){"
+					+ "var serv = principal.datos.ficha.main.servicios;"
+					+ "serv.crearServicioCEX('" + siglasServicio + "','" + servicio + "');"
+				+ "}";
+		
+		return cadena;
+	}
 	
 	static public final String buscarNodoConsultas(String servicio, String tipoNodo){
 		

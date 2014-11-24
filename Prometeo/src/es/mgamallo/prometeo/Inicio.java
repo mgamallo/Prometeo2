@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import com.jacob.activeX.ActiveXComponent;
@@ -23,8 +24,10 @@ public class Inicio {
 	static public Usuario usuario;
 	static public boolean contraseña = true;
 	
-	static Rectangle rVentanaInterfazPrincipal = new Rectangle(0, 0, 850, 1000);
-	static Rectangle rVentanaExplorador = new Rectangle(851, 0, 175, 1000);
+	static Rectangle rVentanaInterfazPrincipalMin = new Rectangle(0, 0, 850, 1000);
+	static Rectangle rVentanaInterfazPrincipalMax = new Rectangle(0, 0, 850, 1250);
+	static Rectangle rVentanaExploradorMin = new Rectangle(851, 0, 175, 1000);
+	static Rectangle rVentanaExploradorMax = new Rectangle(851, 0, 175, 1250);
 	static Rectangle rVentanaNombres = new Rectangle(0, 1001, 1024, 250);
 	static Rectangle rVentanaControlIanus = new Rectangle();
 	
@@ -43,6 +46,7 @@ public class Inicio {
 	
 	
 	static boolean ventanasCargadas = false;
+	static public boolean teclasHabilitadas = false;
 	
 	static public Documento[] documento;  //	Array de documentos de la tanda
 	static public int indiceArchivoSelecc = 0;   // Nº de la lista de pdfs
@@ -52,8 +56,7 @@ public class Inicio {
 
 	static public boolean ocr = true;
 	static public boolean ianus1onTop = true;
-	
-	static public boolean teclashabilitadas = false;
+
 
 	static public Gestion2Ianus gestion;
 	
@@ -88,7 +91,10 @@ public class Inicio {
 		
 	//	String textoBase = LeerArchivos.obtenerHtml("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
 		String textoBase = LeerArchivos.obtenerHtml(unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
-				
+	
+	//	unidadHDD = "j";
+	//	String textoBase = LeerArchivos.obtenerHtml(unidadHDD + ":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
+		
 		int puntoInsercion = textoBase.indexOf("id=\"seccion\">");
 		String textoInicio = textoBase.substring(0,puntoInsercion + 14);
 		String textoFinal = textoBase.substring(puntoInsercion + 14);

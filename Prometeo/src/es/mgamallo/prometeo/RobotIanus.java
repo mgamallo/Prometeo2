@@ -1,7 +1,9 @@
 package es.mgamallo.prometeo;
 
 
+
 import java.awt.AWTException;
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -13,6 +15,34 @@ public class RobotIanus {
 	public final String DOC_ANULADO = "Documento anulado";
 	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDD + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
+	public Point coordExaminar = new Point(0,0);
+	public Point coordAceptar = new Point(0,0);
+	
+	private int aceptarManualX = 1627, aceptarManualY = 710;
+	
+	int retardoTrasPulsarExaminar = 500;
+	
+	private void setCoordenadas(String tipoSubida){
+		
+		int columna = 0;
+		
+		if(tipoSubida.equals("HOSP") || tipoSubida.equals("URG") || tipoSubida.equals("EPI")){
+			columna = 0;
+		}else if(tipoSubida.equals("CEX")){
+			columna = 1;
+		}else if(tipoSubida.equals("CIA")){
+			columna = 2;
+		}else if(tipoSubida.equals("QUI")){
+			columna = 3;
+		}
+		coordExaminar.x = Inicio.inicioIanus.coordenadasAsociar[0][columna];
+		coordExaminar.y = Inicio.inicioIanus.coordenadasAsociar[1][columna];
+		coordAceptar.x = Inicio.inicioIanus.coordenadasAsociar[2][columna];
+		coordAceptar.y = Inicio.inicioIanus.coordenadasAsociar[3][columna];
+		
+		System.out.println(coordExaminar.y + ", " + coordAceptar.y);
+	}
+	
 	public void asocia(String titulo){
 		
 		System.out.println(titulo);
@@ -22,10 +52,13 @@ public class RobotIanus {
 		// String alias = titulo.substring(0,5);
 		
 		
+		setCoordenadas(Inicio.inicioIanus.tipoSubida);
+		
 		if(Inicio.inicioIanus.tipoSubida.equals("HOS")){
 			if(Inicio.inicioIanus.titHosp.containsKey(titulo)){
 				alias = Inicio.inicioIanus.titHosp.get(titulo);
 			}
+			
 		}
 		else if(Inicio.inicioIanus.tipoSubida.equals("CEX") || 
 				Inicio.inicioIanus.tipoSubida.equals("EPI")){
@@ -64,16 +97,17 @@ public class RobotIanus {
 		//	2 Tabulador
 		robot.keyPress(KeyEvent.VK_TAB);
 		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(50);
+		robot.delay(130);
 		
 		// 	3.0 Escribe título
 
 		
 		if(!titulo.contains(DOC_ANULADO)){
+			System.out.println(alias);
 			for(int k = 0; k< alias.length();k++){
 				getChar(alias.charAt(k));
-				robot.delay(10);
-				// System.out.println(titulo.charAt(k));
+				robot.delay(50);
+				System.out.println(alias.charAt(k));
 			}
 		}
 		else{
@@ -99,7 +133,7 @@ public class RobotIanus {
 		// 4 Tabulador
 		robot.keyPress(KeyEvent.VK_TAB);
 		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
+		robot.delay(200);
 		
 		//	5 Pega título
 		Portapapeles copiar = new Portapapeles();
@@ -118,7 +152,7 @@ public class RobotIanus {
 			robot.keyPress(KeyEvent.VK_CLEAR);
 		}
 		
-		robot.delay(100);
+		robot.delay(150);
 		
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
@@ -126,6 +160,7 @@ public class RobotIanus {
 		robot.keyRelease(KeyEvent.VK_CONTROL);
 		robot.delay(75);
 		
+		/*
 		//	6-7 Tabulador
 		for(int i=0;i<2;i++){
 			robot.keyPress(KeyEvent.VK_TAB);
@@ -140,6 +175,17 @@ public class RobotIanus {
 		
 		
 		//	9 Pega ruta
+		*/
+		
+		// Pulsa examinar
+		
+		robot.mouseMove(coordExaminar.x, coordExaminar.y);
+		robot.delay(125);
+		robot.mousePress(InputEvent.BUTTON1_MASK);
+		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		
+
+		
 		
 		if(titulo.toLowerCase().contains(InicioIanus.DOC_ANULADO.toLowerCase())){
 			copiar.copiarAlPortapapeles(RUTA_DOC_ANULADO);
@@ -147,28 +193,32 @@ public class RobotIanus {
 			copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
 		}
 
-		robot.delay(150);
-		
+		robot.delay(retardoTrasPulsarExaminar);		
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_CONTROL);	
+		robot.keyRelease(KeyEvent.VK_CONTROL);
 		
-		robot.delay(250);
+		robot.delay(150);
 		
 		//	10 Enter
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(200);
+		robot.delay(250);
 		
 		
-		
+		/*
 		//	11 Tabulador 9 veces
 		for(int i=0;i<9;i++){
 			robot.keyPress(KeyEvent.VK_TAB);
 			robot.keyRelease(KeyEvent.VK_TAB);
 			robot.delay(10);
 		}
+		*/
+		robot.mouseMove(coordAceptar.x, coordAceptar.y); 
+		robot.mousePress(InputEvent.BUTTON1_MASK);
+		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		
 		
 		//	12 Aceptar
 
@@ -183,6 +233,7 @@ public class RobotIanus {
 		robot.keyRelease(KeyEvent.VK_ENTER);
 */		
 		
+		robot.mouseMove(aceptarManualX, aceptarManualY);
 		
 		
 		// CapturaRatonYTeclado.barraEspaciadoraOn = true;
@@ -255,13 +306,15 @@ public class RobotIanus {
 		try{
 			Robot robot = new Robot();
 
-			if (inverso){
+			if (inverso){  // No vamos a escribir mayusculas
+				/*
 				robot.keyPress(KeyEvent.VK_SHIFT);
 				robot.keyPress(codigo);
 				robot.keyRelease(codigo);
 				robot.keyRelease(KeyEvent.VK_SHIFT);
+				*/
 			}
-			else if(acento){
+			if(acento){
 				robot.keyPress(KeyEvent.VK_DEAD_ACUTE);
 				robot.keyPress(codigo);
 			}
@@ -273,6 +326,8 @@ public class RobotIanus {
 				case KeyEvent.VK_SPACE:
 					imprimeAscii(32);
 					break;
+				
+					/*
 				case KeyEvent.VK_A:
 					imprimeAscii(97);
 					break;
@@ -294,6 +349,8 @@ public class RobotIanus {
 				case KeyEvent.VK_C:
 					imprimeAscii(99);
 					break;
+					*/
+				
 				case KeyEvent.VK_V:
 					imprimeAscii(118);
 					break;

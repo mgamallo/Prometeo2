@@ -1,13 +1,17 @@
 package es.mgamallo.prometeo;
 
+
 import java.awt.Color;
+
+
+import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.SwingUtilities;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 
-import chrriis.dj.nativeswing.swtimpl.components.JWebBrowser;
 
 public class Gestion2Ianus {
 
@@ -20,6 +24,9 @@ public class Gestion2Ianus {
 	String nombreIanus2 = "Ianus 2";
 	
 	int retardoAsociar = 1500;
+	int retardoBuscarNodoInicial = 6000;
+	int retardoBuscarNodoFase2 = 200;
+	
 	
 	Gestion2Ianus(){
 		buscaNHCInicio();
@@ -87,8 +94,8 @@ public class Gestion2Ianus {
 		
 		Inicio.ianus1onTop = true;
 		
-		buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,Inicio.documento[indiceNhc1].nombreNormalizado,true);
-		buscaNodo(Inicio.paciente2.ianus,Inicio.documento[indiceNhc2].servicio,Inicio.documento[indiceNhc2].nombreNormalizado,true);
+		buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,Inicio.documento[indiceNhc1].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
+		buscaNodo(Inicio.paciente2.ianus,Inicio.documento[indiceNhc2].servicio,Inicio.documento[indiceNhc2].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
 	//	Inicio.ianus1.frame.setAlwaysOnTop(true);
 	}
 	
@@ -99,12 +106,15 @@ public class Gestion2Ianus {
 	}
 	
 	
-	private void buscaNodo(ActiveXComponent ianus, String servicio, String nombreDocumento, boolean inicializar){
+	private void buscaNodo(ActiveXComponent ianus, String servicio, String nombreDocumento, boolean inicializar,boolean buscaOtroNodo, int retardo, boolean subirAuto){
 		
 		String tipoNodo = detectaTipoNodo(servicio, nombreDocumento);
+		
+		System.out.println("El tipo de nodo en buscaNodo es " + tipoNodo);
+		
 		String nombreNodoServicio = buscaNombreNodoServicio(servicio);
 		
-		HiloServicio hiloServicio = new HiloServicio(ianus, nombreNodoServicio, tipoNodo, 5500,inicializar);
+		HiloServicio hiloServicio = new HiloServicio(ianus, nombreNodoServicio, tipoNodo, retardo,inicializar,buscaOtroNodo,subirAuto);
 		hiloServicio.start();
 	}
 	
@@ -170,11 +180,13 @@ public class Gestion2Ianus {
 							System.out.println("Imprime nhc 1. Es el mismo paciente: " + Inicio.nhcDelIanus1);
 							
 							if(Inicio.documento[Inicio.indiceArchivoSelecc].servicio.equals(Inicio.documento[Inicio.indiceArchivoSelecc-1].servicio)){
-								
+								buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,
+										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,false,false,retardoBuscarNodoFase2,false);
+							
 							}
 							else{
 								buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,
-										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true);
+										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,true,retardoBuscarNodoFase2,false);
 							}
 							// GestionJacob.pulsaBotonAsociar();
 							// Inicio.vExplorador.asociaDocumento();
@@ -214,7 +226,7 @@ public class Gestion2Ianus {
 							if(indiceNhc1 != -1){
 								Inicio.nhcDelIanus1 = Inicio.documento[indiceNhc1].nhc;
 								
-								introduceNHC(Inicio.paciente1.ianus, nombreIanus1, Inicio.nhcDelIanus1,600);
+								introduceNHC(Inicio.paciente1.ianus, nombreIanus1, Inicio.nhcDelIanus1,Retardo.retIntroNHC);
 								// Inicio.ianus1.frame.setAlwaysOnTop(false);
 								// Inicio.ianus2.frame.setAlwaysOnTop(true);
 								
@@ -227,7 +239,7 @@ public class Gestion2Ianus {
 								Inicio.ianus1onTop = false;
 								
 								buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,
-										Inicio.documento[indiceNhc1].nombreNormalizado, true);
+										Inicio.documento[indiceNhc1].nombreNormalizado, true,false,retardoBuscarNodoInicial,false);
 								
 							}
 							else{
@@ -237,10 +249,10 @@ public class Gestion2Ianus {
 								
 								System.out.println("No hay mas pacientes.");
 								
-								Dispatch.put(Inicio.paciente1.ianus,"Visible",true);
+								Dispatch.put(Inicio.paciente1.ianus,"Visible",false);
 								retardo(250);
 								Dispatch.put(Inicio.paciente2.ianus,"Visible",true);
-								Inicio.ianus1onTop = true;
+								Inicio.ianus1onTop = false;
 								
 							}
 						}
@@ -250,11 +262,13 @@ public class Gestion2Ianus {
 							System.out.println("Imprime nhc 2. Es el mismo paciente: " + Inicio.nhcDelIanus2);
 						
 							if(Inicio.documento[Inicio.indiceArchivoSelecc].servicio.equals(Inicio.documento[Inicio.indiceArchivoSelecc-1].servicio)){
-								
+								buscaNodo(Inicio.paciente2.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,
+										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,false,false,retardoBuscarNodoFase2,false);
+
 							}
 							else{
 								buscaNodo(Inicio.paciente2.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,
-										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado, true);
+										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado, true,true,retardoBuscarNodoFase2,false);
 							}
 							
 							// GestionJacob.pulsaBotonAsociar();
@@ -293,7 +307,7 @@ public class Gestion2Ianus {
 							if(indiceNhc2 != -1){
 								Inicio.nhcDelIanus2 = Inicio.documento[indiceNhc2].nhc;
 								
-								introduceNHC(Inicio.paciente2.ianus, nombreIanus2,Inicio.nhcDelIanus2,600);
+								introduceNHC(Inicio.paciente2.ianus, nombreIanus2,Inicio.nhcDelIanus2,Retardo.retIntroNHC);
 								// Inicio.ianus2.frame.setAlwaysOnTop(false);
 								// Inicio.ianus1.frame.setAlwaysOnTop(true);
 								
@@ -305,7 +319,7 @@ public class Gestion2Ianus {
 								Inicio.ianus1onTop = true;
 								
 								buscaNodo(Inicio.paciente2.ianus, Inicio.documento[indiceNhc2].servicio,
-										Inicio.documento[indiceNhc2].nombreNormalizado, true);
+										Inicio.documento[indiceNhc2].nombreNormalizado, true,false,retardoBuscarNodoInicial,false);
 								
 							}
 							else{
@@ -314,7 +328,7 @@ public class Gestion2Ianus {
 								
 								System.out.println("No hay mas pacientes.");
 								
-								Dispatch.put(Inicio.paciente2.ianus,"Visible",true);
+								Dispatch.put(Inicio.paciente2.ianus,"Visible",false);
 								retardo(250);
 								Dispatch.put(Inicio.paciente1.ianus,"Visible",true);
 								Inicio.ianus1onTop = true;
@@ -328,7 +342,73 @@ public class Gestion2Ianus {
 
 	}
 	
+	public void reset(){
+		
+		
+		indiceNhc1 = 0;
+		indiceNhc2 = 0;
+		
+		indiceNhc1 = Inicio.vExplorador.listaPdfs.getSelectedIndex();
+		
+		for(int i=indiceNhc1;i<Inicio.documento.length;i++){
+			if(!Inicio.documento[i].nhc.contains("Separador")){
+				Inicio.nhcDelIanus1 = Inicio.documento[i].nhc;
+				indiceNhc1 = i;
+				break;
+			}
+		}
+		
+		for(int i=indiceNhc1 + 1;i<Inicio.documento.length;i++){
+			if(!Inicio.documento[i].nhc.equals(Inicio.nhcDelIanus1) &&
+					!Inicio.documento[i].nhc.contains("Separador")){
+				Inicio.nhcDelIanus2 = Inicio.documento[i].nhc;
+				indiceNhc2 = i;
+				break;
+			}			
+		}
+		
+		Inicio.indiceArchivoSelecc = indiceNhc1;
+		Inicio.vExplorador.listaPdfs.setSelectedIndex(Inicio.indiceArchivoSelecc);
+		Inicio.documentoActivo = Inicio.documento[Inicio.indiceArchivoSelecc];
 
+		
+		Inicio.vControlIanus.botonNHC.setText(Inicio.documento[indiceNhc1].nhc);
+		Inicio.vControlIanus.botonServicio.setText(Inicio.documento[indiceNhc1].servicio);
+		Inicio.vControlIanus.botonNombreDocumento.setText(Inicio.documento[indiceNhc1].nombreNormalizado);
+		Inicio.vControlIanus.labelNumeroIanus.setText(nombreIanus1);
+		
+		Inicio.vControlIanus.panelBotones.setBackground(new Color(80,200,120));
+		
+		
+		Inicio.vNombres.comboServicio.setSelectedItem(Inicio.documentoActivo.servicio);
+		System.out.println("Introduce el nhc 1 " + Inicio.nhcDelIanus1);
+//		introduceNHC(Inicio.paciente1.ianus,Inicio.nhcDelIanus1,Inicio.documento[indiceNhc1].servicio,50,false);
+		introduceNHC(Inicio.paciente1.ianus,nombreIanus1,Inicio.nhcDelIanus1,100);
+		
+		/*
+	//	Inicio.ianus2.botonNHC.setText(Inicio.documento[indiceNhc2].nhc);
+	//	Inicio.ianus2.botonServicio.setText(Inicio.documento[indiceNhc2].servicio);
+	//	Inicio.ianus2.botonNombreDocumento.setText(Inicio.documento[indiceNhc2].nombreNormalizado);
+	 * */
+	
+		System.out.println("Introduce el nhc 2 " + Inicio.nhcDelIanus2);
+		
+		Dispatch.put(Inicio.paciente2.ianus,"visible",false);
+		introduceNHC(Inicio.paciente2.ianus,nombreIanus2,Inicio.nhcDelIanus2,100);
+	//	introduceNHC(Inicio.paciente2.ianus,Inicio.nhcDelIanus2,Inicio.documento[indiceNhc2].servicio,2000,false);
+	//	Dispatch.put(Inicio.ianus2,"visible",false);
+		
+		Inicio.ianus1onTop = true;
+		
+		buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,Inicio.documento[indiceNhc1].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
+		buscaNodo(Inicio.paciente2.ianus,Inicio.documento[indiceNhc2].servicio,Inicio.documento[indiceNhc2].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
+	//	Inicio.ianus1.frame.setAlwaysOnTop(true);
+
+		
+
+		
+		
+	}
 	
 	
 	private void retardo(int retardo){
@@ -339,4 +419,6 @@ public class Gestion2Ianus {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }

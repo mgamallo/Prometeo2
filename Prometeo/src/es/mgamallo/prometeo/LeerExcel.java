@@ -1,5 +1,6 @@
 package es.mgamallo.prometeo;
 
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -19,6 +20,7 @@ public class LeerExcel {
 	private String[][] tablaDocumentos;
 	public String[][] asociacionesDocumentos;
 	private String[][] habituales;
+	private int[][] coordenadasAsociar;
 	
 	private Nodo[] nodos;
 	
@@ -152,6 +154,21 @@ public class LeerExcel {
 	        }
 	        
 	        
+	        //	Obtiene las coordenadas
+	        
+	        hoja = archivoExcel.getSheet(2);
+	        numFilas = 0;
+	        
+	        coordenadasAsociar = new int[4][4];
+	        for(int fila=0;fila<4;fila++){
+	        	for(int columna = 0;columna<4;columna++){
+	        		coordenadasAsociar[fila][columna] = Integer.parseInt(hoja.getCell(1 + columna,4 +fila).getContents().toString());
+
+	        	}
+	        }
+
+	        
+	        
 		} catch (BiffException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,6 +206,10 @@ public class LeerExcel {
 		}
 		*/
 		return nodos;
+	}
+	
+	public int[][] getCoordenadasAsociar(){
+		return coordenadasAsociar;
 	}
 	
 	static public void main(String args[]){

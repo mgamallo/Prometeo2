@@ -6,6 +6,10 @@ package es.mgamallo.prometeo;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -28,8 +32,17 @@ public class VentanaExplorador extends javax.swing.JFrame {
 	private JButton jButton10;
 	private JButton jButton11;
 	private JButton jButton12;
-	private JButton botonAsociar;
+	private JButton botonVentanaNombres;
 	private JButton botonSalirOAsociar;
+	
+
+	
+	private PopupMenu menuPop = new PopupMenu();
+	private MenuItem itemApartar = new MenuItem("Apartar");
+	private MenuItem itemDudas = new MenuItem("Dudas");
+	private MenuItem itemYaSubidos = new MenuItem("Ya subidas");
+	
+	private int indexPdfYaSubidos = -1;
 	/**
      * Creates new form VentanaExplorador
      */
@@ -55,6 +68,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         panelPdfs = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaPdfs = new javax.swing.JList();
+        listaModeloPdfs = new DefaultListModel();
         panelControl = new javax.swing.JPanel();
         
         // Botones
@@ -70,15 +84,47 @@ public class VentanaExplorador extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        botonAsociar = new javax.swing.JButton();
+        botonVentanaNombres = new javax.swing.JButton();
         botonSalirOAsociar = new javax.swing.JButton();
         
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pdfs");
         setPreferredSize(new java.awt.Dimension(200, 900));
+        
+        menuPop.add(new MenuItem()); // menu item temporal. Se le asignará el nombre del pdf
+        menuPop.addSeparator();
+        menuPop.add(itemApartar);
+        menuPop.add(itemDudas);
+        menuPop.add(itemYaSubidos);
+        
+        itemYaSubidos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				Inicio.panelPrincipal.webBrowserOperaciones.navigate(InterfazPrincipal.DIR_SALIR);
+				Inicio.panelPrincipal.panelActivo = InterfazPrincipal.SALIR;
+				
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Cerrar.cerrarTodo();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				MoverCarpetas.moverPdfs(null, indexPdfYaSubidos);
+			}
+		});
 
-        jSplitPane1.setDividerLocation(400);
+        jSplitPane1.setDividerLocation(800);
         jSplitPane1.setDividerSize(10);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
@@ -87,11 +133,30 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 400));
 
+        listaPdfs.add(menuPop);
+        
         listaPdfs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(listaPdfs);
         listaPdfs.addMouseListener(new MouseAdapter() {
+        	
+        	public void mouseReleased(MouseEvent ev){
+        		if(ev.isPopupTrigger()){
+        			indexPdfYaSubidos = listaPdfs.locationToIndex(ev.getPoint());
+        			if(indexPdfYaSubidos != -1){
+        				menuPop.remove(0);
+        				String nombrePdf = listaModeloPdfs.get(indexPdfYaSubidos).toString();
+        				nombrePdf = nombrePdf.substring(0,15);
+        				menuPop.insert(new MenuItem(nombrePdf), 0);
+        				menuPop.show(listaPdfs, ev.getPoint().x + 30, ev.getPoint().y +10);
+        			}
+        			
+        		}
+        	}
         	public void mouseClicked(MouseEvent ev){
-        		pulsarListaPdfs(ev);
+
+            		pulsarListaPdfs(ev);
+
+
         	}
 		});
 
@@ -127,10 +192,20 @@ public class VentanaExplorador extends javax.swing.JFrame {
         });
 
         
-        jButton3.setText("Imprimir en ianus");
+        jButton3.setText("Deshabilitar teclas");
+        jButton3.setBackground(Color.green);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	// asociaDocumento();
+            	if(Inicio.teclasHabilitadas){
+            		Inicio.teclasHabilitadas = false;
+            		jButton3.setBackground(Color.red);
+            		jButton3.setText("Habilitar teclas");
+            	}
+            	else{
+            		Inicio.teclasHabilitadas = true;
+            		jButton3.setBackground(Color.green);
+            		jButton3.setText("Deshabilitar teclas");
+            	}
             }
         });
 
@@ -138,7 +213,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         jButton11.setText("Ianus 1");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	GestionJacob.setVisible(Inicio.paciente1.ianus);
+            	GestionJacob.setVisible(Inicio.paciente1.ianus,false);
             }
         });
         
@@ -147,32 +222,84 @@ public class VentanaExplorador extends javax.swing.JFrame {
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("Hacer visible ianus 2");
-            	GestionJacob.setVisible(Inicio.paciente2.ianus);
+            	GestionJacob.setVisible(Inicio.paciente2.ianus,false);
             }
         });
         
         
         jButton4.setText("abrir ficha");
 
-        jButton5.setText("buscar consulta");
+        jButton5.setBackground(Color.orange);
+        jButton5.setText("Reiniciar ianus");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	System.out.println("Busca el servicio");
-            	// GestionJacob.buscaNodo(Inicio.ianus1);
+            	GestionJacob.reseteaIanus();
             }
         });
 
-        jButton6.setText("abrir asociar");
+        jButton6.setText("");
 
-        jButton7.setText("asociar");
+        jButton7.setEnabled(false);
+        jButton7.setText("Resetear subida");
+        jButton7.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				Inicio.gestion.reset();
+				jButton7.setEnabled(false);
+			}
+		});
 
         jButton8.setText("jButton8");
 
-        jButton9.setText("jButton9");
+        jButton9.setText("Actualizar ianus");
+        jButton9.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
-        jButton10.setText("jButton10");
+        jButton10.setText("Ianus visibles");
+        jButton10.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				GestionJacob.setVisible(Inicio.paciente1.ianus,true);
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				GestionJacob.setVisible(Inicio.paciente2.ianus,true);
+				jButton7.setEnabled(true);
+			}
+		});
 
-        botonAsociar.setText("Asociar");
+        botonVentanaNombres.setText("Ventana nombres");
+        botonVentanaNombres.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				Boolean visible = Inicio.vNombres.isVisible();
+				
+				Inicio.vNombres.setVisible(!visible);
+				if(visible){
+					Inicio.panelPrincipal.frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					Inicio.vExplorador.setBounds(Inicio.rVentanaExploradorMax);
+				}else{
+					Inicio.panelPrincipal.frame.setBounds(Inicio.rVentanaInterfazPrincipalMin);
+					Inicio.vExplorador.setBounds(Inicio.rVentanaExploradorMin);
+				}
+			}
+		});
 
         botonSalirOAsociar.setText("Asociar o Salir");
         
@@ -182,7 +309,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
                 panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelControlLayout.createSequentialGroup()
                     .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(botonAsociar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonVentanaNombres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -227,7 +354,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
                         .addComponent(jButton12))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botonAsociar)
+                        .addComponent(botonVentanaNombres)
                         .addComponent(botonSalirOAsociar))
                     .addGap(0, 29, Short.MAX_VALUE))
             );
@@ -271,7 +398,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
     	Inicio.documento = new Documento[pdfs.nombrePdfs.length];
     	Inicio.indiceArchivoSelecc = 0;
     	
-    	DefaultListModel listaModeloPdfs = new DefaultListModel();
+    	listaModeloPdfs = new DefaultListModel();
     	for(int i=0;i<pdfs.nombrePdfs.length;i++){
     		Inicio.documento[i] = new Documento(pdfs.rutaPdfs[i]);
     		System.out.println("Ruta " + i + "  " + Inicio.documento[i].rutaArchivo);
@@ -420,6 +547,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify  
     public javax.swing.JList listaPdfs;
+    public DefaultListModel listaModeloPdfs;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;

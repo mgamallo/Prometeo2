@@ -104,11 +104,13 @@ public class GestionJacob {
 		}
 	}
 	
-	public static void setVisible(final ActiveXComponent ianus){
+	public static void setVisible(final ActiveXComponent ianus, final boolean verDosIanus){
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-
-				Dispatch.put(ianus, "Visible", !Dispatch.get(ianus,"visible").getBoolean());
+				if(!verDosIanus){
+					Dispatch.put(ianus, "Visible", !Dispatch.get(ianus,"visible").getBoolean());
+				}
+				Dispatch.put(ianus, "Visible", true);
 			}
 		});
 	}
@@ -268,13 +270,27 @@ public class GestionJacob {
 				else if(!servicio.equals(InicioIanus.DESCONOCIDO)){
 					
 					if(inicializar){
+						System.out.println("Imprimiendo en GestionJacob. Inicializar. Consulta. " + servicio);
+	
 						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultasInicial(servicio));
+						System.out.println("Imprimido. supuestamente.");
+
+						try {
+							Thread.sleep(1200);
+							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.creaNodoCEX(servicio));
+
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						
 						if(!tipoNodo.equals("x")){
 							try {
-								Thread.sleep(1500);
+								Thread.sleep(1200);
 								String clave = "";
 								if(tipoNodo.equals("f")){
-									clave = "ltima Consulta";
+									clave = "ltima";
 								}
 								else if(tipoNodo.equals("e")){
 									clave = "nfermer";
@@ -290,11 +306,13 @@ public class GestionJacob {
 						if(!tipoNodo.equals("x")){
 							String clave = "";
 							if(tipoNodo.equals("f")){
-								clave = "ltima Consulta";
+								clave = "ltima";
 							}
 							else if(tipoNodo.equals("e")){
 								clave = "nfermer";
 							}
+				
+							System.out.println("GestionJacob.consulta. Debería elegir nodo fecha. No iniciado.");
 							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.buscarNodoConsHijo(clave));
 						}
 						else{
@@ -400,8 +418,9 @@ public class GestionJacob {
 	public static void introduceUsuarioJacob(final ActiveXComponent ianus, final Usuario user){
 		
 		user.usuario = "mgamgul1";
-		user.password = "archivo0";
+		user.password = "archivo1";
 
+		System.out.println(user.password);
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -431,5 +450,41 @@ public class GestionJacob {
 			i = 2;
 		}
 		InicioIanus.oWindows.invokeGetComponent("Item", new Variant(iCount-i)); 
+	}
+	
+	public static void reseteaIanus(){
+		
+		String ianus = Inicio.vControlIanus.labelNumeroIanus.getText();
+		System.out.println("Reseteando el ianus: " + ianus);
+		if(ianus.toLowerCase().contains(("Ianus 1").toLowerCase())){
+			Dispatch.call(Inicio.paciente1.ianus, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
+			try {
+				Thread.sleep(900);
+				Dispatch.call(Inicio.paciente1.ianus,"Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
+			    Thread.sleep(300);
+				Dispatch.put(Inicio.paciente1.ianus,"height",1099);
+			    Dispatch.put(Inicio.paciente1.ianus,"top",180);
+			    Dispatch.put(Inicio.paciente1.ianus,"left",1024);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		
+		}
+		else{
+			Dispatch.call(Inicio.paciente2.ianus, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
+			try {
+				Thread.sleep(900);
+				Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
+			    Thread.sleep(300);
+				Dispatch.put(Inicio.paciente2.ianus,"height",1099);
+			    Dispatch.put(Inicio.paciente2.ianus,"top",180);
+			    Dispatch.put(Inicio.paciente2.ianus,"left",1024);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

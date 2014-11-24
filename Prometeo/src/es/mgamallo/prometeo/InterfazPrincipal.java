@@ -78,10 +78,11 @@ public class InterfazPrincipal implements MouseListener{
 	private final String NORMAS = "Normas";
 	private final String AVISOS = "Avisos";
 	private final String USUARIO = "Usuario";
-	private final String SALIR = "Usuario";
+	public static final String SALIR = "Salir";
 
-	public static String panelActivo = "Usuarios";
-
+	public String panelActivo = "Usuarios";
+	public boolean abracadabra = false;
+	
 	final String DIR_CONTROL = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
 	final String DIR_OPERACIONES = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
 
@@ -92,9 +93,23 @@ public class InterfazPrincipal implements MouseListener{
 	final String DIR_AVISOS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
 	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
 	final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuario.html";
-	final String DIR_SALIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
+	static final String DIR_SALIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
 
+	
+	/*
+	final String DIR_CONTROL = Inicio.unidadHDD + ":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/prometeo/Htmls/control/control.html";
+	final String DIR_OPERACIONES = Inicio.unidadHDD + ":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
 
+//	final String DIR_ABRIR = Inicio.unidadHDD +":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/Prometeo/Htmls/abrir/abrir.html";
+	final String DIR_ABRIR = Inicio.unidadHDD +":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/Prometeo/Htmls/abrir.html";
+	final String DIR_AYUDA = Inicio.unidadHDD +":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
+	final String DIR_NORMAS = Inicio.unidadHDD +":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/Prometeo/Htmls/normas/normas.html";
+	final String DIR_AVISOS = Inicio.unidadHDD +":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/Prometeo/Htmls/avisos/avisos.html";
+	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
+	final String DIR_USUARIO = Inicio.unidadHDD +":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/prometeo/Htmls/usuario.html";
+	final String DIR_SALIR = Inicio.unidadHDD +":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/prometeo/Htmls/salir.html";
+
+	*/
 	
 	public JWebBrowser webBrowserControl;
 	public JWebBrowser webBrowserOperaciones;
@@ -193,16 +208,20 @@ public class InterfazPrincipal implements MouseListener{
 					int numUsuario = Integer.parseInt(command.substring(5, 7));
 
 					Inicio.usuario = Inicio.usuarios[numUsuario];
-					JOptionPane.showMessageDialog(null, "Es el usuario "
-							+ Inicio.usuario.alias);
-					barraPanelControlVisible = true;
+					
+					new VentanaPassword(Inicio.usuario.alias, Inicio.usuario.usuario).setVisible(true);;
+					
+					if(abracadabra){
+						barraPanelControlVisible = true;
 
-					webBrowserOperaciones.navigate(DIR_USUARIO);
-					MiHilo miHilo = new MiHilo(Inicio.usuario.alias);
-					miHilo.start();
+						webBrowserOperaciones.navigate(DIR_USUARIO);
+						MiHilo miHilo = new MiHilo(Inicio.usuario.alias);
+						miHilo.start();
 
-					frame.setBounds(Inicio.rVentanaInterfazPrincipal);
-					Inicio.panelPrincipal.panelControl.setVisible(true);
+						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+						Inicio.panelPrincipal.panelControl.setVisible(true);
+					}
+
 					// panelActivo = "Usuario";
 				} else if (panelActivo.equals(ABRIR)) {
 					System.out.println("Abrimos carpeta");
@@ -212,6 +231,8 @@ public class InterfazPrincipal implements MouseListener{
 						Inicio.carpetasSeleccionadas.add(pdfs.rutaCarpeta);
 						if(!pdfs.cancelado){
 							Inicio.inicioIanus = new InicioIanus(pdfs);
+							Inicio.inicioIanus.rutaCarpeta = pdfs.rutaCompletaCarpeta;
+							System.out.println("Ruta completa carpeta " + pdfs.rutaCompletaCarpeta);
 							Inicio.ventanasCargadas = true;
 							//webBrowserOperaciones.navigate("K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/ocr.pdf");
 							webBrowserOperaciones.setVisible(false);
@@ -237,10 +258,7 @@ public class InterfazPrincipal implements MouseListener{
 												"var contenedor = document.getElementById('insertar');" + LS +
 												"contenedor.appendChild(nodo);" + 
 												"";// <a href='#' >holaaaa</a>";
-						
-						String codigoCompleto= ""
-								+ "var hola = setTimeout(function(){document.all.insertar.innerHTML='" 
-								+ codigoCarpetasmetro + "';},2000);";
+					
 						
 						webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
 					}
@@ -254,8 +272,14 @@ public class InterfazPrincipal implements MouseListener{
 						
 						CargaListaPdfs pdfs = new CargaListaPdfs(true,dir.directorio);
 						Inicio.carpetasSeleccionadas.add(pdfs.rutaCarpeta);
-			
+						
+						
+						
 						Inicio.inicioIanus = new InicioIanus(pdfs);
+						Inicio.inicioIanus.rutaCarpeta = pdfs.rutaCompletaCarpeta;
+						
+						System.out.println("Ruta completa carpeta " + pdfs.rutaCompletaCarpeta);
+						
 						Inicio.ventanasCargadas = true;
 							//webBrowserOperaciones.navigate("K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/ocr.pdf");
 						webBrowserOperaciones.setVisible(false);

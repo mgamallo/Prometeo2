@@ -13,6 +13,7 @@ public class AbrirCarpeta {
 	String rutab =InicioIanus.RUTAB;												// trabajo
 	
 	String nombreCarpeta;
+	String rutaCompletaCarpeta;
 	JFileChooser explorador;
 	
 	boolean directorioSeleccionado;
@@ -24,7 +25,7 @@ public class AbrirCarpeta {
 		}
 		
 
-ruta = "d:/02 Area Pruebas/03 Firmado";
+// ruta = "d:/02 Area Pruebas/03 Firmado";
 		
 		directorioSeleccionado = listaPdfs();
 	}
@@ -76,6 +77,8 @@ ruta = "d:/02 Area Pruebas/03 Firmado";
 		File nombreConEspacios = new File(explorador.getSelectedFile().toString());
 		String cadenaSinEspaciosDobles = eliminarEspaciosEnBlanco(nombreConEspacios);
 		
+		rutaCompletaCarpeta = cadenaSinEspaciosDobles;
+		
 		//	Obtener ficheros pdf
 		File directorio = new File(cadenaSinEspaciosDobles);
 
@@ -113,6 +116,8 @@ ruta = "d:/02 Area Pruebas/03 Firmado";
 		File nombreConEspacios = nombreNuevo;
 		String cadenaSinEspaciosDobles = eliminarEspaciosEnBlanco(nombreConEspacios);
 		
+		rutaCompletaCarpeta = cadenaSinEspaciosDobles;
+		
 		System.out.println(directori.getAbsolutePath().toString());
 		System.out.println(cadenaSinEspaciosDobles);
 		
@@ -145,6 +150,8 @@ ruta = "d:/02 Area Pruebas/03 Firmado";
 		File directorio = new File(ruta);
 		// System.out.println(directorio.getAbsolutePath());
 
+		rutaCompletaCarpeta = ruta;
+		
 		String rutaLarga = explorador.getSelectedFile().toString();
 		int i = rutaLarga.lastIndexOf("\\");
 		nombreCarpeta = rutaLarga.substring(i+1);

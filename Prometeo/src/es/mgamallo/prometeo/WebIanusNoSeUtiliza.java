@@ -284,7 +284,7 @@ public class WebIanusNoSeUtiliza implements MouseListener{
 			        	retardo = 2000;
 			        }
 			        
-			        Inicio.teclashabilitadas = true;
+			        Inicio.teclasHabilitadas = true;
 			        
 			   //     HiloNHCyNodo introUsuario = new HiloNHCyNodo(webBrowser,introducirUsuarioPulido,retardo);
 				//    introUsuario.start();
