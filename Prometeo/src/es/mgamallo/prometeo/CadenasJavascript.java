@@ -56,6 +56,38 @@ public class CadenasJavascript {
 		
 	}
 	
+	static public String getCarpetasSubidas(ArrayList<Directorio> carpetas){
+		
+		String cadena = "";
+		
+		for(int i=0;i<carpetas.size();i++){
+			String numero = String.valueOf(i);
+			
+			carpetas.get(i).asociado = true;
+			
+			String cadenaId = "carpeta_" + numero;
+			
+			cadena += ""
+					+ "<a class='list' href='command://carpeta_" + numero + "' style='float:left; margin-right:20px; width:400px;'>"
+				+ "<div class='list-content data' name='hola' style='background: red;' id='" + cadenaId + "'>" 
+					+ "<span class='icon icon-file-pdf fg-white'></span>" 
+					+ "<div class='fg-white'>" 
+							+ "<span class='list-title'><strong>" + carpetas.get(i).servicio + "</strong></span>" 
+							+ "<span class='list-remark'>Pdfs: " + carpetas.get(i).numeroPdfs + "</span>"
+					+ "</div>"
+					+ "<label class=''><input type='checkbox' disabled id='" + cadenaId + "c' checked style='float: right' /></label>"
+			+ "</div>" 
+		+ "</a>";
+			
+		}
+
+		// cadena = "<a href='#' class='list'> hola </a>";
+		
+		return cadena;
+	}
+	
+	
+	
 	static public String getCarpetas(boolean firmado, boolean libres, ArrayList<Directorio> carpetas){
 		
 		
@@ -71,8 +103,14 @@ public class CadenasJavascript {
 				numero = String.valueOf(i);
 			}
 			
-			cadena += ""
-					+ "<a href='command://carpeta_" + numero + "' class='tile ";
+			if(carpetas.get(i).usuario.length() == 0){
+				cadena += ""
+						+ "<a href='command://carpeta_" + numero + "' class='tile ";
+			}
+			else{
+				cadena += ""
+						+ "<a href='#' class='tile ";
+			}
 			if(carpetas.get(i).numeroPdfs > 89){
 				cadena += "double double-vertical ";
 			}
@@ -85,7 +123,16 @@ public class CadenasJavascript {
 			
 			cadena += carpetas.get(i).color;
 			
-			cadena += " bg-hover-lightGreen'>" + 
+			if(carpetas.get(i).usuario.length() == 0){
+				cadena += " bg-hover-lightGreen'";
+			}
+			else{
+				cadena += " '";
+			}
+			
+			cadena += " title='" +  carpetas.get(i).servicio + "'>";
+			
+			cadena += // " bg-hover-lightGreen'>" + 
 					    "<div class='tile-content'>" + 
 					    	"<div class='padding10'>" +  
 					    		"<h1 class='fg-white'></h1>" + 
@@ -574,6 +621,64 @@ public class CadenasJavascript {
 		
 		return cadenaFinal;
 	}
+	
+	
+
+	
+	static public final String buscarIdentificacionEpisodio(){
+		
+		final String cadena = 
+				"javascript:" +
+				"var tipoSubida = '';" +
+				"var rutas = [];" +
+				"rutas[0] = principal.datos.ficha.hosp_botonera;" +
+				"rutas[1] = principal.datos.ficha.inf_botonera;" +
+				"rutas[2] = principal.datos.ficha.cex_botonera;" +
+				"rutas[3] = principal.datos.ficha.menu;" +
+				"rutas[4] = principal.datos.ficha.pro_botonera;" +
+				
+				"for(var i=0;i<5;i++){" +
+					"if(!(rutas[i] === undefined)){" +
+						"var cabeza = rutas[i].document.getElementsByTagName('head')[0].innerHTML;" +
+						"var hola = window.clipboardData.setData('Text', cabeza);" +
+						"break;" +
+					"}" +
+						
+				"}"		
+				
+				;
+		
+		final String cadenita = "javascript:" +
+				"var rutas = [];" +
+				"rutas[0] = principal.datos.ficha.hosp_botonera;" +
+				"rutas[1] = principal.datos.ficha.inf_botonera;" +
+				"rutas[2] = principal.datos.ficha.cex_botonera;" +
+				"rutas[3] = principal.datos.ficha.menu;" +
+				"rutas[4] = principal.datos.ficha.pro_botonera;" +
+				"for(var i=0;i<5;i++){" +
+					"if(!(rutas[i] === undefined)){" +
+						"var cabeza = principal.datos.ficha.hosp_botonera.document.getElementsByTagName('head')[0].innerHTML;" +
+						"alert(i);"+
+						"break;" +
+					"}" +
+				"}"	+	
+				"";
+		
+		final String cadenilla = "javascript:" +
+
+
+						"var cabeza = principal.datos.ficha.hosp_botonera;" +
+						"alert(cabeza);" +
+
+
+				"";
+		
+		return cadena;
+
+		
+		
+	}
 }
+
 
 

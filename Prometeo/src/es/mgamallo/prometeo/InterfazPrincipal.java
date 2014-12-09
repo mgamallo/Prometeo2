@@ -1,5 +1,6 @@
 package es.mgamallo.prometeo;
 
+
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,6 +26,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
@@ -51,6 +53,9 @@ import javax.swing.event.ChangeListener;
 
 
 //import org.eclipse.swt.widgets.Slider;
+
+
+
 
 
 
@@ -83,17 +88,17 @@ public class InterfazPrincipal implements MouseListener{
 	public String panelActivo = "Usuarios";
 	public boolean abracadabra = false;
 	
-	final String DIR_CONTROL = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
-	final String DIR_OPERACIONES = Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
+	final String DIR_CONTROL = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
+	final String DIR_OPERACIONES = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
 
 //	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
-	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir.html";
-	final String DIR_AYUDA = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
-	final String DIR_NORMAS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas/normas.html";
-	final String DIR_AVISOS = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
+	final String DIR_ABRIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir.html";
+	final String DIR_AYUDA = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
+	final String DIR_NORMAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas/normas.html";
+	final String DIR_AVISOS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
 	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
-	final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuario.html";
-	static final String DIR_SALIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
+	final String DIR_USUARIO = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuario.html";
+	static final String DIR_SALIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
 
 	
 	/*
@@ -129,6 +134,9 @@ public class InterfazPrincipal implements MouseListener{
 	public JFrame frame;
 	
 	public Carpetas carpeta;
+	
+	private boolean inicioCarpetasSubidas = true;
+	private ArrayList<Directorio> carpetasSubidas = new ArrayList<Directorio>();
 
 	public JComponent createContent() {
 
@@ -176,6 +184,8 @@ public class InterfazPrincipal implements MouseListener{
 					webBrowserOperaciones.navigate(DIR_SALIR);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = SALIR;
+					inicioCarpetasSubidas = true;
+
 					// frame.dispose();
 				} else if ("minimizar".equals(command)) {
 					frame.setState(frame.ICONIFIED);
@@ -287,12 +297,93 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					
 				} else if (panelActivo.equals(SALIR)) {
-					frame.dispose();
-					System.exit(0);
-				} else if (command.contains("salir")) {
-					frame.dispose();
-					System.exit(0);
-				}
+					if (command.contains("salir")) {
+						Cerrar.cerrarTodo();
+						frame.dispose();
+						System.exit(0);
+					}
+					if (command.contains("carpetas")){
+						if(inicioCarpetasSubidas){
+							inicioCarpetasSubidas = false;
+							carpetasSubidas = MoverCarpetas.getCarpetasSubidas();
+						
+							String codigoCarpetasSubidas = CadenasJavascript.getCarpetasSubidas(carpetasSubidas);
+							
+							System.out.println(codigoCarpetasSubidas);
+							
+							int numCarpetasSubidas = carpetasSubidas.size();
+							int numPdfsSubidos = 0;
+							
+							System.out.println(numPdfsSubidos);
+							
+							for(int i=0;i<numCarpetasSubidas;i++){
+								numPdfsSubidos += carpetasSubidas.get(i).numeroPdfs;
+							}
+							
+							codigoCarpetasSubidas = 	"" +
+								"document.getElementById('carpetasSubidas').innerHTML='" +numCarpetasSubidas + "';" + LS +
+								"document.getElementById('pdfsSubidos').innerHTML='" + numPdfsSubidos + "';" + LS +
+								 "var oldNodo = document.getElementById('nuevo');" + LS +
+								 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+								 "var nodo = document.createElement('div');" + LS +
+												"nodo.id='nuevo';" + LS + 
+												"nodo.innerHTML = \"" + codigoCarpetasSubidas +"\";" + LS +
+												"var contenedor = document.getElementById('listaCarpetas');" + LS +
+												"contenedor.appendChild(nodo);" + 
+												"";// <a href='#' >holaaaa</a>";			 
+									 
+							//		 "document.getElementById('listaCarpetas').innerHTML = '" + codigoCarpetasSubidas + "';" + LS +
+							//		 		"";
+									 
+						
+							
+							webBrowserOperaciones.executeJavascript(codigoCarpetasSubidas);
+						}
+						else{
+							String rutaCarpetaFirmados = Inicio.rutaFirmados;
+							if(Inicio.usuario.urgencias){
+								rutaCarpetaFirmados = Inicio.rutaFirmadosUrgencias;
+							}
+							
+							// Borrar esta asignacion
+						//	rutaCarpetaFirmados = "j:\\digitalización\\00 documentacion\\03 Firmado";
+							
+					    	String cadena = "explorer.exe " + rutaCarpetaFirmados;
+							try {
+								Runtime.getRuntime().exec(cadena);
+							} catch (IOException ev) {
+								// TODO Auto-generated catch block
+								ev.printStackTrace();
+							}
+						}
+					}
+					else if(command.contains("carpeta_")){
+						int index = Integer.valueOf(command.substring(8));
+						System.out.println(index);
+						System.out.println(command);
+				
+						carpetasSubidas.get(index).asociado = !carpetasSubidas.get(index).asociado;
+						
+						String gestionaCarpeta = //"alert(document.all.carpeta_0.name);";
+							""	+ "var lista = document.all." + command + ";" + LS
+								+ "var check = document.all." + command + "c;" + LS 
+								+ "var seleccionado = check.checked;" + LS
+								+ "if(seleccionado === true){ " + LS
+									+ "check.checked = false;lista.style.backgroundColor = 'DarkSlateGray';}" + LS
+								+ "else{check.checked = true; lista.style.backgroundColor = 'red';}";
+					
+								webBrowserOperaciones.executeJavascript(gestionaCarpeta);		
+					}
+					else if(command.contains("enviar")){
+						
+						Cerrar.cerrarTodo();
+						
+						MoverCarpetas.enviarAasociados(carpetasSubidas);
+						inicioCarpetasSubidas = true;
+						
+						webBrowserOperaciones.reloadPage();
+					}
+				} 
 			}
 		});
 

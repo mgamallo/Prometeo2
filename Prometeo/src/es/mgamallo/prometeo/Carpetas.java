@@ -279,6 +279,7 @@ class Directorio{
 	File directorio;
 	int numeroPdfs = 0;
 	boolean urgente = false;
+	boolean asociado = false;
 	
 	String usuario = "";
 	String servicio = "";
@@ -301,6 +302,26 @@ class Directorio{
 		
 		getDatos(carpeta.getName());
 	}
+	
+	Directorio(File carpeta, boolean subidos){
+		directorio = carpeta;
+
+		
+		numeroPdfs = directorio.listFiles(new FilenameFilter(){
+			public boolean accept(File directorio, String name){
+				return name.toLowerCase().endsWith(".pdf");
+			}
+		}).length;
+
+		servicio = directorio.getName();
+		
+		int index = servicio.lastIndexOf("@");
+		if(index != -1){
+			usuario = Inicio.usuario.alias;
+			servicio = servicio.substring(0,index);
+		}
+	}
+	
 	
 	private void getDatos(String nombreCarpeta){
 		
@@ -335,33 +356,34 @@ class Directorio{
 				//System.out.println(dia);
 		}
 		
-
+		servicio = cadena;
+		
 		cadena = cadena.toLowerCase();
 		
 		int claveColor = (int) (Math.random()*((numColores-1) - 0)) + 0;
 		
 		if(cadena.contains("anr")){
-			servicio = "ANRC";
+			// servicio = "ANRC";
 			color = "bg-lightRed";
 		}
 		else if(cadena.contains("car")){
-			servicio = "CARC";
+			// servicio = "CARC";
 			color = "bg-red";
 		}
 		else if(cadena.contains("cons")){
-			servicio = "Consentimientos";
+			// servicio = "Consentimientos";
 			color = "bg-crimson";
 		}
 		else if(cadena.contains("ingr")){
-			servicio = "Ingresos";
+			// servicio = "Ingresos";
 			color = "bg-" + arrayColores[claveColor];
 		}
 		else{
-			servicio = cadena.toUpperCase();
+			// servicio = cadena.toUpperCase();
 			color = "bg-" + arrayColores[claveColor];
 		}
 		if(cadena.toLowerCase().contains("urg")){
-			servicio = " urg.";
+			// servicio = " urg.";
 			color = "bg-lightRed";
 		}
 		if(!usuario.equals("")){

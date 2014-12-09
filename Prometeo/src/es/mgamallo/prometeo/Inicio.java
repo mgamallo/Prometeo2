@@ -31,6 +31,10 @@ public class Inicio {
 	static Rectangle rVentanaNombres = new Rectangle(0, 1001, 1024, 250);
 	static Rectangle rVentanaControlIanus = new Rectangle();
 	
+	static public String rutaFirmados = ":\\digitalización\\00 documentacion\\03 Firmado";
+	static public String rutaFirmadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)";
+	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
+	static public String rutaAsociadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 Asociado";
 	static public InicioIanus inicioIanus;
 	
 	//	Ruta completa de las carpetas seleccionadas
@@ -60,7 +64,8 @@ public class Inicio {
 
 	static public Gestion2Ianus gestion;
 	
-	static public String unidadHDD = "";
+	static public String unidadHDDejecutable = "";
+	static public String unidadHDDvirtual = "";
 	
 	/**
 	 * @param args
@@ -81,16 +86,27 @@ public class Inicio {
 		
 		try {
 			// System.out.println(miDir.getCanonicalPath());
-			unidadHDD = miDir.getCanonicalPath().substring(0,1);
-			System.out.println(unidadHDD);
+			unidadHDDejecutable = miDir.getCanonicalPath().substring(0,1);
+			System.out.println(unidadHDDejecutable);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+// Lio con la unidad de acceso. Parche.
+		unidadHDDvirtual = detectaUnidadHDD();
+		System.out.println("Letra de la unidad... " + unidadHDDvirtual);
+		
+		rutaFirmados = unidadHDDvirtual + rutaFirmados;
+	//	rutaFirmadosUrgencias = unidadHDD + rutaFirmadosUrgencias;
+		rutaAsociados = unidadHDDvirtual + rutaAsociados;
+		rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
 		
 	//	String textoBase = LeerArchivos.obtenerHtml("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
-		String textoBase = LeerArchivos.obtenerHtml(unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
+		
+
+		String textoBase = LeerArchivos.obtenerHtml(unidadHDDejecutable+ ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
 	
 	//	unidadHDD = "j";
 	//	String textoBase = LeerArchivos.obtenerHtml(unidadHDD + ":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
@@ -123,6 +139,25 @@ public class Inicio {
 			user.imagen= us[1];
 			usuarios[i] = user;
 		}
+	}
+	
+	private static String detectaUnidadHDD(){
+		
+		String posibleRuta = "h" + rutaFirmados;
+		File ruta = new File(posibleRuta);
+		if(ruta.exists()){
+			return "h";
+		}
+		else{
+			posibleRuta = "j" + rutaFirmados;
+			ruta = new File(posibleRuta);
+			if(ruta.exists())
+				return "j";
+		}
+
+		JOptionPane.showMessageDialog(null, "Problemas con la unidad de disco");
+		
+		return null;
 	}
 	
 }

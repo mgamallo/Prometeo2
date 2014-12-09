@@ -36,7 +36,7 @@ public class Portapapeles {
 		portapapeles.setContents(texto, texto);
 	}
 
-	public void getDatosPortapapelesTemporal() {
+	public String getDatosPortapapelesTemporal() {
 		Clipboard portapapeles = Toolkit.getDefaultToolkit()
 				.getSystemClipboard();
 		Transferable datoActual = portapapeles.getContents(this);
@@ -49,6 +49,7 @@ public class Portapapeles {
 			if (datoActual.isDataFlavorSupported(flavorString)) {
 				valorTemporal = (String) datoActual
 						.getTransferData(flavorString);
+				return valorTemporal;
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -60,6 +61,8 @@ public class Portapapeles {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return "";
 	}
 
 	public String getDatosPaciente() {

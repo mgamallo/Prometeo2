@@ -8,7 +8,7 @@ public class Documento {
 	String nombreNormalizado = "";
 	String rutaArchivo;
 	
-	private String nombreArchivo;
+	public String nombreArchivo;
 	
 	boolean ocr;
 	

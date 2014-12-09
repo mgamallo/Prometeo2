@@ -379,6 +379,43 @@ public class GestionJacob {
 	}
 	
 	
+	public static void getIdeEpisodio(){
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				ActiveXComponent ianusActivo = new ActiveXComponent("InternetExplorer.Application");
+				String aux = "";
+				
+				
+				try {
+					if(Inicio.ianus1onTop){
+						aux = "Ianus 1";
+						ianusActivo = Inicio.paciente1.ianus;
+						Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.buscarIdentificacionEpisodio());
+						System.out.println("Enviado a ianus 1");
+
+					}
+					else{
+						aux = "Ianus 2";
+						ianusActivo = Inicio.paciente2.ianus;
+						Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.buscarIdentificacionEpisodio());
+						System.out.println("Enviado a ianus 2");
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Falló el ianus a la hora de asociar. " + aux);
+					
+					rescateJacob(aux);
+				}
+			}
+		});
+	}
+	
 	public static void pulsaBotonAsociar(){
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

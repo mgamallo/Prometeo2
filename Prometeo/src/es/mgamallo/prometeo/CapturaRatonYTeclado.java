@@ -107,19 +107,26 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 
 			switch (e.getKeyCode()) {
 			case 112:
-				System.out.println("Pulsado f1. Inicialización de los dos ianus");
-				
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						Inicio.gestion = new Gestion2Ianus();
-						Inicio.gestion.impresionInicial();
-					}
-				});
-				
-
+	
 				break;
 			case 113:
+				System.out.println("Pulsado f2. Inicialización de los dos ianus");
 				
+
+	
+							Portapapeles clipBoard = new Portapapeles();
+			//				String temporal = clipBoard.getDatosPortapapelesTemporal();
+							GestionJacob.getIdeEpisodio();
+							HiloClipboard hilo = new HiloClipboard(2000);
+							hilo.run();
+							
+							
+							
+							
+							
+
+				
+
 				/***************************************************************
 				System.out.println("Pulsado f2. Salir de ianus1");
 				

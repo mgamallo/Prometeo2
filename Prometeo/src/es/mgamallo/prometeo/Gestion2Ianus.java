@@ -69,6 +69,7 @@ public class Gestion2Ianus {
 		Inicio.vControlIanus.botonServicio.setText(Inicio.documento[indiceNhc1].servicio);
 		Inicio.vControlIanus.botonNombreDocumento.setText(Inicio.documento[indiceNhc1].nombreNormalizado);
 		Inicio.vControlIanus.labelNumeroIanus.setText(nombreIanus1);
+		Inicio.vControlIanus.labelNombrePdf.setText(Inicio.documento[indiceNhc1].nombreArchivo);
 		
 //**** Aquí deberíamos gestionar los colores verde, rojo...
 		Inicio.vControlIanus.panelBotones.setBackground(new Color(80,200,120));
@@ -216,7 +217,7 @@ public class Gestion2Ianus {
 							Inicio.vControlIanus.botonNHC.setText(Inicio.nhcDelIanus2);
 							Inicio.vControlIanus.botonServicio.setText(Inicio.documento[indiceNhc2].servicio);
 							Inicio.vControlIanus.botonNombreDocumento.setText(Inicio.documento[indiceNhc2].nombreNormalizado);
-					
+							Inicio.vControlIanus.labelNombrePdf.setText(Inicio.documento[indiceNhc2].nombreArchivo);
 							
 							indiceNhc1 = buscaIndice(indiceNhc2);
 							
@@ -297,7 +298,8 @@ public class Gestion2Ianus {
 							Inicio.vControlIanus.botonNHC.setText(Inicio.nhcDelIanus1);
 							Inicio.vControlIanus.botonServicio.setText(Inicio.documento[indiceNhc1].servicio);
 							Inicio.vControlIanus.botonNombreDocumento.setText(Inicio.documento[indiceNhc1].nombreNormalizado);
-	
+							Inicio.vControlIanus.labelNombrePdf.setText(Inicio.documento[indiceNhc1].nombreArchivo);
+
 							
 							indiceNhc2 = buscaIndice(indiceNhc1);
 							

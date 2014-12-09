@@ -13,7 +13,7 @@ public class RobotIanus {
 	public final int retardo_antes_examinar = 250;
 	
 	public final String DOC_ANULADO = "Documento anulado";
-	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDD + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
+	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDDejecutable + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
 	public Point coordExaminar = new Point(0,0);
 	public Point coordAceptar = new Point(0,0);

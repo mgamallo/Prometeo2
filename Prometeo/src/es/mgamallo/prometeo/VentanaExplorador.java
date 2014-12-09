@@ -444,6 +444,11 @@ public class VentanaExplorador extends javax.swing.JFrame {
     		Inicio.panelPrincipal.webBrowserOperaciones
     			.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
     		
+    		Inicio.vControlIanus.botonNHC.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nhc);
+    		Inicio.vControlIanus.botonServicio.setText(Inicio.documento[Inicio.indiceArchivoSelecc].servicio);
+    		Inicio.vControlIanus.botonNombreDocumento.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
+    		Inicio.vControlIanus.labelNombrePdf.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nombreArchivo);
+    		
     	}else if(ev.getButton() == 2){
     		System.out.println("Boton central");
     	}
@@ -488,6 +493,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             		if(!Inicio.vNombres.comboServicio.getSelectedItem().toString().equals(Inicio.documento[Inicio.indiceArchivoSelecc])){
             			Inicio.vControlIanus.botonServicio.setBackground(Color.red);
             			Inicio.vControlIanus.panelBotones.setBackground(Color.yellow);
+            			Inicio.vControlIanus.botonServicio.setText(Inicio.documento[Inicio.indiceArchivoSelecc].servicio);
             		}
             		else{
             			Inicio.vControlIanus.botonServicio.setBackground(Color.green);
@@ -495,11 +501,15 @@ public class VentanaExplorador extends javax.swing.JFrame {
             		}
             		if(!Inicio.documento[Inicio.indiceArchivoSelecc].nhc.equals(Inicio.documento[Inicio.indiceArchivoSelecc-1].nhc)){
             			Inicio.vControlIanus.panelBotones.setBackground(Color.red);
+            			Inicio.vControlIanus.botonNHC.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nhc);
+
             		}
             		else{
             			Inicio.vControlIanus.panelBotones.setBackground(new Color(255,222,173));
+            			Inicio.vControlIanus.botonNHC.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nhc);
             		}
         			
+            		Inicio.vControlIanus.botonNombreDocumento.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
         			
          			Inicio.vNombres.comboServicio.setSelectedItem(Inicio.documento[Inicio.indiceArchivoSelecc].servicio);
          			

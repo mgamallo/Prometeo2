@@ -7,5 +7,7 @@ public class Usuario {
 	
 	String imagen = null;
 	
+	boolean urgencias = false;
+	
 	boolean tieneAvisos = false;
 }

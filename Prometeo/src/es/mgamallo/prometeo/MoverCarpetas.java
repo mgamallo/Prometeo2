@@ -1,8 +1,11 @@
 package es.mgamallo.prometeo;
 
 
+
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
@@ -84,5 +87,107 @@ public class MoverCarpetas {
 		}
 
 		//System.exit(0);
+	}
+	
+
+	static public ArrayList<Directorio> getCarpetasSubidas(){
+		File directorioFirmados = new File(InicioIanus.RUTA);
+		if(!directorioFirmados.exists()){
+			directorioFirmados = new File(InicioIanus.RUTAB);
+		}
+		
+		if(directorioFirmados.exists()){
+
+			FileFilter filtro = new FileFilter(){
+	
+				@Override
+				public boolean accept(File fichero) {
+					// TODO Auto-generated method stub
+					
+					if(fichero.isDirectory()){
+						if(fichero.getName().endsWith("@" + Inicio.usuario.alias)){
+							return true;
+						}
+					}
+					return false;
+				}
+				
+			};
+			
+			File[] directoriosUsuario = directorioFirmados.listFiles(filtro);
+			
+			ArrayList<Directorio> carpetas = new ArrayList<Directorio>();
+			for(int i=0;i<directoriosUsuario.length;i++){
+				carpetas.add(new Directorio(directoriosUsuario[i],true));
+				System.out.println(carpetas.get(i).servicio + "   " + carpetas.get(i).numeroPdfs);
+			}
+			
+			return carpetas;
+		}
+		
+		return null;
+	}
+	
+	static public void enviarAasociados(ArrayList<Directorio> carpetas){
+		String rutaAsociados = Inicio.rutaAsociados;
+		if(Inicio.usuario.urgencias){
+			rutaAsociados = Inicio.rutaAsociadosUrgencias;
+		}
+		
+		// Borrar
+	//	rutaAsociados = "j:\\digitalización\\00 documentacion\\04 Asociado";
+		
+		int contadorMovidos=0;
+		int contadorError=0;
+		
+		rutaAsociados = devuelveFecha(rutaAsociados);
+		File directorio = new File(rutaAsociados);
+		boolean creaDirectorio = directorio.mkdirs();
+		
+		for(int i=0;i<carpetas.size();i++){
+			if(carpetas.get(i).asociado){
+				String rutaNueva = rutaAsociados + "\\" + carpetas.get(i).directorio.getName();
+				
+				File nombreNuevo = new File(rutaNueva);
+				boolean renombrado = carpetas.get(i).directorio.renameTo(nombreNuevo);
+				
+				if(renombrado){
+					contadorMovidos++;
+				}
+				else{
+					contadorError++;
+				}
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, "Se han movido " + contadorMovidos +" carpetas.\n No se han podido mover " +contadorError );
+		
+	}
+	
+	private static String devuelveFecha(String rutaAsociados){
+		
+		Calendar fecha = Calendar.getInstance();
+		int año = fecha.get(Calendar.YEAR);
+		rutaAsociados+=("\\" + año);
+		int mes = fecha.get(Calendar.MONTH);
+		String nombreMes = "";
+		switch(mes){
+		case 0:	nombreMes = "01 Enero";break;
+		case 1:	nombreMes = "02 Febrero";break;
+		case 2:	nombreMes = "03 Marzo";break;
+		case 3:	nombreMes = "04 Abril";break;
+		case 4:	nombreMes = "05 Mayo";break;
+		case 5:	nombreMes = "06 Junio";break;
+		case 6:	nombreMes = "07 Julio";break;
+		case 7:	nombreMes = "08 Agosto";break;
+		case 8:	nombreMes = "09 Septiembre";break;
+		case 9:	nombreMes = "10 Octubre";break;
+		case 10:	nombreMes = "11 Noviembre";break;
+		case 11:	nombreMes = "12 Diciembre";break;
+		}
+		rutaAsociados+=("\\" + nombreMes);
+			
+		return rutaAsociados;
+		
 	}
 }

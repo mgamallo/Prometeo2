@@ -3,6 +3,7 @@ package es.mgamallo.prometeo;
 import java.awt.Color;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class VentanaControlIanus extends javax.swing.JFrame {
 
@@ -26,6 +27,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         panelControlIanus = new javax.swing.JPanel();
         labelNumeroIanus = new javax.swing.JLabel();
+        labelNombrePdf = new JLabel();
         labelVacia1 = new javax.swing.JLabel();
         labelMaximizar = new javax.swing.JLabel();
         labelMinimizar = new javax.swing.JLabel();
@@ -57,6 +59,10 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         labelNumeroIanus.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         labelNumeroIanus.setForeground(new java.awt.Color(255, 255, 255));
         labelNumeroIanus.setText("Ianus 1");
+        
+        labelNombrePdf.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        labelNombrePdf.setForeground(new java.awt.Color(255, 255, 255));
+        labelNombrePdf.setText("Nombre del pdf");
 
         labelVacia1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         labelVacia1.setForeground(new java.awt.Color(255, 255, 255));
@@ -75,7 +81,9 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             panelControlIanusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelControlIanusLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelNumeroIanus, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelNumeroIanus, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelNombrePdf, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelMinimizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -88,6 +96,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             .addGroup(panelControlIanusLayout.createSequentialGroup()
                 .addGroup(panelControlIanusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNumeroIanus)
+                    .addComponent(labelNombrePdf)
                     .addComponent(labelVacia1)
                     .addComponent(labelMaximizar)
                     .addComponent(labelMinimizar))
@@ -336,6 +345,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
     public javax.swing.JLabel labelNombreExtraido;
     private javax.swing.JLabel labelNombrePaciente;
     public javax.swing.JLabel labelNumeroIanus;
+    public javax.swing.JLabel labelNombrePdf;
     private javax.swing.JLabel labelVacia1;
     public javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelControlIanus;

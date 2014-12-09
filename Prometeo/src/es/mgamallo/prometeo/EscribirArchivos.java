@@ -11,7 +11,7 @@ public class EscribirArchivos {
 		
 		try {
 			// fichero = new FileWriter("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
-			fichero = new FileWriter(Inicio.unidadHDD + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
+			fichero = new FileWriter(Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
 			pw = new PrintWriter(fichero);
 			pw.print(textoHtml);
 		} catch (IOException e) {
