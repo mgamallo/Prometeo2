@@ -1,0 +1,49 @@
+					if(inicializar){
+						System.out.println("Imprimiendo en GestionJacob. Inicializar. Consulta. " + servicio);
+	
+						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultasInicial(servicio));
+
+						try {
+							Thread.sleep(1200);
+							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.creaNodoCEX(servicio));
+
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						
+						if(!tipoNodo.equals("x")){
+							try {
+								Thread.sleep(1200);
+								String clave = "";
+								if(tipoNodo.equals("f")){
+									clave = "ltima";
+								}
+								else if(tipoNodo.equals("e")){
+									clave = "nfermer";
+								}
+								Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.buscarNodoConsHijo(clave));
+								
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}else{
+						if(!tipoNodo.equals("x")){
+							String clave = "";
+							if(tipoNodo.equals("f")){
+								clave = "ltima";
+							}
+							else if(tipoNodo.equals("e")){
+								clave = "nfermer";
+							}
+				
+							System.out.println("GestionJacob.consulta. Debería elegir nodo fecha. No iniciado.");
+							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.buscarNodoConsHijo(clave));
+						}
+						else{
+							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.pulsaNodoPadre());
+						}
+					}

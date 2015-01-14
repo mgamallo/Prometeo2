@@ -50,15 +50,20 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static final String DESCONOCIDO = "Des";
 	static final String HOSP = "HOSP";
 	static final String HOSP_JACOB = "HOS:";
+	static final String URG = "URG";
 	static final String URG_JACOB = "URG:";
+	static final String CIA = "CIA";
 	static final String CIA_JACOB = "CIA:";
 
 	static boolean botonAsociarAuto = true;
 	static boolean buscaNodoAuto = true;
 	static boolean buscaDatosPacientesAuto = true;
 	
+	static boolean versionar = false;
+	
 	static boolean ventanaModalUp = false;
 	
+	static boolean vAuto = false;
 	
     static ActiveXComponent oShell;  
     static ActiveXComponent oWindows; 
@@ -99,7 +104,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	
 	int coordenadasAsociar[][];
 	
-	Retardo retardo = new Retardo();
+	Retardos retardo = new Retardos();
 
 	public InicioIanus(CargaListaPdfs pdfs) {
 		// TODO Auto-generated constructor stub
@@ -131,7 +136,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			int ancho = rectangulo.width;
 			int alto = rectangulo.height;
 			
-			Inicio.vControlIanus.setBounds(1024, 0, ancho, alto);
+			Inicio.vControlIanus.setBounds(1024, 0, ancho, alto - 50);
 		}
 		else{
 			Inicio.vExplorador.setPdfs(pdfs);

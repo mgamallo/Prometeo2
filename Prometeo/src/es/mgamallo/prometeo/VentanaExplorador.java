@@ -16,17 +16,18 @@ import java.io.File;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class VentanaExplorador extends javax.swing.JFrame {
 
-    private JButton jButton1;
-	private JButton jButton2;
-	private JButton jButton3;
+    private JButton boton2ianus;
+	private JButton botonReiniciarNavegadores;
+	private JButton botonHabilitarTeclas;
 	private JButton jButton4;
-	private JButton jButton5;
+	private JButton botonReiniciarIanus;
 	private JButton jButton6;
-	private JButton jButton7;
+	private JButton botonResetearSubida;
 	private JButton jButton8;
 	private JButton jButton9;
 	private JButton jButton10;
@@ -43,10 +44,14 @@ public class VentanaExplorador extends javax.swing.JFrame {
 	private MenuItem itemYaSubidos = new MenuItem("Ya subidas");
 	
 	private int indexPdfYaSubidos = -1;
+	private int indexApartado = -1;
+	private int indexDudas = -1;
 	/**
      * Creates new form VentanaExplorador
      */
 	
+	
+	private int posicionSeparador = 900;
 	
     public VentanaExplorador(CargaListaPdfs pdfs) {
         initComponents();
@@ -72,13 +77,13 @@ public class VentanaExplorador extends javax.swing.JFrame {
         panelControl = new javax.swing.JPanel();
         
         // Botones
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        boton2ianus = new javax.swing.JButton();
+        botonReiniciarNavegadores = new javax.swing.JButton();
+        botonHabilitarTeclas = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        botonReiniciarIanus = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        botonResetearSubida = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -88,7 +93,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         botonSalirOAsociar = new javax.swing.JButton();
         
         
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Pdfs");
         setPreferredSize(new java.awt.Dimension(200, 900));
         
@@ -107,12 +112,14 @@ public class VentanaExplorador extends javax.swing.JFrame {
 				Inicio.panelPrincipal.webBrowserOperaciones.navigate(InterfazPrincipal.DIR_SALIR);
 				Inicio.panelPrincipal.panelActivo = InterfazPrincipal.SALIR;
 				
+				/*
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				*/
 				Cerrar.cerrarTodo();
 				try {
 					Thread.sleep(2000);
@@ -121,17 +128,88 @@ public class VentanaExplorador extends javax.swing.JFrame {
 					e.printStackTrace();
 				}
 				MoverCarpetas.moverPdfs(null, indexPdfYaSubidos);
+				
+				Inicio.panelPrincipal.webBrowserOperaciones.navigate(InterfazPrincipal.DIR_SALIR);
+				Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
+				Inicio.panelPrincipal.panelActivo = InterfazPrincipal.SALIR;
+				Inicio.panelPrincipal.inicioCarpetasSubidas = true;
+				Inicio.panelPrincipal.frame.toFront();
 			}
 		});
 
-        jSplitPane1.setDividerLocation(800);
+        itemDudas.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				habilita();
+				Object comentario = JOptionPane.showInputDialog(null,"Escribe un breve comentario sobre el documento","Anotación",JOptionPane.QUESTION_MESSAGE);
+				if(comentario.toString() != null){
+
+						String ruta = Inicio.rutaDudas + "\\" + Inicio.usuario.alias;
+						ruta += "\\" + comentario.toString() + "\\";
+						File directorio = new File(ruta);
+						boolean directorioCreado = directorio.mkdirs();
+						if(directorioCreado){
+							ruta += Inicio.documento[indexDudas].nombreArchivo;
+							CopiarFichero.copiar(Inicio.documento[indexDudas].rutaArchivo,ruta);
+							JOptionPane.showMessageDialog(null, "Pdf enviado a dudas");
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Error al enviar el documento a dudas");;
+						}
+					}
+
+				habilita();				
+				
+			}
+		});
+        
+        itemApartar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				habilita();
+				
+				Object comentario = JOptionPane.showInputDialog(null,"Escribe un breve comentario sobre porqué se aparta el documento","Anotación",JOptionPane.QUESTION_MESSAGE);
+				if(comentario.toString() != null){
+					if(Inicio.usuario.urgencias){
+						/*
+						Inicio.rutaFirmadosUrgencias = Inicio.rutaFirmadosUrgencias + "\\"
+						CopiarFichero.copiar(Inicio.documento[indexApartado].rutaArchivo,Inicio.rutaFirmadosUrgencias);
+						*/
+					}
+					else{
+						String ruta = Inicio.rutaFirmados + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
+						ruta += "\\" + comentario.toString() + "\\";
+						File directorio = new File(ruta);
+						boolean directorioCreado = directorio.mkdirs();
+						if(directorioCreado || directorio.exists()){
+							ruta += Inicio.documento[indexApartado].nombreArchivo;
+							CopiarFichero.copiar(Inicio.documento[indexApartado].rutaArchivo,ruta);
+							JOptionPane.showMessageDialog(null, "Pdf apartado");
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Error al apartar el documento");;
+						}
+					}
+
+				}
+				habilita();
+			}
+		});
+        
+        jSplitPane1.setDividerLocation(posicionSeparador);
         jSplitPane1.setDividerSize(10);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setOneTouchExpandable(true);
 
-        panelPdfs.setPreferredSize(new java.awt.Dimension(200, 400));
+        panelPdfs.setPreferredSize(new java.awt.Dimension(50, 400));
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 400));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(50, 400));
 
         listaPdfs.add(menuPop);
         
@@ -142,6 +220,8 @@ public class VentanaExplorador extends javax.swing.JFrame {
         	public void mouseReleased(MouseEvent ev){
         		if(ev.isPopupTrigger()){
         			indexPdfYaSubidos = listaPdfs.locationToIndex(ev.getPoint());
+        			indexApartado = indexPdfYaSubidos;
+        			indexDudas = indexApartado;
         			if(indexPdfYaSubidos != -1){
         				menuPop.remove(0);
         				String nombrePdf = listaModeloPdfs.get(indexPdfYaSubidos).toString();
@@ -164,7 +244,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         panelPdfs.setLayout(panelPdfsLayout);
         panelPdfsLayout.setHorizontalGroup(
             panelPdfsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, 170)
         );
         panelPdfsLayout.setVerticalGroup(
             panelPdfsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,8 +255,9 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
         jSplitPane1.setTopComponent(panelPdfs);
         
-        jButton1.setText("Inicio 2 ianus");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        boton2ianus.setText("Inicio 2 ianus");
+        boton2ianus.setBackground(Color.yellow);
+        boton2ianus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Inicio.gestion = new Gestion2Ianus();
                 Inicio.gestion.impresionInicial();
@@ -184,33 +265,32 @@ public class VentanaExplorador extends javax.swing.JFrame {
         });
 
         
-        jButton2.setText("Salir o imprimir");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonReiniciarNavegadores.setText("Reiniciar navegadores");
+        botonReiniciarNavegadores.setBackground(Color.red);
+        botonReiniciarNavegadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	Inicio.gestion.gestion();
+            	Cerrar.cerrarIexplorer();
+            	GestionJacob.capturaWebs();
+            	botonResetearSubida.setEnabled(true);
             }
         });
 
         
-        jButton3.setText("Deshabilitar teclas");
-        jButton3.setBackground(Color.green);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botonHabilitarTeclas.setText("Deshabilitar teclas");	
+        botonHabilitarTeclas.setBackground(Color.green);
+        botonHabilitarTeclas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	if(Inicio.teclasHabilitadas){
-            		Inicio.teclasHabilitadas = false;
-            		jButton3.setBackground(Color.red);
-            		jButton3.setText("Habilitar teclas");
-            	}
-            	else{
-            		Inicio.teclasHabilitadas = true;
-            		jButton3.setBackground(Color.green);
-            		jButton3.setText("Deshabilitar teclas");
-            	}
+            	
+            	habilita();
+            	
+
             }
         });
 
+ 
         
         jButton11.setText("Ianus 1");
+        jButton11.setBackground(Color.pink);
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	GestionJacob.setVisible(Inicio.paciente1.ianus,false);
@@ -219,6 +299,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         
         
         jButton12.setText("Ianus 2");
+        jButton12.setBackground(Color.pink);
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("Hacer visible ianus 2");
@@ -227,33 +308,58 @@ public class VentanaExplorador extends javax.swing.JFrame {
         });
         
         
-        jButton4.setText("abrir ficha");
+        jButton4.setText("versionar");
+        jButton4.setVisible(false);
+        jButton4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
 
-        jButton5.setBackground(Color.orange);
-        jButton5.setText("Reiniciar ianus");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        botonReiniciarIanus.setBackground(Color.orange);
+        botonReiniciarIanus.setText("Reiniciar ianus");
+        botonReiniciarIanus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	GestionJacob.reseteaIanus();
             }
         });
 
-        jButton6.setText("");
+        jButton6.setText("V auto OFF");
+        jButton6.setBackground(Color.gray);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	InicioIanus.vAuto = !InicioIanus.vAuto;
+            	if(InicioIanus.vAuto){
+                    jButton6.setBackground(Color.pink);
+                    jButton6.setText("V auto On");
+            	}
+            	else{
+                    jButton6.setBackground(Color.GRAY);
+                    jButton6.setText("V auto OFF");
+            	}
+            }
+        });
+        
 
-        jButton7.setEnabled(false);
-        jButton7.setText("Resetear subida");
-        jButton7.addActionListener(new ActionListener() {
+        botonResetearSubida.setEnabled(false);
+        botonResetearSubida.setText("Resetear subida");
+        botonResetearSubida.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				Inicio.gestion.reset();
-				jButton7.setEnabled(false);
+				botonResetearSubida.setEnabled(false);
 			}
 		});
 
         jButton8.setText("jButton8");
+        jButton8.setVisible(false);
 
         jButton9.setText("Actualizar ianus");
+        jButton9.setVisible(false);
         jButton9.addActionListener(new ActionListener() {
 			
 			@Override
@@ -264,6 +370,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 		});
 
         jButton10.setText("Ianus visibles");
+        jButton10.setBackground(Color.pink);
         jButton10.addActionListener(new ActionListener() {
 			
 			@Override
@@ -277,7 +384,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 					e.printStackTrace();
 				}
 				GestionJacob.setVisible(Inicio.paciente2.ianus,true);
-				jButton7.setEnabled(true);
+				botonResetearSubida.setEnabled(true);
 			}
 		});
 
@@ -290,11 +397,16 @@ public class VentanaExplorador extends javax.swing.JFrame {
 				
 				Boolean visible = Inicio.vNombres.isVisible();
 				
+				
+				
+				
 				Inicio.vNombres.setVisible(!visible);
 				if(visible){
 					Inicio.panelPrincipal.frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
 					Inicio.vExplorador.setBounds(Inicio.rVentanaExploradorMax);
+					jSplitPane1.setDividerLocation(posicionSeparador);
 				}else{
+					posicionSeparador = jSplitPane1.getDividerLocation();
 					Inicio.panelPrincipal.frame.setBounds(Inicio.rVentanaInterfazPrincipalMin);
 					Inicio.vExplorador.setBounds(Inicio.rVentanaExploradorMin);
 				}
@@ -302,61 +414,61 @@ public class VentanaExplorador extends javax.swing.JFrame {
 		});
 
         botonSalirOAsociar.setText("Asociar o Salir");
+        botonSalirOAsociar.setVisible(false);
         
         javax.swing.GroupLayout panelControlLayout = new javax.swing.GroupLayout(panelControl);
         panelControl.setLayout(panelControlLayout);       
         panelControlLayout.setHorizontalGroup(
-                panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(panelControlLayout.createSequentialGroup()
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(botonVentanaNombres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonSalirOAsociar, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)))
+                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(boton2ianus,170,170,170)
+                        .addComponent(botonReiniciarNavegadores,170,170,170)
+                        .addComponent(botonHabilitarTeclas,170,170,170)
+                        .addComponent(jButton4,170,170,170)
+                        .addComponent(botonReiniciarIanus,170,170,170)
+                        .addComponent(jButton6,170,170,170)
+                        .addComponent(botonResetearSubida,170,170,170)
+                        .addComponent(jButton8,170,170,170)
+                        .addComponent(jButton9,170,170,170)
+                        .addComponent(jButton10,170,170,170)
+                        .addComponent(jButton11,170,170,170)
+                        .addComponent(jButton12,170,170,170)
+                        .addComponent(botonVentanaNombres,170,170,170)
+                        .addComponent(botonSalirOAsociar,170,170,170)))
+
             );
             panelControlLayout.setVerticalGroup(
                 panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelControlLayout.createSequentialGroup()
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2))
+               //     .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(boton2ianus)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton3)
-                        .addComponent(jButton4))
+                        .addComponent(botonReiniciarNavegadores)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton5)
-                        .addComponent(jButton6))
+                        .addComponent(botonHabilitarTeclas)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton7)
-                        .addComponent(jButton8))
+                        .addComponent(jButton4)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botonReiniciarIanus)
+                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                       .addComponent(jButton6)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonResetearSubida)
+                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                       .addComponent(jButton8)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton9)
-                        .addComponent(jButton10))
+                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                       .addComponent(jButton10)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton11)
-                        .addComponent(jButton12))
+                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                       .addComponent(jButton12)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonVentanaNombres)
-                        .addComponent(botonSalirOAsociar))
-                    .addGap(0, 29, Short.MAX_VALUE))
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(botonSalirOAsociar))
             );
 
         jSplitPane1.setRightComponent(panelControl);
@@ -365,7 +477,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(jSplitPane1,175,175,175)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,6 +587,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
         		
         		listaPdfs.setSelectedIndex(Inicio.indiceArchivoSelecc);
+        	//	jScrollPane1.getVerticalScrollBar().setValue(Inicio.indiceArchivoSelecc*15 -15);
           		
 
         		try{
@@ -497,7 +610,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             		}
             		else{
             			Inicio.vControlIanus.botonServicio.setBackground(Color.green);
-            			Inicio.vControlIanus.panelBotones.setBackground(new Color(255,222,173));
+            			Inicio.vControlIanus.panelBotones.setBackground(new Color(143, 188, 143));
             		}
             		if(!Inicio.documento[Inicio.indiceArchivoSelecc].nhc.equals(Inicio.documento[Inicio.indiceArchivoSelecc-1].nhc)){
             			Inicio.vControlIanus.panelBotones.setBackground(Color.red);
@@ -505,7 +618,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
             		}
             		else{
-            			Inicio.vControlIanus.panelBotones.setBackground(new Color(255,222,173));
+            			Inicio.vControlIanus.panelBotones.setBackground(new Color(143, 188, 143));
             			Inicio.vControlIanus.botonNHC.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nhc);
             		}
         			
@@ -518,7 +631,24 @@ public class VentanaExplorador extends javax.swing.JFrame {
         			System.out.println(ev);
         		}
         	}
+        	else{
+        		Inicio.panelPrincipal.webBrowserOperaciones.setVisible(false);
+        	}
     }
+    
+    private void habilita(){
+    	if(Inicio.teclasHabilitadas){
+    		Inicio.teclasHabilitadas = false;
+    		botonHabilitarTeclas.setBackground(Color.red);
+    		botonHabilitarTeclas.setText("Habilitar teclas");
+    	}
+    	else{
+    		Inicio.teclasHabilitadas = true;
+    		botonHabilitarTeclas.setBackground(Color.green);
+    		botonHabilitarTeclas.setText("Deshabilitar teclas");
+    	}
+    }
+    
     
     /**
      * @param args the command line arguments

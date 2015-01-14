@@ -35,6 +35,7 @@ public class Inicio {
 	static public String rutaFirmadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)";
 	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
 	static public String rutaAsociadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 Asociado";
+	static public String rutaDudas = ":\\digitalización\\00 documentacion\\99 Dudas";
 	static public InicioIanus inicioIanus;
 	
 	//	Ruta completa de las carpetas seleccionadas
@@ -102,6 +103,7 @@ public class Inicio {
 	//	rutaFirmadosUrgencias = unidadHDD + rutaFirmadosUrgencias;
 		rutaAsociados = unidadHDDvirtual + rutaAsociados;
 		rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
+		rutaDudas = unidadHDDvirtual + rutaDudas;
 		
 	//	String textoBase = LeerArchivos.obtenerHtml("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
 		
@@ -137,6 +139,16 @@ public class Inicio {
 			Usuario user = new Usuario();
 			user.alias= us[0];
 			user.imagen= us[1];
+			if(us[2].equals("urg")){
+				user.urgencias = true;
+			}
+			else{
+				user.urgencias = false;
+			}
+			user.usuario = us[3];
+			if(user.usuario.equals(" ")){
+				user.usuario = "";
+			}
 			usuarios[i] = user;
 		}
 	}

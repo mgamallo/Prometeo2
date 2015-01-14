@@ -159,10 +159,10 @@ public class LeerExcel {
 	        hoja = archivoExcel.getSheet(2);
 	        numFilas = 0;
 	        
-	        coordenadasAsociar = new int[4][4];
-	        for(int fila=0;fila<4;fila++){
+	        coordenadasAsociar = new int[6][4];
+	        for(int fila=0;fila<6;fila++){
 	        	for(int columna = 0;columna<4;columna++){
-	        		coordenadasAsociar[fila][columna] = Integer.parseInt(hoja.getCell(1 + columna,4 +fila).getContents().toString());
+	        		coordenadasAsociar[fila][columna] = Integer.parseInt(hoja.getCell(1 + columna,2 +fila).getContents().toString());
 
 	        	}
 	        }

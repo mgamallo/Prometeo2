@@ -72,7 +72,7 @@ public class VentanaNombres extends javax.swing.JFrame {
 		listaServicio = new javax.swing.JList();
 		comboServicio = new javax.swing.JComboBox();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		setTitle("Nombres");
 		setPreferredSize(new java.awt.Dimension(1024, 380));
 
@@ -395,6 +395,8 @@ public class VentanaNombres extends javax.swing.JFrame {
 			}
 		}
 		
+		Inicio.vExplorador.asociaDocumento(nombreDocumentoSeleccionado);
+
 		
 		/*
 		InicioIanus.documentoActivo.nombreDocumento = nombreDocumentoSeleccionado;

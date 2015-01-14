@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="utf-8" />
+<title>Normas</title>
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<link rel="stylesheet" href="css/modal.css">
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-scroll.js"></script>
+<script src="js/metro/metro-listview.js"></script>
+
+<script>
+
+	function inicio(){
+		var ancla = document.getElementById('abrir');
+		// ancla.click();
+	}
+
+	function modalOn(id){
+		document.getElementById('fondooscuro').style.display='block';
+		document.getElementById('contenido').style.display='block';
+		document.getElementById('columna').innerHTML = id;
+	}
+
+	function modalOff(){
+		document.getElementById('fondooscuro').style.display='none';
+		document.getElementById('contenido').style.display='none';
+	}
+
+</script>
+
+</head>
+
+<body class="metro" onload="inicio()" style="background: black;">
+
+	<!--  <div class="tile double double-vertical"></div> -->
+
+	<div id="fondooscuro"></div>
+	<div id="contenido">
+
+		<a href="javascript:void(0);" 
+		   onclick="modalOff()">
+			Cerrar Ventana
+		</a>
+		<p>Contenido de la ventana <span id='columna'></span></p>
+
+
+	</div>
+
+	<div class="tile-area tile-area-dark"
+		style="width: 800px; height: 1123px">
+
+		<h1 class="fg-white">Normas</h1>
+		
+		<br> <br> <br> <br> <br>
+
+
+
+		<div class="row">
+			<div class="span12">
+				<button href= "command://normasAll" class="button large bg-cobalt fg-white" style="margin-left: 20px" title="Todos" >
+					<i class="icon-cabinet fg-white"></i>
+					Todas
+
+				</button> 
+
+				<div class="button-dropdown">
+					<button class="dropdown-toggle large bg-emerald fg-white">
+						<i class="icon-tag"></i>
+					 Servicios 
+
+					</button>
+					<ul class="dropdown-menu" data-role="dropdown">
+						<li><a href="#"> CARC </a></li>
+						<li><a href="#"> DERC</a></li>
+						<li><a href="#"> HEMC </a></li>
+						<li><a href="#"> TRAC </a></li>
+					</ul>
+
+
+				</div>
+				<a class="command-button bg-emerald fg-white" title="Servicio" href="command://normasServicio">
+					<i class="icon-tag fg-white"></i>
+					Servicio
+
+				</a>
+				<a class="tile half bg-crimson" title="Buscar" href="command://buscarNorma"> 
+					<div class="tile-content icon">
+						<i class="icon-search"></i>
+					</div>
+				</a>
+					<a class="tile half bg-yellow" title="Limpiar" href="command://limpiar"> 
+					<div class="tile-content icon">
+						<i class="icon-backspace-2"></i>
+					</div>
+				</a>
+				<a class="tile half bg-red" title="Imprimir" href="command://imprimir">
+					<div class="tile-content icon">
+						<i class=" icon-layers"></i>
+					</div>
+
+				</a>
+
+				<a class="command-button bg-cobalt fg-white ">
+
+					<i class="icon-cabinet fg-white"></i>
+					Todas
+				</a>
+				<form>
+	               <div class="input-control text">
+                   	<input type="text" placeholder="Search...">
+                    <button class="btn-search"></button>
+                   </div>
+           		</form>
+
+
+				<br>
+				<span class="fg-white item-title" style="font-size: 10px;">Número de carpetas: <span class="fg-crimson item-title" id="carpetasSubidas" > 0</span></span>
+				<br>
+				<span class="fg-white item-title" style="font-size: 14px;">Documentos subidos: <strong class="fg-crimson item-title" id="pdfsSubidos"> 0</strong></span>
+			</div>
+		</div>
+
+
+		<div class="listview" style="margin-top: 60px" id="listaCarpetas">
+	
+		</div>
+
+		<div>
+					<table class="table hovered">
+                        <thead>
+                        <tr>
+                            <th class="text-left">Fecha</th>
+                            <th class="text-left">Servicios</th>
+                            <th class="text-left">Contenido</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr id="01" onclick="modalOn('01');"><td>20/02/2014</td><td class="right">Carc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="02" onclick="location.href= 'http://www.google.es'"><td>22/03/2014</td><td class="right">HEMC, ONCC</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="03" onclick="modalOn('03');"><td>12/04/2014</td><td class="right">Trac, Rehc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="04" onclick="modalOn('04');"><td>17/05/2014</td><td class="right">Todos</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="05" onclick="modalOn('05');"><td>05/08/2014</td><td class="right">Todos</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="06" onclick="modalOn('06');"><td>20/12/2014</td><td class="right">Anrc, Carc, Digc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        </tbody>
+
+                        <tfoot></tfoot>
+                    </table>
+		</div>
+		
+	</div>
+
+
+	
+</body>
+</html>

@@ -2,28 +2,68 @@ package es.mgamallo.prometeo;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 public class Cerrar {
 
 	static public void cerrarTodo(){
-		String cmd1 = "taskkill.exe /F /IM AcroRd32.exe /T";
-		String cmd2 = "taskkill.exe /F /IM iexplore.exe /T";
+		String cmd1 = "taskkill.exe /F /IM /T AcroRd32.exe ";
+		String cmd2 = "taskkill.exe /F /IM /T iexplore.exe ";
 		
 		Process hijo1, hijo2;
 		
+		cerrarIexplorer();
+		
 		try {
 			hijo1 = Runtime.getRuntime().exec(cmd1);
-			hijo2 = Runtime.getRuntime().exec(cmd2);
 			
+		//	hijo2 = Runtime.getRuntime().exec(cmd2);
+			
+			// No se porqué con las siguientes instrucciones se bloquea en el ordenador 2.
+			/*
 			hijo1.waitFor();
 			hijo2.waitFor();
-			
-			Thread.sleep(500);
+			*/
+			Thread.sleep(300);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error IOException al cerrar procesos");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error InterruptedException al cerrar procesos");
+		}
+
+	}
+	
+	static public void cerrarIexplorer(){
+
+		String cmd2 = "taskkill.exe /F /IM iexplore.exe /T";
+		
+		Process hijo2;
+		
+		try {
+
+			System.out.println("Empieza la matanza");
+			hijo2 = Runtime.getRuntime().exec(cmd2);
+
+			//			hijo2.waitFor();
+			System.out.println("sleep");
+			Thread.sleep(500);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error IOException al cerrar procesos");
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error InterruptedException al cerrar procesos");
+			
+		} catch(IllegalThreadStateException e){
 			e.printStackTrace();
 		}
 

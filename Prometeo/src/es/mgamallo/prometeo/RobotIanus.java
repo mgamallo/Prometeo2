@@ -10,17 +10,17 @@ import java.awt.event.KeyEvent;
 
 public class RobotIanus {
 	
-	public final int retardo_antes_examinar = 250;
 	
 	public final String DOC_ANULADO = "Documento anulado";
-	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDDejecutable + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
+	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDDvirtual + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
+	public Point coordTitulo = new Point(0,0);
 	public Point coordExaminar = new Point(0,0);
 	public Point coordAceptar = new Point(0,0);
 	
 	private int aceptarManualX = 1627, aceptarManualY = 710;
 	
-	int retardoTrasPulsarExaminar = 500;
+
 	
 	private void setCoordenadas(String tipoSubida){
 		
@@ -35,15 +35,18 @@ public class RobotIanus {
 		}else if(tipoSubida.equals("QUI")){
 			columna = 3;
 		}
-		coordExaminar.x = Inicio.inicioIanus.coordenadasAsociar[0][columna];
-		coordExaminar.y = Inicio.inicioIanus.coordenadasAsociar[1][columna];
-		coordAceptar.x = Inicio.inicioIanus.coordenadasAsociar[2][columna];
-		coordAceptar.y = Inicio.inicioIanus.coordenadasAsociar[3][columna];
+		coordTitulo.x = Inicio.inicioIanus.coordenadasAsociar[0][columna];
+		coordTitulo.y = Inicio.inicioIanus.coordenadasAsociar[1][columna];
+		coordExaminar.x = Inicio.inicioIanus.coordenadasAsociar[2][columna];
+		coordExaminar.y = Inicio.inicioIanus.coordenadasAsociar[3][columna];
+		coordAceptar.x = Inicio.inicioIanus.coordenadasAsociar[4][columna];
+		coordAceptar.y = Inicio.inicioIanus.coordenadasAsociar[5][columna];
 		
 		System.out.println(coordExaminar.y + ", " + coordAceptar.y);
 	}
 	
 	public void asocia(String titulo){
+
 		
 		System.out.println(titulo);
 		
@@ -51,34 +54,39 @@ public class RobotIanus {
 		
 		// String alias = titulo.substring(0,5);
 		
+		Retardos retardos = new Retardos();
 		
-		setCoordenadas(Inicio.inicioIanus.tipoSubida);
+		setCoordenadas(InicioIanus.tipoSubida);
 		
-		if(Inicio.inicioIanus.tipoSubida.equals("HOS")){
-			if(Inicio.inicioIanus.titHosp.containsKey(titulo)){
-				alias = Inicio.inicioIanus.titHosp.get(titulo);
-			}
+		if(!InicioIanus.versionar){
 			
-		}
-		else if(Inicio.inicioIanus.tipoSubida.equals("CEX") || 
-				Inicio.inicioIanus.tipoSubida.equals("EPI")){
-					if(Inicio.inicioIanus.titCons.containsKey(titulo)){
-						alias = Inicio.inicioIanus.titCons.get(titulo);
-					}
-		}
-		else if(Inicio.inicioIanus.tipoSubida.equals("URG")){
-			if(Inicio.inicioIanus.titUrg.containsKey(titulo)){
-				alias = Inicio.inicioIanus.titUrg.get(titulo);
+			
+			if(InicioIanus.tipoSubida.equals("HOS")){
+				if(Inicio.inicioIanus.titHosp.containsKey(titulo)){
+					alias = Inicio.inicioIanus.titHosp.get(titulo);
+				}
+				
 			}
-		}
-		else if(Inicio.inicioIanus.tipoSubida.equals("QUI")){
-			if(Inicio.inicioIanus.titQui.containsKey(titulo)){
-				alias = Inicio.inicioIanus.titQui.get(titulo);
+			else if(InicioIanus.tipoSubida.equals("CEX") || 
+					InicioIanus.tipoSubida.equals("EPI")){
+						if(Inicio.inicioIanus.titCons.containsKey(titulo)){
+							alias = Inicio.inicioIanus.titCons.get(titulo);
+						}
 			}
-		}
-		else if(Inicio.inicioIanus.tipoSubida.equals("CIA")){
-			if(Inicio.inicioIanus.titCIA.containsKey(titulo)){
-				alias = Inicio.inicioIanus.titCIA.get(titulo);
+			else if(InicioIanus.tipoSubida.equals("URG")){
+				if(Inicio.inicioIanus.titUrg.containsKey(titulo)){
+					alias = Inicio.inicioIanus.titUrg.get(titulo);
+				}
+			}
+			else if(InicioIanus.tipoSubida.equals("QUI")){
+				if(Inicio.inicioIanus.titQui.containsKey(titulo)){
+					alias = Inicio.inicioIanus.titQui.get(titulo);
+				}
+			}
+			else if(InicioIanus.tipoSubida.equals("CIA")){
+				if(Inicio.inicioIanus.titCIA.containsKey(titulo)){
+					alias = Inicio.inicioIanus.titCIA.get(titulo);
+				}
 			}
 		}
 		
@@ -86,7 +94,7 @@ public class RobotIanus {
 		try {
 			robot = new Robot();
 
-		
+		/******************************************
 		//	1 Coge foco de la ventana modal
 		
 		robot.mouseMove(1550, 825);
@@ -97,50 +105,92 @@ public class RobotIanus {
 		//	2 Tabulador
 		robot.keyPress(KeyEvent.VK_TAB);
 		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(130);
+		robot.delay(130 + Retardos.S_lento);
+		**********************************************/
 		
 		// 	3.0 Escribe título
+		
+		robot.delay(100 + retardos.retardoDibujarVentana);	
+		
+		if(alias.length()> 0 && !InicioIanus.versionar){
+			robot.mouseMove(coordTitulo.x, coordTitulo.y - 27);
+			System.out.println(coordTitulo.x + " " + coordTitulo.y);
+			robot.delay(25);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			robot.delay(200);
+			
+			if(!titulo.contains(DOC_ANULADO)){
+				System.out.println(alias);
+				for(int k = 0; k< alias.length();k++){
+					getChar(alias.charAt(k));
+					robot.delay(50);
+					System.out.println(alias.charAt(k));
+				}
+			}
+			else{
+				robot.delay(100);
+				getChar('a');
+				robot.delay(500);
+				robot.keyPress(KeyEvent.VK_UP);
+				robot.keyRelease(KeyEvent.VK_UP);
+				robot.delay(75);
+				System.out.println("anulando");
+			}
+			
+			
+			//	3.1	Enter
+			robot.delay(100);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			robot.delay(250);
+		}
 
 		
-		if(!titulo.contains(DOC_ANULADO)){
-			System.out.println(alias);
-			for(int k = 0; k< alias.length();k++){
-				getChar(alias.charAt(k));
-				robot.delay(50);
-				System.out.println(alias.charAt(k));
-			}
-		}
-		else{
-			robot.delay(100);
-			getChar('a');
-			robot.delay(500);
-			robot.keyPress(KeyEvent.VK_UP);
-			robot.keyRelease(KeyEvent.VK_UP);
-			robot.delay(75);
-			System.out.println("anulando");
-		}
 		
+
+	
+
 		
-//  Creo que se puede prescindir de este enter, cambiandolo por un tabulador		
-	/*	
-		//	3.1	Enter
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);		
-	*/	
-		
+		/*
 		// 4 Tabulador
+		robot.delay(200);
 		robot.keyPress(KeyEvent.VK_TAB);
 		robot.keyRelease(KeyEvent.VK_TAB);
 		robot.delay(200);
+		*/
+		
+		if(!InicioIanus.versionar){
+			robot.mouseMove(coordTitulo.x, coordTitulo.y );
+			robot.delay(50);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			robot.delay(50);
+		}else{
+			robot.mouseMove(coordTitulo.x, coordTitulo.y - 27);
+			robot.delay(50);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			robot.delay(200);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.keyRelease(KeyEvent.VK_TAB);
+			robot.delay(150);
+		}
 		
 		//	5 Pega título
+		
+		//	Comprueba si es un subtitulo
+		int indexParentesis = titulo.indexOf("(");
+		if(indexParentesis != -1){
+			titulo = titulo.substring(indexParentesis+1,titulo.length()-1);
+			System.out.println(titulo);
+		}
+		
 		Portapapeles copiar = new Portapapeles();
 		copiar.copiarAlPortapapeles(titulo);
 		
 
-		
+		/*
 		if(titulo.toLowerCase().contains(Inicio.inicioIanus.DOC_ANULADO.toLowerCase())){
 			robot.delay(100);
 			robot.mousePress(InputEvent.BUTTON1_MASK);
@@ -151,8 +201,9 @@ public class RobotIanus {
 			robot.delay(75);
 			robot.keyPress(KeyEvent.VK_CLEAR);
 		}
+		*/
 		
-		robot.delay(150);
+		robot.delay(150 /* + Retardos.S_lento */);
 		
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
@@ -160,27 +211,12 @@ public class RobotIanus {
 		robot.keyRelease(KeyEvent.VK_CONTROL);
 		robot.delay(75);
 		
-		/*
-		//	6-7 Tabulador
-		for(int i=0;i<2;i++){
-			robot.keyPress(KeyEvent.VK_TAB);
-			robot.keyRelease(KeyEvent.VK_TAB);
-			robot.delay(75);
-		}
-		
-		//	8 Barra espaciadora;
-		robot.keyPress(KeyEvent.VK_SPACE);
-		robot.keyRelease(KeyEvent.VK_SPACE);
-		robot.delay(retardo_antes_examinar);
-		
-		
-		//	9 Pega ruta
-		*/
+
 		
 		// Pulsa examinar
 		
 		robot.mouseMove(coordExaminar.x, coordExaminar.y);
-		robot.delay(125);
+		robot.delay(100);
 		robot.mousePress(InputEvent.BUTTON1_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_MASK);
 		
@@ -193,13 +229,13 @@ public class RobotIanus {
 			copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
 		}
 
-		robot.delay(retardoTrasPulsarExaminar);		
+		robot.delay(retardos.retardoTrasPulsarExaminar /* +  Retardos.S_lento */);		
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_CONTROL);
 		
-		robot.delay(150);
+		robot.delay(150 /* + Retardos.S_lento */);
 		
 		//	10 Enter
 		robot.keyPress(KeyEvent.VK_ENTER);
@@ -222,9 +258,11 @@ public class RobotIanus {
 		
 		//	12 Aceptar
 
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(200);
+		if(!InicioIanus.versionar){
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			robot.delay(200);
+		}
 		
 		System.out.println("pegado");
 		
@@ -232,17 +270,22 @@ public class RobotIanus {
 /*		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 */		
-		
-		robot.mouseMove(aceptarManualX, aceptarManualY);
-		
+		if(!InicioIanus.versionar){
+			robot.mouseMove(aceptarManualX, aceptarManualY);
+		}
 		
 		// CapturaRatonYTeclado.barraEspaciadoraOn = true;
+		
+		
+		//	Inicio.panelPrincipal.webBrowserOperaciones.setVisible(false);
+		
 		
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			InicioIanus.versionar = false;
 		}
-		
+		InicioIanus.versionar = false;
 	}
 	
 	

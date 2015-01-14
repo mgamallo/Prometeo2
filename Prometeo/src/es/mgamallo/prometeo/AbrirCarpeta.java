@@ -19,9 +19,9 @@ public class AbrirCarpeta {
 	boolean directorioSeleccionado;
 		
 	AbrirCarpeta(boolean renombrar){
-		if(InicioIanus.documentacion == 0){
-			ruta = InicioIanus.RUTAURG;
-			rutab = InicioIanus.RUTAURGB;
+		if(Inicio.usuario.urgencias){
+			ruta = InicioIanus.RUTAURG + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
+			rutab = InicioIanus.RUTAURGB + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 		}
 		
 
@@ -31,9 +31,9 @@ public class AbrirCarpeta {
 	}
 
 	AbrirCarpeta(boolean renombrar, boolean metro){
-		if(InicioIanus.documentacion == 0){
-			ruta = InicioIanus.RUTAURG;
-			rutab = InicioIanus.RUTAURGB;
+		if(Inicio.usuario.urgencias){
+			ruta = InicioIanus.RUTAURG + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
+			rutab = InicioIanus.RUTAURGB + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 		}	
 
 	}

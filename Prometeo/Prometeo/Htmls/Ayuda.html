@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="utf-8" />
+<title>Salir</title>
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-scroll.js"></script>
+<script src="js/metro/metro-listview.js"></script>
+
+<script>
+	function descartar(identificador) {
+		
+		var index = identificador.substr(5);
+		var lista = document.getElementById(identificador);
+		var check = document.getElementById(identificador + "c");
+		var seleccionado = check.checked;
+
+		if (seleccionado === true) {
+			check.checked = false;
+			lista.style.backgroundColor = "DarkSlateGray";
+		}
+
+		else {
+			check.checked = true;
+			lista.style.backgroundColor = "red";
+		}
+
+	}
+
+	function inicio(){
+		var ancla = document.getElementById('abrir');
+		ancla.click();
+	}
+	
+	function aviso() {
+		alert('hola');
+	}
+</script>
+
+</head>
+
+<body class="metro" onload="inicio()" style="background: black;">
+
+	<!--  <div class="tile double double-vertical"></div> -->
+
+	<div class="tile-area tile-area-dark"
+		style="width: 800px; height: 1123px">
+
+		<h1 class="fg-white">Salir</h1>
+		
+		<br> <br> <br> <br> <br>
+
+		<div class="row">
+			<div class="span12">
+				<a href= "command://carpetas" class="tile half bg-orange" style="margin-left: 20px" title="Abrir carpeta firmado" href="command://abrir" id="abrir">
+					<div class="tile-content icon">
+						<i class="icon-folder"></i>
+					</div>
+				</a> 
+				<a class="tile half bg-emerald" title="Enviar a asociados" href="command://enviar">
+					<div class="tile-content icon">
+						<i class=" icon-download"></i>
+					</div>
+				</a>
+				<a class="tile half bg-crimson" title="Salir sin archivar" href="command://salir"> 
+					<div class="tile-content icon">
+						<i class="icon-switch"></i>
+					</div>
+				</a>
+
+				<br>
+				<span class="fg-white item-title" style="font-size: 10px;">Número de carpetas: <span class="fg-crimson item-title" id="carpetasSubidas" > 0</span></span>
+				<br>
+				<span class="fg-white item-title" style="font-size: 14px;">Documentos subidos: <strong class="fg-crimson item-title" id="pdfsSubidos"> 0</strong></span>
+			</div>
+		</div>
+
+
+		<div class="listview" style="margin-top: 60px" id="listaCarpetas">
+	
+		</div>
+		
+	</div>
+	
+</body>
+</html>

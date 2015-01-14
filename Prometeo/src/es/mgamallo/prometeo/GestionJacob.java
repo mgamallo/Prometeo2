@@ -1,5 +1,7 @@
 package es.mgamallo.prometeo;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.swing.SwingUtilities;
@@ -79,8 +81,8 @@ public class GestionJacob {
 			Dispatch.put(Inicio.paciente1.ianus,"menubar",false);
 			Dispatch.put(Inicio.paciente1.ianus,"toolbar",false);
 			
-		    Dispatch.put(Inicio.paciente1.ianus,"height",1099);
-		    Dispatch.put(Inicio.paciente1.ianus,"top",180);
+		    Dispatch.put(Inicio.paciente1.ianus,"height",1149);  // 1099
+		    Dispatch.put(Inicio.paciente1.ianus,"top",130);  // 180
 		    Dispatch.put(Inicio.paciente1.ianus,"left",1024);
 			
 //		    introduceUsuarioJacob(Inicio.ianus2, Inicio.usuario);
@@ -93,8 +95,8 @@ public class GestionJacob {
 			Dispatch.put(Inicio.paciente2.ianus,"menubar",false);
 			Dispatch.put(Inicio.paciente2.ianus,"toolbar",false);
 			
-		    Dispatch.put(Inicio.paciente2.ianus,"height",1099);
-		    Dispatch.put(Inicio.paciente2.ianus,"top",180);
+		    Dispatch.put(Inicio.paciente2.ianus,"height",1149);
+		    Dispatch.put(Inicio.paciente2.ianus,"top",130);
 		    Dispatch.put(Inicio.paciente2.ianus,"left",1024);
 		}
 		
@@ -159,113 +161,142 @@ public class GestionJacob {
 		}
 	}
 
-	public static void buscaNodo(final ActiveXComponent ianus, final String servicio, final String tipoNodo, boolean inicializar){
+	public static void buscaNodo(final ActiveXComponent ianus, String servicio, final String tipoNodo, boolean inicializar){
 	//	SwingUtilities.invokeLater(new Runnable() {
 	//		public void run() {
-				
+				if(servicio == null){
+					servicio = InicioIanus.DESCONOCIDO;
+				}
 				//	Busca nodo
 				System.out.println("El servicio en GEstionJacob.buscaNodo es: " + servicio);
 				if(servicio.equals(InicioIanus.HOSP_JACOB)){
 					
-
-					try {
-
-						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.inicializacionPacienteNodoHosp(servicio));
-						Thread.sleep(2000);
-						Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.inicializacionPacienteSetFichaHosp());
-						Thread.sleep(300);	
-						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.obtieneDatosFichaHosp());
-
-						Thread.sleep(400);
-						Portapapeles cbTemporal = new Portapapeles();
-						String cadena = cbTemporal.getDatosPaciente();
-						
-						if(Inicio.ianus1onTop){
-							Inicio.paciente1.ficha.setDatosFicha( cadena);
-						}
-						else{
-							Inicio.paciente2.ficha.setDatosFicha( cadena);
-						}
-				
-						Thread.sleep(100);
-						
-						if(ianus.equals(Inicio.paciente1.ianus)){
-							if(Inicio.ianus1onTop){
-								Inicio.vControlIanus.botonFecha.setText(Inicio.paciente1.ficha.fechaIngreso);
-								Inicio.vControlIanus.botonHora.setText(Inicio.paciente1.ficha.horaIngreso);
-								System.out.println(Inicio.paciente1.ficha.fechaIngreso);
-							}
-						}
-						else{
-							if(!Inicio.ianus1onTop){
-								Inicio.vControlIanus.botonFecha.setText(Inicio.paciente2.ficha.fechaIngreso);
-								Inicio.vControlIanus.botonHora.setText(Inicio.paciente2.ficha.horaIngreso);
-							}
-						}
-						
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(servicio.equals(InicioIanus.URG_JACOB)){
-					try {
-
-						
-						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoHosp(servicio));
-						
-						Thread.sleep(1000);
-						
-						Portapapeles cbTemporal = new Portapapeles();
-									
-						System.out.println("Obtenemos datos de la ficha");
-						Dispatch.call(ianus, "navigate","javascript:" + CadenasJavascript.obtieneDatosFichaURG());
-						
-						Thread.sleep(400);
-						String cadena = cbTemporal.getDatosPaciente();
-	
-						
-						if(Inicio.ianus1onTop){
-							Inicio.paciente1.ficha.setDatosFicha( cadena);
-						}
-						else{
-							Inicio.paciente2.ficha.setDatosFicha( cadena);
-						}
-						
-						Thread.sleep(100);
-						
-						if(ianus.equals(Inicio.paciente1.ianus)){
-							if(Inicio.ianus1onTop){
-								Inicio.vControlIanus.botonFecha.setText(Inicio.paciente1.ficha.fechaIngreso);
-								Inicio.vControlIanus.botonHora.setText(Inicio.paciente1.ficha.horaIngreso);
-								System.out.println(Inicio.paciente1.ficha.fechaIngreso);
-							}
-						}
-						else{
-							if(!Inicio.ianus1onTop){
-								Inicio.vControlIanus.botonFecha.setText(Inicio.paciente2.ficha.fechaIngreso);
-								Inicio.vControlIanus.botonHora.setText(Inicio.paciente2.ficha.horaIngreso);
-							}
-						}
-						
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(servicio.equals(InicioIanus.CIA_JACOB)){
+					if(inicializar){
 						try {
+
+							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.inicializacionPacienteNodoHosp(servicio));
+							Thread.sleep(2000);
+					//		Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.inicializacionPacienteSetFichaHosp());
+					//		Thread.sleep(300);	
 							
-							Thread.sleep(10);
+							/*
+							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.obtieneDatosFichaHosp());
+
+							Thread.sleep(400);
+							Portapapeles cbTemporal = new Portapapeles();
+							String cadena = cbTemporal.getDatosPaciente();
 							
-							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoHosp(servicio));
+							if(Inicio.ianus1onTop){
+								Inicio.paciente1.ficha.setDatosFicha( cadena);
+							}
+							else{
+								Inicio.paciente2.ficha.setDatosFicha( cadena);
+							}
+					
+					
+							Thread.sleep(100);
 							
-		
+							if(ianus.equals(Inicio.paciente1.ianus)){
+								if(Inicio.ianus1onTop){
+									Inicio.vControlIanus.botonFecha.setText(Inicio.paciente1.ficha.fechaIngreso);
+									Inicio.vControlIanus.botonHora.setText(Inicio.paciente1.ficha.horaIngreso);
+									System.out.println(Inicio.paciente1.ficha.fechaIngreso);
+								}
+							}
+							else{
+								if(!Inicio.ianus1onTop){
+									Inicio.vControlIanus.botonFecha.setText(Inicio.paciente2.ficha.fechaIngreso);
+									Inicio.vControlIanus.botonHora.setText(Inicio.paciente2.ficha.horaIngreso);
+								}
+							}
+							
+							*/
 							
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						System.out.println("Tipo nodo en ingresos inicial es: " + tipoNodo + " en ianus1: " + Inicio.ianus1onTop);
+						if(!tipoNodo.equals("x")){
+							try {
+
+								String clave = "";
+								if(tipoNodo.equals("q")){
+									Thread.sleep(1200);
+									clave = "QUI:";
+								}
+								System.out.println("Buscando quirofano....");
+								Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.buscarNodoHospHijo(clave));
+								
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+					else{
+						if(!tipoNodo.equals("x")){
+							String clave = "";
+							if(tipoNodo.equals("q")){
+								clave = "QUI:";
+							}
+				
+							System.out.println("GestionJacob.consulta. Debería elegir nodo fecha. No iniciado.");
+							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.buscarNodoHospHijo(clave));
+						}
+						else{
+							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.pulsaNodoPadre());
+						}
+					}
+
+				}
+				else if(servicio.equals(InicioIanus.URG_JACOB)){
+					
+					if(inicializar){
+						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoUrgInicial("01/01/14"));
+						
+						try {
+							Thread.sleep(500);
+							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoUrgIngreso("01/01/14"));
+
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else{
+						Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.pulsaNodoPadre());
+					}
+
+				}
+				else if(servicio.equals(InicioIanus.CIA_JACOB)){
+					
+					if(inicializar){
+						System.out.println("Imprimiendo en GestionJacob. Inicializar. CIA. " + servicio);
+						
+						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoCiaInicial(servicio));
+						
+						if(!tipoNodo.equals("x")){
+							try {
+								Thread.sleep(1200);
+								Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoCiaIngreso("QUI:"));
+
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+		
+					}else{
+						if(!tipoNodo.equals("x")){
+							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoCiaIngreso("QUI:"));
+						}
+						else{
+							Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.pulsaNodoPadre());
+
+						}
+					}
+
 				}
 				else if(!servicio.equals(InicioIanus.DESCONOCIDO)){
 					
@@ -273,7 +304,6 @@ public class GestionJacob {
 						System.out.println("Imprimiendo en GestionJacob. Inicializar. Consulta. " + servicio);
 	
 						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoConsultasInicial(servicio));
-						System.out.println("Imprimido. supuestamente.");
 
 						try {
 							Thread.sleep(1200);
@@ -328,7 +358,7 @@ public class GestionJacob {
 	//	});
 	}
 	
-	
+/*	
 	public static void buscaNodoYpulsaBotonAsociar(final ActiveXComponent ianus, final String servicio, final String tipoNodo){
 	//	SwingUtilities.invokeLater(new Runnable() {
 	//		public void run() {
@@ -358,7 +388,7 @@ public class GestionJacob {
 		//	}
 	//	});
 	}
-	
+*/	
 	
 	public static void introduceNHC(final ActiveXComponent ianus, final String nomIanus, final String nhc){
 		SwingUtilities.invokeLater(new Runnable() {
@@ -378,6 +408,103 @@ public class GestionJacob {
 		});
 	}
 	
+	public static void cambiaPaciente(final ActiveXComponent ianus,final String nomIanus){
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				
+				try {
+					Dispatch.call(ianus, "navigate","javascript:window.frames.principal.botonera.inicio()");
+
+					if(nomIanus.equals(Gestion2Ianus.nombreIanus1)){
+						Inicio.ianus1onTop = false;
+
+					}
+					else{
+						Inicio.ianus1onTop = true;
+					}
+					
+					if(Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.HOSP) || 
+							Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.CIA)){
+
+						
+						if(nomIanus.equals(Gestion2Ianus.nombreIanus1)){
+							Dispatch.call(Inicio.paciente2.ianus, "Navigate","javascript:" + CadenasJavascript.inicializacionPacienteSetFichaHosp());
+							Thread.sleep(200);
+							System.out.println("Agranda fechas");
+							Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaIngreso01());
+							Thread.sleep(200);
+							Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaIngreso02());
+							
+
+						}
+						else{
+							Dispatch.call(Inicio.paciente1.ianus, "Navigate","javascript:" + CadenasJavascript.inicializacionPacienteSetFichaHosp());
+							Thread.sleep(200);
+							System.out.println("Agranda fechas");
+							Dispatch.call(Inicio.paciente1.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaIngreso01());
+							Thread.sleep(200);
+							Dispatch.call(Inicio.paciente1.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaIngreso02());
+
+						}
+	
+					}
+					
+					if(Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.URG)){
+
+						
+						if(nomIanus.equals(Gestion2Ianus.nombreIanus1)){
+							Dispatch.call(Inicio.paciente2.ianus, "Navigate","javascript:" + CadenasJavascript.inicializacionPacienteSetFichaUrg());
+							Thread.sleep(300);
+							System.out.println("Agranda fechas");
+							Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaUrg01());
+							Thread.sleep(300);
+							Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaUrg02());
+							
+
+						}
+						else{
+							Dispatch.call(Inicio.paciente1.ianus, "Navigate","javascript:" + CadenasJavascript.inicializacionPacienteSetFichaUrg());
+							Thread.sleep(300);
+							System.out.println("Agranda fechas");
+							Dispatch.call(Inicio.paciente1.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaUrg01());
+							Thread.sleep(300);
+							Dispatch.call(Inicio.paciente1.ianus,"Navigate","javascript:" + CadenasJavascript.resaltarFechaUrg02());
+
+						}
+	
+					}
+					/*
+					else if(!Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.HOSP) && 
+							!Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.CIA) &&
+							!Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.URG)){
+								
+						if(nomIanus.equals(Gestion2Ianus.nombreIanus1)){
+
+							System.out.println("Cambia colores");
+							Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.cambiaFondoConstultas01());
+							Thread.sleep(200);
+							Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.cambiaFondoConstultas02());
+						}
+						else{
+
+							System.out.println("Cambia colores");
+							Dispatch.call(Inicio.paciente1.ianus,"Navigate","javascript:" + CadenasJavascript.cambiaFondoConstultas01());
+							Thread.sleep(200);
+							Dispatch.call(Inicio.paciente1.ianus,"Navigate","javascript:" + CadenasJavascript.cambiaFondoConstultas02());
+						}		
+					}
+					
+					*/
+				} catch (Exception e) {
+					// TODO Auto-generated catch blockNota ingreso
+					e.printStackTrace();
+					rescateJacob(nomIanus);
+				}
+
+			}																	
+			
+		});
+	}
 	
 	public static void getIdeEpisodio(){
 		SwingUtilities.invokeLater(new Runnable() {
@@ -415,6 +542,44 @@ public class GestionJacob {
 			}
 		});
 	}
+	
+	public static void putAnclaPadre(final String codigoJavascript){
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				ActiveXComponent ianusActivo = new ActiveXComponent("InternetExplorer.Application");
+				String aux = "";
+				
+				
+				try {
+					if(Inicio.ianus1onTop){
+						aux = "Ianus 1";
+						ianusActivo = Inicio.paciente1.ianus;
+						Dispatch.call(ianusActivo, "Navigate",codigoJavascript);
+						System.out.println("Enviado a ianus 1");
+
+					}
+					else{
+						aux = "Ianus 2";
+						ianusActivo = Inicio.paciente2.ianus;
+						Dispatch.call(ianusActivo, "Navigate",codigoJavascript);
+						System.out.println("Enviado a ianus 2");
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Falló el ianus a la hora de asociar. " + aux);
+					
+					rescateJacob(aux);
+				}
+			}
+		});
+	}
+	
 	
 	public static void pulsaBotonAsociar(){
 		SwingUtilities.invokeLater(new Runnable() {
@@ -454,8 +619,8 @@ public class GestionJacob {
 	
 	public static void introduceUsuarioJacob(final ActiveXComponent ianus, final Usuario user){
 		
-		user.usuario = "mgamgul1";
-		user.password = "archivo1";
+		user.usuario = "mgamg1";
+		user.password = "xxx";
 
 		System.out.println(user.password);
 		
@@ -523,5 +688,40 @@ public class GestionJacob {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static void pulsaVersionar(){
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				
+				
+				ActiveXComponent ianusActivo = new ActiveXComponent("InternetExplorer.Application");
+				String aux = "";
+				
+				
+				try {
+					if(Inicio.ianus1onTop){
+						aux = "Ianus 1";
+						ianusActivo = Inicio.paciente1.ianus;
+						Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.pulsarVersionar());
+						
+
+					}
+					else{
+						aux = "Ianus 2";
+						ianusActivo = Inicio.paciente2.ianus;
+						Dispatch.call(ianusActivo, "Navigate",CadenasJavascript.pulsarVersionar());
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Falló el ianus a la hora de versionar. " + aux);
+					
+					rescateJacob(aux);
+					
+				}
+			}
+		});
 	}
 }

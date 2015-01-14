@@ -47,7 +47,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         labelCIPextraido = new javax.swing.JLabel();
         labelNSSextraida = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 200));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 180));
@@ -104,7 +104,7 @@ public class VentanaControlIanus extends javax.swing.JFrame {
         );
 
         panelBotones.setBackground(new java.awt.Color(255, 228, 181));//
-        panelBotones.setPreferredSize(new java.awt.Dimension(0, 70));
+        panelBotones.setPreferredSize(new java.awt.Dimension(0, 110));
 
         botonNHC.setBackground(new java.awt.Color(0, 255, 0));
         botonNHC.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -141,9 +141,9 @@ public class VentanaControlIanus extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                		.addComponent(botonNHC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonNombreDocumento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonServicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                		.addComponent(botonNHC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, 60)
+                        .addComponent(botonNombreDocumento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, 60)
+                        .addComponent(botonServicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, 60))
                 .addContainerGap())
         );
 

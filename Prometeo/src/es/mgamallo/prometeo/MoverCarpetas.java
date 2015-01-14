@@ -91,9 +91,19 @@ public class MoverCarpetas {
 	
 
 	static public ArrayList<Directorio> getCarpetasSubidas(){
-		File directorioFirmados = new File(InicioIanus.RUTA);
+		
+		String ruta = InicioIanus.RUTA;
+		String rutab = InicioIanus.RUTAB;
+		
+		if(Inicio.usuario.urgencias){
+			ruta = InicioIanus.RUTAURG + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
+			rutab = InicioIanus.RUTAURGB + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
+		}
+		
+		File directorioFirmados = new File(ruta);
 		if(!directorioFirmados.exists()){
-			directorioFirmados = new File(InicioIanus.RUTAB);
+			ruta = rutab;
+			directorioFirmados = new File(ruta);
 		}
 		
 		if(directorioFirmados.exists()){

@@ -85,7 +85,7 @@ public class InterfazPrincipal implements MouseListener{
 	private final String USUARIO = "Usuario";
 	public static final String SALIR = "Salir";
 
-	public String panelActivo = "Usuarios";
+	public String panelActivo = USUARIO;
 	public boolean abracadabra = false;
 	
 	final String DIR_CONTROL = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
@@ -94,7 +94,7 @@ public class InterfazPrincipal implements MouseListener{
 //	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
 	final String DIR_ABRIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir.html";
 	final String DIR_AYUDA = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
-	final String DIR_NORMAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas/normas.html";
+	final String DIR_NORMAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas.html";
 	final String DIR_AVISOS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
 	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
 	final String DIR_USUARIO = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuario.html";
@@ -135,7 +135,7 @@ public class InterfazPrincipal implements MouseListener{
 	
 	public Carpetas carpeta;
 	
-	private boolean inicioCarpetasSubidas = true;
+	public boolean inicioCarpetasSubidas = true;
 	private ArrayList<Directorio> carpetasSubidas = new ArrayList<Directorio>();
 
 	public JComponent createContent() {
@@ -177,7 +177,7 @@ public class InterfazPrincipal implements MouseListener{
 				if ("usuario".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_USUARIO);
 					webBrowserOperaciones.setVisible(true);
-					MiHilo miHilo = new MiHilo(Inicio.usuario.alias);
+					MiHilo miHilo = new MiHilo(Inicio.usuario);
 					miHilo.start();
 					panelActivo = USUARIO;
 				} else if ("salir".equals(command)) {
@@ -225,7 +225,7 @@ public class InterfazPrincipal implements MouseListener{
 						barraPanelControlVisible = true;
 
 						webBrowserOperaciones.navigate(DIR_USUARIO);
-						MiHilo miHilo = new MiHilo(Inicio.usuario.alias);
+						MiHilo miHilo = new MiHilo(Inicio.usuario);
 						miHilo.start();
 
 						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
@@ -233,7 +233,40 @@ public class InterfazPrincipal implements MouseListener{
 					}
 
 					// panelActivo = "Usuario";
-				} else if (panelActivo.equals(ABRIR)) {
+				} else if(panelActivo.equals(USUARIO)){
+					System.out.println("Panel usuario");
+					
+					String cadena = "";
+					
+					if (command.equals("urg")) {
+						String claseOn = "tile bg-cobalt bg-hover-lightGreen bd-yellow selected";
+						String claseOff = "tile bg-green bg-hover-lightGreen bd-yellow";
+						cadena = ""
+								+ "document.getElementById('urg').className='" + claseOn + "';" + LS
+								+ "document.getElementById('doc').className='" + claseOff + "';" + LS
+								+ "document.getElementById('tipoDocumentacion').innerHTML = 'URGENCIAS';";
+						
+						Inicio.usuario.urgencias = true;
+					}
+					else if(command.equals("doc")){
+						String claseOff = "tile bg-cobalt bg-hover-lightGreen bd-yellow";
+						String claseOn = "tile bg-green bg-hover-lightGreen bd-yellow selected";
+						cadena = ""
+								+ "document.getElementById('doc').className='" + claseOn + "';" + LS
+								+ "document.getElementById('urg').className='" + claseOff + "';" + LS
+								+ "document.getElementById('tipoDocumentacion').innerHTML = 'DOCUMENTACIÓN';";
+						
+						Inicio.usuario.urgencias = false;
+					}
+					else if(command.equals("salir")){
+						frame.dispose();
+						Cerrar.cerrarTodo();
+						System.exit(0);
+					}
+					
+					webBrowserOperaciones.executeJavascript(cadena);
+					
+				}else if (panelActivo.equals(ABRIR)) {
 					System.out.println("Abrimos carpeta");
 
 					if (command.equals("abrir")) {
@@ -342,7 +375,7 @@ public class InterfazPrincipal implements MouseListener{
 						else{
 							String rutaCarpetaFirmados = Inicio.rutaFirmados;
 							if(Inicio.usuario.urgencias){
-								rutaCarpetaFirmados = Inicio.rutaFirmadosUrgencias;
+								rutaCarpetaFirmados = Inicio.unidadHDDvirtual + Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado" ;
 							}
 							
 							// Borrar esta asignacion
@@ -430,7 +463,11 @@ public class InterfazPrincipal implements MouseListener{
 		labelMaximizar.setBackground(new java.awt.Color(0, 0, 0));
 		labelMaximizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 		labelMaximizar.setForeground(new java.awt.Color(255, 255, 255));
-		labelMaximizar.setText("X");
+
+		
+		labelMaximizar.setText("<html>&#61441;</html>");
+
+		
 		labelMaximizar.setFocusable(false);
 		//labelMaximizar.setMargin(new java.awt.Insets(2, 2, 2, 14));
 		labelMaximizar.setMaximumSize(new java.awt.Dimension(45, 20));
@@ -641,11 +678,11 @@ public class InterfazPrincipal implements MouseListener{
 
 class MiHilo extends Thread {
 
-	final String cadenaJavascript;
+	final Usuario usuario;
 	protected static final String LS = System.getProperty("line.separator");
 
-	MiHilo(final String cadenaJavascript) {
-		this.cadenaJavascript = cadenaJavascript;
+	MiHilo(final Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public void run() {
@@ -668,7 +705,7 @@ class MiHilo extends Thread {
 				 */
 
 				final String cadena = CadenasJavascript
-						.putUsuario(cadenaJavascript);
+						.putUsuario(usuario);
 				
 			//	Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("alert('hola');");
 

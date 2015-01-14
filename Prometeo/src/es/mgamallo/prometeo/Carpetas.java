@@ -11,7 +11,9 @@ public class Carpetas {
 	
 	 // static String path = "d:/02 Area Pruebas/03 Firmado";
 	 static String path = "j:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
-	
+	 static String pathUrgA = "j:\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\";
+	 static String pathUrgB = "h:\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\";
+	 
 	private Directorio[] conjuntoCarpetas;
 	
 	ArrayList<Directorio> arrayCarpetas = new ArrayList<Directorio>();
@@ -21,9 +23,19 @@ public class Carpetas {
 	
 	Carpetas(boolean carpetaFirmados){
 		
+		if(Inicio.usuario.urgencias){
+			path = pathUrgA + "01 " + Inicio.usuario.alias + "\\03 Firmado";
+		}
+		
 		File caminito = new File(path);
 		if(!caminito.exists()){
-			path = "h:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
+			if(Inicio.usuario.urgencias){
+				path = pathUrgB + "01 " + Inicio.usuario.alias + "\\03 Firmado";
+			}
+			else{
+				path = "h:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
+			}
+			
 		}
 		
 		if(!carpetaFirmados){
@@ -285,6 +297,7 @@ class Directorio{
 	String servicio = "";
 	String color = "";
 	String dia = "";
+	String numCarpeta = "";
 	
 	Directorio(){
 		
@@ -347,20 +360,44 @@ class Directorio{
 		
 		
 		int indexDia = nombreCarpeta.indexOf("#");
-		cadena = cadena.substring(indexDia + 1);
-		int primerEspacioBlanco = cadena.indexOf(" ");
-		cadena = cadena.substring(primerEspacioBlanco + 1);
-		if(cadena.charAt(2) == ' '){
-				dia = cadena.substring(0,2);
-				cadena = cadena.substring(3);
-				//System.out.println(dia);
+		if(indexDia != -1){
+			cadena = cadena.substring(indexDia + 1);
+			int primerEspacioBlanco = cadena.indexOf(" ");
+			numCarpeta = cadena.substring(0,primerEspacioBlanco);
+			System.out.println(numCarpeta);
+			
+			cadena = cadena.substring(primerEspacioBlanco + 1);
+			if(cadena.length() > 2 && cadena.charAt(2) == ' '){
+					dia = cadena.substring(0,2);
+					cadena = cadena.substring(3);
+					//System.out.println(dia);
+			}
 		}
+
 		
 		servicio = cadena;
 		
 		cadena = cadena.toLowerCase();
 		
 		int claveColor = (int) (Math.random()*((numColores-1) - 0)) + 0;
+		
+		String colorDia[] = {"bg-yellow", "bg-teal","bg-amber","bg-lightBlue","bg-emerald"};
+		String colorFinal = "";
+
+		dia = dia.toLowerCase();
+		if(dia.equals("lu")){
+			colorFinal = colorDia[0];
+		}else if(dia.equals("ma")){
+			colorFinal = colorDia[1];
+		}else if(dia.equals("mi")){
+			colorFinal = colorDia[2];
+		}else if(dia.equals("ju")){
+			colorFinal = colorDia[3];
+		}else if(dia.equals("vi")){
+			colorFinal = colorDia[4];
+		}else{
+			colorFinal = "bg-" + arrayColores[claveColor];
+		}
 		
 		if(cadena.contains("anr")){
 			// servicio = "ANRC";
@@ -376,11 +413,11 @@ class Directorio{
 		}
 		else if(cadena.contains("ingr")){
 			// servicio = "Ingresos";
-			color = "bg-" + arrayColores[claveColor];
+			color = colorFinal;
 		}
 		else{
 			// servicio = cadena.toUpperCase();
-			color = "bg-" + arrayColores[claveColor];
+			color = colorFinal;
 		}
 		if(cadena.toLowerCase().contains("urg")){
 			// servicio = " urg.";

@@ -14,15 +14,15 @@ import com.jacob.com.Dispatch;
 
 
 public class Gestion2Ianus {
+	
+	public static String nombreIanus1 = "Ianus 1";
+	public static String nombreIanus2 = "Ianus 2";
 
 	protected static final String LS = System.getProperty("line.separator");
 	
 	int indiceNhc1 = 0;
 	int indiceNhc2 = 0;
-	
-	String nombreIanus1 = "Ianus 1";
-	String nombreIanus2 = "Ianus 2";
-	
+		
 	int retardoAsociar = 1500;
 	int retardoBuscarNodoInicial = 6000;
 	int retardoBuscarNodoFase2 = 200;
@@ -189,9 +189,14 @@ public class Gestion2Ianus {
 								buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,
 										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,true,retardoBuscarNodoFase2,false);
 							}
-							// GestionJacob.pulsaBotonAsociar();
-							// Inicio.vExplorador.asociaDocumento();
-
+							
+							if(InicioIanus.vAuto){
+	
+								// asociar(1400);
+								GestionJacob.pulsaBotonAsociar();
+							}
+							
+							/*
 							try {
 								Thread.sleep(retardoAsociar);
 							//	Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
@@ -199,18 +204,14 @@ public class Gestion2Ianus {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							*/
 						}
 						else{
 							
 							System.out.println("No es el mismo paciente y me salgo de ianus1");
 							
-							SwingUtilities.invokeLater(new Runnable() {
-								public void run() {
-								Dispatch.call(Inicio.paciente1.ianus, "navigate","javascript:window.frames.principal.botonera.inicio()");
-								Inicio.ianus1onTop = false;
-								}																	
-								
-							});
+							GestionJacob.cambiaPaciente(Inicio.paciente1.ianus, nombreIanus1);
+							
 							Inicio.vControlIanus.panelControlesAux.setBackground(new Color(80,200,120));
 
 							Inicio.vControlIanus.labelNumeroIanus.setText(nombreIanus2);
@@ -227,7 +228,7 @@ public class Gestion2Ianus {
 							if(indiceNhc1 != -1){
 								Inicio.nhcDelIanus1 = Inicio.documento[indiceNhc1].nhc;
 								
-								introduceNHC(Inicio.paciente1.ianus, nombreIanus1, Inicio.nhcDelIanus1,Retardo.retIntroNHC);
+								introduceNHC(Inicio.paciente1.ianus, nombreIanus1, Inicio.nhcDelIanus1,Retardos.retIntroNHC);
 								// Inicio.ianus1.frame.setAlwaysOnTop(false);
 								// Inicio.ianus2.frame.setAlwaysOnTop(true);
 								
@@ -254,6 +255,9 @@ public class Gestion2Ianus {
 								retardo(250);
 								Dispatch.put(Inicio.paciente2.ianus,"Visible",true);
 								Inicio.ianus1onTop = false;
+							
+								
+								
 								
 							}
 						}
@@ -272,8 +276,15 @@ public class Gestion2Ianus {
 										Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado, true,true,retardoBuscarNodoFase2,false);
 							}
 							
+							if(InicioIanus.vAuto){
+								
+								// asociar(1400);
+								GestionJacob.pulsaBotonAsociar();
+							}
+							
 							// GestionJacob.pulsaBotonAsociar();
 							
+							/*
 							try {
 								Thread.sleep(retardoAsociar);
 								//Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
@@ -281,7 +292,7 @@ public class Gestion2Ianus {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
+							*/
 						//	Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
 
 						}
@@ -289,9 +300,9 @@ public class Gestion2Ianus {
 							
 							//	Salir del paciente
 							// boolean aux = GestionJacob.salirDelPaciente();
-							Dispatch.call(Inicio.paciente2.ianus, "navigate","javascript:window.frames.principal.botonera.inicio()");
-							Inicio.ianus1onTop = true;
 							
+							GestionJacob.cambiaPaciente(Inicio.paciente2.ianus, nombreIanus2);
+													
 							Inicio.vControlIanus.panelControlesAux.setBackground(new Color(80,200,120));
 
 							Inicio.vControlIanus.labelNumeroIanus.setText(nombreIanus1);
@@ -309,7 +320,7 @@ public class Gestion2Ianus {
 							if(indiceNhc2 != -1){
 								Inicio.nhcDelIanus2 = Inicio.documento[indiceNhc2].nhc;
 								
-								introduceNHC(Inicio.paciente2.ianus, nombreIanus2,Inicio.nhcDelIanus2,Retardo.retIntroNHC);
+								introduceNHC(Inicio.paciente2.ianus, nombreIanus2,Inicio.nhcDelIanus2,Retardos.retIntroNHC);
 								// Inicio.ianus2.frame.setAlwaysOnTop(false);
 								// Inicio.ianus1.frame.setAlwaysOnTop(true);
 								
@@ -334,6 +345,8 @@ public class Gestion2Ianus {
 								retardo(250);
 								Dispatch.put(Inicio.paciente1.ianus,"Visible",true);
 								Inicio.ianus1onTop = true;
+								
+								
 							}
 						}
 				}
@@ -422,5 +435,24 @@ public class Gestion2Ianus {
 		}
 	}
 	
+	static public void asociar(int retardo){
+		GestionJacob.pulsaBotonAsociar();
+
+		retardo = 1400;
+		
+			try {
+				Thread.sleep(retardo);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		
+		Portapapeles cbTemporal = new Portapapeles();
+		String tipoSubida = cbTemporal.getTipoDeSubida();
+		InicioIanus.tipoSubida = tipoSubida;
+		
+		System.out.println("El tipo de subida es..... " + tipoSubida);
+	}
 	
 }

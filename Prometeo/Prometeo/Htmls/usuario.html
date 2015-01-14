@@ -12,13 +12,15 @@
 <script src="js/metro/metro-scroll.js"></script>
 </head>
 <body class="metro">
+
+
 	  <div class="tile-area tile-area-dark" style="width: 800px">  
 		<!-- tile-area-dark -->
 
-		<h1 class="tile-area-title fg-white">Usuario</h1>
-		<div class="user-id">
+		<h1 id="tipoDocumentacion" class="fg-red">  </h1>
+		<div class="user-id" >
 			<div class="user-id-image">
-				<img src="images/01.jpg">
+				<img id="avatarS" src="images/01.jpg">
 			</div>
 			<div class="user-id-name">
 				<span class="first-name" id='usuario'>  </span>
@@ -34,8 +36,8 @@
 		<div class="grid">
 			<div class="row">
 				<div class="span10">
-					<a
-						class="tile bg-cobalt bg-hover-lightRed bd-crimson bg-hover-cobalt selected">
+					<a id="urg" href="command://urg"
+						class="tile bg-cobalt bg-hover-lightGreen">
 						<div class="tile-content icon">
 							<i class="icon-accessibility-2"></i>
 						</div>
@@ -43,15 +45,17 @@
 							<div class="label ">Urgencias</div>
 						</div>
 					</a>
-					<div class="tile bg-green">
-						<div class="tile-content icon">
-							<i class=" icon-accessibility"></i>
-						</div>
-						<div class="tile-status">
-							<span class="name">Documentación</span>
-						</div>
-					</div>
-					<a class="tile double bg-red" data-click="transform">
+					<a id="doc" href="command://doc"
+						class="tile bg-green bg-hover-lightGreen ">
+							<div class="tile-content icon">
+								<i class=" icon-accessibility"></i>
+							</div>
+							<div class="tile-status">
+								<div class="name">Documentación</div>
+							</div>
+					</a>
+					<a id="normas"
+						class="tile double bg-red bg-hover-lightGreen" data-click="transform">
 						<div class="tile-content icon">
 							<i class="icon-book"></i>
 						</div>
@@ -61,7 +65,9 @@
 								<i class="icon-alarm-2"></i>
 							</div>
 						</div>
-					</a> <a class="tile bg-orange " data-click="transform">
+					</a> 
+					<a id="dudas" 
+						class="tile bg-orange bg-hover-lightGreen" data-click="transform">
 						<div class="tile-content icon">
 							<i class="icon-help"></i>
 						</div>
@@ -69,23 +75,31 @@
 							<div class="label ">Dudas</div>
 							<div class="badge icon-thumbs-up"></div>
 						</div>
-					</a> <a class="tile half bg-emerald">
+					</a> 
+					<a id="tiempo" href="http://www.meteogalicia.es/web/index.action" title="Meteogalicia"
+						class="tile half bg-emerald bg-hover-lightGreen">
 						<div class="tile-content icon">
 							<i class=" icon-cloudy"></i>
 						</div>
-					</a> <a class="tile half bg-crimson">
+					</a> 
+					<a id="correo" href="https://correo.sergas.local/" title="Correo del Sergas"
+						class="tile half bg-crimson bg-hover-lightGreen">
 						<div class="tile-content icon">
 							<i class="icon-mail"></i>
 						</div>
-					</a> <a class="tile half bg-lightBlue">
+					</a> 
+					<a id="sughus" href="http://sughusponpro.sergas.local:8080/sughus" title="Sughus. Cambio contraseña."
+						class="tile half bg-lightBlue bg-hover-lightGreen">
 						<div class="tile-content icon">
 							<i class="icon-key"></i>
 						</div>
-					</a> <a class="tile half bg-yellow">
+					</a> 
+					<a id="fides" href="http://fides.sergas.local/" title="Fides"
+						class="tile half bg-yellow bg-hover-lightGreen">
 						<div class="tile-content icon">
 							<i class="icon-user-3 fg-black"></i>
 						</div>
-					</a> <a class="tile double double-vertical bg-cyan">
+					</a> <a class="tile double double-vertical bg-cyan bg-hover-lightGreen">
 						<div class="email-image">
 							<img src="tiempo/galicia.png">
 						</div>
@@ -103,30 +117,38 @@
 						<div class="tile-content">
 							<img src="images/08.jpg">
 						</div>
-					</a> <a class="tile bg-magenta">
+					</a> 
+					<a id="aptdoRevis"
+						class="tile bg-magenta bg-hover-lightGreen">
 						<div class="tile-content icon">
 							<i class="icon-cone"></i>
 						</div>
 						<div class="brand">
 							<span class="label">Apartado Revisado</span>
-						</div> <a class="tile bg-violet" data-click="transform">
+						</div> 
+					</a>
+					<a id="aptdoFirm"
+						class="tile bg-violet bg-hover-lightGreen" data-click="transform">
 							<div class="tile-content icon">
 								<i class="icon-wrench"></i>
 							</div>
 							<div class="brand">
 								<div class="label">Apartado Firmado</div>
 							</div>
-					</a> <a class="tile double bg-darkGreen" data-click="transform">
+					</a> 
+					<a class="tile double bg-darkGreen" data-click="transform">
 							<div class="tile-content image-set">
 								<img src="images/11.jpg"> <img src="images/12.jpg">
 								<img src="images/13.jpg"> <img src="images/04.jpg">
 								<img src="images/05.jpg">
 							</div>
 
-					</a> <a class="tile double bg-lightBlue live" data-role="live-tile"
+					</a> 
+					<a id="avatar" 
+						class="tile double bg-lightBlue live" data-role="live-tile"
 						data-effect="slideUp" data-click="transform">
 							<div class="email-image">
-								<img src="images/02.jpg">
+								<img id="imagenAvatar" >
 							</div>
 							<div class="email-data">
 								<span class="email-data-title"> Pepito Grillo</span>

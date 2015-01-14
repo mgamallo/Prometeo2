@@ -137,8 +137,14 @@ public class VentanaPassword extends javax.swing.JDialog {
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+ 
+        
        // this.setUndecorated(true);
         pack();
+        
+        if(usuario.length()>2){
+        	campoPassword.requestFocusInWindow();
+        }
     }// </editor-fold>                        
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {                                             

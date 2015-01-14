@@ -60,7 +60,18 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	@Override
 	public void nativeMouseClicked(NativeMouseEvent e) {
 		// TODO Auto-generated method stub
-
+		if(e.getButton() == 3){
+			try {
+				Robot robot  = new Robot();
+				robot.keyPress(KeyEvent.VK_CONTROL);
+				robot.keyPress(KeyEvent.VK_2);
+				robot.keyRelease(KeyEvent.VK_2);
+				robot.keyRelease(KeyEvent.VK_CONTROL);
+			} catch (AWTException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -110,15 +121,31 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	
 				break;
 			case 113:
-				System.out.println("Pulsado f2. Inicialización de los dos ianus");
+				System.out.println("Pulsado f2. Capturando nodo");
 				
 
 	
 							Portapapeles clipBoard = new Portapapeles();
 			//				String temporal = clipBoard.getDatosPortapapelesTemporal();
 							GestionJacob.getIdeEpisodio();
-							HiloClipboard hilo = new HiloClipboard(2000);
+							HiloClipboard hilo = new HiloClipboard(500);
 							hilo.run();
+							
+							
+							
+							try {
+								Robot robot = new Robot();
+								robot.delay(500);
+								robot.keyPress(KeyEvent.VK_ENTER);
+								robot.keyRelease(KeyEvent.VK_ENTER);
+								robot.delay(200);
+								robot.keyPress(KeyEvent.VK_V);
+								robot.keyRelease(KeyEvent.VK_V);				
+								
+							} catch (AWTException ex) {
+								// TODO Auto-generated catch block
+								ex.printStackTrace();
+							}
 							
 							
 							
@@ -203,12 +230,31 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 				});
 		********************************************************/		
 				break;
-	/*
-	 		case 115:
+	
+	 		case 116:
 
-				System.out.println("Pulsado f4");
+				System.out.println("Pulsado f5");
+				versiona("HOS");
+				break;
+				
+			case 117:
+
+				System.out.println("Pulsado f6");
+				versiona("CEX");
 				break;
 
+	 		case 118:
+
+				System.out.println("Pulsado f7");
+				versiona("CIA");
+				break;
+				
+			case 119:
+
+				System.out.println("Pulsado f8");
+				versiona("QUI");
+				break;
+/*
 			case 81: // q
 				System.out.println("Pulsado q");
 				break;
@@ -258,23 +304,27 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 				//  V, cuando no utilizamos ctrl + v
 				if(teclaAnterior != 17 && teclaActual == 86){
 					// Inicio.vExplorador.asociaDocumento();
-					GestionJacob.pulsaBotonAsociar();
 					
-					if(true){
-						try {
-							Thread.sleep(1400);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+					if(!InicioIanus.versionar){
+						
+						GestionJacob.pulsaBotonAsociar();
+						
+						if(true){
+							try {
+								Thread.sleep(1400);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
+						
+						Portapapeles cbTemporal = new Portapapeles();
+						String tipoSubida = cbTemporal.getTipoDeSubida();
+						InicioIanus.tipoSubida = tipoSubida;
+						
+						System.out.println("El tipo de subida es..... " + tipoSubida);
+
 					}
-					
-					Portapapeles cbTemporal = new Portapapeles();
-					String tipoSubida = cbTemporal.getTipoDeSubida();
-					Inicio.inicioIanus.tipoSubida = tipoSubida;
-					
-					System.out.println("El tipo de subida es..... " + tipoSubida);
-					
 					Inicio.vExplorador.asociaDocumento(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
 				}
 				//	space, cuando no utilizamos tab - space
@@ -301,6 +351,37 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	//	 System.out.println("NativeKeyTyped " + arg0.getKeyCode());
 	}
 
+	
+	private void versiona(String tipoVersion){
+
+		
+		GestionJacob.pulsaVersionar();
+		try {
+			Robot robot = new Robot();
+			robot.delay(600);
+			robot.mouseMove(1525, 645);
+			robot.delay(50);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			robot.delay(300);
+			robot.keyPress(KeyEvent.VK_DOWN);
+			robot.keyRelease(KeyEvent.VK_DOWN);
+			robot.delay(50);
+			robot.keyPress(KeyEvent.VK_DOWN);
+			robot.keyRelease(KeyEvent.VK_DOWN);
+			robot.delay(50);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+						
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		InicioIanus.versionar = true;
+		InicioIanus.tipoSubida = tipoVersion;
+	}
+	
 	
 	static public void main(String arg[]){
 		CapturaRatonYTeclado capt = new CapturaRatonYTeclado();
