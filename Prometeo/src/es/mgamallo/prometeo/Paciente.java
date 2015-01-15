@@ -4,6 +4,7 @@ import com.jacob.activeX.ActiveXComponent;
 
 public class Paciente {
 	ActiveXComponent ianus;
+	ActiveXComponent xedoc;
 	DatosFicha ficha;
 	
 	Paciente(){

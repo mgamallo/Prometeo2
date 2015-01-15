@@ -13,6 +13,66 @@ import com.jacob.com.Variant;
 
 public class GestionJacob {
 	
+	
+	public static void capturaWebXedoc(){
+	    InicioXedoc.oShell = new ActiveXComponent("Shell.Application"); 
+	    InicioXedoc.oWindows = InicioXedoc.oShell.invokeGetComponent("Windows");
+	    
+        try {
+			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
+			Thread.sleep(1000);
+			/*
+			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
+			Thread.sleep(1000);
+			*/
+        } catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        int iCount = InicioXedoc.oWindows.getProperty("Count").getInt();
+        System.out.println("iCount: " + iCount);        
+		
+        for (int i=iCount-1,j= 1; i >iCount-3 ; i--,j++) {
+            ActiveXComponent oWindow = InicioXedoc.oWindows.invokeGetComponent("Item", new Variant(i));     
+            String sLocName = oWindow.getProperty("LocationName").getString();
+            String sFullName = oWindow.getProperty("FullName").getString();
+            boolean isIE = sFullName.toLowerCase().endsWith("iexplore.exe");
+            boolean bVisible = oWindow.getProperty("Visible").getBoolean();
+            System.out.println("i: " + i + ", loc: " + sLocName + ", name: " + sFullName + ", isIE: " + isIE + ", vis: " + bVisible);
+            /*
+            if ((isIE)&&(sLocName.startsWith("about:blank"))) {
+                oIE = oWindow;
+            }
+            */
+            if(j==1){
+            	Inicio.paciente1.xedoc = oWindow;
+            }
+            /*
+            if(j==2){
+            	Inicio.paciente2.xedoc = oWindow;
+            }
+            */
+        }
+        
+		Dispatch.call(Inicio.paciente1.xedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+		
+		/*
+		try {
+		
+		Thread.sleep(900);	
+			
+		Dispatch.call(Inicio.paciente2.xedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+	}
 
 	public static void capturaWebs(){
 		

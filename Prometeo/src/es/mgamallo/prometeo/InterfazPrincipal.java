@@ -258,6 +258,12 @@ public class InterfazPrincipal implements MouseListener{
 						
 						Inicio.usuario.urgencias = false;
 					}
+					else if(command.equals("xedoc")){
+						InicioXedoc xedoc = new InicioXedoc();
+						
+						webBrowserOperaciones.navigate("http://xedocidx.sergas.local/xedoc_idx/login");
+						
+					}
 					else if(command.equals("salir")){
 						frame.dispose();
 						Cerrar.cerrarTodo();
