@@ -12,5 +12,5 @@ public class Retardos {
 	
 	
 	public int retardoDibujarVentana = 100;
-	public int retardoTrasPulsarExaminar = 500;
+	public int retardoTrasPulsarExaminar = 600;
 }
