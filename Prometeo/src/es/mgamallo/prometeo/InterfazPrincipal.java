@@ -210,17 +210,19 @@ public class InterfazPrincipal implements MouseListener{
 			public void commandReceived(WebBrowserCommandEvent e) {
 				String command = e.getCommand();
 				Object[] parameters = e.getParameters();
-				System.out.println(command
-						+ (parameters.length > 0 ? " "
-								+ Arrays.toString(parameters) : ""));
 
 				if (command.contains("user_")) {
 					int numUsuario = Integer.parseInt(command.substring(5, 7));
 
+					System.out.println(numUsuario);
+					
 					Inicio.usuario = Inicio.usuarios[numUsuario];
+					Inicio.usuario.usuario = parameters[0].toString();
+					Inicio.usuario.password = parameters[1].toString();
 					
-					new VentanaPassword(Inicio.usuario.alias, Inicio.usuario.usuario).setVisible(true);;
+			//		new VentanaPassword(Inicio.usuario.alias, Inicio.usuario.usuario).setVisible(true);;
 					
+					abracadabra = true;
 					if(abracadabra){
 						barraPanelControlVisible = true;
 

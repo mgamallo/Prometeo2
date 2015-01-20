@@ -21,7 +21,7 @@ public class Inicio {
 	public static InterfazPrincipal panelPrincipal;
 	
 	static public Usuario[] usuarios;
-	static public Usuario usuario;
+	static public Usuario usuario = new Usuario();
 	static public boolean contraseña = true;
 	
 	static Rectangle rVentanaInterfazPrincipalMin = new Rectangle(0, 0, 850, 1000);

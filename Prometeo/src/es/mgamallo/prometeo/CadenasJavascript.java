@@ -55,8 +55,15 @@ public class CadenasJavascript {
 									"<div><span>" + Inicio.usuarios[i].alias + "</span></div>" +
 							"</a></li>" + LS;
 			*/
+		
+			/*
+			String ca = "<li><a id='" + numUsuario + "' onclick=\"modalOn('" + numUsuario + "');\" class='login-window' href=\'command://user_" + numUsuario + "_" + Inicio.usuarios[i].alias + "\'>" +
+					"<img src=\'images/" + Inicio.usuarios[i].imagen + ".jpg\' width=\'200px\'/>" +
+						"<div><span>" + Inicio.usuarios[i].alias + "</span></div>" +
+				"</a></li>" + LS;
+			*/
 			
-			String ca = "<li><a class='login-window' href=\'command://user_" + numUsuario + "_" + Inicio.usuarios[i].alias + "\'>" +
+			String ca = "<li><a id='" + numUsuario + "' onclick=\"modalOn('" + numUsuario + "','" + Inicio.usuarios[i].alias + "','" + Inicio.usuarios[i].usuario + "');\" class='login-window' href='#'>" +
 					"<img src=\'images/" + Inicio.usuarios[i].imagen + ".jpg\' width=\'200px\'/>" +
 						"<div><span>" + Inicio.usuarios[i].alias + "</span></div>" +
 				"</a></li>" + LS;
@@ -64,7 +71,7 @@ public class CadenasJavascript {
 			cadena = cadena + ca;
 		}
 		
-		String ca = "<li><a href=\'command://user_99_nuevo'>" +
+		String ca = "<li><a id='99' onclick=\"modalOn('99','Nuevo Usuario','');\" class = 'login-window' href='#'>" +
 				"<img src=\'images/99.jpg\' width=\'200px\'/>" +
 					"<div><span> Nuevo usuario </span></div>" +
 			"</a></li>" + LS;
