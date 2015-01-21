@@ -131,6 +131,26 @@ public class GestionJacobXedoc {
 				e.printStackTrace();
 			}
 			
+			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.contexto());
+			
+			
+			
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.rellenaContexto());
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.inicio1Xedoc());
 
 			
@@ -157,29 +177,34 @@ public class GestionJacobXedoc {
 			}
 			*/
 			
+
 			
-			Dispatch documento = Dispatch.call(Inicio.paciente1.xedoc, "Document").getDispatch();
-			Dispatch branding = Dispatch.call(documento, "getElementById","branding").getDispatch();
-			Dispatch brandingStilo = Dispatch.get(branding, "style").getDispatch();
+			Dispatch documento = Dispatch.call(Inicio.paciente1.xedoc, "Document").toDispatch();
+			Dispatch branding = Dispatch.call(documento, "getElementById","branding").toDispatch();
+			Dispatch brandingStilo = Dispatch.get(branding, "style").toDispatch();
 			Dispatch.put(brandingStilo, "display","none");
 			
-			Dispatch entornoLogin = Dispatch.call(documento, "getElementById","entornoLogin").getDispatch();
-			Dispatch entornoLoginStilo = Dispatch.get(entornoLogin, "style").getDispatch();
+			Dispatch entornoLogin = Dispatch.call(documento, "getElementById","entornoLogin").toDispatch();
+			Dispatch entornoLoginStilo = Dispatch.get(entornoLogin, "style").toDispatch();
 			Dispatch.put(entornoLoginStilo, "display","none");
 			
-			Dispatch header = Dispatch.call(documento, "getElementById","header").getDispatch();
-			Dispatch headerStilo = Dispatch.get(header, "style").getDispatch();
+			Dispatch header = Dispatch.call(documento, "getElementById","header").toDispatch();
+			Dispatch headerStilo = Dispatch.get(header, "style").toDispatch();
 			Dispatch.put(headerStilo, "height","0px");
 			
-			Dispatch columnaIzquierdaEdicion = Dispatch.call(documento, "getElementById","columnaIzquierdaEdicion").getDispatch();
-			Dispatch columnaIzquierdaEdicionStilo = Dispatch.get(columnaIzquierdaEdicion, "style").getDispatch();
+
+			
+			/*
+			
+			Dispatch columnaIzquierdaEdicion = Dispatch.call(documento, "getElementById","columnaIzquierdaEdicion").toDispatch();
+			Dispatch columnaIzquierdaEdicionStilo = Dispatch.get(columnaIzquierdaEdicion, "style").toDispatch();
 			Dispatch.put(columnaIzquierdaEdicionStilo, "width","750px");
 			Dispatch.put(columnaIzquierdaEdicionStilo, "height","1100px");
-		//	Dispatch.put(columnaIzquierdaEdicionStilo, "float","left");
+			Dispatch.put(columnaIzquierdaEdicionStilo, "float","left");
 			
 			
-			Dispatch completePreview = Dispatch.call(documento, "getElementById","completePreview").getDispatch();
-			Dispatch completePreviewStilo = Dispatch.get(completePreview, "style").getDispatch();
+			Dispatch completePreview = Dispatch.call(documento, "getElementById","completePreview").toDispatch();
+			Dispatch completePreviewStilo = Dispatch.get(completePreview, "style").toDispatch();
 			Dispatch.put(completePreviewStilo, "width","750px");
 			Dispatch.put(completePreviewStilo, "height","1100px");
 			
@@ -204,9 +229,18 @@ public class GestionJacobXedoc {
 			Dispatch.put(tablaElementosAjaxStilo, "height","1000px");
 		//	Dispatch.put(tablaElementosAjaxStilo, "float","left");
 		
+			*/
+			
+			try {
+				Thread.sleep(4000);
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
-			//	Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.maquetado());
+			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.maquetado2());
 
 			 
 		}

@@ -30,10 +30,9 @@
 	            </div>
 			</header>
 		
-		
 		<div id="fondooscuro"></div>
 		<div id="contenido">
-			<span id='alias'> Ruben </span>
+			<div id='alias'> </div>
 			<a href="javascript:void(0);"  	class="cerrar" onclick="modalOff()">Cerrar Ventana</a>
 			<br>
 			<br>
@@ -47,7 +46,7 @@
 			
 			    <p>
 			      <label for="password">Password:</label>
-			      <input type="password" name="password" id="password">
+			      <input type="password" name="password" id="password" onkeyup='if(validarEnter(event) == true){enviar();}'>
 			    </p>
 			
 			    <p class="login-submit">
@@ -129,6 +128,16 @@
 					sendNSCommand(cadena,us.value,pas.value);
 				}
 				
+			}
+			
+			function validarEnter(e){
+				var key = e.keyCode || e.which;
+				if(key==13){
+					return true;
+				}
+				else{
+					return false;
+				}
 			}
 		</script>
 		
