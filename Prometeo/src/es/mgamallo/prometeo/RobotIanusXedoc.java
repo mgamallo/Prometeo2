@@ -14,10 +14,15 @@ public class RobotIanusXedoc {
 	public final String DOC_ANULADO = "Documento anulado";
 	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDDvirtual + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
-
-	public Point coordTitulo = new Point(0,0);
+	
+	
 	public Point coordExaminar = new Point(0,0);
+	public Point coordLupa = new Point(0,0);
+	public Point coordTitulo = new Point(0,0);
 	public Point coordAceptar = new Point(0,0);
+	public Point coordTipoDoc = new Point(0,0);
+	
+	public String titulo = "";
 	
 	private int aceptarManualX = 1627, aceptarManualY = 710;
 	
@@ -36,20 +41,25 @@ public class RobotIanusXedoc {
 		}else if(tipoSubida.equals("QUI")){
 			columna = 3;
 		}
-		coordTitulo.x = Inicio.inicioIanus.coordenadasAsociar[0][columna];
-		coordTitulo.y = Inicio.inicioIanus.coordenadasAsociar[1][columna];
-		coordExaminar.x = Inicio.inicioIanus.coordenadasAsociar[2][columna];
-		coordExaminar.y = Inicio.inicioIanus.coordenadasAsociar[3][columna];
-		coordAceptar.x = Inicio.inicioIanus.coordenadasAsociar[4][columna];
-		coordAceptar.y = Inicio.inicioIanus.coordenadasAsociar[5][columna];
+		
+		coordExaminar.x = Inicio.inicioIanus.coordenadasAsociar[0][columna];
+		coordExaminar.y = Inicio.inicioIanus.coordenadasAsociar[1][columna];
+		coordLupa.x = Inicio.inicioIanus.coordenadasAsociar[2][columna];
+		coordLupa.y = Inicio.inicioIanus.coordenadasAsociar[3][columna];
+		coordTitulo.x = Inicio.inicioIanus.coordenadasAsociar[4][columna];
+		coordTitulo.y = Inicio.inicioIanus.coordenadasAsociar[5][columna];
+		coordAceptar.x = Inicio.inicioIanus.coordenadasAsociar[6][columna];
+		coordAceptar.y = Inicio.inicioIanus.coordenadasAsociar[7][columna];
+		coordTipoDoc.x = Inicio.inicioIanus.coordenadasAsociar[8][columna];
+		coordTipoDoc.y = Inicio.inicioIanus.coordenadasAsociar[9][columna];
 		
 		System.out.println(coordExaminar.y + ", " + coordAceptar.y);
 	}
 	
-	public void asocia(String titulo){
+	public void asocia(String tituloCDU){
 
 		
-		System.out.println(titulo);
+		System.out.println(tituloCDU);
 		
 		String alias = "";
 		
@@ -59,233 +69,204 @@ public class RobotIanusXedoc {
 		
 		setCoordenadas(InicioIanus.tipoSubida);
 		
+		
+
+		boolean tieneTipo = false;
+		
 		if(!InicioIanus.versionar){
+			tieneTipo = compruebaAsociar(tituloCDU);
+		
+		}
+		
+		if(!InicioIanus.versionar || tieneTipo ){
 			
+			Robot robot;
+			try {
+				robot = new Robot();
+
 			
-			if(InicioIanus.tipoSubida.equals("HOS")){
-				if(Inicio.inicioIanus.titHosp.containsKey(titulo)){
-					alias = Inicio.inicioIanus.titHosp.get(titulo);
+			// 	3.0 Escribe título
+			
+			robot.delay(100 + retardos.retardoDibujarVentana);	
+			
+			if(tieneTipo && !InicioIanus.versionar){
+				robot.mouseMove(coordExaminar.x, coordExaminar.y);
+				System.out.println(coordTitulo.x + " " + coordTitulo.y);
+				robot.delay(25);
+				robot.mousePress(InputEvent.BUTTON1_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_MASK);
+				
+				Portapapeles copiar = new Portapapeles();
+				
+				if(!tituloCDU.contains(DOC_ANULADO)){
+					if(tituloCDU.toLowerCase().contains(InicioIanus.DOC_ANULADO.toLowerCase())){
+						copiar.copiarAlPortapapeles(RUTA_DOC_ANULADO);
+					}else{
+						copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+					}
+					
+					robot.delay(retardos.retardoTrasPulsarExaminar /* +  Retardos.S_lento */);		
+					robot.keyPress(KeyEvent.VK_CONTROL);
+					robot.keyPress(KeyEvent.VK_V);
+					robot.keyRelease(KeyEvent.VK_V);
+					robot.keyRelease(KeyEvent.VK_CONTROL);
+					
+					robot.delay(150 /* + Retardos.S_lento */);
+					
+					//	10 Enter
+					robot.keyPress(KeyEvent.VK_ENTER);
+					robot.keyRelease(KeyEvent.VK_ENTER);
+					robot.delay(250);
+				}
+				else{
+					
+					/*****************************************  programar  ****************************/
+					
+					robot.delay(100);
+					getChar('a');
+					robot.delay(500);
+					robot.keyPress(KeyEvent.VK_UP);
+					robot.keyRelease(KeyEvent.VK_UP);
+					robot.delay(75);
+					System.out.println("anulando");
 				}
 				
-			}
-			else if(InicioIanus.tipoSubida.equals("CEX") || 
-					InicioIanus.tipoSubida.equals("EPI")){
-						if(Inicio.inicioIanus.titCons.containsKey(titulo)){
-							alias = Inicio.inicioIanus.titCons.get(titulo);
-						}
-			}
-			else if(InicioIanus.tipoSubida.equals("URG")){
-				if(Inicio.inicioIanus.titUrg.containsKey(titulo)){
-					alias = Inicio.inicioIanus.titUrg.get(titulo);
-				}
-			}
-			else if(InicioIanus.tipoSubida.equals("QUI")){
-				if(Inicio.inicioIanus.titQui.containsKey(titulo)){
-					alias = Inicio.inicioIanus.titQui.get(titulo);
-				}
-			}
-			else if(InicioIanus.tipoSubida.equals("CIA")){
-				if(Inicio.inicioIanus.titCIA.containsKey(titulo)){
-					alias = Inicio.inicioIanus.titCIA.get(titulo);
-				}
-			}
-		}
-		
-		Robot robot;
-		try {
-			robot = new Robot();
-
-		/******************************************
-		//	1 Coge foco de la ventana modal
-		
-		robot.mouseMove(1550, 825);
-		robot.mousePress(InputEvent.BUTTON1_MASK);
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
-		robot.delay(100);
-		
-		//	2 Tabulador
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(130 + Retardos.S_lento);
-		**********************************************/
-		
-		// 	3.0 Escribe título
-		
-		robot.delay(100 + retardos.retardoDibujarVentana);	
-		
-		if(alias.length()> 0 && !InicioIanus.versionar){
-			robot.mouseMove(coordTitulo.x, coordTitulo.y - 27);
-			System.out.println(coordTitulo.x + " " + coordTitulo.y);
-			robot.delay(25);
-			robot.mousePress(InputEvent.BUTTON1_MASK);
-			robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			robot.delay(200);
-			
-			if(!titulo.contains(DOC_ANULADO)){
-				System.out.println(alias);
-				for(int k = 0; k< alias.length();k++){
-					getChar(alias.charAt(k));
-					robot.delay(50);
-					System.out.println(alias.charAt(k));
-				}
-			}
-			else{
+				
+				//	3.1	Enter
 				robot.delay(100);
-				getChar('a');
-				robot.delay(500);
-				robot.keyPress(KeyEvent.VK_UP);
-				robot.keyRelease(KeyEvent.VK_UP);
+				robot.keyPress(KeyEvent.VK_ENTER);
+				robot.keyRelease(KeyEvent.VK_ENTER);
+				robot.delay(250);
+			}
+
+			
+			
+
+		
+
+			
+			/*
+			// 4 Tabulador
+			robot.delay(200);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.keyRelease(KeyEvent.VK_TAB);
+			robot.delay(200);
+			*/
+			
+			if(!InicioIanus.versionar){
+				robot.mouseMove(coordTitulo.x, coordTitulo.y );
+				robot.delay(50);
+				robot.mousePress(InputEvent.BUTTON1_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_MASK);
+				robot.delay(50);
+			}else{
+				robot.mouseMove(coordTitulo.x, coordTitulo.y - 27);
+				robot.delay(50);
+				robot.mousePress(InputEvent.BUTTON1_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_MASK);
+				robot.delay(200);
+				robot.keyPress(KeyEvent.VK_TAB);
+				robot.keyRelease(KeyEvent.VK_TAB);
+				robot.delay(150);
+			}
+			
+			//	5 Pega título
+			
+			//	Comprueba si es un subtitulo
+			int indexParentesis = tituloCDU.indexOf("(");
+			if(indexParentesis != -1){
+				tituloCDU = tituloCDU.substring(indexParentesis+1,tituloCDU.length()-1);
+				System.out.println(tituloCDU);
+			}
+			
+
+			
+
+			/*
+			if(titulo.toLowerCase().contains(Inicio.inicioIanus.DOC_ANULADO.toLowerCase())){
+				robot.delay(100);
+				robot.mousePress(InputEvent.BUTTON1_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_MASK);
+				robot.delay(100);
+				robot.mousePress(InputEvent.BUTTON1_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_MASK);
 				robot.delay(75);
-				System.out.println("anulando");
+				robot.keyPress(KeyEvent.VK_CLEAR);
+			}
+			*/
+			
+			robot.delay(150 /* + Retardos.S_lento */);
+			
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
+			robot.delay(75);
+			
+
+			
+			// Pulsa examinar
+			
+			robot.mouseMove(coordExaminar.x, coordExaminar.y);
+			robot.delay(100);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			
+
+			
+			
+
+
+
+			
+			
+			/*
+			//	11 Tabulador 9 veces
+			for(int i=0;i<9;i++){
+				robot.keyPress(KeyEvent.VK_TAB);
+				robot.keyRelease(KeyEvent.VK_TAB);
+				robot.delay(10);
+			}
+			*/
+			robot.mouseMove(coordAceptar.x, coordAceptar.y); 
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			
+			
+			//	12 Aceptar
+
+			if(!InicioIanus.versionar){
+				robot.keyPress(KeyEvent.VK_ENTER);
+				robot.keyRelease(KeyEvent.VK_ENTER);
+				robot.delay(200);
+			}
+			
+			System.out.println("pegado");
+			
+			//	13 Aceptar definitivo
+	/*		robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+	*/		
+			if(!InicioIanus.versionar){
+				robot.mouseMove(aceptarManualX, aceptarManualY);
+			}
+			
+			// CapturaRatonYTeclado.barraEspaciadoraOn = true;
+			
+			
+			//	Inicio.panelPrincipal.webBrowserOperaciones.setVisible(false);
+			
+			
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				InicioIanus.versionar = false;
 			}
 			
 			
-			//	3.1	Enter
-			robot.delay(100);
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-			robot.delay(250);
 		}
-
-		
 		
 
-	
-
-		
-		/*
-		// 4 Tabulador
-		robot.delay(200);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(200);
-		*/
-		
-		if(!InicioIanus.versionar){
-			robot.mouseMove(coordTitulo.x, coordTitulo.y );
-			robot.delay(50);
-			robot.mousePress(InputEvent.BUTTON1_MASK);
-			robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			robot.delay(50);
-		}else{
-			robot.mouseMove(coordTitulo.x, coordTitulo.y - 27);
-			robot.delay(50);
-			robot.mousePress(InputEvent.BUTTON1_MASK);
-			robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			robot.delay(200);
-			robot.keyPress(KeyEvent.VK_TAB);
-			robot.keyRelease(KeyEvent.VK_TAB);
-			robot.delay(150);
-		}
-		
-		//	5 Pega título
-		
-		//	Comprueba si es un subtitulo
-		int indexParentesis = titulo.indexOf("(");
-		if(indexParentesis != -1){
-			titulo = titulo.substring(indexParentesis+1,titulo.length()-1);
-			System.out.println(titulo);
-		}
-		
-		Portapapeles copiar = new Portapapeles();
-		copiar.copiarAlPortapapeles(titulo);
-		
-
-		/*
-		if(titulo.toLowerCase().contains(Inicio.inicioIanus.DOC_ANULADO.toLowerCase())){
-			robot.delay(100);
-			robot.mousePress(InputEvent.BUTTON1_MASK);
-			robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			robot.delay(100);
-			robot.mousePress(InputEvent.BUTTON1_MASK);
-			robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			robot.delay(75);
-			robot.keyPress(KeyEvent.VK_CLEAR);
-		}
-		*/
-		
-		robot.delay(150 /* + Retardos.S_lento */);
-		
-		robot.keyPress(KeyEvent.VK_CONTROL);
-		robot.keyPress(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_CONTROL);
-		robot.delay(75);
-		
-
-		
-		// Pulsa examinar
-		
-		robot.mouseMove(coordExaminar.x, coordExaminar.y);
-		robot.delay(100);
-		robot.mousePress(InputEvent.BUTTON1_MASK);
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
-		
-
-		
-		
-		if(titulo.toLowerCase().contains(InicioIanus.DOC_ANULADO.toLowerCase())){
-			copiar.copiarAlPortapapeles(RUTA_DOC_ANULADO);
-		}else{
-			copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
-		}
-
-		robot.delay(retardos.retardoTrasPulsarExaminar /* +  Retardos.S_lento */);		
-		robot.keyPress(KeyEvent.VK_CONTROL);
-		robot.keyPress(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_CONTROL);
-		
-		robot.delay(150 /* + Retardos.S_lento */);
-		
-		//	10 Enter
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(250);
-		
-		
-		/*
-		//	11 Tabulador 9 veces
-		for(int i=0;i<9;i++){
-			robot.keyPress(KeyEvent.VK_TAB);
-			robot.keyRelease(KeyEvent.VK_TAB);
-			robot.delay(10);
-		}
-		*/
-		robot.mouseMove(coordAceptar.x, coordAceptar.y); 
-		robot.mousePress(InputEvent.BUTTON1_MASK);
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
-		
-		
-		//	12 Aceptar
-
-		if(!InicioIanus.versionar){
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-			robot.delay(200);
-		}
-		
-		System.out.println("pegado");
-		
-		//	13 Aceptar definitivo
-/*		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-*/		
-		if(!InicioIanus.versionar){
-			robot.mouseMove(aceptarManualX, aceptarManualY);
-		}
-		
-		// CapturaRatonYTeclado.barraEspaciadoraOn = true;
-		
-		
-		//	Inicio.panelPrincipal.webBrowserOperaciones.setVisible(false);
-		
-		
-		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			InicioIanus.versionar = false;
-		}
 		InicioIanus.versionar = false;
 	}
 	
@@ -504,5 +485,36 @@ public class RobotIanusXedoc {
 		
 		this.imprimeChar(inverso,codigo, acento);
 		
+	}
+	
+	private boolean compruebaAsociar(String tituloCDU){
+		if(InicioIanus.tipoSubida.equals("HOS")){
+			if(Inicio.inicioIanus.titHosp.containsKey(tituloCDU)){
+				return true;
+			}
+			
+		}
+		else if(InicioIanus.tipoSubida.equals("CEX") || 
+				InicioIanus.tipoSubida.equals("EPI")){
+					if(Inicio.inicioIanus.titCons.containsKey(tituloCDU)){
+						return true;
+					}
+		}
+		else if(InicioIanus.tipoSubida.equals("URG")){
+			if(Inicio.inicioIanus.titUrg.containsKey(tituloCDU)){
+				return true;
+			}
+		}
+		else if(InicioIanus.tipoSubida.equals("QUI")){
+			if(Inicio.inicioIanus.titQui.containsKey(tituloCDU)){
+				return true;
+			}
+		}
+		else if(InicioIanus.tipoSubida.equals("CIA")){
+			if(Inicio.inicioIanus.titCIA.containsKey(tituloCDU)){
+				return true;
+			}
+		}
+		return false;
 	}
 }
