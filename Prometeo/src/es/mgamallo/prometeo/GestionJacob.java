@@ -256,7 +256,7 @@ public class GestionJacob {
 						Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoUrgInicial("01/01/14"));
 						
 						try {
-							Thread.sleep(500);
+							Thread.sleep(2500);
 							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.buscarNodoUrgIngreso("01/01/14"));
 
 						} catch (InterruptedException e) {
