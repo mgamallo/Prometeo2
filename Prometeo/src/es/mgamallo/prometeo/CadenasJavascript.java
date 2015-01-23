@@ -349,6 +349,7 @@ public class CadenasJavascript {
 				+ "}"
 				+ "if(numeroAncla != 0){"
 					+ "anclaPadre = numeroAncla;"
+					+ "nodoUrg=numeroAncla;"
 					+ "nodo[numeroAncla].click();" 
 				+ "}else if(nodoHosp !=0){"
 					+ "urgDentro = true;"
@@ -877,13 +878,14 @@ public class CadenasJavascript {
 		
 		final String cadena = 
 				"javascript:"
-				+ "var anclaPadre;" +
+				+ "var anclaPadre = 0;" +
 					"for(var i=0;i<nodo.length;i++){"
 						+ "if(nodo[i].href.indexOf('" + idEpi + "') != -1){"
 							+ "anclaPadre = i;"
 							+ "break;"
 						+ "}"
 				+ "};"
+				+ ""
 				+ "alert('Nodo fijado');"
 				
 				 ;

@@ -6,6 +6,8 @@ public class Retardos {
 	static public int retIntroNHC = 800;
 	
 	public static int retardoAntesExaminar = 250;
+	public static int retardoTrasLupa = 250;
+	
 	
 	public static int S_lento = 200;
 	public static int XS_lento = 400;
