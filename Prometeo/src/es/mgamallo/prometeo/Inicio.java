@@ -2,6 +2,8 @@ package es.mgamallo.prometeo;
 
 
 import java.awt.Color;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +21,10 @@ public class Inicio {
 	protected static final String LS = System.getProperty("line.separator");
 	
 	public static InterfazPrincipal panelPrincipal;
+	
+	public static int numeroPantallas = 0;
+	public static int anchoP = 0;
+	public static int altoP = 0;
 	
 	static public Usuario[] usuarios;
 	static public Usuario usuario = new Usuario();
@@ -76,6 +82,18 @@ public class Inicio {
 		
 		
 		NativeInterface.open(); 
+		
+		
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice[] gs = ge.getScreenDevices();
+				
+		numeroPantallas = gs.length;
+		
+		anchoP = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+	    altoP = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+	    
+	    System.out.println("El numero de pantallas es " + numeroPantallas);
+	    System.out.println("Resolución: " + anchoP + ", " + altoP);
 		
 		// Inicializamos el interfaz cargando los usuarios
 		

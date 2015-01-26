@@ -59,7 +59,7 @@ public class GestionJacobXedoc {
 		
 		Variant estado = Dispatch.call(Inicio.paciente1.xedoc,"readyState");
 		
-		System.out.println("Primer readyState");
+		System.out.println("Empieza el primer readyState");
 		
 		int i=0;
 		while(true /* && i < 25000 */){
@@ -96,7 +96,7 @@ public class GestionJacobXedoc {
 		    Dispatch.put(Inicio.paciente1.xedoc,"top",0);  
 		    Dispatch.put(Inicio.paciente1.xedoc,"left",850);
 		    
-			System.out.println("Segundo readyState");
+			System.out.println("Empieza el segundo readyState");
 			
 			i=0;
 			while(true /* && i < 25000 */){
@@ -111,7 +111,7 @@ public class GestionJacobXedoc {
 		    
 			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.selectMiBandeja());
 
-			System.out.println("Tercer readyState");
+			System.out.println("Empieza el tercer readyState");
 			
 			i=0;
 			while(true /* && i < 25000 */){
@@ -123,6 +123,12 @@ public class GestionJacobXedoc {
 					break;
 				}
 			}
+			
+		    Dispatch.put(Inicio.paciente1.xedoc,"height",Inicio.altoP);
+		    Dispatch.put(Inicio.paciente1.xedoc,"width",Inicio.anchoP);
+		    Dispatch.put(Inicio.paciente1.xedoc,"top",0);  
+		    Dispatch.put(Inicio.paciente1.xedoc,"left",0);
+			
 			
 			try {
 				Thread.sleep(1000);
@@ -154,7 +160,7 @@ public class GestionJacobXedoc {
 			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.inicio1Xedoc());
 
 			
-			System.out.println("Cuarto readyState");
+			System.out.println("Empieza el cuarto readyState");
 			
 			i=0;
 			while(true /* && i < 25000 */){
