@@ -17,6 +17,8 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 import org.jnativehook.mouse.NativeMouseListener;
 
+import com.jacob.com.Dispatch;
+
 public class CapturaRatonYTeclado implements NativeKeyListener,
 		NativeMouseInputListener {
 
@@ -104,9 +106,17 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		// TODO Auto-generated method stub
-	//	System.out.println("NativeKeyPressed " + e.getKeyCode());
-	//	System.out.println("Tecla ... " + ((char) e.getKeyCode()));
+		// System.out.println("NativeKeyPressed " + e.getKeyCode());
+		// System.out.println("Tecla ... " + ((char) e.getKeyCode()));
 
+		
+		if(Inicio.xedoc){
+			// Tecla * asterisco
+			if(e.getKeyCode() == 106){
+				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf() );
+			}
+		}
+		
 		if(Inicio.teclasHabilitadas){
 			teclaAnterior = teclaActual;
 			teclaActual = e.getKeyCode();

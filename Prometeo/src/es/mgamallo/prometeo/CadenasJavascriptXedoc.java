@@ -98,6 +98,54 @@ public class CadenasJavascriptXedoc {
 	}
 	
 	
+	static public final String zoomPdf(){
+		String cadena = ""
+				+ "document.getElementById('entornoLogin').style.display='none';"
+				+ "document.getElementById('branding').style.display='none';"
+				+ "document.getElementById('header').style.height='0px';"
+				+ ""
+				+ "var columnaI = document.getElementById('columnaIzquierdaEdicion');"
+		//		+ "columnaI.style.float='left';"
+				+ "columnaI.style.width='800px';"
+				+ "columnaI.style.height='1200px';"
+				+ "var completePreview = document.getElementById('completePreview');"
+				+ "completePreview.style.width='800px';"
+				+ "completePreview.style.height='1200px';"
+				+ ""
+				+ "var previewer = document.getElementById('previewer');"
+				+ "previewer.style.width='800px';"
+				+ "previewer.style.height='1200px';"
+				+ ""
+				+ "var columnaD = document.getElementById('columnaDerechaEdicion');"
+				+ "columnaD.style.marginLeft='1000px';"
+				
+				+ "var fondo = document.getElementById('page').style.background='#10324c';"
+				
+				+ "var tablaAtributos = document.getElementById('tablaAtributos');"
+				+ "tablaAtributos.style.border='none';"
+				+ "tablaAtributos.style.background='#9db7cc';"
+				+ "tablaAtributos.style.color='#000000';"
+				
+				+ "var tablaElementosAjax = document.getElementById('tablaElementosAjax');"
+		//		+ "tablaElementosAjax.style.background='beige';"
+				+ "tablaElementosAjax.style.background='#9db7cc';"
+		
+				+ "var tablaMeritos = document.getElementById('tablaMeritos');"
+		//		+ "tablaMeritos.style.background='#9db7cc';"
+				+ "tablaMeritos.style.border='none';"
+				
+				+ "var tablaDocumento = document.getElementById('tablaDocumento');"
+		//		+ "tablaElementosAjax.style.background='beige';"
+				+ "tablaDocumento.style.background='#9db7cc';"
+				+ "tablaDocumento.style.border='none';"
+				
+				
+				+ "alert('hola');"
+				+ "";
+		
+		return cadena;
+	}
+	
 	static public final String maquetado2(){
 		String cadena = ""
 				+ ""

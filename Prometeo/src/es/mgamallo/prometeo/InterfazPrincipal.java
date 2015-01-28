@@ -249,6 +249,7 @@ public class InterfazPrincipal implements MouseListener{
 								+ "document.getElementById('tipoDocumentacion').innerHTML = 'URGENCIAS';";
 						
 						Inicio.usuario.urgencias = true;
+						Inicio.xedoc = false;
 					}
 					else if(command.equals("doc")){
 						String claseOff = "tile bg-cobalt bg-hover-lightGreen bd-yellow";
@@ -259,8 +260,10 @@ public class InterfazPrincipal implements MouseListener{
 								+ "document.getElementById('tipoDocumentacion').innerHTML = 'DOCUMENTACIÓN';";
 						
 						Inicio.usuario.urgencias = false;
+						Inicio.xedoc = false;
 					}
 					else if(command.equals("xedoc")){
+						Inicio.xedoc = true;
 						InicioXedoc xedoc = new InicioXedoc();
 						
 					//	webBrowserOperaciones.navigate("http://xedocidx.sergas.local/xedoc_idx/login");

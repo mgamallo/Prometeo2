@@ -25,7 +25,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 	private JButton botonReiniciarNavegadores;
 	private JButton botonHabilitarTeclas;
 	private JButton jButton4;
-	private JButton botonReiniciarIanus;
+	private JButton botonReiniciarNHC;
 	private JButton jButton6;
 	private JButton botonResetearSubida;
 	private JButton jButton8;
@@ -81,7 +81,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         botonReiniciarNavegadores = new javax.swing.JButton();
         botonHabilitarTeclas = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        botonReiniciarIanus = new javax.swing.JButton();
+        botonReiniciarNHC = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         botonResetearSubida = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -318,11 +318,11 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
-        botonReiniciarIanus.setBackground(Color.orange);
-        botonReiniciarIanus.setText("Reiniciar ianus");
-        botonReiniciarIanus.addActionListener(new java.awt.event.ActionListener() {
+        botonReiniciarNHC.setBackground(Color.orange);
+        botonReiniciarNHC.setText("Reiniciar NHC");
+        botonReiniciarNHC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	GestionJacob.reseteaIanus();
+            	GestionJacob.reIntroduceNHC();
             }
         });
 
@@ -426,7 +426,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
                         .addComponent(botonReiniciarNavegadores,170,170,170)
                         .addComponent(botonHabilitarTeclas,170,170,170)
                         .addComponent(jButton4,170,170,170)
-                        .addComponent(botonReiniciarIanus,170,170,170)
+                        .addComponent(botonReiniciarNHC,170,170,170)
                         .addComponent(jButton6,170,170,170)
                         .addComponent(botonResetearSubida,170,170,170)
                         .addComponent(jButton8,170,170,170)
@@ -450,7 +450,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonReiniciarIanus)
+                        .addComponent(botonReiniciarNHC)
                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                        .addComponent(jButton6)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

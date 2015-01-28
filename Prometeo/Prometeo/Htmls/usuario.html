@@ -12,12 +12,15 @@
 <script src="js/metro/metro.min.js"></script>
 <script src="js/metro/metro-scroll.js"></script>
 <script type="text/javascript">
-	funtion ocultarImagen(){
+	function ocultarImagen(){
 		var mapas = document.getElementById('weather');
-		alert(mapas.innerHTML);
 		mapas.style.display="none";
 	}
 
+	function mostrarImagen(){
+		var mapas = document.getElementById('weather');
+		mapas.style.display="block";
+	}
 </script>
 </head>
 <body class="metro">
@@ -108,7 +111,7 @@
 						<div class="tile-content icon">
 							<i class="icon-user-3 fg-black"></i>
 						</div>
-					</a> <a id="weatherMetro" class="tile double double-vertical bg-cyan" onmouseover="ocultarImagen()">
+					</a> <a id="weatherMetro" class="tile double double-vertical bg-cyan" onmouseover="mostrarImagen()" onmouseleave="ocultarImagen()">
 						<div class="email-image">
 							<img src="tiempo/galicia.png">
 						</div>
@@ -196,7 +199,7 @@
 				<div class="span10">
 					<a class="tile double double-vertical bg-cyan">
 						<div class="email-image">
-							<img src="tiempo/galiciaM.png">
+							<img src="tiempo/galiciaM.jpg">
 						</div>
 						<div class="brand">
 							<div class="label ">Mañana</div>
@@ -204,7 +207,7 @@
 					</a> 
 					<a class="tile double double-vertical bg-cyan">
 						<div class="email-image">
-							<img src="tiempo/galiciaT.png">
+							<img src="tiempo/galiciaT.jpg">
 						</div>
 						<div class="brand">
 							<div class="label ">Tarde</div>
@@ -212,7 +215,7 @@
 					</a> 
 					<a class="tile double double-vertical bg-cyan">
 						<div class="email-image">
-							<img src="tiempo/galiciaN.png">
+							<img src="tiempo/galiciaN.jpg">
 						</div>
 						<div class="brand">
 							<div class="label ">Noche</div>

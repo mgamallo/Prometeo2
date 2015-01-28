@@ -204,10 +204,6 @@ public class CadenasJavascript {
 		
 		System.out.println(usuario.alias);
 		
-		/*
-		usuario.usuario = "mgamgul1";
-		usuario.password = "archivo1";
-		*/
 		
 		final String introducirUsuarioPulido = 
 				"var framePrincipal = window.frames;" + LS +

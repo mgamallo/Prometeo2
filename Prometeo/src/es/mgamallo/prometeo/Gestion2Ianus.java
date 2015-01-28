@@ -24,7 +24,7 @@ public class Gestion2Ianus {
 	int indiceNhc2 = 0;
 		
 	int retardoAsociar = 1500;
-	int retardoBuscarNodoInicial = 6000;
+	static int retardoBuscarNodoInicial = 6000;
 	int retardoBuscarNodoFase2 = 200;
 	
 	
@@ -101,13 +101,13 @@ public class Gestion2Ianus {
 	}
 	
 	
-	private void introduceNHC(ActiveXComponent ianus, String nombreIanus, String nhc, int retardo ){
+	public static void introduceNHC(ActiveXComponent ianus, String nombreIanus, String nhc, int retardo ){
 		HiloNHC introNHC = new HiloNHC(ianus,CadenasJavascript.introducirNHC(nhc),nombreIanus,retardo);
 		introNHC.start();
 	}
 	
 	
-	private void buscaNodo(ActiveXComponent ianus, String servicio, String nombreDocumento, boolean inicializar,boolean buscaOtroNodo, int retardo, boolean subirAuto){
+	public static void buscaNodo(ActiveXComponent ianus, String servicio, String nombreDocumento, boolean inicializar,boolean buscaOtroNodo, int retardo, boolean subirAuto){
 		
 		String tipoNodo = detectaTipoNodo(servicio, nombreDocumento);
 		
@@ -119,7 +119,7 @@ public class Gestion2Ianus {
 		hiloServicio.start();
 	}
 	
-	private String detectaTipoNodo(String servicio, String nombreDocumento){
+	private static String detectaTipoNodo(String servicio, String nombreDocumento){
 		
 		String tipoNodo = "x";    // Nodo padre, sin excepciones
 		
@@ -135,7 +135,7 @@ public class Gestion2Ianus {
 		return tipoNodo;
 	}
 	
-	private String buscaNombreNodoServicio(String servicio){
+	private static String buscaNombreNodoServicio(String servicio){
 		
 		System.out.println("Empieza a buscar el nombre del servicio");
 		

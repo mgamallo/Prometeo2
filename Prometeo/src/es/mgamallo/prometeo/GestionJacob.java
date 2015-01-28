@@ -690,6 +690,23 @@ public class GestionJacob {
 		}
 	}
 	
+	public static void reIntroduceNHC(){
+		
+		String ianus = Inicio.vControlIanus.labelNumeroIanus.getText();
+
+		if(ianus.toLowerCase().contains(("Ianus 1").toLowerCase())){
+			
+			Gestion2Ianus.introduceNHC(Inicio.paciente1.ianus,Gestion2Ianus.nombreIanus1,Inicio.nhcDelIanus1,100);
+			Gestion2Ianus.buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Gestion2Ianus.retardoBuscarNodoInicial,false);
+					
+		}
+		else{
+			Gestion2Ianus.introduceNHC(Inicio.paciente2.ianus,Gestion2Ianus.nombreIanus2,Inicio.nhcDelIanus2,100);
+			Gestion2Ianus.buscaNodo(Inicio.paciente2.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Gestion2Ianus.retardoBuscarNodoInicial,false);
+
+		}
+	}
+	
 	public static void pulsaVersionar(){
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
