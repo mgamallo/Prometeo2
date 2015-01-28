@@ -6,10 +6,19 @@
 <title>Panel del usuario</title>
 <link rel="stylesheet" href="css/metro-bootstrap.css">
 <link rel="stylesheet" href="css/iconFont.css">
+<link rel="stylesheet" href="css/tiempo.css">
 <script src="js/jquery/jquery.min.js"></script>
 <script src="js/jquery/jquery.widget.min.js"></script>
 <script src="js/metro/metro.min.js"></script>
 <script src="js/metro/metro-scroll.js"></script>
+<script type="text/javascript">
+	funtion ocultarImagen(){
+		var mapas = document.getElementById('weather');
+		alert(mapas.innerHTML);
+		mapas.style.display="none";
+	}
+
+</script>
 </head>
 <body class="metro">
 
@@ -99,7 +108,7 @@
 						<div class="tile-content icon">
 							<i class="icon-user-3 fg-black"></i>
 						</div>
-					</a> <a class="tile double double-vertical bg-cyan bg-hover-lightGreen">
+					</a> <a id="weatherMetro" class="tile double double-vertical bg-cyan" onmouseover="ocultarImagen()">
 						<div class="email-image">
 							<img src="tiempo/galicia.png">
 						</div>
@@ -178,9 +187,41 @@
 				</div>
 			</div>
 
-
+			
 
 		</div>
+	
+		<div id="weather" class="grid">
+			<div class="row">
+				<div class="span10">
+					<a class="tile double double-vertical bg-cyan">
+						<div class="email-image">
+							<img src="tiempo/galiciaM.png">
+						</div>
+						<div class="brand">
+							<div class="label ">Mañana</div>
+						</div>
+					</a> 
+					<a class="tile double double-vertical bg-cyan">
+						<div class="email-image">
+							<img src="tiempo/galiciaT.png">
+						</div>
+						<div class="brand">
+							<div class="label ">Tarde</div>
+						</div>
+					</a> 
+					<a class="tile double double-vertical bg-cyan">
+						<div class="email-image">
+							<img src="tiempo/galiciaN.png">
+						</div>
+						<div class="brand">
+							<div class="label ">Noche</div>
+						</div>
+					</a> 
+				</div>
+			</div>
+		</div>
+	
 	</div>  
 
 </body>

@@ -74,6 +74,8 @@ public class Inicio {
 	static public String unidadHDDejecutable = "";
 	static public String unidadHDDvirtual = "";
 	
+	static public String usuarioLogeadoWindows = "";
+	
 	/**
 	 * @param args
 	 */
@@ -95,6 +97,14 @@ public class Inicio {
 	    System.out.println("El numero de pantallas es " + numeroPantallas);
 	    System.out.println("Resolución: " + anchoP + ", " + altoP);
 		
+	    
+	    usuarioLogeadoWindows = System.getProperty("user.name");
+	    System.out.println("Usuario logeado: " + usuarioLogeadoWindows);
+	    
+	    if(!usuarioLogeadoWindows.equals("cahcpon")){
+	    	
+	    }
+	    
 		// Inicializamos el interfaz cargando los usuarios
 		
 		cargarUsuarios();
