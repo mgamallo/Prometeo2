@@ -1,11 +1,15 @@
 package es.mgamallo.prometeo;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Proxy;
 import java.net.URL;
+import java.net.URLConnection;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,6 +31,8 @@ public class Tiempo {
 	static String temperaturaMax = "http://www.meteogalicia.es/web/predicion/cprazo/getMapa.action?idVarMapa=340";
 	static String temperaturaMin = "http://www.meteogalicia.es/web/predicion/cprazo/getMapa.action?idVarMapa=341";
 
+	static String videoGif = "http://www.meteogalicia.es/datosred/satelite/ULTIMOS_30_DIAS/VIDEOS/20150129IR87.gif";
+	
 	String idMapaM = "srcImxM";
 	String idMapaT = "srcImxT";
 	String idMapaN = "srcImxN";
@@ -37,9 +43,18 @@ public class Tiempo {
 	Tiempo(){
 		
 		try {
-			Document doc = Jsoup.connect(tiempoGalicia).get();
+		//	Document doc = Jsoup.connect(tiempoGalicia).get();
 			
-			getImagen(doc, idMapaM);
+			// getImagen(doc, idMapaM);
+			
+			getImages("69.178.0.60:3128", "galiciaM.jpg");
+			getImages(tiempoGaliciaT, "galiciaT.jpg");
+			getImages(tiempoGaliciaN, "galiciaN.jpg");
+			
+			getImages(temperaturaMax, "galiciaM.jpg");
+			getImages(temperaturaMin, "galiciaM.jpg");
+			
+			getImages(videoGif,"video.gif");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -88,10 +103,15 @@ public class Tiempo {
         }
          */
 
-        URL url = new URL("http://www.meteogalicia.es/web/predicion/cprazo/getMapa.action?idVarMapa=340");
+        URL url = new URL(src);
+        URLConnection conn = url.openConnection(Proxy.NO_PROXY);
+        conn.connect();
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        
+        /*
         InputStream in = url.openStream();
-
-        OutputStream out = new BufferedOutputStream(new FileOutputStream("prometeo/Htmls/tiempo/galicia.jpg"));
+         */
+        OutputStream out = new BufferedOutputStream(new FileOutputStream("prometeo/Htmls/tiempo/" + id));
 
         for (int b; (b = in.read()) != -1;) {
             out.write(b);
@@ -99,7 +119,7 @@ public class Tiempo {
         out.close();
         in.close();
         
-        System.out.println("Fin");
+        System.out.println("Descargado " + id);
     }
 
     static public void main(String args[]){
