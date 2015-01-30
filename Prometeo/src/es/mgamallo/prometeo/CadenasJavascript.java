@@ -348,8 +348,16 @@ public class CadenasJavascript {
 										+ "var barra1 = cadena.indexOf('/');"
 										+ "var barra2 = cadena.lastIndexOf('/');"
 										+ "diaI = cadena.slice(barra1-2,barra1);"
-										+ "mesI = cadena.slice(barra1,barra2);"
+
+										+ "mesI = cadena.slice(barra1+1,barra2);"
 										+ "anoI = cadena.slice(barra2+1,barra2+5);"
+									
+										+ "if(diaI.charAt(0).localeCompare('0') == 0){"
+											+ "diaI = diaI.slice(1);"
+										+ "}"
+										+ "if(mesI.charAt(0).localeCompare('0') == 0){"
+											+ "mesI = mesI.slice(1);"
+										+ "}"
 										+ "diaI = parseInt(diaI);"
 										+ "mesI = parseInt(mesI);"
 										+ "anoI = parseInt(anoI);"
@@ -362,8 +370,17 @@ public class CadenasJavascript {
 						+ "var barra1 = cadena.indexOf('/');"
 						+ "var barra2 = cadena.lastIndexOf('/');"
 						+ "diaU = cadena.slice(barra1-2,barra1);"
-						+ "mesU = cadena.slice(barra1,barra2);"
+						+ "mesU = cadena.slice(barra1+1,barra2);"
 						+ "anoU = cadena.slice(barra2+1,barra2+5);"
+						
+	
+						+ "if(diaU.charAt(0).localeCompare('0') == 0){"
+							+ "diaU = diaU.slice(1);"
+						+ "}"
+						+ "if(mesU.charAt(0).localeCompare('0') == 0){"
+							+ "mesU = mesU.slice(1);"
+						+ "}"		
+							
 						+ "diaU = parseInt(diaU);"
 						+ "mesU = parseInt(mesU);"
 						+ "anoU = parseInt(anoU);"
@@ -375,6 +392,7 @@ public class CadenasJavascript {
 				//		+ "alert(anoI);"
 						+ "urgDentro = true;"
 						+ "anclaPadre = nodoHosp;"
+					//	+ "alert(anoI + ' > ' + anoU);"
 						+ "nodo[nodoHosp].click();"
 					+ "}"
 					+ "else if(anoI == anoU){"
@@ -414,7 +432,7 @@ public class CadenasJavascript {
 					+ "anclaPadre = nodoHosp;"
 					+ "nodo[nodoHosp].click();"
 				+ "}"	
-				
+			//	+ "alert(anoI + ' ' + anoU + ' ' + mesI + ' ' + mesU + ' ' + diaI + ' ' + diaU);"
 				;
 		
 		

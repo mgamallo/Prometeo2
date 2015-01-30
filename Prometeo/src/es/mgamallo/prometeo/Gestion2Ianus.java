@@ -4,9 +4,6 @@ package es.mgamallo.prometeo;
 import java.awt.Color;
 
 
-import java.awt.event.KeyEvent;
-import java.io.File;
-
 import javax.swing.SwingUtilities;
 
 import com.jacob.activeX.ActiveXComponent;
@@ -109,6 +106,7 @@ public class Gestion2Ianus {
 	
 	public static void buscaNodo(ActiveXComponent ianus, String servicio, String nombreDocumento, boolean inicializar,boolean buscaOtroNodo, int retardo, boolean subirAuto){
 		
+		System.out.println("BuscaNodo: Servicio... " + servicio + "NombreDoc... " + nombreDocumento);
 		String tipoNodo = detectaTipoNodo(servicio, nombreDocumento);
 		
 		System.out.println("El tipo de nodo en buscaNodo es " + tipoNodo);
@@ -123,11 +121,21 @@ public class Gestion2Ianus {
 		
 		String tipoNodo = "x";    // Nodo padre, sin excepciones
 		
-		for(int i=0;i<Inicio.inicioIanus.tablaExcepciones.size();i++){
-			if(servicio.equals(Inicio.inicioIanus.tablaExcepciones.get(i).servicio)){
-				for(int j=0;j<Inicio.inicioIanus.tablaExcepciones.get(i).excepciones.size();j++){
-					if(nombreDocumento.equals(Inicio.inicioIanus.tablaExcepciones.get(i).excepciones.get(j).nombreDocumento)){
-						tipoNodo = Inicio.inicioIanus.tablaExcepciones.get(i).excepciones.get(j).tipoExcepcion;
+		/*
+		for(int i=0;i<InicioIanus.tablaExcepciones.size();i++){
+			System.out.println(InicioIanus.tablaExcepciones.get(i).servicio);
+			for(int j=0;j<InicioIanus.tablaExcepciones.get(i).excepciones.size();j++){
+				System.out.println(InicioIanus.tablaExcepciones.get(i).excepciones.get(j).nombreDocumento + 
+						" Tipo de excepción: " + InicioIanus.tablaExcepciones.get(i).excepciones.get(j).tipoExcepcion);
+			}
+		}
+		*/
+		
+		for(int i=0;i<InicioIanus.tablaExcepciones.size();i++){
+			if(servicio.equals(InicioIanus.tablaExcepciones.get(i).servicio)){
+				for(int j=0;j<InicioIanus.tablaExcepciones.get(i).excepciones.size();j++){
+					if(nombreDocumento.equals(InicioIanus.tablaExcepciones.get(i).excepciones.get(j).nombreDocumento)){
+						tipoNodo = InicioIanus.tablaExcepciones.get(i).excepciones.get(j).tipoExcepcion;
 					}
 				}
 			}
