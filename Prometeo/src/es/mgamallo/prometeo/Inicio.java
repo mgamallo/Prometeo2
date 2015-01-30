@@ -37,6 +37,7 @@ public class Inicio {
 	static Rectangle rVentanaNombres = new Rectangle(0, 1001, 1024, 250);
 	static Rectangle rVentanaControlIanus = new Rectangle();
 	
+	static public String rutaRevisados = ":\\digitalización\\00 documentacion\\02 Revisado";
 	static public String rutaFirmados = ":\\digitalización\\00 documentacion\\03 Firmado";
 	static public String rutaFirmadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)";
 	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
@@ -130,6 +131,7 @@ public class Inicio {
 		System.out.println("Letra de la unidad... " + unidadHDDvirtual);
 		
 		rutaFirmados = unidadHDDvirtual + rutaFirmados;
+		rutaRevisados = unidadHDDvirtual + rutaRevisados;
 	//	rutaFirmadosUrgencias = unidadHDD + rutaFirmadosUrgencias;
 		rutaAsociados = unidadHDDvirtual + rutaAsociados;
 		rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
