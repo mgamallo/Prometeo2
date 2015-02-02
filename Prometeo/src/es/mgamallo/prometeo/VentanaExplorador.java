@@ -570,7 +570,11 @@ public class VentanaExplorador extends javax.swing.JFrame {
     	
     	System.out.println("Imprimimos en ianus");
     	
+    	/*
     	RobotIanus robot = new RobotIanus();
+    	*/
+    	
+    	RobotIanusXedoc robot = new RobotIanusXedoc();
     	robot.asocia(titulo);
     	
     	

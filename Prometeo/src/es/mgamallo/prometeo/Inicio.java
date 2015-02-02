@@ -43,7 +43,14 @@ public class Inicio {
 	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
 	static public String rutaAsociadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 Asociado";
 	static public String rutaDudas = ":\\digitalización\\00 documentacion\\99 Dudas";
+	
+	static public String rutaNormas = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Prometeo\\txt\\Normas";
+	static public String rutaAvisos;
+	static public String rutaAyuda;
+	
 	static public InicioIanus inicioIanus;
+	
+	
 	
 	//	Ruta completa de las carpetas seleccionadas
 	static ArrayList<String> carpetasSeleccionadas = new ArrayList<String>();
@@ -94,6 +101,13 @@ public class Inicio {
 		GraphicsDevice[] gs = ge.getScreenDevices();
 				
 		numeroPantallas = gs.length;
+		
+		if(numeroPantallas==1){
+			rVentanaExploradorMin = new Rectangle(851, 0, 175, 800);
+			rVentanaExploradorMax = new Rectangle(851, 0, 175, 1052);
+			rVentanaNombres = new Rectangle(0, 751, 1024, 250);
+		}
+
 		
 		anchoP = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
 	    altoP = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;

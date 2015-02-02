@@ -84,6 +84,10 @@ public class GestionJacob {
 		    Dispatch.put(Inicio.paciente1.ianus,"height",1149);  // 1099
 		    Dispatch.put(Inicio.paciente1.ianus,"top",130);  // 180
 		    Dispatch.put(Inicio.paciente1.ianus,"left",1024);
+		    if(Inicio.numeroPantallas == 1){
+		    	Dispatch.put(Inicio.paciente1.ianus,"height",1052-130);  // 1099
+		    	Dispatch.put(Inicio.paciente1.ianus,"width",895);
+		    }
 			
 //		    introduceUsuarioJacob(Inicio.ianus2, Inicio.usuario);
 			Dispatch.call(Inicio.paciente2.ianus,"Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
@@ -98,6 +102,12 @@ public class GestionJacob {
 		    Dispatch.put(Inicio.paciente2.ianus,"height",1149);
 		    Dispatch.put(Inicio.paciente2.ianus,"top",130);
 		    Dispatch.put(Inicio.paciente2.ianus,"left",1024);
+		    
+		    if(Inicio.numeroPantallas == 1){
+		    	Dispatch.put(Inicio.paciente2.ianus,"height",1052-130);  // 1099
+		    	Dispatch.put(Inicio.paciente2.ianus,"width",895);
+		    }
+		    
 		}
 		
 		} catch (InterruptedException e) {

@@ -167,7 +167,25 @@ public class LeerExcel {
 	        	}
 	        }
 
+	        // Obtiene las nuevas coordenadas
 	        
+	        hoja = archivoExcel.getSheet(3);
+	        
+	        coordenadasAsociar = new int[10][4];
+	        for(int fila=0;fila<10;fila++){
+	        	for(int columna = 0;columna<4;columna++){
+	        		coordenadasAsociar[fila][columna] = Integer.parseInt(hoja.getCell(1 + columna,2 +fila).getContents().toString());
+
+	        	}
+	        }	        
+	        
+	        
+	        for(int i=0;i<10;i++){
+	        	for(int j=0;j<4;j++){
+	        		System.out.print(coordenadasAsociar[i][j] + "\t");
+	        	}
+	        	System.out.println();
+	        }
 	        
 		} catch (BiffException e) {
 			// TODO Auto-generated catch block

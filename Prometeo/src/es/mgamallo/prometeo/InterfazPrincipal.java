@@ -323,7 +323,7 @@ public class InterfazPrincipal implements MouseListener{
 						
 						String tipoCarpeta = "Firmado";
 						if(Inicio.carpetaDudas){
-							tipoCarpeta = "Dudas";
+							tipoCarpeta = "Dudas " + Inicio.usuario.alias;
 						}
 						
 						codigoCarpetasmetro = 	""

@@ -137,6 +137,9 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			int alto = rectangulo.height;
 			
 			Inicio.vControlIanus.setBounds(1024, 0, ancho, alto - 50);
+			if(Inicio.numeroPantallas == 1){
+				Inicio.vControlIanus.setBounds(1024, 0, 895, alto - 50);
+			}
 		}
 		else{
 			Inicio.vExplorador.setPdfs(pdfs);
