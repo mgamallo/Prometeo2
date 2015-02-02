@@ -25,18 +25,32 @@ public class Carpetas {
 		
 		if(Inicio.usuario.urgencias){
 			path = pathUrgA + "01 " + Inicio.usuario.alias + "\\03 Firmado";
+			Inicio.rutaFirmadosUrgencias = path;
 		}
 		
 		File caminito = new File(path);
 		if(!caminito.exists()){
 			if(Inicio.usuario.urgencias){
 				path = pathUrgB + "01 " + Inicio.usuario.alias + "\\03 Firmado";
+				Inicio.rutaFirmadosUrgencias = path;
 			}
 			else{
 				path = "h:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
 			}
-			
 		}
+		
+		if(Inicio.carpetaDudas){
+			caminito = new File(path);
+			String nuevaRuta = caminito.getParent();
+			nuevaRuta += "\\99 dudas\\" + Inicio.usuario.alias + " C";
+			System.out.println("Nueva Ruta: " + nuevaRuta);
+			File fi = new File(nuevaRuta);
+			if(fi.exists()){
+				path = nuevaRuta;
+			}
+		}
+			
+		
 		
 		if(!carpetaFirmados){
 			path = "d:/02 Area Pruebas/01 Escaneado";

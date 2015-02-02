@@ -8,6 +8,7 @@ public class Usuario {
 	String imagen = null;
 	
 	boolean urgencias = false;
+	boolean xedoc = false;
 	
 	boolean tieneAvisos = false;
 }

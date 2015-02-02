@@ -60,6 +60,8 @@ import javax.swing.event.ChangeListener;
 
 
 
+
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -234,9 +236,11 @@ public class InterfazPrincipal implements MouseListener{
 						Inicio.panelPrincipal.panelControl.setVisible(true);
 					}
 
-					// panelActivo = "Usuario";
+		// panelActivo = "Usuario" *********************************************************;
 				} else if(panelActivo.equals(USUARIO)){
 					System.out.println("Panel usuario");
+					
+					Inicio.carpetaDudas = false;
 					
 					String cadena = "";
 					
@@ -276,7 +280,11 @@ public class InterfazPrincipal implements MouseListener{
 						Dudas.abrirCarpetaApartadoFirmado();
 					}
 					else if(command.equals("dudas")){
-						Dudas.cargarDudas();
+
+						Inicio.carpetaDudas = true;
+						webBrowserOperaciones.setVisible(true);
+						webBrowserOperaciones.navigate(DIR_ABRIR);
+						panelActivo = ABRIR;
 					}						
 					else if(command.equals("salir")){
 						frame.dispose();
@@ -286,7 +294,10 @@ public class InterfazPrincipal implements MouseListener{
 					
 					webBrowserOperaciones.executeJavascript(cadena);
 					
-				}else if (panelActivo.equals(ABRIR)) {
+				}
+				
+	//   ABRÏR *****************************************************************
+				else if (panelActivo.equals(ABRIR)) {
 					System.out.println("Abrimos carpeta");
 
 					if (command.equals("abrir")) {
@@ -309,8 +320,13 @@ public class InterfazPrincipal implements MouseListener{
 						
 						String codigoCarpetasmetro = carpeta.getCodigoJavascript();
 						
+						String tipoCarpeta = "Firmado";
+						if(Inicio.carpetaDudas){
+							tipoCarpeta = "Dudas";
+						}
 						
-						codigoCarpetasmetro = 	"" +
+						codigoCarpetasmetro = 	""
+								+ "document.getElementById('firmado').innerHTML = '" + tipoCarpeta + "';" + LS +
 								 "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
 								 "document.getElementById('pdfspendientes').innerHTML='" + carpeta.numeroPdfsPendientes + "';" + LS +
 								 "var oldNodo = document.getElementById('nuevo');" + LS +

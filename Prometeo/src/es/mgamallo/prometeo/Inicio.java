@@ -78,6 +78,7 @@ public class Inicio {
 	static public String usuarioLogeadoWindows = "";
 	
 	static public boolean xedoc = false;
+	static public boolean carpetaDudas = false;
 	
 	/**
 	 * @param args

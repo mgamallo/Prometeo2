@@ -176,14 +176,12 @@ public class VentanaExplorador extends javax.swing.JFrame {
 				
 				Object comentario = JOptionPane.showInputDialog(null,"Escribe un breve comentario sobre porqué se aparta el documento","Anotación",JOptionPane.QUESTION_MESSAGE);
 				if(comentario.toString() != null){
-					if(Inicio.usuario.urgencias){
-						/*
-						Inicio.rutaFirmadosUrgencias = Inicio.rutaFirmadosUrgencias + "\\"
-						CopiarFichero.copiar(Inicio.documento[indexApartado].rutaArchivo,Inicio.rutaFirmadosUrgencias);
-						*/
-					}
-					else{
 						String ruta = Inicio.rutaFirmados + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
+						
+						if(Inicio.usuario.urgencias){
+							ruta = Inicio.rutaFirmadosUrgencias + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
+						}
+						
 						ruta += "\\" + comentario.toString() + "\\";
 						File directorio = new File(ruta);
 						boolean directorioCreado = directorio.mkdirs();
@@ -195,7 +193,6 @@ public class VentanaExplorador extends javax.swing.JFrame {
 						else{
 							JOptionPane.showMessageDialog(null, "Error al apartar el documento");;
 						}
-					}
 
 				}
 				habilita();

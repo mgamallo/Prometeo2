@@ -1,5 +1,6 @@
 package es.mgamallo.prometeo;
 
+import java.io.File;
 import java.io.IOException;
 
 /*
@@ -9,10 +10,6 @@ import java.io.IOException;
  */
 
 public class Dudas {
-
-	static public void cargarDudas(){
-		
-	}
 	
 	static public void abrirCarpetaApartadoFirmado(){
 		
@@ -24,13 +21,17 @@ public class Dudas {
 		// Borrar esta asignacion
 	//	rutaCarpetaFirmados = "j:\\digitalización\\00 documentacion\\03 Firmado";
 		
-    	String cadena = "explorer.exe " + rutaCarpetaFirmadosApartados;
-		try {
-			Runtime.getRuntime().exec(cadena);
-		} catch (IOException ev) {
-			// TODO Auto-generated catch block
-			ev.printStackTrace();
+		File f = new File(rutaCarpetaFirmadosApartados);
+		if(f.exists()){
+	    	String cadena = "explorer.exe " + rutaCarpetaFirmadosApartados;
+			try {
+				Runtime.getRuntime().exec(cadena);
+			} catch (IOException ev) {
+				// TODO Auto-generated catch block
+				ev.printStackTrace();
+			}
 		}
+
 	}
 	
 	static public void abrirCarpetaApartadoRevisado(){
@@ -39,15 +40,15 @@ public class Dudas {
 			rutaCarpetaRevisadoApartados = Inicio.unidadHDDvirtual + Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado" ;
 		}
 		
-		// Borrar esta asignacion
-	//	rutaCarpetaFirmados = "j:\\digitalización\\00 documentacion\\03 Firmado";
-		
-    	String cadena = "explorer.exe " + rutaCarpetaRevisadoApartados;
-		try {
-			Runtime.getRuntime().exec(cadena);
-		} catch (IOException ev) {
-			// TODO Auto-generated catch block
-			ev.printStackTrace();
+		File f = new File(rutaCarpetaRevisadoApartados);
+		if(f.exists()){
+	    	String cadena = "explorer.exe " + rutaCarpetaRevisadoApartados;
+			try {
+				Runtime.getRuntime().exec(cadena);
+			} catch (IOException ev) {
+				// TODO Auto-generated catch block
+				ev.printStackTrace();
+			}
 		}
 	}
 }
