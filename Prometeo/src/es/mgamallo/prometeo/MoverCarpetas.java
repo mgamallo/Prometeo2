@@ -106,6 +106,13 @@ public class MoverCarpetas {
 			directorioFirmados = new File(ruta);
 		}
 		
+		String dudas = Inicio.rutaDudas + "\\" + Inicio.usuario.alias + " C";
+		File fDudas = new File(dudas);
+		boolean tieneCarpetaDudas = false;
+		if(fDudas.exists()){
+			tieneCarpetaDudas = true;
+		}
+		
 		if(directorioFirmados.exists()){
 
 			FileFilter filtro = new FileFilter(){
@@ -130,6 +137,14 @@ public class MoverCarpetas {
 			for(int i=0;i<directoriosUsuario.length;i++){
 				carpetas.add(new Directorio(directoriosUsuario[i],true));
 				System.out.println(carpetas.get(i).servicio + "   " + carpetas.get(i).numeroPdfs);
+			}
+			
+			if(tieneCarpetaDudas){
+				directoriosUsuario = fDudas.listFiles(filtro);
+				for(int i=0;i<directoriosUsuario.length;i++){
+					carpetas.add(new Directorio(directoriosUsuario[i],true));
+					System.out.println(carpetas.get(i).servicio + "   " + carpetas.get(i).numeroPdfs);
+				}
 			}
 			
 			return carpetas;

@@ -23,6 +23,8 @@ public class Carpetas {
 	
 	Carpetas(boolean carpetaFirmados){
 		
+		path = "j:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
+		
 		if(Inicio.usuario.urgencias){
 			path = pathUrgA + "01 " + Inicio.usuario.alias + "\\03 Firmado";
 			Inicio.rutaFirmadosUrgencias = path;

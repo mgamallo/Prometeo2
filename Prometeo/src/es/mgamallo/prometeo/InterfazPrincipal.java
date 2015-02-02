@@ -179,6 +179,7 @@ public class InterfazPrincipal implements MouseListener{
 				if ("usuario".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_USUARIO);
 					webBrowserOperaciones.setVisible(true);
+					Inicio.carpetaDudas = false;
 					MiHilo miHilo = new MiHilo(Inicio.usuario);
 					miHilo.start();
 					panelActivo = USUARIO;
@@ -364,6 +365,19 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.setVisible(false);
 			
 					}
+					if(command.equals("aptdoRevis")){
+						Dudas.abrirCarpetaApartadoRevisado();
+					}
+					if(command.equals("aptdoFirm")){
+						Dudas.abrirCarpetaApartadoFirmado();
+					}
+					if(command.equals("dudas")){
+
+						Inicio.carpetaDudas = true;
+						webBrowserOperaciones.setVisible(true);
+						webBrowserOperaciones.navigate(DIR_ABRIR);
+						panelActivo = ABRIR;
+					}						
 					
 				} else if (panelActivo.equals(SALIR)) {
 					if (command.contains("salir")) {
