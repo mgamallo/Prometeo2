@@ -1,0 +1,12 @@
+29/7/2013
+@0@
+No
+@0@
+Todos
+@0@
+Toda la documentación de los ingresos se asocia como "hospitalización" excepto:
+- Los Consentimientos (van a su servicio)
+- Los documentos legales (van en el ingreso pero aparte)
+- Las URPAS (por cuestiones de escaneo)
+
+@0@

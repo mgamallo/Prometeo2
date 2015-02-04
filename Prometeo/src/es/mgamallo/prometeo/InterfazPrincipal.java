@@ -378,7 +378,116 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.navigate(DIR_ABRIR);
 						panelActivo = ABRIR;
 					}						
-					
+				} 
+		
+		//   NORMAS *****************************************************************				
+				else if(panelActivo.equals(NORMAS)){
+					if(command.contains("norma_")){
+						String index = command.substring(6);
+						System.out.println(index);
+						String codigo = "modalOn('" + index + "');" + LS;
+						
+						int indice = Integer.parseInt(index) - 1;
+						
+						String fecha = Inicio.listaNormasIanus.get(indice).fecha;
+						String serv = "";
+						for(int j=0;j<Inicio.listaNormasIanus.get(indice).servicios.size();j++){
+							serv += Inicio.listaNormasIanus.get(indice).servicios.get(j) + ", ";
+						}
+						String textoNorma = Inicio.listaNormasIanus.get(indice).texto;
+						
+						String codigo2 = ""
+								+ "document.getElementById('fecha').innerHTML = '" + fecha + "';" + LS
+								+ "document.getElementById('servicios').innerHTML = '" + serv + "';" + LS
+								+ "document.getElementById('textoNorma').innerHTML = '" + textoNorma + "';" + LS
+								;
+								
+						codigo += codigo2;
+						
+
+						webBrowserOperaciones.executeJavascript(codigo);
+					}
+					if(command.equals("todas")){
+						
+						System.out.println("Estamos en todas las normas");
+						
+						String filas = "<table class=\"table hovered\">"
+								+ "<thead>"
+								+ "<tr><th class=\"text-left\">Fecha</th>"
+									+ "<th class=\"text-left\">Servicios</th>"
+									+ "<th class=\"text-left\">Mañana</th>"
+								+ "</tr>"
+								+ "</thead>"
+								+ "<tbody>";
+						
+						
+						
+						
+						for(int i=0;i<Inicio.listaNormasIanus.size();i++){
+							String serv = "";
+							for(int j=0;j<Inicio.listaNormasIanus.get(i).servicios.size();j++){
+								serv += Inicio.listaNormasIanus.get(i).servicios.get(j) + ", ";
+							}
+							
+							int limite = 100;
+							if(Inicio.listaNormasIanus.get(i).texto.length() < limite){
+								limite = Inicio.listaNormasIanus.get(i).texto.length();
+							}
+							String encabezado = Inicio.listaNormasIanus.get(i).texto.substring(0,limite);
+									
+							
+							filas += "<a id=\"" + (i+1) + "\" href=\"command://norma_" + (i+1) + "\">"
+									+ "<tr>"
+									+ "<td>" + Inicio.listaNormasIanus.get(i).fecha + "</td>"
+									+ "<td>" + serv + "</td>"
+									+ "<td>" + encabezado + "</td>"
+									+ "</tr></a>";
+						}
+						
+						
+						filas += "</tbody></table>";
+						
+						/*
+						<table class="table hovered">
+                        <thead>
+                        <tr>
+                            <th class="text-left">Fecha</th>
+                            <th class="text-left">Servicios</th>
+                            <th class="text-left">Contenido</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="tablaNormas">
+                        <tr id="01" onclick="modalOn('01');"><td>20/02/2014</td><td class="right">Carc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="02" onclick="location.href= 'http://www.google.es'"><td>22/03/2014</td><td class="right">HEMC, ONCC</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="03" onclick="modalOn('03');"><td>12/04/2014</td><td class="right">Trac, Rehc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="04" onclick="modalOn('04');"><td>17/05/2014</td><td class="right">Todos</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="05" onclick="modalOn('05');"><td>05/08/2014</td><td class="right">Todos</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        <tr id="06" onclick="modalOn('06');"><td>20/12/2014</td><td class="right">Anrc, Carc, Digc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
+                        </tbody>
+
+                        <tfoot></tfoot>
+
+						 </table>
+						 
+						 */
+						
+						
+
+
+						
+						String lolailo = ""		 +						 
+								 "var oldNodo = document.getElementById('nuevo');" + LS +
+								 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+								 "var nodo = document.createElement('div');" + LS +
+												"nodo.id='nuevo';" + LS + 
+												"nodo.innerHTML = '" + filas +"';" + LS +
+												"var contenedor = document.getElementById('insertar');" + LS +
+												"contenedor.appendChild(nodo);" + 
+												"";// <a href='#' >holaaaa</a>";
+						
+						webBrowserOperaciones.executeJavascript(lolailo);
+					}
 				} else if (panelActivo.equals(SALIR)) {
 					if (command.contains("salir")) {
 						Cerrar.cerrarTodo();

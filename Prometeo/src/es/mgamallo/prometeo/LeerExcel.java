@@ -22,6 +22,8 @@ public class LeerExcel {
 	private String[][] habituales;
 	private int[][] coordenadasAsociar;
 	
+	public String[][] tablaNormas;
+	
 	private Nodo[] nodos;
 	
 	public void leer(String archivoFuente){
@@ -186,6 +188,27 @@ public class LeerExcel {
 	        	}
 	        	System.out.println();
 	        }
+	        
+	        
+	        /*   Esta parte se borrará */
+	        
+	        hoja = archivoExcel.getSheet(4);
+	        
+	        tablaNormas = new String[31][4];
+	        for(int fila=0;fila<31;fila++){
+	        	for(int columna=0;columna<4;columna++){
+	        		tablaNormas[fila][columna]=hoja.getCell(columna, fila+1).getContents().toString();
+	        	}
+	        	
+	        }
+	        
+	        for(int fila=0;fila<31;fila++){
+	        	for(int columna=0;columna<4;columna++){
+	        		System.out.print(tablaNormas[fila][columna] + "\t");
+	        	}
+	        	System.out.println();
+	        }
+	        
 	        
 		} catch (BiffException e) {
 			// TODO Auto-generated catch block

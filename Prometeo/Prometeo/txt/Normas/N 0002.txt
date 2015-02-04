@@ -1,0 +1,13 @@
+10/11/2012
+@0@
+No
+@0@
+Todos
+@0@
+Los EKG se asocian en el Servicio realizador (Cardio, 
+M. Interna, Urgencias o Pediatría). 
+
+Si no tienen nodo se les crea. Si no fue realizado por 
+ninguno de estos, se asocia en el Servicio que lo remite.
+
+@0@

@@ -1,0 +1,8 @@
+29/7/2013
+@0@
+No
+@0@
+Todos
+@0@
+A partir de ahora, todos los consentimientos que vengan con los ingresos se separan y se asocian en el nodo del servicio correspondiente (lo mismo que estamos haciendo con los de anestesia).
+@0@

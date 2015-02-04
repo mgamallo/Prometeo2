@@ -17,9 +17,29 @@
 	 left:25%;
 	 top:25%;
 	 padding:15px;
-	 background:#fff;
-	 width:550px;
-	 height:350px;
+	 background:#c9f8cc;
+	 width:600px;
+	 height:400px;
+ }
+ 
+ #cerrar{
+ 	float: right;
+ }
+ 
+ .encabezados{
+ 	font: 15px bold;
+ 	font-weight: bold;
+ 	margin-bottom: 15px;
+ 	color: maroon;
+ }
+ 
+ .contenido{
+ 	background-color: #fff;
+ 	margin-bottom: 15px;
+ 	margin-top: 15px;
+ 	height: 200px;
+ 	border: 2px;
+ 	font: 15px bold;
  }
  
  tbody tr:hover {

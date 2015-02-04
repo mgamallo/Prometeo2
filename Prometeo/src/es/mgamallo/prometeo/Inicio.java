@@ -44,11 +44,16 @@ public class Inicio {
 	static public String rutaAsociadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 Asociado";
 	static public String rutaDudas = ":\\digitalización\\00 documentacion\\99 Dudas";
 	
-	static public String rutaNormas = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Prometeo\\txt\\Normas";
+	// Revisar estas rutas
+	static public String rutaNormas = "c:\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\txt\\Normas\\";
+	// static public String rutaNormas = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Prometeo\\txt\\Normas";
+	
 	static public String rutaAvisos;
 	static public String rutaAyuda;
 	
 	static public InicioIanus inicioIanus;
+	
+	static public ArrayList<Norma> listaNormasIanus = new ArrayList<Norma>();
 	
 	
 	
@@ -152,6 +157,8 @@ public class Inicio {
 		rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
 		rutaDudas = unidadHDDvirtual + rutaDudas;
 		
+	//	rutaNormas = unidadHDDvirtual + rutaNormas;
+		
 	//	String textoBase = LeerArchivos.obtenerHtml("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuarios.html");
 		
 
@@ -171,6 +178,11 @@ public class Inicio {
 	
 		CapturaRatonYTeclado capturaTeclado = new CapturaRatonYTeclado();
 		
+		/******  Cargamos Normas
+		***************************************/
+		
+		listaNormasIanus = Txt.leerNormasTxt(rutaNormas);
+		System.out.println("Numero de normas: " + listaNormasIanus.size());
 		
 		NativeInterface.runEventPump(); 
 	}

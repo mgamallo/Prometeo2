@@ -1,0 +1,13 @@
+27/2/2013
+@0@
+No
+@0@
+HOSP
+@0@
+Con el fin de simplificar el proceso y unificar criterios, a partir de ahora solo se separa de la documentación de "Hospitalización" lo siguiente:
+
+- Consentimientos informados (los de Anestesia se meten en el nodo de Anestesia)
+- Documentos legales
+
+Todo lo demás se asocia en el ingreso, en el PDF "Hospitalización" si viene con mas documentos o con su nombre si viene solo.
+@0@

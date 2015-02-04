@@ -1,0 +1,9 @@
+10/11/2012
+@0@
+No
+@0@
+HOSP-NEOP-PEC
+@0@
+La hoja de exploración del R.N., a partir de ahora se asocia en el episodio de hospitalización (NEOP o NEOS)
+Se sube separado.
+@0@

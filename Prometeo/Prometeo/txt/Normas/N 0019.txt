@@ -1,0 +1,8 @@
+14/3/2013
+@0@
+No
+@0@
+CIA
+@0@
+A partir de ahora el nombre CMA se usará únicamente para el documento de Cirugía Mayor Ambulatoria cuando venga sólo. Se creó el nombre "Quirófano" para cuando vengan varios documentos diferentes de un quirófano (incluso el de CMA). Si viene un solo documento se asociará, como hasta ahora, con su nombre correspondiente
+@0@

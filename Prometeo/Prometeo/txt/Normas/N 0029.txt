@@ -1,0 +1,8 @@
+12/11/2013
+@0@
+No
+@0@
+Todos
+@0@
+Lo que venga de Hospital de Día (evol. enfermería, órdenes médicas, etc) se asocia en Hospital de Día de Hematología. Si no tiene nodo se le crea.
+@0@

@@ -1,9 +1,9 @@
-Imagen
-c:\imagen.jpg
-@1@
-Servicios
-GIN PED TRAM
-@2@
-Texto
-Los consentimientos se suben a la consulta
-@3@
+10/11/2012
+@0@
+No
+@0@
+ANR
+@0@
+Los consentimentos de Anestesia SIEMPRE se suben en el nodo de Anestesia. Aunque sea un ingreso.
+
+@0@
