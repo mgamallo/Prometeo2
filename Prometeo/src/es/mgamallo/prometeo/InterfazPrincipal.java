@@ -411,14 +411,18 @@ public class InterfazPrincipal implements MouseListener{
 						
 						System.out.println("Estamos en todas las normas");
 						
-						String filas = "<table class=\"table hovered\">"
-								+ "<thead>"
-								+ "<tr><th class=\"text-left\">Fecha</th>"
-									+ "<th class=\"text-left\">Servicios</th>"
-									+ "<th class=\"text-left\">Mañana</th>"
-								+ "</tr>"
-								+ "</thead>"
-								+ "<tbody>";
+						String filas = ""
+								+ "<div class = \"outer\">"
+									+ "<div class = \"innera\">"
+										+ "<table class=\"table hovered\">"
+										+ "<thead>"
+										+ "<tr><th class=\"text-left\">Fecha</th>"
+											+ "<th class=\"text-left\">Servicios</th>"
+											+ "<th class=\"text-left\">Contenido</th>"
+										+ "</tr>"
+										+ "</thead>"
+										+ "<tfoot></tfoot>"
+										+ "<tbody>";
 						
 						
 						
@@ -445,7 +449,7 @@ public class InterfazPrincipal implements MouseListener{
 						}
 						
 						
-						filas += "</tbody></table>";
+						filas += "</tbody></table></div></div>";
 						
 						/*
 						<table class="table hovered">

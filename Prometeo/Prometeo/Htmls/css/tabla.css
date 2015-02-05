@@ -1,0 +1,39 @@
+.outer {
+	position: relative;
+	width: 97%;
+	padding: 4em 0 3em 0; 
+	/* background: #eee; */
+	margin: 0 auto 3em auto; 
+	
+}
+
+.innera {
+	overflow: auto;
+/*	width: 54em;  */
+	height: 610px;
+/*	background: #eee;  */
+}
+
+
+
+.outer thead tr {
+/*	position: absolute; */
+/*	top: -1.5em;
+	height: 1.5em;
+	left: 0;   */
+}
+
+
+
+.outer tfoot td {
+	position: absolute;
+	width: 51.5em;
+	text-align: center;
+	background: #f0c992;
+	border: 0.1em solid #000;
+	color: #000;
+	bottom: 0;
+	left: 0
+}
+
+
