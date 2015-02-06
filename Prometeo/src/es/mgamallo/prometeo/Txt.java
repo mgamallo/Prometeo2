@@ -15,6 +15,56 @@ public class Txt {
 		return LeerArchivos.obtenerUsuarios(ruta);
 	}
 	
+	
+	static public void escribirNormasTxt(Norma norma){
+		
+		FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            
+
+            if(new File(norma.rutaNormaTxt).exists()){
+            	
+            	fichero = new FileWriter(norma.rutaNormaTxt,false);
+            	
+                pw = new PrintWriter(fichero);
+
+		         String servicios = "";
+                
+		         for(int i=0;i<norma.servicios.size();i++){
+		        	 servicios += norma.servicios.get(i);
+		        	 if((i+1) != norma.servicios.size()){
+		        		 servicios += "-";
+		        	 }
+		         }
+
+                pw.println(norma.fecha);
+                pw.println("@0@");
+                pw.println(norma.rutaImagen);
+                pw.println("@0@");
+                pw.println(servicios);
+                pw.println("@0@");
+                pw.println(norma.texto);
+                pw.println("@0@");
+      
+            }
+            
+ 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           // Nuevamente aprovechamos el finally para 
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
+	}
+
 	//  Metodo para borrar
 	static public void escribirNormasTxt(String rutaCompleta, String[] campos){
 		
@@ -114,6 +164,7 @@ public class Txt {
 		         }
 		         norma.servicios = listaServicios;
 	         }
+	         norma.rutaNormaTxt = archivo.getAbsolutePath();
 
 	      }
 	      catch(Exception e){

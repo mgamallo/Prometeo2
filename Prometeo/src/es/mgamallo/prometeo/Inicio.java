@@ -53,8 +53,9 @@ public class Inicio {
 	
 	static public InicioIanus inicioIanus;
 	
+	static public LeerExcel leerExcel;
 	static public ArrayList<Norma> listaNormasIanus = new ArrayList<Norma>();
-	
+	static public String[] listaServicios;
 	
 	
 	//	Ruta completa de las carpetas seleccionadas
@@ -183,6 +184,10 @@ public class Inicio {
 		
 		listaNormasIanus = Txt.leerNormasTxt(rutaNormas);
 		System.out.println("Numero de normas: " + listaNormasIanus.size());
+		
+		leerExcel = new LeerExcel();
+		leerExcel.leer("Documentos.xls");
+		listaServicios = leerExcel.getServicios();
 		
 		NativeInterface.runEventPump(); 
 	}

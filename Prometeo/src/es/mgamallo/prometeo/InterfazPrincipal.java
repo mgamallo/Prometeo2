@@ -62,6 +62,8 @@ import javax.swing.event.ChangeListener;
 
 
 
+
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -177,6 +179,7 @@ public class InterfazPrincipal implements MouseListener{
 					panelActivo = AVISOS;
 				}
 				if ("usuario".equals(command)) {
+					maximizada = Pantalla.restaurar(frame);
 					webBrowserOperaciones.navigate(DIR_USUARIO);
 					webBrowserOperaciones.setVisible(true);
 					Inicio.carpetaDudas = false;
@@ -241,6 +244,7 @@ public class InterfazPrincipal implements MouseListener{
 				} else if(panelActivo.equals(USUARIO)){
 					System.out.println("Panel usuario");
 					
+					
 					Inicio.carpetaDudas = false;
 					
 					String cadena = "";
@@ -255,6 +259,8 @@ public class InterfazPrincipal implements MouseListener{
 						
 						Inicio.usuario.urgencias = true;
 						Inicio.xedoc = false;
+						
+						webBrowserOperaciones.executeJavascript(cadena);
 					}
 					else if(command.equals("doc")){
 						String claseOff = "tile bg-cobalt bg-hover-lightGreen bd-yellow";
@@ -266,6 +272,8 @@ public class InterfazPrincipal implements MouseListener{
 						
 						Inicio.usuario.urgencias = false;
 						Inicio.xedoc = false;
+						
+						webBrowserOperaciones.executeJavascript(cadena);
 					}
 					else if(command.equals("xedoc")){
 						Inicio.xedoc = true;
@@ -286,14 +294,29 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.setVisible(true);
 						webBrowserOperaciones.navigate(DIR_ABRIR);
 						panelActivo = ABRIR;
-					}						
+					}
+					else if(command.equals("tiempo")){
+						maximizada = Pantalla.maximizar(frame);
+						webBrowserOperaciones.navigate("http://www.meteogalicia.es/web/index.action");
+					}
+					else if(command.equals("correo")){
+						maximizada = Pantalla.maximizar(frame);
+						webBrowserOperaciones.navigate("https://correo.sergas.local/");
+					}
+					else if(command.equals("sughus")){
+						maximizada = Pantalla.maximizar(frame);
+						webBrowserOperaciones.navigate("http://sughusponpro.sergas.local:8080/sughus");
+					}
+					else if(command.equals("fides")){
+						maximizada = Pantalla.maximizar(frame);
+						webBrowserOperaciones.navigate("http://fides.sergas.local/");
+					}
 					else if(command.equals("salir")){
 						frame.dispose();
 						Cerrar.cerrarTodo();
 						System.exit(0);
 					}
 					
-					webBrowserOperaciones.executeJavascript(cadena);
 					
 				}
 				
@@ -377,7 +400,9 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.setVisible(true);
 						webBrowserOperaciones.navigate(DIR_ABRIR);
 						panelActivo = ABRIR;
-					}						
+					}	
+					
+					maximizada = Pantalla.restaurar(frame);
 				} 
 		
 		//   NORMAS *****************************************************************				
@@ -400,6 +425,7 @@ public class InterfazPrincipal implements MouseListener{
 								+ "document.getElementById('fecha').innerHTML = '" + fecha + "';" + LS
 								+ "document.getElementById('servicios').innerHTML = '" + serv + "';" + LS
 								+ "document.getElementById('textoNorma').innerHTML = '" + textoNorma + "';" + LS
+								+ "document.getElementById('editar').name='" + index + "';"
 								;
 								
 						codigo += codigo2;
@@ -407,6 +433,20 @@ public class InterfazPrincipal implements MouseListener{
 
 						webBrowserOperaciones.executeJavascript(codigo);
 					}
+					
+					if(command.contains("editar")){
+						String index = command.substring(7);
+						int indice = Integer.parseInt(index) - 1;
+						System.out.println(index);
+						
+						String[] serviciosSelecc = new String[Inicio.listaNormasIanus.get(indice).servicios.size()];
+						for(int i=0;i<Inicio.listaNormasIanus.get(indice).servicios.size();i++){
+							serviciosSelecc[i] = Inicio.listaNormasIanus.get(indice).servicios.get(i);
+						}
+						
+						new EditorHTML(indice,Inicio.listaNormasIanus.get(indice).texto,Inicio.listaServicios, serviciosSelecc );
+					}
+					
 					if(command.equals("todas")){
 						
 						System.out.println("Estamos en todas las normas");
@@ -440,46 +480,19 @@ public class InterfazPrincipal implements MouseListener{
 							String encabezado = Inicio.listaNormasIanus.get(i).texto.substring(0,limite);
 									
 							
-							filas += "<a id=\"" + (i+1) + "\" href=\"command://norma_" + (i+1) + "\">"
-									+ "<tr>"
+							filas += (
+									"<tr>"
+									+ "<a id=\"" + (i+1) + "\" href=\"command://norma_" + (i+1) + "\">"
 									+ "<td>" + Inicio.listaNormasIanus.get(i).fecha + "</td>"
 									+ "<td>" + serv + "</td>"
 									+ "<td>" + encabezado + "</td>"
-									+ "</tr></a>";
+									+ "</a></tr>");
 						}
 						
-						
+
 						filas += "</tbody></table></div></div>";
-						
-						/*
-						<table class="table hovered">
-                        <thead>
-                        <tr>
-                            <th class="text-left">Fecha</th>
-                            <th class="text-left">Servicios</th>
-                            <th class="text-left">Contenido</th>
-                        </tr>
-                        </thead>
-
-                        <tbody id="tablaNormas">
-                        <tr id="01" onclick="modalOn('01');"><td>20/02/2014</td><td class="right">Carc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
-                        <tr id="02" onclick="location.href= 'http://www.google.es'"><td>22/03/2014</td><td class="right">HEMC, ONCC</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
-                        <tr id="03" onclick="modalOn('03');"><td>12/04/2014</td><td class="right">Trac, Rehc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
-                        <tr id="04" onclick="modalOn('04');"><td>17/05/2014</td><td class="right">Todos</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
-                        <tr id="05" onclick="modalOn('05');"><td>05/08/2014</td><td class="right">Todos</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
-                        <tr id="06" onclick="modalOn('06');"><td>20/12/2014</td><td class="right">Anrc, Carc, Digc</td><td class="right">A JavaScript function is a block of code designed to perform a particular task</td></tr>
-                        </tbody>
-
-                        <tfoot></tfoot>
-
-						 </table>
-						 
-						 */
-						
-						
-
-
-						
+					
+					
 						String lolailo = ""		 +						 
 								 "var oldNodo = document.getElementById('nuevo');" + LS +
 								 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
@@ -491,6 +504,8 @@ public class InterfazPrincipal implements MouseListener{
 												"";// <a href='#' >holaaaa</a>";
 						
 						webBrowserOperaciones.executeJavascript(lolailo);
+						
+						maximizada = Pantalla.maximizar(frame);
 					}
 				} else if (panelActivo.equals(SALIR)) {
 					if (command.contains("salir")) {
@@ -725,6 +740,7 @@ public class InterfazPrincipal implements MouseListener{
 		panelOperaciones.setBackground(color);
 
 	}
+	
 
 	/* Standard main method to try that test as a standalone application. */
 	public InterfazPrincipal(final String nombreFrame, final Color color,

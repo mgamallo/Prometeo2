@@ -4,6 +4,7 @@ No
 @0@
 Todos
 @0@
-La "GAMMAGRAFIA" deja de ser un nombre normalizado, 
-y pasa a subirse como "INFORME".
+<p>Esta norma se va a borrar.</p>
+<p>La -<span style="color: #ff0000">GAMMAGRAFIA</span>- deja de ser un nombre normalizado, y pasa a subirse como -<span style="color: #339966">INFORME</span>-.</p>
+<p>Segunda modificaci&oacute;n.</p>
 @0@

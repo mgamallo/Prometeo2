@@ -78,7 +78,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	
 	static String tipoSubida = "";
 
-	LeerExcel leerExcel;
+
 
 	static Nodo listaNodos[];
 	
@@ -109,8 +109,6 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	public InicioIanus(CargaListaPdfs pdfs) {
 		// TODO Auto-generated constructor stub
 
-		leerExcel = new LeerExcel();
-		leerExcel.leer("Documentos.xls");
 		setDefaultsModels();
 		setConjuntosTitulos();
 		setExcepciones();
@@ -151,13 +149,13 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	
 	private void setDefaultsModels() {
 
-		listaNodos = leerExcel.getNodos();
-		coordenadasAsociar = leerExcel.getCoordenadasAsociar();
+		listaNodos = Inicio.leerExcel.getNodos();
+		coordenadasAsociar = Inicio.leerExcel.getCoordenadasAsociar();
 		
-		listaServicios = leerExcel.getServicios();
-		listaNombresDocumentos = leerExcel.getNombres();
-		tablaHabituales = leerExcel.getHabituales();
-		tablaDocumentos = leerExcel.getTabla();
+		listaServicios = Inicio.leerExcel.getServicios();
+		listaNombresDocumentos = Inicio.leerExcel.getNombres();
+		tablaHabituales = Inicio.leerExcel.getHabituales();
+		tablaDocumentos = Inicio.leerExcel.getTabla();
 
 		listaModelTodosLosNombres.removeAllElements();
 		listaModelNombresComunes.removeAllElements();
@@ -225,20 +223,20 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	
 	private void setConjuntosTitulos(){
 		for(int i=0;i<listaNombresDocumentos.length;i++){
-			if(leerExcel.asociacionesDocumentos[i][1].toLowerCase().equals("s")){
-				titCons.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			if(Inicio.leerExcel.asociacionesDocumentos[i][1].toLowerCase().equals("s")){
+				titCons.put(listaNombresDocumentos[i],Inicio.leerExcel.asociacionesDocumentos[i][0]);
 			}
-			if(leerExcel.asociacionesDocumentos[i][2].toLowerCase().equals("s")){
-				titHosp.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			if(Inicio.leerExcel.asociacionesDocumentos[i][2].toLowerCase().equals("s")){
+				titHosp.put(listaNombresDocumentos[i],Inicio.leerExcel.asociacionesDocumentos[i][0]);
 			}
-			if(leerExcel.asociacionesDocumentos[i][3].toLowerCase().equals("s")){
-				titCIA.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			if(Inicio.leerExcel.asociacionesDocumentos[i][3].toLowerCase().equals("s")){
+				titCIA.put(listaNombresDocumentos[i],Inicio.leerExcel.asociacionesDocumentos[i][0]);
 			}
-			if(leerExcel.asociacionesDocumentos[i][4].toLowerCase().equals("s")){
-				titQui.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			if(Inicio.leerExcel.asociacionesDocumentos[i][4].toLowerCase().equals("s")){
+				titQui.put(listaNombresDocumentos[i],Inicio.leerExcel.asociacionesDocumentos[i][0]);
 			}
-			if(leerExcel.asociacionesDocumentos[i][5].toLowerCase().equals("s")){
-				titUrg.put(listaNombresDocumentos[i],leerExcel.asociacionesDocumentos[i][0]);
+			if(Inicio.leerExcel.asociacionesDocumentos[i][5].toLowerCase().equals("s")){
+				titUrg.put(listaNombresDocumentos[i],Inicio.leerExcel.asociacionesDocumentos[i][0]);
 			}
 		}
 	}

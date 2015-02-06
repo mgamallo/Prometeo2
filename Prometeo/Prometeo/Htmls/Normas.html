@@ -35,6 +35,12 @@
 	function saludar(){
 		alert('hola');
 	}
+	
+	function editar(){
+		var indice = document.getElementById('editar').name;
+		var cadena = "editar_" + indice;
+		sendNSCommand(cadena);
+	}
 
 </script>
 
@@ -55,7 +61,7 @@
 		<div class="encabezados">Fecha: <span id="fecha"></span></div>
 		<div class="encabezados">Servicios: <span id="servicios"></span></div>
 		<div class="contenido"><span id="textoNorma"></span></div>
-		<button href="command://editar" style="background-color: red; color: white;" >Editar</button>
+		<button id="editar" name="01" onclick="editar()" style="background-color: red; color: white;" >Editar</button>
 	</div>
 
 <!--  	<div class="tile-area tile-area-dark"  
@@ -73,21 +79,7 @@
 
 				</button> 
 
-				<div class="button-dropdown">
-					<button class="dropdown-toggle large bg-emerald fg-white">
-						<i class="icon-tag"></i>
-					 Servicios 
 
-					</button>
-					<ul class="dropdown-menu" data-role="dropdown">
-						<li><a href="#"> CARC </a></li>
-						<li><a href="#"> DERC</a></li>
-						<li><a href="#"> HEMC </a></li>
-						<li><a href="#"> TRAC </a></li>
-					</ul>
-
-
-				</div>
 				<a class="command-button bg-emerald fg-white" title="Servicio" href="command://normasServicio">
 					<i class="icon-tag fg-white"></i>
 					Servicio

@@ -7,4 +7,5 @@ public class Norma {
 	String texto = "";
 	ArrayList<String> servicios = new ArrayList<String>();
 	String rutaImagen = "No";
+	String rutaNormaTxt = "";
 }
