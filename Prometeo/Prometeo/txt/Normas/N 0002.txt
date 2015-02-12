@@ -1,13 +1,17 @@
 10/11/2012
 @0@
-No
+C:\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Htmls\\ImagenesDocumentos\\02.jpg
 @0@
 Todos
 @0@
-Los EKG se asocian en el Servicio realizador (Cardio, 
-M. Interna, Urgencias o Pediatría). 
-
-Si no tienen nodo se les crea. Si no fue realizado por 
-ninguno de estos, se asocia en el Servicio que lo remite.
-
+<p>&nbsp;</p>
+<p>Los EKG se asocian en el <u><strong><span style="color: #0000ff">Servicio realizador</span></strong></u>:</p>
+<ul>
+    <li>Cardio</li>
+    <li>M. Interna</li>
+    <li>Urgencias</li>
+    <li>Pediatr&iacute;a.</li>
+</ul>
+<p>Si no tienen nodo se les crea.</p>
+<p>Si no fue realizado por ninguno de estos servicios, se asocia en el <span style="color: #0000ff"><strong><u>Servicio que lo remite</u></strong></span>.</p>
 @0@

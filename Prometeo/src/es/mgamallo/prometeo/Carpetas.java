@@ -7,6 +7,8 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class Carpetas {
 	
 	 // static String path = "d:/02 Area Pruebas/03 Firmado";
@@ -23,32 +25,25 @@ public class Carpetas {
 	
 	Carpetas(boolean carpetaFirmados){
 		
-		path = "j:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
+		path = Inicio.rutaFirmados;
 		
 		if(Inicio.usuario.urgencias){
-			path = pathUrgA + "01 " + Inicio.usuario.alias + "\\03 Firmado";
-			Inicio.rutaFirmadosUrgencias = path;
+			path = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 		}
 		
 		File caminito = new File(path);
-		if(!caminito.exists()){
-			if(Inicio.usuario.urgencias){
-				path = pathUrgB + "01 " + Inicio.usuario.alias + "\\03 Firmado";
-				Inicio.rutaFirmadosUrgencias = path;
-			}
-			else{
-				path = "h:\\DIGITALIZACIÓN\\00 DOCUMENTACION\\03 Firmado";
-			}
-		}
 		
 		if(Inicio.carpetaDudas){
-			caminito = new File(path);
-			String nuevaRuta = caminito.getParent();
-			nuevaRuta += "\\99 dudas\\" + Inicio.usuario.alias + " C";
-			System.out.println("Nueva Ruta: " + nuevaRuta);
+			
+			String nuevaRuta = (Inicio.rutaDudas + "\\" + Inicio.usuario.alias);
+			System.out.println("Nueva Ruta: Dudas. " + nuevaRuta);
 			File fi = new File(nuevaRuta);
 			if(fi.exists()){
 				path = nuevaRuta;
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "No tienes dudas.");
+				Inicio.carpetaDudas = false;
 			}
 		}
 			
@@ -308,12 +303,15 @@ class Directorio{
 	int numeroPdfs = 0;
 	boolean urgente = false;
 	boolean asociado = false;
+	boolean duda = false;
 	
 	String usuario = "";
 	String servicio = "";
 	String color = "";
 	String dia = "";
 	String numCarpeta = "";
+	String pregunta = "";
+	String contestacion = "";
 	
 	Directorio(){
 		
@@ -367,31 +365,70 @@ class Directorio{
 		String cadena = nombreCarpeta;
 		System.out.println("Número de colores " + arrayColores.length);
 		
-		int index = nombreCarpeta.lastIndexOf("@");
-		if (index != -1){
-			usuario = nombreCarpeta.substring(index+1);
-			//System.out.println(usuario);
-			cadena= cadena.substring(0,index);
+		
+		int index = 0;
+		int[] posicionArroba = new int[2];
+		int numArrobas = 0;
+		
+		index = nombreCarpeta.indexOf("@");
+		while(index != -1 && numArrobas <2){
+			posicionArroba[numArrobas] = index;
+			numArrobas++; 
+			index = nombreCarpeta.indexOf("@",index + 1);
 		}
 		
+		System.out.println("Numero de arrobas " + numArrobas);
 		
-		int indexDia = nombreCarpeta.indexOf("#");
-		if(indexDia != -1){
-			cadena = cadena.substring(indexDia + 1);
-			int primerEspacioBlanco = cadena.indexOf(" ");
-			numCarpeta = cadena.substring(0,primerEspacioBlanco);
-			System.out.println(numCarpeta);
-			
-			cadena = cadena.substring(primerEspacioBlanco + 1);
-			if(cadena.length() > 2 && cadena.charAt(2) == ' '){
-					dia = cadena.substring(0,2);
-					cadena = cadena.substring(3);
-					//System.out.println(dia);
+		if(numArrobas == 2){
+			if(Inicio.carpetaDudas){
+				duda = true;
+				pregunta = nombreCarpeta.substring(0,posicionArroba[0]);
+				Inicio.contestacionDudas = nombreCarpeta.substring(posicionArroba[0] + 1,posicionArroba[1]);
+				contestacion = Inicio.contestacionDudas;
+				usuario = nombreCarpeta.substring(posicionArroba[1] + 1);
 			}
 		}
-
+		else if(numArrobas == 1){
+			if(Inicio.carpetaDudas){
+				duda = true;
+				pregunta = nombreCarpeta.substring(0,posicionArroba[0]);
+				Inicio.contestacionDudas = nombreCarpeta.substring(posicionArroba[0] + 1);
+				contestacion = Inicio.contestacionDudas; 
+			}
+			else{
+				usuario = nombreCarpeta.substring(posicionArroba[0] + 1);
+				cadena= cadena.substring(0,posicionArroba[0]);
+			}
+		}
+		else if(numArrobas == 0){
+			if(Inicio.carpetaDudas){
+				duda = true;
+				pregunta = nombreCarpeta;
+				contestacion = "";
+			}
+		}
 		
-		servicio = cadena;
+		if(!Inicio.carpetaDudas){
+			int indexDia = nombreCarpeta.indexOf("#");
+			if(indexDia != -1){
+				cadena = cadena.substring(indexDia + 1);
+				int primerEspacioBlanco = cadena.indexOf(" ");
+				numCarpeta = cadena.substring(0,primerEspacioBlanco);
+				System.out.println(numCarpeta);
+				
+				cadena = cadena.substring(primerEspacioBlanco + 1);
+				if(cadena.length() > 2 && cadena.charAt(2) == ' '){
+						dia = cadena.substring(0,2);
+						cadena = cadena.substring(3);
+						//System.out.println(dia);
+				}
+			}
+
+			
+			servicio = cadena;
+		}
+		
+
 		
 		cadena = cadena.toLowerCase();
 		
@@ -441,6 +478,19 @@ class Directorio{
 		}
 		if(!usuario.equals("")){
 			color = "bg-steel";
+		}
+		
+		if(duda){
+			if(contestacion.length() == 0){
+				color = "bg-cobalt";
+			}
+			else{
+				color = "bg-teal";
+			}
+			if(!usuario.equals("")){
+				color = "bg-steel";
+			}
+			
 		}
 		
 		System.out.println("Usuario: " + usuario);

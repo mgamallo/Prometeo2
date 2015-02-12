@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class EscribirArchivos {
-	public static void escribeHtml(String textoHtml){
+	public static void escribeHtml(String textoHtml, String ruta){
 		FileWriter fichero = null;
 		PrintWriter pw = null;
 		
 		try {
 			// fichero = new FileWriter("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
-			fichero = new FileWriter(Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
+			fichero = new FileWriter(Inicio.unidadHDDejecutable + ruta );
 			pw = new PrintWriter(fichero);
 			pw.print(textoHtml);
 		} catch (IOException e) {

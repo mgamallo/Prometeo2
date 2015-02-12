@@ -191,7 +191,7 @@ public class LeerExcel {
 	        
 	        
 	        /*   Esta parte se borrará */
-	        
+	       /* 
 	        hoja = archivoExcel.getSheet(4);
 	        
 	        tablaNormas = new String[31][4];
@@ -208,7 +208,7 @@ public class LeerExcel {
 	        	}
 	        	System.out.println();
 	        }
-	        
+	        */
 	        
 		} catch (BiffException e) {
 			// TODO Auto-generated catch block

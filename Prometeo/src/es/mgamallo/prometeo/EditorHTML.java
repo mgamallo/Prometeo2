@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -37,13 +38,13 @@ import chrriis.dj.nativeswing.swtimpl.components.JHTMLEditor.HTMLEditorImplement
 public class EditorHTML {
 
   protected static final String LS = System.getProperty("line.separator");
+  protected static JList listaServicios = new JList();
   
   static JFrame frame;
 
   public static JComponent createContent(final int numeroDeNorma, String texto, String[] servicios, String[] serviciosSelecc) {
 	  
-	  
-	 JList listaServicios = new JList(); 
+
 	 JScrollPane scroll = new JScrollPane();
 
 	 DefaultListModel listaModelNombresServicio = new DefaultListModel(); 
@@ -97,11 +98,19 @@ public class EditorHTML {
     	String textoAGrabar = htmlEditor.getHTMLContent();
     	
     	// textoAGrabar = textoAGrabar.replace("\"", "'");
-    	textoAGrabar = textoAGrabar.replaceAll("&quot;", "-");
+    	textoAGrabar = textoAGrabar.replaceAll("\"", "\\\"");
     	
-    	System.out.println(textoAGrabar);
+    	System.out.println("Este es el texto a Grabar: \n" + textoAGrabar);
     	
     	Inicio.listaNormasIanus.get(numeroDeNorma).texto = textoAGrabar;
+    	
+    	Object[] indicesServicios = listaServicios.getSelectedValues();
+    	ArrayList<String> listaServiciosSeleccionados = new ArrayList<String>();
+    	for(int i=0;i<indicesServicios.length;i++){
+    		listaServiciosSeleccionados.add(indicesServicios[i].toString());
+    	}
+
+    	Inicio.listaNormasIanus.get(numeroDeNorma).servicios = listaServiciosSeleccionados;
     	
     	guardarCambios(numeroDeNorma);
     	
@@ -153,7 +162,7 @@ public class EditorHTML {
 	  
 	    SwingUtilities.invokeLater(new Runnable() {
 	        public void run() {
-	          frame = new JFrame("DJ Native Swing Test");
+	          frame = new JFrame("Editor Prometeo");
 	          frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	          frame.getContentPane().add(createContent(numeroDeNorma,texto,servicios,serviciosSelecc), BorderLayout.CENTER);
 	          frame.setSize(900, 600);

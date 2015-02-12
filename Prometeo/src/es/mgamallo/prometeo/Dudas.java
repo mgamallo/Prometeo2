@@ -15,7 +15,9 @@ public class Dudas {
 		
 		String rutaCarpetaFirmadosApartados = Inicio.rutaFirmados + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
 		if(Inicio.usuario.urgencias){
-			rutaCarpetaFirmadosApartados = Inicio.unidadHDDvirtual + Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado" ;
+			rutaCarpetaFirmadosApartados = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias 
+					+ "\\03 Firmado\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
+						;
 		}
 		
 		// Borrar esta asignacion
@@ -24,6 +26,7 @@ public class Dudas {
 		File f = new File(rutaCarpetaFirmadosApartados);
 		if(f.exists()){
 	    	String cadena = "explorer.exe " + rutaCarpetaFirmadosApartados;
+	    	System.out.println(rutaCarpetaFirmadosApartados);
 			try {
 				Runtime.getRuntime().exec(cadena);
 			} catch (IOException ev) {
@@ -37,7 +40,9 @@ public class Dudas {
 	static public void abrirCarpetaApartadoRevisado(){
 		String rutaCarpetaRevisadoApartados = Inicio.rutaRevisados + "\\Apartado por " + Inicio.usuario.alias;
 		if(Inicio.usuario.urgencias){
-			rutaCarpetaRevisadoApartados = Inicio.unidadHDDvirtual + Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado" ;
+			rutaCarpetaRevisadoApartados = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias 
+					+ "\\02 Revisado\\Apartado por " + Inicio.usuario.alias + ". Pendiente" ;
+			System.out.println(rutaCarpetaRevisadoApartados);
 		}
 		
 		File f = new File(rutaCarpetaRevisadoApartados);

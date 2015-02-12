@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/> 
+
+<title>Normas</title>
+
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/tabla.css">
+
+<link rel="stylesheet" type="text/css" href="css/demoParallax.css" />
+<link rel="stylesheet" type="text/css" href="css/style2Parallax.css" />
+
+<link rel='stylesheet' type='text/css' href='css/fonts/Economica-italic.woff2' >
+
+<script type="text/javascript" src="js/modernizr.custom.28468.js"></script>
+<script type="text/javascript" src="js/jquery.cslider.js"></script>
+
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-scroll.js"></script>
+<script src="js/metro/metro-listview.js"></script>
+
+
+<script type="text/javascript">
+
+	var indiceNorma = 0;
+
+	function inicio(){
+		var ancla = document.getElementById('todas');
+		ancla.click();
+	}
+
+	function modalOn(id){
+		
+		indiceNorma = id-1;
+
+		jQuery.fn.loading = $(function() {
+			
+			$('#da-slider').cslider({
+				autoplay	: false,
+				bgincrement	: 450,
+				current: indiceNorma
+			});
+		
+		});
+		
+		document.getElementById('fondooscuro').style.display='block';
+		document.getElementById('contenido').style.display='block';
+		document.getElementById('fecha').innerHTML = id;
+		
+		
+	}
+
+	function modalOff(){
+		sendNSCommand('recargar');
+		document.getElementById('fondooscuro').style.display='none';
+		document.getElementById('contenido').style.display='none';
+		
+	}
+	
+	function saludar(){
+		alert('hola');
+	}
+	
+	function editar(index){
+		var indice = index;
+		var cadena = "editar_" + indice;
+		sendNSCommand(cadena);
+	}
+
+</script>
+
+</head>
+
+<body class="metro" onload="inicio()" style="background: black; height: 1100px;">
+
+	<!--  <div class="tile double double-vertical"></div> -->
+
+	<div id="fondooscuro"></div>
+	<div id="contenido" class="container">
+		       
+	</div>
+
+<!--  	<div class="tile-area tile-area-dark"  
+		style="width: 800px; height: 1123px">  -->
+	
+		<h1 class="fg-white">Normas</h1>
+		
+		<br> <br><br>
+	
+		<div class="row">
+			<div class="span12">
+
+				<a class="tile half bg-crimson" title="Buscar" href="command://buscarNorma"> 
+					<div class="tile-content icon">
+						<i class="icon-search"></i>
+					</div>
+				</a>
+					<a class="tile half bg-yellow" title="Limpiar" href="command://limpiar"> 
+					<div class="tile-content icon">
+						<i class="icon-backspace-2"></i>
+					</div>
+				</a>
+				<a class="tile half bg-red" title="Imprimir" href="command://imprimir">
+					<div class="tile-content icon">
+						<i class=" icon-layers"></i>
+					</div>
+
+				</a>
+
+				<a class="command-button bg-cobalt fg-white " id="todas"  href="command://todas">
+
+					<i class="icon-cabinet fg-white"></i>
+					Todas
+				</a>
+
+			</div>
+		</div>
+
+
+
+
+
+		<div id="insertar">
+<!--  		</div>  -->
+		
+		</div>
+
+	    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.cslider.js"></script>
+<!--  
+ 		<script type="text/javascript">
+  		
+				$(function() {
+					
+					alert(indiceNorma);
+					
+					$('#da-slider').cslider({
+						autoplay	: false,
+						bgincrement	: 450,
+						current: indiceNorma
+					});
+				
+				});
+		</script>	
+ -->
+	
+</body>
+</html>

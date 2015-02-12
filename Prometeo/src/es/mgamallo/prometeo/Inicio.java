@@ -92,6 +92,7 @@ public class Inicio {
 	
 	static public boolean xedoc = false;
 	static public boolean carpetaDudas = false;
+	static public String contestacionDudas = "";
 	
 	/**
 	 * @param args
@@ -153,7 +154,7 @@ public class Inicio {
 		
 		rutaFirmados = unidadHDDvirtual + rutaFirmados;
 		rutaRevisados = unidadHDDvirtual + rutaRevisados;
-	//	rutaFirmadosUrgencias = unidadHDD + rutaFirmadosUrgencias;
+		rutaFirmadosUrgencias = unidadHDDvirtual + rutaFirmadosUrgencias;
 		rutaAsociados = unidadHDDvirtual + rutaAsociados;
 		rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
 		rutaDudas = unidadHDDvirtual + rutaDudas;
@@ -173,7 +174,9 @@ public class Inicio {
 		String textoFinal = textoBase.substring(puntoInsercion + 14);
 		String htmlCompleto = textoInicio + cadenaUsuarios + textoFinal;
 		
-		EscribirArchivos.escribeHtml(htmlCompleto);
+		EscribirArchivos.escribeHtml(htmlCompleto, ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
+		
+		
 		
 		panelPrincipal = new InterfazPrincipal("Prometeo 1.0.0", new Color(255,222,173), false);
 	
@@ -184,6 +187,19 @@ public class Inicio {
 		
 		listaNormasIanus = Txt.leerNormasTxt(rutaNormas);
 		System.out.println("Numero de normas: " + listaNormasIanus.size());
+		
+		
+		String listaNormas = CadenasJavascript.getListaNormas();
+		textoBase = LeerArchivos.obtenerHtml(unidadHDDejecutable + ":\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Htmls\\NormasBase.html");
+		
+		puntoInsercion = textoBase.indexOf("class=\"container\">");
+		textoInicio = textoBase.substring(0,puntoInsercion + 20);
+		textoFinal = textoBase.substring(puntoInsercion + 20);
+		htmlCompleto = textoInicio + listaNormas + textoFinal;
+		
+		EscribirArchivos.escribeHtml(htmlCompleto, ":\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Htmls\\Normas.html");
+
+		
 		
 		leerExcel = new LeerExcel();
 		leerExcel.leer("Documentos.xls");

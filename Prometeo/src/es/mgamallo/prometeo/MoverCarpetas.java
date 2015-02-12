@@ -106,7 +106,7 @@ public class MoverCarpetas {
 			directorioFirmados = new File(ruta);
 		}
 		
-		String dudas = Inicio.rutaDudas + "\\" + Inicio.usuario.alias + " C";
+		String dudas = Inicio.rutaDudas + "\\" + Inicio.usuario.alias;
 		File fDudas = new File(dudas);
 		boolean tieneCarpetaDudas = false;
 		if(fDudas.exists()){

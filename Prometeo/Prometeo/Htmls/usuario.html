@@ -1,16 +1,27 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
-<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/> 
 <title>Panel del usuario</title>
 <link rel="stylesheet" href="css/metro-bootstrap.css">
 <link rel="stylesheet" href="css/iconFont.css">
 <link rel="stylesheet" href="css/tiempo.css">
+
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" type="text/css" href="css/demoParallax.css" />
+<link rel="stylesheet" type="text/css" href="css/style2Parallax.css" />
+
+<link rel='stylesheet' type='text/css' href='css/fonts/Economica-italic.woff2' >
+<script type="text/javascript" src="js/modernizr.custom.28468.js"></script>
+<script type="text/javascript" src="js/jquery.cslider.js"></script>
+
 <script src="js/jquery/jquery.min.js"></script>
 <script src="js/jquery/jquery.widget.min.js"></script>
 <script src="js/metro/metro.min.js"></script>
 <script src="js/metro/metro-scroll.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.cslider.js"></script>
 <script type="text/javascript">
 	function ocultarImagen(){
 		var mapas = document.getElementById('weather');
@@ -21,10 +32,86 @@
 		var mapas = document.getElementById('weather');
 		mapas.style.display="block";
 	}
+	
+	function modalOn(){
+		
+
+
+				$(function() {
+				
+					$('#da-slider').cslider({
+						autoplay	: true,
+						bgincrement	: 450,
+						interval: 3000
+					});
+				
+				});
+
+		
+		document.getElementById('fondooscuro').style.display='block';
+		document.getElementById('contenido').style.display='block';
+
+	}
+	
+	function modalOff(){
+		document.getElementById('fondooscuro').style.display='none';
+		document.getElementById('contenido').style.display='none';
+		
+	}
+	
+	function carruselOn(){
+		sendNSCommand("carrusel");
+	}
+	
+	function irA(destino){
+		sendNSCommand(destino);
+	}
+	
 </script>
 </head>
-<body class="metro">
+<body class="metro" onload="carruselOn()">
 
+		<div id="fondooscuro"></div>
+		<div id="contenido" class="container">
+		     <div id="da-slider" class="da-slider">
+				<div id="pantallaDudas" class="da-slide">
+					<button onclick="irA('dudas')" style='background-color: red; color: white; margin-left: 40px; margin-top: 400px'> Ir a dudas </button>
+					<button onclick='modalOff()' style='background-color: teal; color: white;  margin-top: 400px; margin-left: 10px;'> Cerrar </button>
+					<h2 style='color: maroon;'>Dudas</h2>
+					<p id="numDudasContestadas">Tienes x dudas contestadas</p>
+					<a href="#" class="da-link"></a>
+					<div class="da-img"><img src="images/01.jpg" alt="image01" /></div>
+				</div>
+				<div id="pantallaApartadosFirmados" class="da-slide">
+					<button onclick="irA('aptdoFirm')" style='background-color: red; color: white; margin-left: 40px; margin-top: 400px'> Ir a apartado firmado </button>
+					<button onclick='modalOff()' style='background-color: teal; color: white;  margin-top: 400px; margin-left: 10px;'> Cerrar </button>
+					<h2 style='color: maroon;'>Apartado Firmados</h2>
+					<p id="numApartadosFirmados">Tienes x documentos o carpetas apartadas en firmados.</p>
+					<a href="#" class="da-link"></a>
+					<div class="da-img"><img src="images/02.jpg" alt="image01" /></div>
+				</div>
+				<div id="pantallaApartadosRevisados" class="da-slide">
+					<button onclick="irA('aptdoRevis')" style='background-color: red; color: white; margin-left: 40px; margin-top: 400px'> Ir a apartado revisado </button>
+					<button onclick='modalOff()' style='background-color: teal; color: white;  margin-top: 400px; margin-left: 10px;'> Cerrar </button>
+					<h2 style='color: maroon;'>Apartado Revisados</h2>
+					<p id="numApartadosRevisados">Tienes x documentos o carpetas apartadas en firmados.</p>
+					<a href="#" class="da-link"></a>
+					<div class="da-img"><img src="images/03.jpg" alt="image01" /></div>
+				</div>
+				<div id="normasNuevas" class="da-slide">
+					<button onclick="irA('normasNuevas')" style='background-color: red; color: white; margin-left: 40px; margin-top: 400px'> Ir a normas </button>
+					<button onclick='modalOff()' style='background-color: teal; color: white;  margin-top: 400px; margin-left: 10px;'> Cerrar </button>
+					<h2 style='color: maroon;' >Normas nuevas</h2>
+					<p id="numNormasNuevas" >Contenido norma</p>
+					<a href="#" class="da-link"></a>
+					<div class="da-img"><img src="images/04.jpg" alt="image01" /></div>
+				</div>
+				<nav class="da-arrows">
+					<span class="da-arrows-prev"></span>
+					<span class="da-arrows-next"></span>
+				</nav>
+			</div>
+		</div>
 
 	  <div class="tile-area tile-area-dark" style="width: 800px">  
 		<!-- tile-area-dark -->
@@ -63,7 +150,7 @@
 								<i class=" icon-accessibility"></i>
 							</div>
 							<div class="tile-status">
-								<div class="name">DocumentaciÃ³n</div>
+								<div class="name">Documentación</div>
 							</div>
 					</a>
 
@@ -100,7 +187,7 @@
 							<i class="icon-mail"></i>
 						</div>
 					</a> 
-					<a id="sughus" href="command://sughus" title="Sughus. Cambio contraseÃ±a."
+					<a id="sughus" href="command://sughus" title="Sughus. Cambio contraseña."
 						class="tile half bg-lightBlue bg-hover-lightGreen">
 						<div class="tile-content icon">
 							<i class="icon-key"></i>
@@ -202,7 +289,7 @@
 							<img src="tiempo/galiciaM.jpg">
 						</div>
 						<div class="brand">
-							<div class="label ">MaÃ±ana</div>
+							<div class="label ">Mañana</div>
 						</div>
 					</a> 
 					<a class="tile double double-vertical bg-cyan">

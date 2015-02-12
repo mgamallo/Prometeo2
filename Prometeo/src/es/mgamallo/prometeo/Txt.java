@@ -154,8 +154,9 @@ public class Txt {
 	         
 	         if(campos.length == 4){
 		         norma.fecha = campos[0];
-		         norma.rutaImagen = "No";
+		         norma.rutaImagen = campos[1];
 		         norma.texto = campos[3];
+		         norma.textoSinFormato = norma.setTextoSinFormato();
 		         
 		         String[] servicios = campos[2].split("-");
 		         ArrayList<String> listaServicios = new ArrayList<String>();

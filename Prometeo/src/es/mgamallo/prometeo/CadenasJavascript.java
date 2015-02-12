@@ -33,7 +33,46 @@ public class CadenasJavascript {
 		return cadena;
 	}
 	
+	static public String getListaNormas(){
+	
+		String cadena = "<div id='da-slider' class='da-slider'>"
+				+ "";
+		int tamaño = Inicio.listaNormasIanus.size();
+		for(int i=0;i<tamaño;i++){
+			
+			int tam = Inicio.listaNormasIanus.get(i).servicios.size();
+			String servi = "";
+			for(int j=0;j<tam;j++){
+				servi += Inicio.listaNormasIanus.get(i).servicios.get(j);
+				if(j+1 == tam){
+					servi += ".";
+				}
+				else{
+					servi += ", ";
+				}
+			}
+			
+			cadena += ("<div class='da-slide'>"
+					    + "<button onclick=\"editar('" + (i+1) + "')\" style='background-color: red; color: white; margin-left: 40px; margin-top: 400px'> Editar </button>"
+						+ "<button onclick='modalOff()' style='background-color: teal; color: white;  margin-top: 400px; margin-left: 10px;'> Cerrar </button>"
+						+ "<h2 style='color: maroon;'>" + servi + "</h2>"
+						+ "<p>" + Inicio.listaNormasIanus.get(i).textoSinFormato + "</p>"
+						+ "<br><br>"
+						+ "<a href='#' class='da-link' ></a>"
 
+						+ "<div class='da-img'><img src='" + Inicio.listaNormasIanus.get(i).rutaImagen +"' style='border:4px solid maroon;' /></div>"					
+					+ "</div>"
+				);
+		}
+			
+		cadena +=  "<nav class='da-arrows'>"
+						+ "<span class='da-arrows-prev'></span>"
+						+ "<span class='da-arrows-next'></span>"
+					+ "</nav>"
+				+ "</div>";
+		
+		return cadena;
+	}
 	
 	static public String getCadenaUsuarios(){
 		String cadena = "<ul id=\'da-thumbs\' class=\'da-thumbs\'>" + LS;
@@ -141,12 +180,18 @@ public class CadenasJavascript {
 			if(carpetas.get(i).numeroPdfs > 89){
 				cadena += "double double-vertical ";
 			}
-			else if(carpetas.get(i).numeroPdfs >49){
+			else if(carpetas.get(i).numeroPdfs >49 || Inicio.carpetaDudas){
 				cadena += "double ";
 			}
 			else if(carpetas.get(i).numeroPdfs <20){
 				cadena += "half ";
 			}
+			
+			/*
+			if(Inicio.carpetaDudas){
+				cadena += "double ";
+			}
+			*/
 			
 			cadena += carpetas.get(i).color;
 			
@@ -157,13 +202,19 @@ public class CadenasJavascript {
 				cadena += " '";
 			}
 			
-			cadena += " title='" +  carpetas.get(i).servicio + "'>";
+			if(carpetas.get(i).duda){
+				cadena += " title='" + carpetas.get(i).contestacion + "'>";
+			}
+			else{
+				cadena += " title='" +  carpetas.get(i).servicio + "'>";
+			}
+			
 			
 			cadena += // " bg-hover-lightGreen'>" + 
 					    "<div class='tile-content'>" + 
 					    	"<div class='padding10'>";
 			
-			if(carpetas.get(i).numeroPdfs >= 20){
+			if(carpetas.get(i).numeroPdfs >= 20 && !carpetas.get(i).duda){
 				cadena += "" +
 			    		"<h1 class='fg-white'></h1>" + 
 			    		"<h2 class='fg-white center'>" + carpetas.get(i).servicio + "</h2>"
@@ -179,19 +230,39 @@ public class CadenasJavascript {
 			    + "";
 			}
 			else{
-				cadena += "" +
-			    	//	"<h1 class='fg-white'></h1>" + 
-			    	//	"<h2 class='fg-white center'>" + carpetas.get(i).servicio + "</h2>" +
-			    		"<div style='text-align: left'><h3 style='color: white'>#" + carpetas.get(i).numCarpeta +  "</h3></div>" +
-			    	/*	"<span class='fg-white>" + carpetas.get(i).numCarpeta + "</span>" + */
-			    	"</div>" + 
-			    "</div>" + 
-			    "<div class='brand'>" + 
-			    	"<span class='label fg-white'><strong>" + carpetas.get(i).usuario + "</strong></span>" + 
-			    	
-			 //   	"<div class='badge fg-white'><strong>" /*<span class='label fg-white'style='text-align: left'>"+ carpetas.get(i).dia + "</span>" */ + carpetas.get(i).numeroPdfs + "</strong></div>" + 
-			    "</div></a>"
-			    + "";
+				if(carpetas.get(i).duda){
+					cadena += "" +
+					    	//	"<h1 class='fg-white'></h1>" + 
+					    		"<h2 class='fg-white center'>" + carpetas.get(i).pregunta + "</h2>" +
+					    		"<hr>" +
+					    		"<h2 class='fg-white center'>" + carpetas.get(i).contestacion + "</h2>" +
+					    	//	"<div style='text-align: left'><h3 style='color: white'>" + carpetas.get(i).numCarpeta +  "</h3></div>" +
+					    	/*	"<span class='fg-white>" + carpetas.get(i).numCarpeta + "</span>" + */
+					    	"</div>" + 
+					    "</div>" + 
+					    "<div class='brand'>" + 
+					    	"<span class='label fg-white'><strong>" + carpetas.get(i).usuario + "</strong></span>" + 
+					    	
+					 //   	"<div class='badge fg-white'><strong>" /*<span class='label fg-white'style='text-align: left'>"+ carpetas.get(i).dia + "</span>" */ + carpetas.get(i).numeroPdfs + "</strong></div>" + 
+					    "</div></a>"
+					    + "";
+				}
+				else{
+					cadena += "" +
+					    	//	"<h1 class='fg-white'></h1>" + 
+					    	//	"<h2 class='fg-white center'>" + carpetas.get(i).servicio + "</h2>" +
+					    		"<div style='text-align: left'><h3 style='color: white'>#" + carpetas.get(i).numCarpeta +  "</h3></div>" +
+					    	/*	"<span class='fg-white>" + carpetas.get(i).numCarpeta + "</span>" + */
+					    	"</div>" + 
+					    "</div>" + 
+					    "<div class='brand'>" + 
+					    	"<span class='label fg-white'><strong>" + carpetas.get(i).usuario + "</strong></span>" + 
+					    	
+					 //   	"<div class='badge fg-white'><strong>" /*<span class='label fg-white'style='text-align: left'>"+ carpetas.get(i).dia + "</span>" */ + carpetas.get(i).numeroPdfs + "</strong></div>" + 
+					    "</div></a>"
+					    + "";
+				}
+	
 			}
 		}
 		

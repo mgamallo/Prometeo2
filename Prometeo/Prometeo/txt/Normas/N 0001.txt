@@ -1,9 +1,10 @@
 10/11/2012
 @0@
-No
+C:\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Htmls\\ImagenesDocumentos\\01.jpg
 @0@
-ANR
+ANRC
 @0@
-Los consentimentos de Anestesia SIEMPRE se suben en el nodo de Anestesia. Aunque sea un ingreso.
-
+<p>&nbsp;</p>
+<p>Los <span style="color: #0000ff"><u><strong>consentimentos de Anestesia </strong></u></span><strong><span style="color: #ff0000">SIEMPRE </span></strong>se suben en el nodo de Anestesia.&nbsp;</p>
+<p>Aunque sea un ingreso.</p>
 @0@

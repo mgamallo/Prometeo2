@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="utf-8" />
+<title>Normas</title>
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/tabla.css">
+
+<link rel="stylesheet" type="text/css" href="css/demoParallax.css" />
+<link rel="stylesheet" type="text/css" href="css/style2Parallax.css" />
+
+<script type="text/javascript" src="js/modernizr.custom.28468.js"></script>
+<script type="text/javascript" src="js/jquery.cslider.js"></script>
+
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-scroll.js"></script>
+<script src="js/metro/metro-listview.js"></script>
+
+<script type="text/javascript">
+			$(function() {
+			
+				$('#da-slider').cslider({
+					autoplay	: false,
+					bgincrement	: 450
+				});
+			
+			});
+</script>	
+
+<script type="text/javascript">
+
+	function inicio(){
+		var ancla = document.getElementById('todas');
+		ancla.click();
+	}
+
+	function modalOn(id){
+		document.getElementById('fondooscuro').style.display='block';
+		document.getElementById('contenido').style.display='block';
+		document.getElementById('fecha').innerHTML = id;
+	}
+
+	function modalOff(){
+		document.getElementById('fondooscuro').style.display='none';
+		document.getElementById('contenido').style.display='none';
+	}
+	
+	function saludar(){
+		alert('hola');
+	}
+	
+	function editar(){
+		var indice = document.getElementById('editar').name;
+		var cadena = "editar_" + indice;
+		sendNSCommand(cadena);
+	}
+
+</script>
+
+</head>
+
+<body class="metro" onload="inicio()" style="background: black; height: 1100px;">
+
+	<!--  <div class="tile double double-vertical"></div> -->
+
+	<div id="fondooscuro"></div>
+	<div id="contenido">
+
+		<a id="cerrar" href="javascript:void(0);" 
+		   onclick="modalOff()" >
+			Cerrar Ventana 
+		</a>
+		<p></p>
+		<div class="encabezados">Fecha: <span id="fecha"></span></div>
+		<div class="encabezados">Servicios: <span id="servicios"></span></div>
+		<div class="contenido"><span id="textoNorma"></span></div>
+		<div class="imagen"><img id="imagen" src="#" alt="Programar" /></div>
+		<button id="editar" name="01" onclick="editar()" style="background-color: red; color: white;" >Editar</button>
+	</div>
+
+<!--  	<div class="tile-area tile-area-dark"  
+		style="width: 800px; height: 1123px">  -->
+	
+		<h1 class="fg-white">Normas</h1>
+		
+		<br> <br><br>
+	
+		<div class="row">
+			<div class="span12">
+				<button href= "command://normasAll" class="button large bg-cobalt fg-white" style="margin-left: 20px;" title="Todos" >
+					<i class="icon-cabinet fg-white"></i>
+					Todas
+
+				</button> 
+
+
+				<a class="command-button bg-emerald fg-white" title="Servicio" href="command://normasServicio">
+					<i class="icon-tag fg-white"></i>
+					Servicio
+
+				</a>
+				<a class="tile half bg-crimson" title="Buscar" href="command://buscarNorma"> 
+					<div class="tile-content icon">
+						<i class="icon-search"></i>
+					</div>
+				</a>
+					<a class="tile half bg-yellow" title="Limpiar" href="command://limpiar"> 
+					<div class="tile-content icon">
+						<i class="icon-backspace-2"></i>
+					</div>
+				</a>
+				<a class="tile half bg-red" title="Imprimir" href="command://imprimir">
+					<div class="tile-content icon">
+						<i class=" icon-layers"></i>
+					</div>
+
+				</a>
+
+				<a class="command-button bg-cobalt fg-white " id="todas"  href="command://todas">
+
+					<i class="icon-cabinet fg-white"></i>
+					Todas
+				</a>
+				<form>
+	               <div class="input-control text">
+                   	<input type="text" placeholder="Search...">
+                    <button class="btn-search"></button>
+                   </div>
+           		</form>
+
+			</div>
+		</div>
+
+
+
+
+
+		<div id="insertar">
+<!--  		</div>  -->
+		
+	</div>
+
+        <div class="container">
+
+
+			<div id="da-slider" class="da-slider">
+				<div class="da-slide">
+					<h2>Easy management</h2>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+					<a href="#" class="da-link">Read more</a>
+					<div class="da-img"><img src="images/01.jpg" alt="image01" /></div>
+				</div>
+				<div class="da-slide">
+					<h2>Revolution</h2>
+					<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+					<a href="#" class="da-link">Read more</a>
+					<div class="da-img"><img src="images/02.jpg" alt="image01" /></div>
+				</div>
+				<div class="da-slide">
+					<h2>Warm welcome</h2>
+					<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.</p>
+					<a href="#" class="da-link">Read more</a>
+					<div class="da-img"><img src="images/03.jpg" alt="image01" /></div>
+				</div>
+				<div class="da-slide">
+					<h2>Quality Control</h2>
+					<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+					<a href="#" class="da-link">Read more</a>
+					<div class="da-img"><img src="images/04.jpg" alt="image01" /></div>
+				</div>
+				<nav class="da-arrows">
+					<span class="da-arrows-prev"></span>
+					<span class="da-arrows-next"></span>
+				</nav>
+			</div>
+        </div>
+	
+</body>
+</html>

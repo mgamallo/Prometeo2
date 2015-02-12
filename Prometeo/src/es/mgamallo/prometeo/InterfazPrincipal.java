@@ -64,6 +64,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -79,6 +80,14 @@ import chrriis.dj.nativeswing.swtimpl.demo.examples.webbrowser.ClasspathPages;
 public class InterfazPrincipal implements MouseListener{
 
 	protected static final String LS = System.getProperty("line.separator");
+	
+	private boolean inicioPrograma = true;
+	
+	public int numeroDudasContestadas = 0; 
+	public int numeroApartadoFirmados = 0; 
+	public int numeroApartadoRevisados = 0; 
+	public int numeroNormasNuevas = 0;
+	
 
 	private Point coordenadasRaton = new Point();
 
@@ -164,6 +173,8 @@ public class InterfazPrincipal implements MouseListener{
 					webBrowserOperaciones.setVisible(true);
 					webBrowserOperaciones.navigate(DIR_ABRIR);
 					
+					Inicio.carpetaDudas = false;
+					
 					panelActivo = ABRIR;
 				} else if ("ayuda".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_AYUDA);
@@ -173,6 +184,7 @@ public class InterfazPrincipal implements MouseListener{
 					webBrowserOperaciones.navigate(DIR_NORMAS);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = NORMAS;
+					Inicio.listaNormasIanus = Txt.leerNormasTxt(Inicio.rutaNormas);
 				} else if ("avisos".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_AVISOS);
 					webBrowserOperaciones.setVisible(true);
@@ -233,6 +245,13 @@ public class InterfazPrincipal implements MouseListener{
 						barraPanelControlVisible = true;
 
 						webBrowserOperaciones.navigate(DIR_USUARIO);
+						
+						numeroDudasContestadas = Detecta.dudasResueltas();
+						System.out.println("Numero de dudas resueltas " + numeroDudasContestadas);
+						numeroApartadoFirmados = Detecta.apartadoPendiente(true);
+						numeroApartadoRevisados = Detecta.apartadoPendiente(false);
+						
+						
 						MiHilo miHilo = new MiHilo(Inicio.usuario);
 						miHilo.start();
 
@@ -243,8 +262,7 @@ public class InterfazPrincipal implements MouseListener{
 		// panelActivo = "Usuario" *********************************************************;
 				} else if(panelActivo.equals(USUARIO)){
 					System.out.println("Panel usuario");
-					
-					
+										
 					Inicio.carpetaDudas = false;
 					
 					String cadena = "";
@@ -289,7 +307,7 @@ public class InterfazPrincipal implements MouseListener{
 						Dudas.abrirCarpetaApartadoFirmado();
 					}
 					else if(command.equals("dudas")){
-
+						
 						Inicio.carpetaDudas = true;
 						webBrowserOperaciones.setVisible(true);
 						webBrowserOperaciones.navigate(DIR_ABRIR);
@@ -315,6 +333,53 @@ public class InterfazPrincipal implements MouseListener{
 						frame.dispose();
 						Cerrar.cerrarTodo();
 						System.exit(0);
+					}
+					else if(command.equals("normasNuevas")){
+						webBrowserOperaciones.navigate(DIR_NORMAS);
+						panelActivo = NORMAS;
+						Inicio.listaNormasIanus = Txt.leerNormasTxt(Inicio.rutaNormas);
+					}
+					else if(command.equals("carrusel")){
+						if(inicioPrograma){
+							String codigo = "";
+							
+							if(numeroDudasContestadas>0){
+								codigo += "document.getElementById('numDudasContestadas').innerHTML='Tienes " + numeroDudasContestadas + " dudas contestadas.';" + LS;
+							}
+							else{
+								codigo += "var nodillo = document.getElementById('pantallaDudas');" + LS;
+								codigo += "nodillo.parentNode.removeChild(nodillo);" + LS;
+							}
+								
+							if(numeroApartadoFirmados >0){
+								codigo += "document.getElementById('numApartadosFirmados').innerHTML ='Tienes " + numeroApartadoFirmados + " documentos o carpetas apartadas en firmados.';" + LS;
+							}
+							else{
+								codigo += "var nodillo = document.getElementById('pantallaApartadosFirmados');" + LS;
+								codigo += "nodillo.parentNode.removeChild(nodillo);" + LS;
+							}
+							
+							if(numeroApartadoRevisados >0){
+								codigo += "document.getElementById('numApartadosRevisados').innerHTML ='Tienes " + numeroApartadoRevisados + " documentos o carpetas apartadas en revisados.';" + LS;
+							}
+							else{
+								codigo += "var nodillo = document.getElementById('pantallaApartadosRevisados');" + LS;
+								codigo += "nodillo.parentNode.removeChild(nodillo);" + LS;
+							}
+							
+							if(numeroNormasNuevas > 0){
+								codigo += "document.getElementById('numNormasNuevas').innerHTML ='Hay " + numeroNormasNuevas + " normas nuevas.';" + LS;
+							}
+							else{
+								codigo += "var nodillo = document.getElementById('normasNuevas');" + LS;
+								codigo += "nodillo.parentNode.removeChild(nodillo);" + LS;
+							}
+							
+							codigo += "modalOn();";
+							
+							webBrowserOperaciones.executeJavascript(codigo);
+						}
+						inicioPrograma = false;
 					}
 					
 					
@@ -407,6 +472,11 @@ public class InterfazPrincipal implements MouseListener{
 		
 		//   NORMAS *****************************************************************				
 				else if(panelActivo.equals(NORMAS)){
+					
+					if(command.contains("recargar")){
+						webBrowserOperaciones.navigate(DIR_NORMAS);
+					}
+					
 					if(command.contains("norma_")){
 						String index = command.substring(6);
 						System.out.println(index);
@@ -415,9 +485,16 @@ public class InterfazPrincipal implements MouseListener{
 						int indice = Integer.parseInt(index) - 1;
 						
 						String fecha = Inicio.listaNormasIanus.get(indice).fecha;
+						int tamaño = Inicio.listaNormasIanus.get(indice).servicios.size();
 						String serv = "";
-						for(int j=0;j<Inicio.listaNormasIanus.get(indice).servicios.size();j++){
-							serv += Inicio.listaNormasIanus.get(indice).servicios.get(j) + ", ";
+						for(int j=0;j<tamaño;j++){
+							serv += Inicio.listaNormasIanus.get(indice).servicios.get(j);
+							if(j+1 == tamaño){
+								serv += ".";
+							}
+							else{
+								serv += ", ";
+							}
 						}
 						String textoNorma = Inicio.listaNormasIanus.get(indice).texto;
 						
@@ -426,12 +503,17 @@ public class InterfazPrincipal implements MouseListener{
 								+ "document.getElementById('servicios').innerHTML = '" + serv + "';" + LS
 								+ "document.getElementById('textoNorma').innerHTML = '" + textoNorma + "';" + LS
 								+ "document.getElementById('editar').name='" + index + "';"
+								+ "document.getElementById('imagen').src='" + Inicio.listaNormasIanus.get(indice).rutaImagen + "';"
 								;
 								
 						codigo += codigo2;
 						
+						String codigo25 = "modalOn('" + index + "');" + LS;
+						
+						webBrowserOperaciones.executeJavascript(codigo25);
+					
+						
 
-						webBrowserOperaciones.executeJavascript(codigo);
 					}
 					
 					if(command.contains("editar")){
@@ -468,16 +550,25 @@ public class InterfazPrincipal implements MouseListener{
 						
 						
 						for(int i=0;i<Inicio.listaNormasIanus.size();i++){
+							
+							
+							int tamaño = Inicio.listaNormasIanus.get(i).servicios.size();
 							String serv = "";
-							for(int j=0;j<Inicio.listaNormasIanus.get(i).servicios.size();j++){
-								serv += Inicio.listaNormasIanus.get(i).servicios.get(j) + ", ";
+							for(int j=0;j<tamaño;j++){
+								serv += Inicio.listaNormasIanus.get(i).servicios.get(j);
+								if(j+1 == tamaño){
+									serv += ".";
+								}
+								else{
+									serv += ", ";
+								}
 							}
 							
 							int limite = 100;
-							if(Inicio.listaNormasIanus.get(i).texto.length() < limite){
-								limite = Inicio.listaNormasIanus.get(i).texto.length();
+							if(Inicio.listaNormasIanus.get(i).textoSinFormato.length() < limite){
+								limite = Inicio.listaNormasIanus.get(i).textoSinFormato.length();
 							}
-							String encabezado = Inicio.listaNormasIanus.get(i).texto.substring(0,limite);
+							String encabezado = Inicio.listaNormasIanus.get(i).textoSinFormato.substring(0,limite);
 									
 							
 							filas += (
@@ -504,6 +595,8 @@ public class InterfazPrincipal implements MouseListener{
 												"";// <a href='#' >holaaaa</a>";
 						
 						webBrowserOperaciones.executeJavascript(lolailo);
+						
+
 						
 						maximizada = Pantalla.maximizar(frame);
 					}
@@ -553,7 +646,7 @@ public class InterfazPrincipal implements MouseListener{
 						else{
 							String rutaCarpetaFirmados = Inicio.rutaFirmados;
 							if(Inicio.usuario.urgencias){
-								rutaCarpetaFirmados = Inicio.unidadHDDvirtual + Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado" ;
+								rutaCarpetaFirmados = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado" ;
 							}
 							
 							// Borrar esta asignacion
