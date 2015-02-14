@@ -334,7 +334,7 @@ public class InterfazPrincipal implements MouseListener{
 						Cerrar.cerrarTodo();
 						System.exit(0);
 					}
-					else if(command.equals("normasNuevas")){
+					else if(command.equals("normasNuevas") || command.equals("normas")){
 						webBrowserOperaciones.navigate(DIR_NORMAS);
 						panelActivo = NORMAS;
 						Inicio.listaNormasIanus = Txt.leerNormasTxt(Inicio.rutaNormas);

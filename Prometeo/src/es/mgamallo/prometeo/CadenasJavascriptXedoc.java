@@ -2,21 +2,66 @@ package es.mgamallo.prometeo;
 
 public class CadenasJavascriptXedoc {
 
-	static public final String introUsuario(Usuario usuario){
+	static public final String introUsuario0(Usuario usuario){
 		
 		String cadena = ""
+				+ "function cargar(){document.getElementById('loginForm').submit();}"
 				+ "var login = document.getElementById('j_username');"
 				+ "var password = document.getElementById('j_password');"
 				+ "var centro = document.getElementById('j_entorno');"
 				+ "login.value= '" + usuario.usuario + "';"
 				+ "password.value= '" + usuario.password + "';"
 				+ "centro.value='HC_CHOPO';"
-			//	+ "alert('hola');"
-				+ "document.getElementById('loginForm').submit();"
+		//		+ "setTimeout(cargar(),2000);"
+		//	+ "alert('hola');"
+		//		+ "document.getElementById('loginForm').submit();"
 				+ "";
 		
-		return cadena;
+		
+		String cadena2 = ""
+				+ "function cargar(){"
+					+ "var centro = document.getElementById('j_entorno');"
+					+ "centro.value='HC_CHOPO';"
+					+ "var login = document.getElementById('j_username');"
+					+ "var password = document.getElementById('j_password');"
+					+ "login.value= '" + usuario.usuario + "';"
+					+ "password.value= '" + usuario.password + "';"
+				+"}"
+
+		//		+ "setTimeout(cargar(),2000);"
+		//	+ "alert('hola');"
+		//		+ "document.getElementById('loginForm').submit();"
+				+ "";
+		
+		
+		return cadena2;
 	}
+	
+	
+	static public final String introUsuario1(Usuario usuario){
+		
+		
+		String cadena2 = ""
+				+ "cargar();"
+				+ ""
+				+ "var botonM = document.getElementsByTagName('input');"
+				+ "for(var i=0;i<botonM.length;i++){"
+					+ "if(botonM[i].name == 'login'){"
+						+ "botonM[i].click();"
+					+ "};"
+				+ "}"
+
+
+		//		+ "setTimeout(cargar(),2000);"
+		//	+ "alert('hola');"
+		//		+ "document.getElementById('loginForm').submit();"
+				+ "";
+		
+		
+		return cadena2;
+	}
+	
+
 	
 	static public final String selectMiBandeja(){
 		
@@ -138,9 +183,30 @@ public class CadenasJavascriptXedoc {
 		//		+ "tablaElementosAjax.style.background='beige';"
 				+ "tablaDocumento.style.background='#9db7cc';"
 				+ "tablaDocumento.style.border='none';"
+
+				+ "var comprimirA = document.getElementById('selectDisplayButtonsTree');"
+				+ "comprimirA.style.left = '1200px';"
 				
+				+ "var comprimirM = document.getElementById('selectDisplayButtonsAtributos');"
+				+ "comprimirM.style.left = '1200px';"
+				+ ""
+				+ "var nombrePaciente = document.getElementById('loadContexto');"
+				+ "nombrePaciente.style.marginLeft='-800px';"
+				+ "nombrePaciente.style.color= 'yellow';"
+				+ "nombrePaciente.style.fontSize = '25px';"
 				
-				+ "alert('hola');"
+				+ "var fecha = document.getElementById('{hc}dataVersion-{hc}docExt');"
+				+ "fecha.style.backgroundColor='rgb(253,247,133)';"
+
+				
+				+ "var buscando = document.querySelectorAll('.custom-combobox-input');"
+				+ "buscando[1].style.backgroundColor = 'rgb(253,247,133)';"
+				+ "buscando[2].style.backgroundColor = 'rgb(253,247,133)';"
+				+ ""
+				+ "var siguiente=document.getElementById('siguiente');"
+				+ "siguiente.style.color = 'yellow';" 
+				
+				+ "alert('Ommmm...');"
 				+ "";
 		
 		return cadena;

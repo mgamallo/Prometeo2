@@ -11,6 +11,8 @@ import com.jacob.com.Variant;
 
 public class GestionJacobXedoc {
 	
+	public static ActiveXComponent ianusApoyoXedoc;
+	
 	public static void capturaWebXedoc(){
 	    InicioXedoc.oShell = new ActiveXComponent("Shell.Application"); 
 	    InicioXedoc.oWindows = InicioXedoc.oShell.invokeGetComponent("Windows");
@@ -18,10 +20,10 @@ public class GestionJacobXedoc {
         try {
 			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
 			Thread.sleep(1000);
-			/*
+			
 			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
 			Thread.sleep(1000);
-			*/
+			
         } catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -48,11 +50,13 @@ public class GestionJacobXedoc {
             if(j==1){
             	Inicio.paciente1.xedoc = oWindow;
             }
-            /*
+            
             if(j==2){
-            	Inicio.paciente2.xedoc = oWindow;
+            	// Inicio.paciente2.xedoc = oWindow;
+            	ianusApoyoXedoc = oWindow;
+            	Dispatch.call(ianusApoyoXedoc, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
             }
-            */
+            
         }
         
 		Dispatch.call(Inicio.paciente1.xedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
@@ -71,6 +75,9 @@ public class GestionJacobXedoc {
 				break;
 			}
 		}
+		
+		
+
 		
 		/*
 		try {
@@ -111,11 +118,20 @@ public class GestionJacobXedoc {
 		
 		
 		if(Inicio.contraseña){
-			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario(Inicio.usuario));
+			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario0(Inicio.usuario));
 		
 			Dispatch.put(Inicio.paciente1.xedoc,"menubar",false);
 			Dispatch.put(Inicio.paciente1.xedoc,"toolbar",false);
 			
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario1(Inicio.usuario));
+
 			
 		try {
 			Thread.sleep(2000);
@@ -145,6 +161,39 @@ public class GestionJacobXedoc {
 	    Dispatch.put(Inicio.paciente1.xedoc,"left",izquierda);
 		
 		
+		}
+		
+	if(Inicio.contraseña){
+			
+			// introduceUsuarioJacob(Inicio.ianus1, Inicio.usuario);
+			
+			Dispatch.call(ianusApoyoXedoc,"Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
+			
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Dispatch.put(ianusApoyoXedoc,"Visible",true);
+			Dispatch.put(ianusApoyoXedoc,"menubar",false);
+			Dispatch.put(ianusApoyoXedoc,"toolbar",false);
+			
+			
+		    Dispatch.put(ianusApoyoXedoc,"height",1149);  // 1099
+		    Dispatch.put(ianusApoyoXedoc,"top",0);  // 180
+		    Dispatch.put(ianusApoyoXedoc,"left",1024);
+		    if(Inicio.numeroPantallas == 1){
+		    	Dispatch.put(ianusApoyoXedoc,"height",1052);  // 1099
+		    	Dispatch.put(ianusApoyoXedoc,"width",895);
+		    }
+			
+			
+			
+//		    introduceUsuarioJacob(Inicio.ianus2, Inicio.usuario);
+
+		    
 		}
 	}
 	
@@ -224,7 +273,7 @@ public class GestionJacobXedoc {
 		*/
 		
 		if(Inicio.contraseña){
-			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario(Inicio.usuario));
+			Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario0(Inicio.usuario));
 		
 			Dispatch.put(Inicio.paciente1.xedoc,"menubar",false);
 			Dispatch.put(Inicio.paciente1.xedoc,"toolbar",false);
