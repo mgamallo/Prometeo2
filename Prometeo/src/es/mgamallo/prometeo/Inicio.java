@@ -39,6 +39,8 @@ public class Inicio {
 	
 	static public String rutaRevisados = ":\\digitalización\\00 documentacion\\02 Revisado";
 	static public String rutaFirmados = ":\\digitalización\\00 documentacion\\03 Firmado";
+	static public String rutaFirmadosXedoc = ":\\digitalización\\00 documentacion\\03 Firmado Xedoc";
+	static public String rutaXedoc = ":\\digitalización\\00 documentacion\\03 Xedoc";
 	static public String rutaFirmadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)";
 	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
 	static public String rutaAsociadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 Asociado";
@@ -92,6 +94,7 @@ public class Inicio {
 	
 	static public boolean xedoc = false;
 	static public boolean carpetaDudas = false;
+	static public boolean carpetaXedocFirmado = false;
 	static public String contestacionDudas = "";
 	
 	/**
@@ -153,6 +156,8 @@ public class Inicio {
 		System.out.println("Letra de la unidad... " + unidadHDDvirtual);
 		
 		rutaFirmados = unidadHDDvirtual + rutaFirmados;
+		rutaFirmadosXedoc = unidadHDDvirtual + rutaFirmadosXedoc;
+		rutaXedoc = unidadHDDvirtual + rutaXedoc;
 		rutaRevisados = unidadHDDvirtual + rutaRevisados;
 		rutaFirmadosUrgencias = unidadHDDvirtual + rutaFirmadosUrgencias;
 		rutaAsociados = unidadHDDvirtual + rutaAsociados;
@@ -181,6 +186,9 @@ public class Inicio {
 		panelPrincipal = new InterfazPrincipal("Prometeo 1.0.0", new Color(255,222,173), false);
 	
 		CapturaRatonYTeclado capturaTeclado = new CapturaRatonYTeclado();
+		
+		// Borrar
+		Detecta.detectaDudasJavier();
 		
 		/******  Cargamos Normas
 		***************************************/
@@ -211,10 +219,11 @@ public class Inicio {
 	static private void cargarUsuarios(){
 		
 		String datosBrutos[] = Txt.obtenerUsuarios("prometeo/txt/usuarios.txt");
-		
+
 		usuarios = new Usuario[datosBrutos.length];
 		
 		for(int i=0;i<datosBrutos.length;i++){
+			System.out.println(datosBrutos[i]);
 			String[] us = datosBrutos[i].split("@");
 			Usuario user = new Usuario();
 			user.alias= us[0];

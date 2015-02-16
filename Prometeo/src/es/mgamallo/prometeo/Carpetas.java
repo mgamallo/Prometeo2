@@ -46,6 +46,9 @@ public class Carpetas {
 				Inicio.carpetaDudas = false;
 			}
 		}
+		else if(Inicio.carpetaXedocFirmado){
+			path = Inicio.rutaFirmadosXedoc;
+		}
 			
 		
 		
@@ -405,6 +408,14 @@ class Directorio{
 				duda = true;
 				pregunta = nombreCarpeta;
 				contestacion = "";
+			}
+			else if(Inicio.carpetaXedocFirmado){
+				
+				
+				System.out.println("Tenemos que abrir xedocfirmado.");
+			
+			
+			
 			}
 		}
 		

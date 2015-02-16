@@ -174,6 +174,7 @@ public class InterfazPrincipal implements MouseListener{
 					webBrowserOperaciones.navigate(DIR_ABRIR);
 					
 					Inicio.carpetaDudas = false;
+					Inicio.carpetaXedocFirmado = false;
 					
 					panelActivo = ABRIR;
 				} else if ("ayuda".equals(command)) {
@@ -195,6 +196,7 @@ public class InterfazPrincipal implements MouseListener{
 					webBrowserOperaciones.navigate(DIR_USUARIO);
 					webBrowserOperaciones.setVisible(true);
 					Inicio.carpetaDudas = false;
+					Inicio.carpetaXedocFirmado = false;
 					MiHilo miHilo = new MiHilo(Inicio.usuario);
 					miHilo.start();
 					panelActivo = USUARIO;
@@ -232,7 +234,7 @@ public class InterfazPrincipal implements MouseListener{
 				if (command.contains("user_")) {
 					int numUsuario = Integer.parseInt(command.substring(5, 7));
 
-					System.out.println(numUsuario);
+					System.out.println("Número de usuario " + numUsuario);
 					
 					Inicio.usuario = Inicio.usuarios[numUsuario];
 					Inicio.usuario.usuario = parameters[0].toString();
@@ -259,11 +261,15 @@ public class InterfazPrincipal implements MouseListener{
 						Inicio.panelPrincipal.panelControl.setVisible(true);
 					}
 
-		// panelActivo = "Usuario" *********************************************************;
+		
+					
+	// panelActivo = "Usuario" *********************************************************;
+				
 				} else if(panelActivo.equals(USUARIO)){
 					System.out.println("Panel usuario");
 										
 					Inicio.carpetaDudas = false;
+					Inicio.carpetaXedocFirmado = false;
 					
 					String cadena = "";
 					
@@ -295,7 +301,13 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					else if(command.equals("xedoc")){
 						Inicio.xedoc = true;
-						InicioXedoc xedoc = new InicioXedoc();
+						Inicio.carpetaXedocFirmado = true;
+						
+						webBrowserOperaciones.setVisible(true);
+						webBrowserOperaciones.navigate(DIR_ABRIR);
+						panelActivo = ABRIR;
+						
+				//		InicioXedoc xedoc = new InicioXedoc();
 						
 					//	webBrowserOperaciones.navigate("http://xedocidx.sergas.local/xedoc_idx/login");
 						
@@ -342,9 +354,11 @@ public class InterfazPrincipal implements MouseListener{
 					else if(command.equals("carrusel")){
 						if(inicioPrograma){
 							String codigo = "";
+							boolean nada = true;
 							
 							if(numeroDudasContestadas>0){
 								codigo += "document.getElementById('numDudasContestadas').innerHTML='Tienes " + numeroDudasContestadas + " dudas contestadas.';" + LS;
+								nada = false;
 							}
 							else{
 								codigo += "var nodillo = document.getElementById('pantallaDudas');" + LS;
@@ -352,6 +366,7 @@ public class InterfazPrincipal implements MouseListener{
 							}
 								
 							if(numeroApartadoFirmados >0){
+								nada = false;
 								codigo += "document.getElementById('numApartadosFirmados').innerHTML ='Tienes " + numeroApartadoFirmados + " documentos o carpetas apartadas en firmados.';" + LS;
 							}
 							else{
@@ -360,6 +375,7 @@ public class InterfazPrincipal implements MouseListener{
 							}
 							
 							if(numeroApartadoRevisados >0){
+								nada = false;
 								codigo += "document.getElementById('numApartadosRevisados').innerHTML ='Tienes " + numeroApartadoRevisados + " documentos o carpetas apartadas en revisados.';" + LS;
 							}
 							else{
@@ -368,6 +384,7 @@ public class InterfazPrincipal implements MouseListener{
 							}
 							
 							if(numeroNormasNuevas > 0){
+								nada=false;
 								codigo += "document.getElementById('numNormasNuevas').innerHTML ='Hay " + numeroNormasNuevas + " normas nuevas.';" + LS;
 							}
 							else{
@@ -375,7 +392,10 @@ public class InterfazPrincipal implements MouseListener{
 								codigo += "nodillo.parentNode.removeChild(nodillo);" + LS;
 							}
 							
-							codigo += "modalOn();";
+							if(!nada){
+								codigo += "modalOn();";
+							}
+
 							
 							webBrowserOperaciones.executeJavascript(codigo);
 						}
@@ -385,7 +405,7 @@ public class InterfazPrincipal implements MouseListener{
 					
 				}
 				
-	//   ABRÏR *****************************************************************
+	//   ABRIR *****************************************************************
 				else if (panelActivo.equals(ABRIR)) {
 					System.out.println("Abrimos carpeta");
 
@@ -414,6 +434,10 @@ public class InterfazPrincipal implements MouseListener{
 							tipoCarpeta = "Dudas " + Inicio.usuario.alias;
 						}
 						
+						if(Inicio.carpetaXedocFirmado){
+							 tipoCarpeta = "Xedoc";
+						}
+						
 						codigoCarpetasmetro = 	""
 								+ "document.getElementById('firmado').innerHTML = '" + tipoCarpeta + "';" + LS +
 								 "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
@@ -431,26 +455,49 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
 					}
 					if(command.contains("carpeta_")){
-						System.out.println(command);
-						int numCarpeta = Integer.parseInt(command.substring(8, 10));
+						if(!Inicio.carpetaXedocFirmado){
+							System.out.println(command);
+							int numCarpeta = Integer.parseInt(command.substring(8, 10));
 
-						Directorio dir = carpeta.arrayCarpetas.get(numCarpeta);
-						
-						System.out.println(dir.directorio.getAbsolutePath());
-						
-						CargaListaPdfs pdfs = new CargaListaPdfs(true,dir.directorio);
-						Inicio.carpetasSeleccionadas.add(pdfs.rutaCarpeta);
-						
-						
-						
-						Inicio.inicioIanus = new InicioIanus(pdfs);
-						Inicio.inicioIanus.rutaCarpeta = pdfs.rutaCompletaCarpeta;
-						
-						System.out.println("Ruta completa carpeta " + pdfs.rutaCompletaCarpeta);
-						
-						Inicio.ventanasCargadas = true;
-							//webBrowserOperaciones.navigate("K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/ocr.pdf");
-						webBrowserOperaciones.setVisible(false);
+							Directorio dir = carpeta.arrayCarpetas.get(numCarpeta);
+							
+							System.out.println(dir.directorio.getAbsolutePath());
+							
+							CargaListaPdfs pdfs = new CargaListaPdfs(true,dir.directorio);
+							Inicio.carpetasSeleccionadas.add(pdfs.rutaCarpeta);
+							
+							
+							
+							Inicio.inicioIanus = new InicioIanus(pdfs);
+							Inicio.inicioIanus.rutaCarpeta = pdfs.rutaCompletaCarpeta;
+							
+							System.out.println("Ruta completa carpeta " + pdfs.rutaCompletaCarpeta);
+							
+							Inicio.ventanasCargadas = true;
+								//webBrowserOperaciones.navigate("K:/Desarrollo/git/Prometeo/Prometeo/Prometeo/ocr.pdf");
+							webBrowserOperaciones.setVisible(false);
+						}
+						else{
+							System.out.println("Carpeta de xedoc firmado");
+							int numCarpeta = Integer.parseInt(command.substring(8, 10));
+
+							Directorio dir = carpeta.arrayCarpetas.get(numCarpeta);
+							
+							File carpetaOrigen = dir.directorio;
+							
+							String nombreSinAlmohadilla = dir.directorio.getName().replace("#", "");
+							
+							String rutaDestino = Inicio.rutaXedoc + "\\" + Inicio.usuario.usuario + "\\" + nombreSinAlmohadilla;
+							File carpetaDestino = new File(rutaDestino);
+							
+							carpetaOrigen.renameTo(carpetaDestino);
+							
+							System.out.println(carpetaOrigen.getAbsolutePath());
+							System.out.println(carpetaDestino.getAbsolutePath());
+							
+							webBrowserOperaciones.executeJavascript("document.all.ins.click()");
+						}
+
 			
 					}
 					if(command.equals("aptdoRevis")){
@@ -976,8 +1023,7 @@ class MiHilo extends Thread {
 				 * "alert(nodo[0].id);" ;
 				 */
 
-				final String cadena = CadenasJavascript
-						.putUsuario(usuario);
+				final String cadena = CadenasJavascript.putUsuario(usuario);
 				
 			//	Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("alert('hola');");
 

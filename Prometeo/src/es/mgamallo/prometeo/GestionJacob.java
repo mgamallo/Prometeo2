@@ -18,6 +18,10 @@ public class GestionJacob {
 		
 		//	ComThread.InitSTA();
 		
+		// String direccionIanus = "http://assccihspre/ianus_hosp2_pre/inicio.do";
+		
+		String direccionIanus = "http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp";
+		
 	    InicioIanus.oShell = new ActiveXComponent("Shell.Application"); 
 	    InicioIanus.oWindows = InicioIanus.oShell.invokeGetComponent("Windows");
 
@@ -59,15 +63,16 @@ public class GestionJacob {
         }
         
 
-		Dispatch.call(Inicio.paciente1.ianus, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
+	//	Dispatch.call(Inicio.paciente1.ianus, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
+    	Dispatch.call(Inicio.paciente1.ianus, "Navigate",direccionIanus);
 
 		
 		try {
 		
 		Thread.sleep(900);	
 			
-		Dispatch.call(Inicio.paciente2.ianus, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
-
+	//	Dispatch.call(Inicio.paciente2.ianus, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
+		Dispatch.call(Inicio.paciente2.ianus, "Navigate",direccionIanus);
 		
 		if(Inicio.contraseña){
 			

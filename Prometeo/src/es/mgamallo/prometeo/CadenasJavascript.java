@@ -103,7 +103,7 @@ public class CadenasJavascript {
 			*/
 			
 			String ca = "<li><a id='" + numUsuario + "' onclick=\"modalOn('" + numUsuario + "','" + Inicio.usuarios[i].alias + "','" + Inicio.usuarios[i].usuario + "');\" class='login-window' href='#'>" +
-					"<img src=\'images/" + Inicio.usuarios[i].imagen + ".jpg\' width=\'200px\'/>" +
+					"<img src=\'images/" + Inicio.usuarios[i].imagen + ".jpg\' width=\'200px\'/ height=\'155px\'>" +
 						"<div><span>" + Inicio.usuarios[i].alias + "</span></div>" +
 				"</a></li>" + LS;
 			
