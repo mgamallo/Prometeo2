@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 public class RobotIanus {
 	
 	
-	public final String DOC_ANULADO = "Documento anulado";
+	public final String DOC_ANULADO = "Documento cancelado";
 	public final String  RUTA_DOC_ANULADO = Inicio.unidadHDDvirtual + ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
 	public Point coordTitulo = new Point(0,0);

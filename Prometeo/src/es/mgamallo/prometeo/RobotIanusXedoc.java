@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 public class RobotIanusXedoc {
 
-	public final String DOC_ANULADO = "Documento anulado";
+	public final String DOC_ANULADO = "Documento cancelado";
 	public final String RUTA_DOC_ANULADO = Inicio.unidadHDDvirtual
 			+ ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
 
@@ -90,7 +90,7 @@ public class RobotIanusXedoc {
 							copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
 					}
 
-					robot.delay(retardos.retardoTrasPulsarExaminar /* + Retardos.S_lento */);
+					robot.delay(retardos.retardoTrasPulsarExaminar + 200/* + Retardos.S_lento */);
 						
 						//	Pega Ruta archivo
 						
@@ -177,9 +177,15 @@ public class RobotIanusXedoc {
 					// 05 Aceptar
 
 					if (!InicioIanus.versionar) {
+						
+						robot.mouseMove(coordAceptar.x, coordAceptar.y);
+						robot.delay(100);
+						robot.mousePress(InputEvent.BUTTON1_MASK);
+						robot.mouseRelease(InputEvent.BUTTON1_MASK);
+						robot.delay(200);
 						robot.keyPress(KeyEvent.VK_ENTER);
 						robot.keyRelease(KeyEvent.VK_ENTER);
-						robot.delay(200);
+						robot.delay(200);  
 					}
 
 					System.out.println("pegado");

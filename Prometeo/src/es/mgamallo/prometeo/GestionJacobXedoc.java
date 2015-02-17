@@ -20,9 +20,10 @@ public class GestionJacobXedoc {
         try {
 			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
 			Thread.sleep(1000);
-			
+			/*
 			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
 			Thread.sleep(1000);
+			*/
 			
         } catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -51,12 +52,13 @@ public class GestionJacobXedoc {
             	Inicio.paciente1.xedoc = oWindow;
             }
             
+            /*
             if(j==2){
             	// Inicio.paciente2.xedoc = oWindow;
             	ianusApoyoXedoc = oWindow;
             	Dispatch.call(ianusApoyoXedoc, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
             }
-            
+            */
         }
         
 		Dispatch.call(Inicio.paciente1.xedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
@@ -166,7 +168,7 @@ public class GestionJacobXedoc {
 	if(Inicio.contraseña){
 			
 			// introduceUsuarioJacob(Inicio.ianus1, Inicio.usuario);
-			
+		/*	
 			Dispatch.call(ianusApoyoXedoc,"Navigate","javascript:" + CadenasJavascript.introducirUsuario(Inicio.usuario));
 			
 			try {
@@ -188,7 +190,7 @@ public class GestionJacobXedoc {
 		    	Dispatch.put(ianusApoyoXedoc,"height",1052);  // 1099
 		    	Dispatch.put(ianusApoyoXedoc,"width",895);
 		    }
-			
+		*/
 			
 			
 //		    introduceUsuarioJacob(Inicio.ianus2, Inicio.usuario);

@@ -46,7 +46,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static final String INFORMEURG = "Informe alta";
 	static final String ENFERMERIAURG = "Folla enfermaría urxencias";
 	
-	static final String DOC_ANULADO = "Documento anulado";
+	static final String DOC_ANULADO = "Documento cancelado";
 	static final String DESCONOCIDO = "Des";
 	static final String HOSP = "HOSP";
 	static final String HOSP_JACOB = "HOS:";

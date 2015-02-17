@@ -13,6 +13,7 @@ import com.jacob.com.Variant;
 
 public class GestionJacob {
 	
+	public static String direccionIanus = "http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp";
 
 	public static void capturaWebs(){
 		
@@ -20,7 +21,7 @@ public class GestionJacob {
 		
 		// String direccionIanus = "http://assccihspre/ianus_hosp2_pre/inicio.do";
 		
-		String direccionIanus = "http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp";
+
 		
 	    InicioIanus.oShell = new ActiveXComponent("Shell.Application"); 
 	    InicioIanus.oWindows = InicioIanus.oShell.invokeGetComponent("Windows");

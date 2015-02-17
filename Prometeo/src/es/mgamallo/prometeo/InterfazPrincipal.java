@@ -65,6 +65,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -197,7 +198,7 @@ public class InterfazPrincipal implements MouseListener{
 					webBrowserOperaciones.setVisible(true);
 					Inicio.carpetaDudas = false;
 					Inicio.carpetaXedocFirmado = false;
-					MiHilo miHilo = new MiHilo(Inicio.usuario);
+					MiHilo miHilo = new MiHilo(Inicio.usuario,500);
 					miHilo.start();
 					panelActivo = USUARIO;
 				} else if ("salir".equals(command)) {
@@ -254,7 +255,7 @@ public class InterfazPrincipal implements MouseListener{
 						numeroApartadoRevisados = Detecta.apartadoPendiente(false);
 						
 						
-						MiHilo miHilo = new MiHilo(Inicio.usuario);
+						MiHilo miHilo = new MiHilo(Inicio.usuario,500);
 						miHilo.start();
 
 						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
@@ -512,7 +513,31 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.setVisible(true);
 						webBrowserOperaciones.navigate(DIR_ABRIR);
 						panelActivo = ABRIR;
-					}	
+					}
+					if(command.equals("iniciarXedoc")){
+						if(Inicio.carpetaXedocFirmado){
+							
+							
+							
+							InicioXedoc xedoc = new InicioXedoc();
+							
+							webBrowserOperaciones.navigate(GestionJacob.direccionIanus);
+							
+
+							/*
+							String codig = ""
+									+ "principal.main.document.getElementById('login').value = '" + Inicio.usuario.usuario + "';"
+									+ "principal.main.document.getElementById('password').value = '" + Inicio.usuario.password + "';"
+									+ "principal.main.aceptar();"
+									+ "";
+							
+							MiHilo hiloXedoc = new MiHilo(codig, 1000);
+							hiloXedoc.start();
+							*/
+							
+							// webBrowserOperaciones.executeJavascript(codig);
+						}
+					}
 					
 					maximizada = Pantalla.restaurar(frame);
 				} 
@@ -997,16 +1022,29 @@ public class InterfazPrincipal implements MouseListener{
 
 class MiHilo extends Thread {
 
-	final Usuario usuario;
+	Usuario usuario = null;
+	
+	String codigo = "";
+	
+	boolean esCodigo = false;
+	int retardo = 0;
+	
 	protected static final String LS = System.getProperty("line.separator");
 
-	MiHilo(final Usuario usuario) {
+	MiHilo(final Usuario usuario, final int retardo) {
 		this.usuario = usuario;
+		this.retardo = retardo;
+	}
+	
+	MiHilo(final String codigo, final int retardo){
+		this.codigo = codigo;
+		esCodigo = true;
+		this.retardo = retardo;
 	}
 
 	public void run() {
 		try {
-			Thread.sleep(500);
+			Thread.sleep(retardo);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1022,13 +1060,23 @@ class MiHilo extends Thread {
 				 * "nodo[0].innerHTML= '" + cadenas +"';" + LS +
 				 * "alert(nodo[0].id);" ;
 				 */
+				
+				String cadena = "";
+				
+				if(esCodigo){
+					cadena = codigo;
+					System.out.println("Retardo para meter el usuario...");
+				}
+				else{
+					cadena = CadenasJavascript.putUsuario(usuario);
 
-				final String cadena = CadenasJavascript.putUsuario(usuario);
+				}
+				
+				Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript(cadena);
 				
 			//	Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("alert('hola');");
 
-				Inicio.panelPrincipal.webBrowserOperaciones
-						.executeJavascript(cadena);
+
 				
 				
 			}

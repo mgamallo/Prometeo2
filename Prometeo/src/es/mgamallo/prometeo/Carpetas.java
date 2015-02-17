@@ -48,6 +48,9 @@ public class Carpetas {
 		}
 		else if(Inicio.carpetaXedocFirmado){
 			path = Inicio.rutaFirmadosXedoc;
+			if(Inicio.usuario.urgencias){
+				path = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc";
+			}
 		}
 			
 		

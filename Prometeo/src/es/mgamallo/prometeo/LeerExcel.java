@@ -173,22 +173,29 @@ public class LeerExcel {
 	        
 	        hoja = archivoExcel.getSheet(3);
 	        
+	        int iniciofila = 0;
+	        if(Inicio.numeroPantallas == 1){
+	        	iniciofila = 11;
+	        }
+	        
+	        System.out.println("Numero de pantallas... " + Inicio.numeroPantallas);
+	        
 	        coordenadasAsociar = new int[10][4];
-	        for(int fila=0;fila<10;fila++){
+	        for(int fila=iniciofila, fil = 0;fila<10 + iniciofila;fila++,fil++){
 	        	for(int columna = 0;columna<4;columna++){
-	        		coordenadasAsociar[fila][columna] = Integer.parseInt(hoja.getCell(1 + columna,2 +fila).getContents().toString());
 
+	        		coordenadasAsociar[fil][columna] = Integer.parseInt(hoja.getCell(1 + columna,2 +fila).getContents().toString());
 	        	}
 	        }	        
 	        
-	        
+	        /*
 	        for(int i=0;i<10;i++){
 	        	for(int j=0;j<4;j++){
 	        		System.out.print(coordenadasAsociar[i][j] + "\t");
 	        	}
 	        	System.out.println();
 	        }
-	        
+	        */
 	        
 	        /*   Esta parte se borrará */
 	       /* 
