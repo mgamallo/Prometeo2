@@ -1,6 +1,6 @@
 package es.mgamallo.prometeo;
 
-public class CadenasJavascriptXedoc {
+public class CadenasJavascriptXedocCopiaborrar {
 
 	static public final String introUsuario0(Usuario usuario){
 		
@@ -137,7 +137,7 @@ public class CadenasJavascriptXedoc {
 				+ "columnaD.style.marginLeft='0px';"
 				+ "columnaD.style.width='1000px';"
 				+ ""
-				+ "alert('hola');";
+				+ "alert('holaaa');";
 		
 		return cadena;
 	}
@@ -149,6 +149,7 @@ public class CadenasJavascriptXedoc {
 				+ "document.getElementById('branding').style.display='none';"
 				+ "document.getElementById('header').style.height='0px';"
 				+ ""
+
 				+ "var columnaI = document.getElementById('columnaIzquierdaEdicion');"
 		//		+ "columnaI.style.float='left';"
 				+ "columnaI.style.width='800px';"
@@ -191,6 +192,7 @@ public class CadenasJavascriptXedoc {
 				+ "var arbol = document.getElementById('arbol');"
 				+ "arbol.style.height='1000px';"
 				+ "" 
+				
 				+ "var tablaAtributosAjax = document.getElementById('tablaAtributosAjax');"
 			//	+ "tablaAtributosAjax.style.minWidth='450px';"
 				+ "tablaAtributosAjax.style.float='left';"
@@ -206,9 +208,17 @@ public class CadenasJavascriptXedoc {
 				+ "tablaAtributos.style.background='#9db7cc';"
 				+ "tablaAtributos.style.color='#000000';"
 				+ ""
-
+				+ "var tablaDocumento = document.getElementById('tablaDocumento');"
+				+ "tablaDocumento.style.minWidth='450px';"
+				+ "tablaDocumento.style.width='500px';"
+				+ ""
+				+ "var contextoMenuSuperior = document.getElementById('contextoMenuSuperior');"
+				+ "contextoMenuSuperior.style.marginRight='400px';"
+				+ "var loadContexto = document.getElementById('loadContexto');"
+				+ "loadContexto.style.width='600px';"
+				+ ""
+				+ "alert(loadContexto.innerHTML);"
 				+ "alert('adios');";
-
 		
 		return cadena;
 	}

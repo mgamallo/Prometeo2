@@ -488,10 +488,19 @@ public class InterfazPrincipal implements MouseListener{
 							
 							String nombreSinAlmohadilla = dir.directorio.getName().replace("#", "");
 							
-							String rutaDestino = Inicio.rutaXedoc + "\\" + Inicio.usuario.usuario + "\\" + nombreSinAlmohadilla;
+							String directorioDestino = Inicio.rutaXedoc + "\\" + Inicio.usuario.usuario + "\\";
+							String rutaDestino =  directorioDestino + nombreSinAlmohadilla;
 							File carpetaDestino = new File(rutaDestino);
 							
 							carpetaOrigen.renameTo(carpetaDestino);
+							
+					    	String cadena = "explorer.exe " + directorioDestino;
+							try {
+								Runtime.getRuntime().exec(cadena);
+							} catch (IOException ev) {
+								// TODO Auto-generated catch block
+								ev.printStackTrace();
+							}
 							
 							System.out.println(carpetaOrigen.getAbsolutePath());
 							System.out.println(carpetaDestino.getAbsolutePath());
@@ -521,10 +530,10 @@ public class InterfazPrincipal implements MouseListener{
 							
 							InicioXedoc xedoc = new InicioXedoc();
 							
-							webBrowserOperaciones.navigate(GestionJacob.direccionIanus);
+							// webBrowserOperaciones.navigate(GestionJacob.direccionIanus);
 							
 
-							/*
+							
 							String codig = ""
 									+ "principal.main.document.getElementById('login').value = '" + Inicio.usuario.usuario + "';"
 									+ "principal.main.document.getElementById('password').value = '" + Inicio.usuario.password + "';"
@@ -533,9 +542,11 @@ public class InterfazPrincipal implements MouseListener{
 							
 							MiHilo hiloXedoc = new MiHilo(codig, 1000);
 							hiloXedoc.start();
-							*/
 							
-							// webBrowserOperaciones.executeJavascript(codig);
+							
+							webBrowserOperaciones.executeJavascript(codig);
+							
+							frame.setState(Frame.ICONIFIED);
 						}
 					}
 					

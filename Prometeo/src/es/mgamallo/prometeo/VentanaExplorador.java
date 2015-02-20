@@ -40,11 +40,13 @@ public class VentanaExplorador extends javax.swing.JFrame {
 	
 	private PopupMenu menuPop = new PopupMenu();
 	private MenuItem itemApartar = new MenuItem("Apartar");
+	private MenuItem itemXedoc = new MenuItem("Enviar a Xedoc");
 	private MenuItem itemDudas = new MenuItem("Dudas");
 	private MenuItem itemYaSubidos = new MenuItem("Ya subidas");
 	
 	private int indexPdfYaSubidos = -1;
 	private int indexApartado = -1;
+	private int indexXedoc = -1;
 	private int indexDudas = -1;
 	/**
      * Creates new form VentanaExplorador
@@ -101,6 +103,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         menuPop.addSeparator();
         menuPop.add(itemApartar);
         menuPop.add(itemDudas);
+        menuPop.add(itemXedoc);
         menuPop.add(itemYaSubidos);
         
         itemYaSubidos.addActionListener(new ActionListener() {
@@ -166,6 +169,42 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
         
+        
+        itemXedoc.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				habilita();
+
+						String ruta = Inicio.rutaFirmadosXedoc + "\\0000 #666 Rebotado de Ianus.";
+						
+						if(Inicio.usuario.urgencias){
+							ruta = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc\\0000 #666 Rebotado de Ianus. ";
+						}
+						
+						ruta += "\\";
+						
+						System.out.println(ruta);
+						
+						File directorio = new File(ruta);
+						boolean directorioCreado = directorio.mkdirs();
+						if(directorioCreado || directorio.exists()){
+							ruta += Inicio.documento[indexXedoc].nombreArchivo;
+							CopiarFichero.copiar(Inicio.documento[indexXedoc].rutaArchivo,ruta);
+							JOptionPane.showMessageDialog(null, "Pdf rebotado a Firmado Xedoc");
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Error al rebotar el documento");;
+						}
+
+				habilita();
+			}
+		});
+        
+        
+        
         itemApartar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -179,7 +218,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 						String ruta = Inicio.rutaFirmados + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
 						
 						if(Inicio.usuario.urgencias){
-							ruta = Inicio.rutaFirmadosUrgencias + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
+							ruta = Inicio.rutaFirmadosUrgencias+ "\\01 " + Inicio.usuario.alias  + "\\03 Firmado\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
 						}
 						
 						ruta += "\\" + comentario.toString() + "\\";
@@ -219,6 +258,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         			indexPdfYaSubidos = listaPdfs.locationToIndex(ev.getPoint());
         			indexApartado = indexPdfYaSubidos;
         			indexDudas = indexApartado;
+        			indexXedoc = indexApartado;
         			if(indexPdfYaSubidos != -1){
         				menuPop.remove(0);
         				String nombrePdf = listaModeloPdfs.get(indexPdfYaSubidos).toString();

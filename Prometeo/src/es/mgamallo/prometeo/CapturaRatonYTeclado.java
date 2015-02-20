@@ -106,14 +106,17 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		// TODO Auto-generated method stub
-		// System.out.println("NativeKeyPressed " + e.getKeyCode());
-		// System.out.println("Tecla ... " + ((char) e.getKeyCode()));
+		 System.out.println("NativeKeyPressed " + e.getKeyCode());
+		 System.out.println("Tecla ... " + ((char) e.getKeyCode()));
 
 		
 		if(Inicio.xedoc){
 			// Tecla * asterisco
 			if(e.getKeyCode() == 106){
-				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf() );
+				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + /*CadenasJavascriptXedoc.zoomPdf() */ CadenasJavascriptXedoc.maquetado2() );
+			}
+			if(e.getKeyCode() == 92){
+				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf2() );
 			}
 		}
 		

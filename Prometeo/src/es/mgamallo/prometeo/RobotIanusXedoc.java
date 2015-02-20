@@ -65,7 +65,7 @@ public class RobotIanusXedoc {
 
 		boolean tieneTipo = false;
 
-		if (!InicioIanus.versionar) {
+//		if (!InicioIanus.versionar) {
 			tieneTipo = compruebaAsociar(tituloCDU);
 			if (tieneTipo) {
 				Robot robot;
@@ -74,10 +74,12 @@ public class RobotIanusXedoc {
 
 					// 01 Pulsa boton examinar
 
-					robot.delay(100 + retardos.retardoDibujarVentana);
+					if(!InicioIanus.versionar){
+						robot.delay(100 + retardos.retardoDibujarVentana);
+					}
 
 					robot.mouseMove(coordExaminar.x, coordExaminar.y);
-					System.out.println(coordTitulo.x + " " + coordTitulo.y);
+
 					robot.delay(25);
 					robot.mousePress(InputEvent.BUTTON1_MASK);
 					robot.mouseRelease(InputEvent.BUTTON1_MASK);
@@ -211,7 +213,7 @@ public class RobotIanusXedoc {
 			} else {
 				JOptionPane.showMessageDialog(null, "En principio no se puede subir este documento");
 			}
-		}
+//		}
 
 		InicioIanus.versionar = false;
 
