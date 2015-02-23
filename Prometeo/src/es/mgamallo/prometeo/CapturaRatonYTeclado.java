@@ -118,6 +118,10 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			if(e.getKeyCode() == 92){
 				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf2() );
 			}
+			if(e.getKeyCode() == 34){
+				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf3() );
+
+			}
 		}
 		
 		if(Inicio.teclasHabilitadas){

@@ -213,6 +213,81 @@ public class CadenasJavascriptXedoc {
 		return cadena;
 	}
 	
+	static public final String zoomPdf3(){
+		String cadena = ""
+				+ ""
+				+ "var tablaDocumento = document.getElementById('tablaDocumento');"
+				+ "tablaDocumento.style.minWidth='450px';"
+				+ "tablaDocumento.style.width='500px';"
+				+ ""
+				+ "var contextoMenuSuperior = document.getElementById('contextoMenuSuperior');"
+				+ "contextoMenuSuperior.style.marginRight='400px';"
+				+ "var loadContexto = document.getElementById('loadContexto');"
+				+ "loadContexto.style.width='600px';"
+				+ ""
+				+ "var comprimirA = document.getElementById('selectDisplayButtonsTree');"
+				+ "comprimirA.style.left = '1200px';"
+				
+				+ "var comprimirM = document.getElementById('selectDisplayButtonsAtributos');"
+				+ "comprimirM.style.left = '1200px';"
+				+ ""
+				+ "var nombrePaciente = document.getElementById('loadContexto');"
+				+ "nombrePaciente.style.marginLeft='-800px';"
+				+ "nombrePaciente.style.color= 'yellow';"
+				+ "nombrePaciente.style.fontSize = '25px';"
+				
+				+ "var fecha = document.getElementById('{hc}dataVersion-{hc}docExt');"
+				+ "fecha.style.backgroundColor='rgb(253,247,133)';"
+
+				
+				+ "var buscando = document.querySelectorAll('.custom-combobox-input');"
+				+ "buscando[1].style.backgroundColor = 'rgb(253,247,133)';"
+				+ "buscando[2].style.backgroundColor = 'rgb(253,247,133)';"
+				+ ""
+				+ "var chapuza = document.all('nuevaSeccionEdicion');"
+				+ "alert(chapuza.length);"
+				+ ""
+				+ "var ocultar = document.getElementById('nuevaSeccionEdicion');"
+				+ "ocultar.style.display='none';"
+				+ ""
+			
+				
+				+ ""
+				+ "var siguiente=document.getElementById('siguiente');"
+				+ "siguiente.style.color = 'yellow';"
+				+ "var combobox = document.querySelectorAll('.custom-combobox');" 
+				+ "var comboboxinput = document.querySelectorAll('.custom-combobox-input');"
+				+ "var comboboxtoggle = document.querySelectorAll('.custom-combobox-toggle');"
+				+ "alert(combobox.length);"
+
+				
+				+ "for(var z=0;z<combobox.length;z++){"
+					+ "combobox[2].style.width='300px';"
+					+ "comboboxinput[2].style.width='300px';"
+					+ "comboboxinput[2].style.backgroundColor= 'rgb(100,100,100)';"
+					+ "combobox[2].style.display='block';"
+				//	+ "comboboxtoggle[i].style.right='initial';"
+				+ "}"
+				/*
+						+ "var combos0 = document.getElementsByClassName('custom-combobox');"
+						+ "var combos1 = document.getElementsByClassName('custom-combobox-input');"
+						+ "var combos2 = document.getElementsByClassName('custom-combobox-toggle');"
+						+ "alert(combos0.length);"
+						+ "alert(combos1.length);"
+						+ "alert(combos2.lenght);"
+						+ "for(var z=0;z<combos0.length;z++){"
+							+ "combos0[z].style.width='300px';"
+							+ "combos1[z].style.width='300px';"
+							+ "combos2[z].style.right='initial';"
+						+ "}"			
+				*/	
+				+ "alert('Ommmm...');"
+				+ "";
+		
+		return cadena;
+	}
+	
+	
 	static public final String zoomPdf(){
 		String cadena = ""
 				+ "document.getElementById('entornoLogin').style.display='none';"
