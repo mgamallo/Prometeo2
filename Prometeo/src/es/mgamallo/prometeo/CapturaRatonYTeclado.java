@@ -113,8 +113,9 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 		if(Inicio.xedoc){
 			// Tecla * asterisco
 			if(e.getKeyCode() == 106){
-				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" + /*CadenasJavascriptXedoc.zoomPdf() */ CadenasJavascriptXedoc.maquetado2() );
+				Dispatch.call(GestionJacobXedoc.bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
 			}
+			/*
 			if(e.getKeyCode() == 92){
 				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf2() );
 			}
@@ -122,6 +123,25 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 				Dispatch.call(Inicio.paciente1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf3() );
 
 			}
+			*/
+			
+			//  Flecha arriba
+			if(e.getKeyCode() == 38){
+			}
+			
+			//  Flecha derecha
+			if(e.getKeyCode() == 39){
+				Dispatch.call(GestionJacobXedoc.bandejaXedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.cargaPdf() );
+			}
+			
+			//  Flecha abajo
+			if(e.getKeyCode() == 40){
+			}
+			
+			//  Flecha izquierda
+			if(e.getKeyCode() == 37){
+			}
+			
 		}
 		
 		if(Inicio.teclasHabilitadas){

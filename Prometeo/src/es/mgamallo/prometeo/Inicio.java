@@ -45,6 +45,7 @@ public class Inicio {
 	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
 	static public String rutaAsociadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 Asociado";
 	static public String rutaDudas = ":\\digitalización\\00 documentacion\\99 Dudas";
+	static public String rutaXedocOriginales = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\05 XEDOC ORIGINALES";
 	
 	// Revisar estas rutas
 	static public String rutaNormas = "c:\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\txt\\Normas\\";
@@ -71,6 +72,8 @@ public class Inicio {
 	static public Paciente paciente1= new Paciente();
 	static public Paciente paciente2 = new Paciente();
 	
+	static public DocumentoXedoc documento1 = new DocumentoXedoc();
+	static public DocumentoXedoc documento2 = new DocumentoXedoc();	
 	
 	static boolean ventanasCargadas = false;
 	static public boolean teclasHabilitadas = false;
@@ -157,6 +160,7 @@ public class Inicio {
 		
 		rutaFirmados = unidadHDDvirtual + rutaFirmados;
 		rutaFirmadosXedoc = unidadHDDvirtual + rutaFirmadosXedoc;
+		rutaXedocOriginales = unidadHDDvirtual + rutaXedocOriginales;
 		rutaXedoc = unidadHDDvirtual + rutaXedoc;
 		rutaRevisados = unidadHDDvirtual + rutaRevisados;
 		rutaFirmadosUrgencias = unidadHDDvirtual + rutaFirmadosUrgencias;

@@ -502,10 +502,13 @@ public class InterfazPrincipal implements MouseListener{
 								ev.printStackTrace();
 							}
 							
-							System.out.println(carpetaOrigen.getAbsolutePath());
-							System.out.println(carpetaDestino.getAbsolutePath());
-							
 							webBrowserOperaciones.executeJavascript("document.all.ins.click()");
+							
+							String rutaCopiaCarpetaDestino = Inicio.rutaXedocOriginales + "\\" + carpetaDestino.getName() + " " + Inicio.usuario.alias;
+							System.out.println("Ruta de la copia de xedoc... \n" + rutaCopiaCarpetaDestino);
+							
+							CopiarDirectorio.copiarDirectorios(carpetaDestino, new File(rutaCopiaCarpetaDestino));
+							JOptionPane.showMessageDialog(null, "Carpeta copiada en \"05 Xedoc originales\"");
 						}
 
 			

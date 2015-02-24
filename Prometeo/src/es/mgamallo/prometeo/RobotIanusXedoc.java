@@ -92,7 +92,7 @@ public class RobotIanusXedoc {
 							copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
 					}
 
-					robot.delay(retardos.retardoTrasPulsarExaminar + 200/* + Retardos.S_lento */);
+					robot.delay(retardos.retardoTrasPulsarExaminar + 200 + 300 /* + Retardos.S_lento */);
 						
 						//	Pega Ruta archivo
 						

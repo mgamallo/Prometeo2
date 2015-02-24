@@ -65,7 +65,7 @@ public class CadenasJavascriptXedoc {
 	
 	static public final String selectMiBandeja(){
 		
-		String miBandeja = "Todas bandejas";  // "Mi bandeja";
+		String miBandeja = "Mi bandeja";
 		
 		String cadena = ""
 				+ "var anclas = document.getElementsByTagName('a');"
@@ -87,6 +87,10 @@ public class CadenasJavascriptXedoc {
 				+ "document.getElementById('contextoMenuSuperior').click();"
 				+ "var nhc = document.getElementById('{hc}numeroHC');"
 				+ "nhc.value='52378';"
+				+ "var fechaI = document.getElementById('FechaIni');"
+				+ "var fechaF = document.getElementById('FechaFin');"
+				+ "fechaI.value = '01/01/2015';"
+				+ "fechaF.value = '22/02/2015';"
 			//	+ "alert('hola');"
 				+ "document.getElementById('submitFormContexto').click();"
 				+ "";
@@ -109,9 +113,17 @@ public class CadenasJavascriptXedoc {
 			//	+ "alert('hola');"
 				+ "var filas = document.getElementsByTagName('tr');"
 				+ "var ancla = filas[1].getElementsByTagName('a');"
+				+ "ancla[0].target = '_blank';"
 			//	+ "alert(ancla[0].innerHTML);"
 				+ "ancla[0].click();"
 				+ "";
+		
+		return cadena;
+	}
+	
+	
+	static public final String cargaPdf(){
+		String cadena = "";
 		
 		return cadena;
 	}
