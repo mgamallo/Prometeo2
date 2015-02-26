@@ -427,7 +427,13 @@ class Directorio{
 			if(indexDia != -1){
 				cadena = cadena.substring(indexDia + 1);
 				int primerEspacioBlanco = cadena.indexOf(" ");
-				numCarpeta = cadena.substring(0,primerEspacioBlanco);
+				if(primerEspacioBlanco != -1){
+					numCarpeta = cadena.substring(0,primerEspacioBlanco);
+				}
+				else{
+					numCarpeta = cadena;
+				}
+				
 				System.out.println(numCarpeta);
 				
 				cadena = cadena.substring(primerEspacioBlanco + 1);
