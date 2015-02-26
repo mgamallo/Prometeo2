@@ -552,6 +552,9 @@ public class InterfazPrincipal implements MouseListener{
 							frame.setState(Frame.ICONIFIED);
 						}
 					}
+					if(command.equals("carpetaXedocO")){
+						Dudas.abrirCarpetaXedocOriginales();
+					}
 					
 					maximizada = Pantalla.restaurar(frame);
 				} 

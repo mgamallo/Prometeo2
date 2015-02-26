@@ -56,4 +56,20 @@ public class Dudas {
 			}
 		}
 	}
+	
+	static public void abrirCarpetaXedocOriginales(){
+		String rutaCarpetaXedocOriginales = Inicio.rutaXedocOriginales;
+		
+		File f = new File(rutaCarpetaXedocOriginales);
+		if(f.exists()){
+	    	String cadena = "explorer.exe " + rutaCarpetaXedocOriginales;
+			try {
+				Runtime.getRuntime().exec(cadena);
+			} catch (IOException ev) {
+				// TODO Auto-generated catch block
+				ev.printStackTrace();
+			}
+		}
+	}
+	
 }
