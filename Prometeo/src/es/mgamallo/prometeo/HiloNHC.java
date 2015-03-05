@@ -7,16 +7,18 @@ import com.jacob.com.Dispatch;
 
 public class HiloNHC extends Thread{
 
-	final String introduceNhc;
+	final String introduceNhc1;
 	final String nombreIanus;
+	final String nhc;
 	int retardo;
 	ActiveXComponent ianus;
 	
-	HiloNHC(ActiveXComponent ianus,String introduceNhc, String nombreIanus, int retardo){
+	HiloNHC(ActiveXComponent ianus,String introduceNhc1, String nombreIanus, int retardo, String nhc){
 		this.ianus = ianus;
-		this.introduceNhc = introduceNhc;
+		this.introduceNhc1 = introduceNhc1;
 		this.nombreIanus = nombreIanus;
 		this.retardo = retardo;
+		this.nhc = nhc;
 	}
 	
 	public void run(){
@@ -31,7 +33,9 @@ public class HiloNHC extends Thread{
 			public void run() {
 
 				 try {
-					Dispatch.call(ianus, "navigate",introduceNhc);
+					Dispatch.call(ianus, "navigate",introduceNhc1);
+					Thread.sleep(Retardos.retardoIntroducirNHC);
+					Dispatch.call(ianus, "navigate",CadenasJavascript.introducirNHC2(nhc));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

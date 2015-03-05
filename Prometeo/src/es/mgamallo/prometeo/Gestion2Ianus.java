@@ -21,7 +21,6 @@ public class Gestion2Ianus {
 	int indiceNhc2 = 0;
 		
 	int retardoAsociar = 1500;
-	static int retardoBuscarNodoInicial = 6000;
 	int retardoBuscarNodoFase2 = 200;
 	
 	
@@ -92,14 +91,14 @@ public class Gestion2Ianus {
 		
 		Inicio.ianus1onTop = true;
 		
-		buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,Inicio.documento[indiceNhc1].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
-		buscaNodo(Inicio.paciente2.ianus,Inicio.documento[indiceNhc2].servicio,Inicio.documento[indiceNhc2].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
+		buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,Inicio.documento[indiceNhc1].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
+		buscaNodo(Inicio.paciente2.ianus,Inicio.documento[indiceNhc2].servicio,Inicio.documento[indiceNhc2].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
 	//	Inicio.ianus1.frame.setAlwaysOnTop(true);
 	}
 	
 	
 	public static void introduceNHC(ActiveXComponent ianus, String nombreIanus, String nhc, int retardo ){
-		HiloNHC introNHC = new HiloNHC(ianus,CadenasJavascript.introducirNHC(nhc),nombreIanus,retardo);
+		HiloNHC introNHC = new HiloNHC(ianus,CadenasJavascript.introducirNHC1(nhc),nombreIanus,retardo,nhc);
 		introNHC.start();
 	}
 	
@@ -249,7 +248,7 @@ public class Gestion2Ianus {
 								Inicio.ianus1onTop = false;
 								
 								buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,
-										Inicio.documento[indiceNhc1].nombreNormalizado, true,false,retardoBuscarNodoInicial,false);
+										Inicio.documento[indiceNhc1].nombreNormalizado, true,false,Retardos.retardoCargarPaciente,false);
 								
 							}
 							else{
@@ -340,7 +339,7 @@ public class Gestion2Ianus {
 								Inicio.ianus1onTop = true;
 								
 								buscaNodo(Inicio.paciente2.ianus, Inicio.documento[indiceNhc2].servicio,
-										Inicio.documento[indiceNhc2].nombreNormalizado, true,false,retardoBuscarNodoInicial,false);
+										Inicio.documento[indiceNhc2].nombreNormalizado, true,false,Retardos.retardoCargarPaciente,false);
 								
 							}
 							else{
@@ -423,8 +422,8 @@ public class Gestion2Ianus {
 		
 		Inicio.ianus1onTop = true;
 		
-		buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,Inicio.documento[indiceNhc1].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
-		buscaNodo(Inicio.paciente2.ianus,Inicio.documento[indiceNhc2].servicio,Inicio.documento[indiceNhc2].nombreNormalizado,true,false,retardoBuscarNodoInicial,false);
+		buscaNodo(Inicio.paciente1.ianus,Inicio.documento[indiceNhc1].servicio,Inicio.documento[indiceNhc1].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
+		buscaNodo(Inicio.paciente2.ianus,Inicio.documento[indiceNhc2].servicio,Inicio.documento[indiceNhc2].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
 	//	Inicio.ianus1.frame.setAlwaysOnTop(true);
 
 		

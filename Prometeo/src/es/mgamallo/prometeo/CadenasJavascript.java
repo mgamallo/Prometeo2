@@ -289,14 +289,14 @@ public class CadenasJavascript {
 		return introducirUsuarioPulido;
 	}
 	
-	static public final String introducirNHC(String nhc){
+	static public final String introducirNHC1(String nhc){
 		String introducirNHCPulido = 
 			"var framePrincipal = window.frames;" + LS +
 			"var frameNHC = framePrincipal['principal'].frames['mainFrame'];" + LS +
 			"var NHC = frameNHC.document.buscarPacienteForm.ID_NHC;" + LS +
 	
-			"NHC.value = " + nhc + ";" + LS +
-			"frameNHC.buscar();"
+			"NHC.value = " + nhc + ";"//  + LS +
+	//		"frameNHC.buscar();"
 			;
 		
 		String introducirNHCresumido = 
@@ -312,10 +312,37 @@ public class CadenasJavascript {
 				+ "alert('salimos del bucle');"   */
 						;
 		
+		String introducirNHCfase1 = ""
+				+ "javascript:window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " 
+				+ nhc 
+				+ ";";
 		
-		return introducirNHCresumido;
+		String introducirConFuncion1 = ""
+				+ ""
+				+ "function introNHC(nhc){"
+					+ "window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = nhc;"
+					+ "window.principal.mainFrame.buscar();"
+				+ "}"
+				+ "";
+		
+		// return introducirNHCresumido;
+		return "javascript:" + introducirConFuncion1;
 	}
 
+	
+	static public final String introducirNHC2(String nhc){
+		
+		String introducirNHCfase2 = 
+				"javascript:window.principal.mainFrame.buscar();"
+						;
+		
+		String introducirConFuncion2 = "javascript:introNHC(" + nhc + ")";
+		
+		return introducirConFuncion2;
+	}
+	
+	
+	
 	static public final String salirDelPaciente(){
 		
 		final String salirPaciente = 

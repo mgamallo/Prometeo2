@@ -527,10 +527,9 @@ public class InterfazPrincipal implements MouseListener{
 						panelActivo = ABRIR;
 					}
 					if(command.equals("iniciarXedoc")){
-						if(Inicio.carpetaXedocFirmado){
-							
-							
-							
+						
+				//		if(Inicio.carpetaXedocFirmado){
+
 							InicioXedoc xedoc = new InicioXedoc();
 							
 							// webBrowserOperaciones.navigate(GestionJacob.direccionIanus);
@@ -550,7 +549,7 @@ public class InterfazPrincipal implements MouseListener{
 							webBrowserOperaciones.executeJavascript(codig);
 							
 							frame.setState(Frame.ICONIFIED);
-						}
+				//		}
 					}
 					if(command.equals("carpetaXedocO")){
 						Dudas.abrirCarpetaXedocOriginales();

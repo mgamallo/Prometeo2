@@ -28,7 +28,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 	private JButton botonReiniciarNHC;
 	private JButton jButton6;
 	private JButton botonResetearSubida;
-	private JButton jButton8;
+	private JButton botonRetardos;
 	private JButton jButton9;
 	private JButton jButton10;
 	private JButton jButton11;
@@ -86,7 +86,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         botonReiniciarNHC = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         botonResetearSubida = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        botonRetardos = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
@@ -392,8 +392,16 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
-        jButton8.setText("jButton8");
-        jButton8.setVisible(false);
+        botonRetardos.setText("Retardos");
+        botonRetardos.setVisible(true);
+        botonRetardos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new VentanaRetardos();
+			}
+		});
 
         jButton9.setText("Actualizar ianus");
         jButton9.setVisible(false);
@@ -466,7 +474,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
                         .addComponent(botonReiniciarNHC,170,170,170)
                         .addComponent(jButton6,170,170,170)
                         .addComponent(botonResetearSubida,170,170,170)
-                        .addComponent(jButton8,170,170,170)
+                        .addComponent(botonRetardos,170,170,170)
                         .addComponent(jButton9,170,170,170)
                         .addComponent(jButton10,170,170,170)
                         .addComponent(jButton11,170,170,170)
@@ -493,7 +501,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonResetearSubida)
                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                       .addComponent(jButton8)
+                       .addComponent(botonRetardos)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton9)
                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

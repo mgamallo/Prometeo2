@@ -59,7 +59,6 @@ public class RobotIanusXedoc {
 
 		// String alias = titulo.substring(0,5);
 
-		Retardos retardos = new Retardos();
 
 		setCoordenadas(InicioIanus.tipoSubida);
 
@@ -75,7 +74,7 @@ public class RobotIanusXedoc {
 					// 01 Pulsa boton examinar
 
 					if(!InicioIanus.versionar){
-						robot.delay(100 + retardos.retardoDibujarVentana);
+						robot.delay(100 + Retardos.retardoDibujarVentana);
 					}
 
 					robot.mouseMove(coordExaminar.x, coordExaminar.y);
@@ -92,7 +91,7 @@ public class RobotIanusXedoc {
 							copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
 					}
 
-					robot.delay(retardos.retardoTrasPulsarExaminar + 200 + 300 /* + Retardos.S_lento */);
+					robot.delay(Retardos.retardoTrasPulsarExaminar  /* + Retardos.S_lento */);
 						
 						//	Pega Ruta archivo
 						
@@ -211,7 +210,10 @@ public class RobotIanusXedoc {
 					InicioIanus.versionar = false;
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "En principio no se puede subir este documento");
+				JOptionPane.showMessageDialog(null, "En principio no se puede subir este documento. \n" + 
+							Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado + "\n" + 
+							Inicio.documento[Inicio.indiceArchivoSelecc].servicio +
+							 "\nPrueba a actualizar el ianus, y espera a que se dibujen los botones de asociar");
 			}
 //		}
 

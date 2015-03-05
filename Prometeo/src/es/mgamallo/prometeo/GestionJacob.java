@@ -411,7 +411,7 @@ public class GestionJacob {
 			public void run() {
 
 				try {
-					Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.introducirNHC(nhc));
+					Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.introducirNHC1(nhc));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -711,14 +711,16 @@ public class GestionJacob {
 		String ianus = Inicio.vControlIanus.labelNumeroIanus.getText();
 
 		if(ianus.toLowerCase().contains(("Ianus 1").toLowerCase())){
-			
-			Gestion2Ianus.introduceNHC(Inicio.paciente1.ianus,Gestion2Ianus.nombreIanus1,Inicio.nhcDelIanus1,100);
-			Gestion2Ianus.buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Gestion2Ianus.retardoBuscarNodoInicial,false);
+			Dispatch.call(Inicio.paciente1.ianus,"GoBack");
+	//		Gestion2Ianus.introduceNHC(Inicio.paciente1.ianus,Gestion2Ianus.nombreIanus1,Inicio.nhcDelIanus1,100);
+	//		Gestion2Ianus.buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
 					
 		}
 		else{
-			Gestion2Ianus.introduceNHC(Inicio.paciente2.ianus,Gestion2Ianus.nombreIanus2,Inicio.nhcDelIanus2,100);
-			Gestion2Ianus.buscaNodo(Inicio.paciente2.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Gestion2Ianus.retardoBuscarNodoInicial,false);
+			Dispatch.call(Inicio.paciente2.ianus,"GoBack");
+
+		//	Gestion2Ianus.introduceNHC(Inicio.paciente2.ianus,Gestion2Ianus.nombreIanus2,Inicio.nhcDelIanus2,100);
+		//	Gestion2Ianus.buscaNodo(Inicio.paciente2.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
 
 		}
 	}
