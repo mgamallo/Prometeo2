@@ -341,6 +341,31 @@ public class CadenasJavascript {
 		return introducirConFuncion2;
 	}
 	
+	static public final String reloadNhc01(){
+		String reload1 = ""
+				+ ""
+				+ "var pag = principal.mainFrame;"
+				+ "pag.location.reload();"
+				+ "";
+		
+		return reload1;
+	}
+	
+	static public final String reloadNhc02(){
+		String reload2 = ""
+				+ "pag.busquedaAvanzada();"
+				+ "";
+		
+		return reload2;
+	}
+	
+	static public final String reloadNhc03(){
+		String reload3 = ""
+				+ "principal.botonera.inicio();"
+				+ "";
+		
+		return reload3;
+	}
 	
 	
 	static public final String salirDelPaciente(){

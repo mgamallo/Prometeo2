@@ -363,6 +363,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setVisible(false);
         jButton6.setText("V auto OFF");
         jButton6.setBackground(Color.gray);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -394,6 +395,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
         botonRetardos.setText("Retardos");
         botonRetardos.setVisible(true);
+        botonRetardos.setBackground(new Color(103,170,238));
         botonRetardos.addActionListener(new ActionListener() {
 			
 			@Override

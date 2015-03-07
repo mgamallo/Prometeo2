@@ -8,13 +8,13 @@ public class InicioXedoc {
     static ActiveXComponent oWindows; 
     
     public InicioXedoc(){
-    	 GestionJacobXedoc.capturaWebXedoc();
+    	 // GestionJacobXedoc.capturaWebXedoc();
     	
     	
     	// GestionJacobXedoc.pruebaCapturaWebXedoc();
     	
     	
-    	// GestionJacobXedoc.CapturaWebXedoc_nuevoproyecto();
+    	 GestionJacobXedoc.CapturaWebXedoc_nuevoproyecto();
     }
 	
 	

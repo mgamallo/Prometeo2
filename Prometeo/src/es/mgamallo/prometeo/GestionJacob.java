@@ -711,16 +711,39 @@ public class GestionJacob {
 		String ianus = Inicio.vControlIanus.labelNumeroIanus.getText();
 
 		if(ianus.toLowerCase().contains(("Ianus 1").toLowerCase())){
-			Dispatch.call(Inicio.paciente1.ianus,"GoBack");
-	//		Gestion2Ianus.introduceNHC(Inicio.paciente1.ianus,Gestion2Ianus.nombreIanus1,Inicio.nhcDelIanus1,100);
-	//		Gestion2Ianus.buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
+			
+			try {
+				Dispatch.call(Inicio.paciente1.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc01());
+				Thread.sleep(300);
+				Dispatch.call(Inicio.paciente1.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc02());
+				Thread.sleep(300);
+				Dispatch.call(Inicio.paciente1.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc03());
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Gestion2Ianus.introduceNHC(Inicio.paciente1.ianus,Gestion2Ianus.nombreIanus1,Inicio.nhcDelIanus1,100);
+			Gestion2Ianus.buscaNodo(Inicio.paciente1.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
 					
 		}
 		else{
-			Dispatch.call(Inicio.paciente2.ianus,"GoBack");
+//			Dispatch.call(Inicio.paciente2.ianus,"GoBack");
+			
+			try {
+				Dispatch.call(Inicio.paciente2.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc01());
+				Thread.sleep(300);
+				Dispatch.call(Inicio.paciente2.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc02());
+				Thread.sleep(300);
+				Dispatch.call(Inicio.paciente2.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc03());
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-		//	Gestion2Ianus.introduceNHC(Inicio.paciente2.ianus,Gestion2Ianus.nombreIanus2,Inicio.nhcDelIanus2,100);
-		//	Gestion2Ianus.buscaNodo(Inicio.paciente2.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
+			Gestion2Ianus.introduceNHC(Inicio.paciente2.ianus,Gestion2Ianus.nombreIanus2,Inicio.nhcDelIanus2,100);
+			Gestion2Ianus.buscaNodo(Inicio.paciente2.ianus,Inicio.documento[Inicio.indiceArchivoSelecc].servicio,Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado,true,false,Retardos.retardoCargarPaciente,false);
 
 		}
 	}

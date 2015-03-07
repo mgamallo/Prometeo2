@@ -127,6 +127,8 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			
 			//  Flecha arriba
 			if(e.getKeyCode() == 38){
+				Dispatch.call(GestionJacobXedoc.bandejaXedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.pruebaTabla() );
+
 			}
 			
 			//  Flecha derecha

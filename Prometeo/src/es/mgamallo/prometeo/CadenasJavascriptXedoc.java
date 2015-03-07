@@ -81,6 +81,16 @@ public class CadenasJavascriptXedoc {
 		return cadena;
 	}
 	
+	static public final String getNHC(){
+		
+		String cadena = ""
+				+ ""
+				+ "";
+		
+		return cadena;
+	}
+	
+
 	
 	static public final String contexto(){
 		String cadena = ""
@@ -107,6 +117,68 @@ public class CadenasJavascriptXedoc {
 		
 		return cadena;
 	}
+	
+	static public final String pruebaTabla(){
+		String cadena = ""
+				+ ""
+				+ "var nhc;"
+				+ "var filaSeleccionada;"
+				+ ""
+				+ "function getNHC(nodo){"
+					+ "var cadena = nodo.innerHTML;"
+					+ "var campos = cadena.split(' @');"
+					+ "campos[3] = campos[3].replace('r_f.pdf','');"
+				//	+ "alert(campos[1] + '\\n' + campos[2] + '\\n' + campos[3]);"
+					+ "nhc = campos[1];"
+					+ "filaSeleccionada = nodo.id;"
+					+ "alert(filaSeleccionada);"
+					+ "cargaContexto();"
+				+ "}"
+				
+				+ "function cargaContexto(){"
+					+ "document.getElementById('contextoMenuSuperior').click();"
+					+ "var nhcElement = document.getElementById('{hc}numeroHC');"
+					+ "nhcElement.value= nhc;"
+					+ "var fechaI = document.getElementById('FechaIni');"
+					+ "var fechaF = document.getElementById('FechaFin');"
+					+ "fechaI.value = '01/01/2015';"
+					+ "fechaF.value = '22/02/2015';"
+				//	+ "alert('hola');"
+					+ "document.getElementById('submitFormContexto').click();"
+					+ "var claveEntera = nhc + '-360340';"
+					+ "setTimeout(function(){cambiarContexto(claveEntera);"
+						+ "var anclaSeleccionada = celdas[filaSeleccionada*5 +4];"
+						+ "anclaSeleccionada = anclaSeleccionada.getElementsByTagName('a');"
+						+ "anclaSeleccionada[0].click();},4000);"
+					+ ""
+					+ ""
+					+ ""
+				//	+ "var anclaSeleccionada = celdaSeleccionada.getElementsByTagName('a');"
+				//	+ "anclaSeleccionada[0].click();"
+					+ ""
+				+ "}"
+					
+				+ "function saludar(numrFila){alert('Fila numero ' + numrFila);}"
+				+ ""
+
+				+ ""
+				+ "var tabla = document.getElementById('row');"
+				+ "var celdas = tabla.getElementsByTagName('td');"
+				+ "var filas = celdas.length / 5;"
+
+				+ "var numFila = 1;"
+				+ "for(var i=0;i<filas;i++){"
+					+ "celdas[i*5 + 2].setAttribute('id',i);"
+					+ "celdas[i*5 + 2].setAttribute('onclick','getNHC(this);');"
+					+ "var anclas = celdas[i*5 + 4].getElementsByTagName('a');"
+					+ "anclas[0].target = '_blank';"
+					+ "numFila++;"
+				+ "}"
+				+ "alert(filas);"
+				+ "";
+		return cadena;
+	}
+	
 	
 	static public final String inicio1Xedoc(){
 		String cadena = ""

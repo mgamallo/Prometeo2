@@ -565,13 +565,23 @@ public class GestionJacobXedoc {
 		
 		System.out.println("Empieza el primer readyState");
 		
-		int i=0;
-		while(true /* && i < 25000 */){
+		long tiempoInicial = System.currentTimeMillis();
+		int numRepeticiones = 0;
+		while(true){
 			estado = Dispatch.call(bandejaXedoc, "readyState");
 		//	System.out.println(i++);
 		//	System.out.println(estado.toString());
 			if(Integer.valueOf(estado.toString()) == 4){
 				System.out.println("El estado está en 4");
+				break;
+			}
+			if(tiempoInicial + 3000 < System.currentTimeMillis()){
+				System.out.println("Reiniciando la navegación.");
+				Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+				tiempoInicial = System.currentTimeMillis();
+				numRepeticiones++;
+			}
+			if(numRepeticiones>2){
 				break;
 			}
 		}
@@ -652,7 +662,6 @@ public class GestionJacobXedoc {
 		    
 			System.out.println("Empieza el segundo readyState");
 			
-			i=0;
 			while(true /* && i < 25000 */){
 				estado = Dispatch.call(bandejaXedoc, "readyState");
 			//	System.out.println(i++);
@@ -667,7 +676,6 @@ public class GestionJacobXedoc {
 
 			System.out.println("Empieza el tercer readyState");
 			
-			i=0;
 			while(true /* && i < 25000 */){
 				estado = Dispatch.call(bandejaXedoc, "readyState");
 			//	System.out.println(i++);
@@ -698,7 +706,10 @@ public class GestionJacobXedoc {
 				e.printStackTrace();
 			}
 			
+		//	Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.pruebaTabla());
+
 			
+	/*		
 			
 			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.contexto());
 			
@@ -733,7 +744,7 @@ public class GestionJacobXedoc {
 			capturaUltimoExplorer();
 			
 			System.out.println("readyState del xedoc1");
-			while(true /* && i < 25000 */){
+			while(true){
 				estado = Dispatch.call(Inicio.documento1.xedoc, "readyState");
 			//	System.out.println(i++);
 			//	System.out.println(estado.toString());
@@ -752,7 +763,7 @@ public class GestionJacobXedoc {
 			}
 	
 			inicializaMaquetado(Inicio.documento1.xedoc);
-			
+	*/		
 			/*
 			
 			Dispatch columnaIzquierdaEdicion = Dispatch.call(documento, "getElementById","columnaIzquierdaEdicion").toDispatch();

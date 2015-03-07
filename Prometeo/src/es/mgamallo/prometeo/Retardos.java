@@ -5,7 +5,7 @@ public class Retardos {
 	static public int retPulsarVauto = 900;
 	static public int retIntroNHC = 800;
 	
-	public static int retardoAntesExaminar = 250;
+	public static int retardoAntesExaminar = /* 250 */ 50;
 	public static int retardoTrasLupa = 250;
 	
 	
