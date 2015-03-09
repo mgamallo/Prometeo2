@@ -577,9 +577,12 @@ public class GestionJacobXedoc {
 			}
 			if(tiempoInicial + 3000 < System.currentTimeMillis()){
 				System.out.println("Reiniciando la navegación.");
-				Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+				Dispatch.call(bandejaXedoc, "Quit");
 				tiempoInicial = System.currentTimeMillis();
 				numRepeticiones++;
+				bandejaXedoc = new ActiveXComponent("InternetExplorer.Application");
+				Dispatch.call(bandejaXedoc, "Visible",true);
+				Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
 			}
 			if(numRepeticiones>2){
 				break;
