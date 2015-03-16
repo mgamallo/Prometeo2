@@ -14,7 +14,11 @@ public class Retardos {
 	
 	
 	static public int retardoDibujarVentana = 100;
+	
+	
 	static public int retardoTrasPulsarExaminar = 1100;
+	static public int retardoTrasPegarRuta = 250;
+	static public int retardoTrasPegarTipo = 150;
 	
 	static public int retardoCargarPaciente = 6000;
 	static public int retardoIntroducirNHC = 100;

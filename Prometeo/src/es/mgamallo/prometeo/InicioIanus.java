@@ -54,6 +54,8 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	static final String URG_JACOB = "URG:";
 	static final String CIA = "CIA";
 	static final String CIA_JACOB = "CIA:";
+	static final String MAPA_A = "Estudo HTA-AMPA MAPA";
+	static final String MAPA_B = "Estudo HTA-AMPA/MAPA";	
 
 	static boolean botonAsociarAuto = true;
 	static boolean buscaNodoAuto = true;

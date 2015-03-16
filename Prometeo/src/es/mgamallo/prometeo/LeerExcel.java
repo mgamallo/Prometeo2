@@ -3,7 +3,9 @@ package es.mgamallo.prometeo;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.TreeMap;
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -25,6 +27,8 @@ public class LeerExcel {
 	public String[][] tablaNormas;
 	
 	private Nodo[] nodos;
+	
+	public TreeMap<String, String> nombreServicios = new TreeMap<String, String>();
 	
 	public void leer(String archivoFuente){
 		
@@ -188,6 +192,7 @@ public class LeerExcel {
 	        	}
 	        }	        
 	        
+	        
 	        /*
 	        for(int i=0;i<10;i++){
 	        	for(int j=0;j<4;j++){
@@ -197,23 +202,26 @@ public class LeerExcel {
 	        }
 	        */
 	        
-	        /*   Esta parte se borrará */
-	       /* 
-	        hoja = archivoExcel.getSheet(4);
 	        
-	        tablaNormas = new String[31][4];
-	        for(int fila=0;fila<31;fila++){
-	        	for(int columna=0;columna<4;columna++){
-	        		tablaNormas[fila][columna]=hoja.getCell(columna, fila+1).getContents().toString();
-	        	}
-	        	
+	        // Obtiene el nombre de los servicios para Xedoc
+	        hoja = archivoExcel.getSheet(7);
+
+	        numFilas = 0;
+	        numColumnas = 2;
+	        while(!hoja.getCell(0,numFilas).getContents().toString().equals("#finV")){
+	        	numFilas++;
 	        }
 	        
-	        for(int fila=0;fila<31;fila++){
-	        	for(int columna=0;columna<4;columna++){
-	        		System.out.print(tablaNormas[fila][columna] + "\t");
-	        	}
-	        	System.out.println();
+	        for(int fila=0;fila<numFilas;fila++){
+	        	nombreServicios.put(hoja.getCell(0,fila).getContents().toString(), 
+	        			hoja.getCell(1,fila).getContents().toString());
+	        }
+	        
+	        /*
+	        for( Iterator it = nombreServicios.keySet().iterator(); it.hasNext();) {
+	        	String clave = (String)it.next();
+	        	String valor = (String)nombreServicios.get(clave);
+	        	System.out.println(clave + " : " + valor);
 	        }
 	        */
 	        

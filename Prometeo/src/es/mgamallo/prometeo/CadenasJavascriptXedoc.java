@@ -535,4 +535,30 @@ public class CadenasJavascriptXedoc {
 		
 		return cadena;
 	}
+	
+	public static String completaDatos(){
+		
+		String cadena = ""
+				+ ""
+				//	Carga los datos del documento
+				
+				+ "var archivo = document.getElementById('labelAtributo');"
+				+ "var campos = archivo.innerHTML.split(' @');"
+				+ "var nhc = campos[1];"
+				+ "var servicio = campos[2];"
+				+ "var tipoDoc = campos[3];"
+				
+				//	Coloca el numero de historia arriba para facil lectura
+				
+				+ "var logo = document.getElementById('branding').getElementsByTagName('a')[0];"
+				+ "logo.innerHTML = nhc;"
+				+ ""
+				
+				// Selecciona el nodo
+				+ ""
+				+ "alert('hola');"
+				+ "";
+		
+		return cadena;
+	}
 }

@@ -15,7 +15,7 @@ public class GestionJacobXedoc {
 	public static ActiveXComponent bandejaXedoc;
 	
 	
-	public static void capturaUltimoExplorer(){
+	public static ActiveXComponent capturaUltimoExplorer(){
         int iCount = InicioXedoc.oWindows.getProperty("Count").getInt();
         System.out.println("iCount: " + iCount);  
         
@@ -29,7 +29,7 @@ public class GestionJacobXedoc {
 
        	Inicio.documento1.xedoc = oWindow;
 
-        
+        return oWindow;
 	}
 	
 	
@@ -581,7 +581,7 @@ public class GestionJacobXedoc {
 				tiempoInicial = System.currentTimeMillis();
 				numRepeticiones++;
 				bandejaXedoc = new ActiveXComponent("InternetExplorer.Application");
-				Dispatch.call(bandejaXedoc, "Visible",true);
+				//Dispatch.call(bandejaXedoc, "Visible",true);
 				Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
 			}
 			if(numRepeticiones>2){

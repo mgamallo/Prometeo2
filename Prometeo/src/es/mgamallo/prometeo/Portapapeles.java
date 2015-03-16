@@ -22,7 +22,7 @@ public class Portapapeles {
 
 	String valorTemporal = "";
 
-	public void copiarAlPortapapeles(String documento) {
+	static public void copiarAlPortapapeles(String documento) {
 		Clipboard portapapeles = Toolkit.getDefaultToolkit()
 				.getSystemClipboard();
 		StringSelection texto = new StringSelection(documento);

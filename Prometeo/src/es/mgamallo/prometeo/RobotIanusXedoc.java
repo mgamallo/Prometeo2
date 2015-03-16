@@ -100,7 +100,7 @@ public class RobotIanusXedoc {
 						robot.keyRelease(KeyEvent.VK_V);
 						robot.keyRelease(KeyEvent.VK_CONTROL);
 
-						robot.delay(150 /* + Retardos.S_lento */);
+						robot.delay(Retardos.retardoTrasPegarRuta/* + Retardos.S_lento */);
 
 						// 10 Enter
 						robot.keyPress(KeyEvent.VK_ENTER);
@@ -119,6 +119,13 @@ public class RobotIanusXedoc {
 						}
 						
 						
+						if(tituloCDU.equals(InicioIanus.MAPA_A)){
+							tituloCDU = InicioIanus.MAPA_B;
+						}
+						
+						copiar.copiarAlPortapapeles(tituloCDU);
+						
+						
 					//	03 Pulsa lupa
 						
 					if (!InicioIanus.versionar) {
@@ -135,17 +142,15 @@ public class RobotIanusXedoc {
 					robot.delay(50);
 					robot.mousePress(InputEvent.BUTTON1_MASK);
 					robot.mouseRelease(InputEvent.BUTTON1_MASK);
-					robot.delay(150);					
+					robot.delay(250);		
 					
-					copiar.copiarAlPortapapeles(tituloCDU);
-					robot.delay(50);
 					
 					robot.keyPress(KeyEvent.VK_CONTROL);
 					robot.keyPress(KeyEvent.VK_V);
 					robot.keyRelease(KeyEvent.VK_V);
 					robot.keyRelease(KeyEvent.VK_CONTROL);
 
-					robot.delay(100);
+					robot.delay(Retardos.retardoTrasPegarTipo);
 					robot.keyPress(KeyEvent.VK_ENTER);
 					robot.keyRelease(KeyEvent.VK_ENTER);
 					robot.delay(250);
@@ -165,7 +170,7 @@ public class RobotIanusXedoc {
 						
 						copiar.copiarAlPortapapeles(titulo);
 						
-						robot.delay(50);
+						robot.delay(150);
 						
 						robot.keyPress(KeyEvent.VK_CONTROL);
 						robot.keyPress(KeyEvent.VK_V);
