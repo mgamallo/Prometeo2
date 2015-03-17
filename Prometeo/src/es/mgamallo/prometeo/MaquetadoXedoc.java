@@ -12,6 +12,8 @@ public class MaquetadoXedoc {
 	String colorFondo = "#10324c";
 	String colorFondoInterno = "#9db7cc";
 	
+	
+	
 	public MaquetadoXedoc(ActiveXComponent xedocDocumento) {
 		// TODO Auto-generated constructor stub
 						
@@ -99,6 +101,11 @@ public class MaquetadoXedoc {
 		//	Columna Derecha
 		//////////////////////////////////////////////
 		
+		Dispatch divOcultarAsociados = Dispatch.call(documento,"getElementById","divOcultarAsociados").getDispatch();
+		Dispatch estiloDivOcultarAsociados = Dispatch.get(divOcultarAsociados,"style").getDispatch();
+		Dispatch.put(estiloDivOcultarAsociados, "display","none");	
+		
+		
 		Dispatch columnaD = Dispatch.call(documento,"getElementById","columnaDerechaEdicion").getDispatch();
 		Dispatch estiloColumnaD = Dispatch.get(columnaD,"style").getDispatch();
 		Dispatch.put(estiloColumnaD, "width","1000px");	
@@ -110,32 +117,41 @@ public class MaquetadoXedoc {
 		Dispatch.put(estiloTablaAtributos, "border","none");	
 		Dispatch.put(estiloTablaAtributos, "background",colorFondoInterno);
 		Dispatch.put(estiloTablaAtributos, "color","#000000");
-		Dispatch.put(estiloTablaAtributos, "minWidth","450px");
-		Dispatch.put(estiloTablaAtributos, "width","500px");
+		Dispatch.put(estiloTablaAtributos, "minWidth","550px");
+		Dispatch.put(estiloTablaAtributos, "width","560px");
 		
 		Dispatch edicionForm = Dispatch.call(documento,"getElementById","edicionForm").getDispatch();
 		Dispatch estiloEdicionForm = Dispatch.get(edicionForm,"style").getDispatch();
 		Dispatch.put(estiloEdicionForm, "width","1000px");	
 
+		
+		String altoArbol = "1000px";
+		String altoTablaMeritos = "1050px";
+		if(Inicio.numeroPantallas == 1){
+			altoArbol = "830px";
+			altoTablaMeritos = "850px";
+		}
+				
 		Dispatch tablaElementosAjax = Dispatch.call(documento,"getElementById","tablaElementosAjax").getDispatch();
 		Dispatch estiloTablaElementosAjax = Dispatch.get(tablaElementosAjax,"style").getDispatch();
 		Dispatch.put(estiloTablaElementosAjax, "width","450px");	
-		Dispatch.put(estiloTablaElementosAjax, "height","1000px");
-		
+		Dispatch.put(estiloTablaElementosAjax, "height",altoArbol);
+	
 		Dispatch tablaMeritos = Dispatch.call(documento,"getElementById","tablaMeritos").getDispatch();
 		Dispatch estiloTablaMeritos = Dispatch.get(tablaMeritos,"style").getDispatch();
 		Dispatch.put(estiloTablaMeritos, "minWidth","400px");	
-		Dispatch.put(estiloTablaMeritos, "height","1000px");
+		Dispatch.put(estiloTablaMeritos, "height",altoTablaMeritos);
 		Dispatch.put(estiloTablaMeritos, "background",colorFondoInterno);	
 		Dispatch.put(estiloTablaMeritos, "border","none");
 		
 		Dispatch arbol = Dispatch.call(documento,"getElementById","arbol").getDispatch();
 		Dispatch estiloArbol = Dispatch.get(arbol,"style").getDispatch();
-		Dispatch.put(estiloArbol, "height","1000px");	
+		Dispatch.put(estiloArbol, "height",altoArbol);
+		Dispatch.put(estiloArbol, "background",colorFondoInterno);	
 		
 		Dispatch tablaAtributosAjax = Dispatch.call(documento,"getElementById","tablaAtributosAjax").getDispatch();
 		Dispatch estiloTablaAtributosAjax = Dispatch.get(tablaAtributosAjax,"style").getDispatch();
-		Dispatch.put(estiloTablaAtributosAjax, "minWidth","450px");	
+		Dispatch.put(estiloTablaAtributosAjax, "minWidth","500px");	
 		Dispatch.put(estiloTablaAtributosAjax, "marginLeft","470px");
 		Dispatch.put(estiloTablaAtributosAjax, "marginTop","-970px");
 		
@@ -145,8 +161,8 @@ public class MaquetadoXedoc {
 		
 		Dispatch tablaDocumento = Dispatch.call(documento,"getElementById","tablaDocumento").getDispatch();
 		Dispatch estiloTablaDocumento = Dispatch.get(tablaDocumento,"style").getDispatch();
-		Dispatch.put(estiloTablaDocumento, "minWidth","450px");	
-		Dispatch.put(estiloTablaDocumento, "width","500px");
+		Dispatch.put(estiloTablaDocumento, "minWidth","560px");	
+		Dispatch.put(estiloTablaDocumento, "width","560px");
 		Dispatch.put(estiloTablaDocumento, "background",colorFondoInterno);	
 		Dispatch.put(estiloTablaDocumento, "border","none");
 		
@@ -160,8 +176,8 @@ public class MaquetadoXedoc {
 
 		Dispatch loadContexto = Dispatch.call(documento,"getElementById","loadContexto").getDispatch();
 		Dispatch estiloLoadContexto = Dispatch.get(loadContexto,"style").getDispatch();
-		Dispatch.put(estiloLoadContexto, "width","600px");
-		Dispatch.put(estiloLoadContexto, "marginLeft","-800px");
+		Dispatch.put(estiloLoadContexto, "width","800px");
+		Dispatch.put(estiloLoadContexto, "marginLeft","-700px");
 		Dispatch.put(estiloLoadContexto, "color","yellow");
 		Dispatch.put(estiloLoadContexto, "fontSize","25px");
 		
@@ -169,7 +185,12 @@ public class MaquetadoXedoc {
 		String cadenaUsuario = variantUsuario.getString();
 		System.out.println(cadenaUsuario);
 		
-		cadenaUsuario = cadenaUsuario.substring(0, cadenaUsuario.indexOf("("));
+		
+		int index = cadenaUsuario.indexOf("(");
+		if(index != -1){
+			cadenaUsuario = cadenaUsuario.substring(0, cadenaUsuario.indexOf("("));
+		}
+
 		Dispatch.put(loadContexto,"innerHTML",cadenaUsuario);
 		
 		Dispatch comprimirA = Dispatch.call(documento,"getElementById","selectDisplayButtonsTree").getDispatch();
@@ -186,11 +207,11 @@ public class MaquetadoXedoc {
 		//  Ocultar elementos
 		/////////////////////////////////////////////////////////
 				
-		Variant titulosSeccion = Dispatch.call(documento,"getElementsByTagName","div");
+	/*	Variant titulosSeccion = Dispatch.call(documento,"getElementsByTagName","div");
 		Variant divs[] = titulosSeccion.getVariantArray();
 		System.out.println(divs.length);
+	*/	
 		
-		/*
 		Dispatch titulosSeccion = Dispatch.call(documento,"getElementsByTagName","div").getDispatch();
 		Variant numeroTitulosSeccion = Dispatch.get(titulosSeccion, "length");
 		int numTitulosSeccion = numeroTitulosSeccion.getInt();
@@ -198,17 +219,93 @@ public class MaquetadoXedoc {
 		
 		int contador = 0;
 		
-		for(int i=50;i<numTitulosSeccion;i++){
+		for(int i=0;i<numTitulosSeccion;i++){
 			System.out.println("Div numero: " + i );
-			Dispatch tituloSeccion = Dispatch.get(titulosSeccion, i).getDispatch();
+			Dispatch tituloSeccion = Dispatch.get(titulosSeccion, String.valueOf(i)).getDispatch();
 			Variant valorId = Dispatch.call(tituloSeccion, "getAttribute","id");
-			if(valorId.equals("tituloSeccion")){
+			System.out.println(valorId.toString());
+			if(valorId.toString().equals("nuevaSeccionEdicion")){
 				if(contador == 4 || contador == 3 || contador == 2){
 					Dispatch estiloTituloSeccion = Dispatch.call(tituloSeccion, "style").getDispatch();
 					Dispatch.put(estiloTituloSeccion, "display","none");
 				}
+				contador++;
+			}
+			if(valorId.toString().equals("colPropDinamicaAncha")){
+				Dispatch estiloTituloSeccion = Dispatch.call(tituloSeccion, "style").getDispatch();
+				Dispatch.put(estiloTituloSeccion, "width","300px");
+			//	Dispatch.put(estiloTituloSeccion, "textAlign","left");
 			}
 		}
+		
+		
+		//  Cajitas coloreadas
+		/////////////////////////////////////////////////////////////////
+		
+		/*
+		Dispatch claseCustomCombobox = Dispatch.call(documento, "querySelectorAll","custom-combobox").getDispatch();
+		Dispatch customComboboxTipoDoc = Dispatch.get(claseCustomCombobox,"1").getDispatch();
+		Dispatch customComboboxServicio = Dispatch.get(claseCustomCombobox,"2").getDispatch();
+		Dispatch estiloCustomComboboxTipoDoc = Dispatch.get(customComboboxTipoDoc,"style").getDispatch();
+		Dispatch estiloCustomComboboxServicio = Dispatch.get(customComboboxServicio,"style").getDispatch();
+		Dispatch.put(estiloCustomComboboxTipoDoc, "width","300px");
+		Dispatch.put(estiloCustomComboboxServicio, "width","300px");
+		Dispatch.put(estiloCustomComboboxTipoDoc, "backgroundColor","RGB(253,247,133)");
+		Dispatch.put(estiloCustomComboboxServicio, "backgroundColor","RGB(253,247,133)");
 		*/
+		
+		//	Mover nodo de aviso de error
+		
+		/*
+		Dispatch nodoError = Dispatch.call(documento,"getElementById","edicionErrorMessage").getDispatch();
+		Dispatch estiloNodoError = Dispatch.call(nodoError, "style").getDispatch();
+		Dispatch.put(estiloNodoError,"display","block");
+		*/
+		//	Dispatch.put(tablaAtributosAjax, "appendChild",nodoError);
+		
+		//  NHC
+		//////////////////////////////////////////////////////////////////
+		
+		Dispatch labelAtributo = Dispatch.call(documento,"getElementById","labelAtributo").getDispatch();
+		Dispatch estiloLabelAtributo = Dispatch.get(labelAtributo,"style").getDispatch();
+		Dispatch.put(estiloLabelAtributo, "width","560px");	
+		Dispatch.put(estiloLabelAtributo, "color","green");	
+		Dispatch.put(estiloLabelAtributo, "paddingLeft","10px");
+		
+		XedocIndividualJacob xedoc = new XedocIndividualJacob(Dispatch.get(labelAtributo,"innerHTML").getString());
+	//	xedoc.imprimeDatos();
+		
+		seleccionarServicio("CARM",22);
+		putNHC(xedoc.nhc);
+	}
+	
+	
+	public void seleccionarServicio(String servicio, int index){
+		Dispatch selectServicio = Dispatch.call(documento, "getElementById","{hc}servicioEspecialidad-{hc}docExt").getDispatch();
+		Dispatch opciones = Dispatch.call(selectServicio, "options").getDispatch();
+		Dispatch opcion = Dispatch.get(opciones,String.valueOf(index)).getDispatch();
+		Dispatch.put(opcion,"selected","true");
+	}
+	
+	
+	public void putNHC(String nhc){
+		Dispatch anclas = Dispatch.call(documento,"getElementsByTagName","a").getDispatch();
+		Variant numeroAnclas = Dispatch.get(anclas, "length");
+		int numAnclas = numeroAnclas.getInt();
+		System.out.println(numAnclas); 
+		
+		for(int i=0;i<numAnclas;i++){
+			System.out.println("Ancla numero: " + i );
+			Dispatch tituloAncla = Dispatch.get(anclas, String.valueOf(i)).getDispatch();
+			Variant valorTitle = Dispatch.call(tituloAncla, "getAttribute","title");
+			System.out.println(valorTitle.toString());
+			if(valorTitle.toString().equals("Inicio")){
+					System.out.println("Encontrada ancla inicio");
+					Dispatch.put(tituloAncla, "innerHTML",nhc);
+					break;
+
+			}
+	
+		}
 	}
 }
