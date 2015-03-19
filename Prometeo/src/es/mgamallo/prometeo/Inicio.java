@@ -60,6 +60,7 @@ public class Inicio {
 	static public ArrayList<Norma> listaNormasIanus = new ArrayList<Norma>();
 	static public String[] listaServicios;
 	
+	static ArrayList<ExcepcionesServicio> tablaExcepcionesXedoc = new ArrayList<ExcepcionesServicio>();
 	
 	//	Ruta completa de las carpetas seleccionadas
 	static ArrayList<String> carpetasSeleccionadas = new ArrayList<String>();

@@ -210,6 +210,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			}
 		}
 		
+		/*
 		for(int i=0;i<tablaExcepciones.size();i++){
 			
 			System.out.println("Excepciones del servicio " + tablaExcepciones.get(i).servicio);
@@ -219,7 +220,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			}
 			System.out.println();
 		}
-		
+		*/
 	}
 
 	

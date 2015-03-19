@@ -8,10 +8,18 @@ public class MaquetadoXedoc {
 
 	public ActiveXComponent xedocDocumento;
 	public static Dispatch documento;
+	public static Dispatch fecha;
 	
 	String colorFondo = "#10324c";
 	String colorFondoInterno = "#9db7cc";
+	String colorFondoCajas = "RGB(253,247,133)";
 	
+	String colorTitulosBarraNav = "#bbff00";
+	
+	String cadenaDocumentoPaciente = "";
+	
+	String claseInputs = "custom-combobox-input ui-widget "
+			+ "ui-widget-content ui-state-default ui-corner-left ui-autocomplete-input";
 	
 	
 	public MaquetadoXedoc(ActiveXComponent xedocDocumento) {
@@ -63,6 +71,9 @@ public class MaquetadoXedoc {
 		Dispatch estiloFondoPagina = Dispatch.get(fondoPagina,"style").getDispatch();
 		Dispatch.put(estiloFondoPagina, "background",colorFondo);	
 		
+	//	Dispatch fondoMain = Dispatch.call(documento,"getElementById","content").getDispatch();
+	//	Dispatch estiloFondoMain = Dispatch.get(fondoMain,"style").getDispatch();
+	//	Dispatch.put(estiloFondoMain, "background",colorFondo);	
 		
 		////////////////////////////////////////////////////////////////////
 		
@@ -191,6 +202,8 @@ public class MaquetadoXedoc {
 			cadenaUsuario = cadenaUsuario.substring(0, cadenaUsuario.indexOf("("));
 		}
 
+		cadenaDocumentoPaciente = cadenaUsuario;
+		
 		Dispatch.put(loadContexto,"innerHTML",cadenaUsuario);
 		
 		Dispatch comprimirA = Dispatch.call(documento,"getElementById","selectDisplayButtonsTree").getDispatch();
@@ -219,40 +232,44 @@ public class MaquetadoXedoc {
 		
 		int contador = 0;
 		
-		for(int i=0;i<numTitulosSeccion;i++){
-			System.out.println("Div numero: " + i );
-			Dispatch tituloSeccion = Dispatch.get(titulosSeccion, String.valueOf(i)).getDispatch();
-			Variant valorId = Dispatch.call(tituloSeccion, "getAttribute","id");
-			System.out.println(valorId.toString());
-			if(valorId.toString().equals("nuevaSeccionEdicion")){
-				if(contador == 4 || contador == 3 || contador == 2){
-					Dispatch estiloTituloSeccion = Dispatch.call(tituloSeccion, "style").getDispatch();
-					Dispatch.put(estiloTituloSeccion, "display","none");
+		/*
+		 * 	Div elegidos a priori... 
+		 * 		colPropDinamicaAncha	33	36	40	42 64
+		 * 
+		 * 		nuevaSeccionEdicion		47	54	61	
+		 * 
+		 * */
+		
+		
+		for(int i=30;i<66;i++){
+			// System.out.println("Div numero: " + i );
+			
+	//		if(i == 33 || i == 36 || i == 40 || i == 42 || i == 64 || i ==47 || i ==54 || i ==61){
+				
+				Dispatch tituloSeccion = Dispatch.get(titulosSeccion, String.valueOf(i)).getDispatch();
+				Variant valorId = Dispatch.call(tituloSeccion, "getAttribute","id");
+				// System.out.println(valorId.toString());
+				if(valorId.toString().equals("nuevaSeccionEdicion")){
+					if(contador == 4 || contador == 3 || contador == 2){
+						System.out.println("Div elegido, nuevaSeccionEdicion, numero... " + i);
+						Dispatch estiloTituloSeccion = Dispatch.call(tituloSeccion, "style").getDispatch();
+						Dispatch.put(estiloTituloSeccion, "display","none");
+					}
+					contador++;
 				}
-				contador++;
-			}
-			if(valorId.toString().equals("colPropDinamicaAncha")){
-				Dispatch estiloTituloSeccion = Dispatch.call(tituloSeccion, "style").getDispatch();
-				Dispatch.put(estiloTituloSeccion, "width","300px");
-			//	Dispatch.put(estiloTituloSeccion, "textAlign","left");
-			}
+				if(valorId.toString().equals("colPropDinamicaAncha")){
+					
+					System.out.println("Div elegido, colPropDinamicaAncha, numero... " + i);
+					Dispatch estiloTituloSeccion = Dispatch.call(tituloSeccion, "style").getDispatch();
+					Dispatch.put(estiloTituloSeccion, "width","300px");
+					
+				//	Dispatch.put(estiloTituloSeccion, "textAlign","left");
+				}
+	//		}
+
 		}
 		
 		
-		//  Cajitas coloreadas
-		/////////////////////////////////////////////////////////////////
-		
-		/*
-		Dispatch claseCustomCombobox = Dispatch.call(documento, "querySelectorAll","custom-combobox").getDispatch();
-		Dispatch customComboboxTipoDoc = Dispatch.get(claseCustomCombobox,"1").getDispatch();
-		Dispatch customComboboxServicio = Dispatch.get(claseCustomCombobox,"2").getDispatch();
-		Dispatch estiloCustomComboboxTipoDoc = Dispatch.get(customComboboxTipoDoc,"style").getDispatch();
-		Dispatch estiloCustomComboboxServicio = Dispatch.get(customComboboxServicio,"style").getDispatch();
-		Dispatch.put(estiloCustomComboboxTipoDoc, "width","300px");
-		Dispatch.put(estiloCustomComboboxServicio, "width","300px");
-		Dispatch.put(estiloCustomComboboxTipoDoc, "backgroundColor","RGB(253,247,133)");
-		Dispatch.put(estiloCustomComboboxServicio, "backgroundColor","RGB(253,247,133)");
-		*/
 		
 		//	Mover nodo de aviso de error
 		
@@ -272,11 +289,23 @@ public class MaquetadoXedoc {
 		Dispatch.put(estiloLabelAtributo, "color","green");	
 		Dispatch.put(estiloLabelAtributo, "paddingLeft","10px");
 		
-		XedocIndividualJacob xedoc = new XedocIndividualJacob(Dispatch.get(labelAtributo,"innerHTML").getString());
+		XedocIndividualJacob xedoc = new XedocIndividualJacob(Dispatch.get(labelAtributo,"innerHTML").getString(),documento,xedocDocumento);
 	//	xedoc.imprimeDatos();
 		
 		seleccionarServicio("CARM",22);
-		putNHC(xedoc.nhc);
+		putNHC(xedoc);
+		colorea();
+		
+		
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		xedoc.buscaNodo();
+		xedoc.putFecha(fecha);
 	}
 	
 	
@@ -287,25 +316,114 @@ public class MaquetadoXedoc {
 		Dispatch.put(opcion,"selected","true");
 	}
 	
+	public void seleccionarTipoYtitulo(String tipo, String titulo){
+		Dispatch selectTipo = Dispatch.call(documento, "getElementById","{hc}tipoSubtipoRef-{hc}docExt").getDispatch();
+		Dispatch opciones = Dispatch.call(selectTipo, "options").getDispatch();
+		
+		// Inacabado
+		
+		// Dispatch opcion = Dispatch.get(opciones,String.valueOf(index)).getDispatch();
+		// Dispatch.put(opcion,"selected","true");
+		
+		
+	}
+	//	Coloca los datos del documento en el nav original
 	
-	public void putNHC(String nhc){
+	public void putNHC(XedocIndividualJacob xedoc){
+		
+		// Las anclas tienen que ser:  135, 136, 137
+		
 		Dispatch anclas = Dispatch.call(documento,"getElementsByTagName","a").getDispatch();
 		Variant numeroAnclas = Dispatch.get(anclas, "length");
 		int numAnclas = numeroAnclas.getInt();
 		System.out.println(numAnclas); 
 		
-		for(int i=0;i<numAnclas;i++){
-			System.out.println("Ancla numero: " + i );
+		
+		
+		for(int i=134;i<140;i++){
+
 			Dispatch tituloAncla = Dispatch.get(anclas, String.valueOf(i)).getDispatch();
 			Variant valorTitle = Dispatch.call(tituloAncla, "getAttribute","title");
 			System.out.println(valorTitle.toString());
 			if(valorTitle.toString().equals("Inicio")){
-					System.out.println("Encontrada ancla inicio");
-					Dispatch.put(tituloAncla, "innerHTML",nhc);
-					break;
-
+				//	System.out.println("Encontrada ancla inicio");
+				//	System.out.println("Ancla numero: " + i + " encontrada.");
+					Dispatch.put(tituloAncla, "innerHTML",xedoc.nhc);
+					Dispatch estiloTituloAnclaNhc = Dispatch.get(tituloAncla,"style").getDispatch();
+					Dispatch.put(estiloTituloAnclaNhc, "fontSize","30px");
+					Dispatch.put(estiloTituloAnclaNhc, "marginBottom","10px");
+					
+					String color = "yellow";
+					if(cadenaDocumentoPaciente.contains(xedoc.nhc)){
+						color = "red";
+					}
+					
+					Dispatch.put(estiloTituloAnclaNhc, "color",color);
+			}
+			else if(valorTitle.toString().equals("Documentos Pendentes")){
+				// System.out.println("Encontrada ancla inicio");
+				// System.out.println("Ancla numero: " + i + " encontrada.");
+				Dispatch.put(tituloAncla, "innerHTML",xedoc.servicio);
+				Dispatch estiloTituloAnclaServicio = Dispatch.get(tituloAncla,"style").getDispatch();
+				Dispatch.put(estiloTituloAnclaServicio, "fontSize","30px");
+				Dispatch.put(estiloTituloAnclaServicio, "color","red");
+			}
+			if(valorTitle.toString().equals("Búsqueda Documentos")){
+			//	System.out.println("Encontrada ancla inicio");
+			//	System.out.println("Ancla numero: " + i + " encontrada.");
+				Dispatch.put(tituloAncla, "innerHTML",xedoc.tipoDocumento.toUpperCase());
+				Dispatch estiloTituloAnclaTipo = Dispatch.get(tituloAncla,"style").getDispatch();
+				Dispatch.put(estiloTituloAnclaTipo, "fontSize","30px");
+				Dispatch.put(estiloTituloAnclaTipo, "color","red");
+				break;
 			}
 	
 		}
 	}
+	
+	
+	public void colorea(){
+		Dispatch inputs = Dispatch.call(documento,"getElementsByTagName","input").getDispatch();
+		Variant numeroInputs = Dispatch.get(inputs, "length");
+		int numInputs = numeroInputs.getInt();
+		System.out.println(numInputs); 
+		
+		
+		/*
+		 * 	inputs 
+		 * 
+		 * */
+		
+		int numInput[] = { 133, 136};
+		
+		for(int i=0;i<numInput.length;i++){
+
+			Dispatch input = Dispatch.call(inputs, String.valueOf(numInput[i])).getDispatch();
+
+			Variant nombreClase = Dispatch.call(input, "getAttribute","autocomplete");
+			System.out.println(nombreClase.toString());
+
+			if(nombreClase.toString().equals("off")){
+				System.out.println("Encontrado input");
+				System.out.println("Input numero: " + i + " encontrado.");
+				
+				String id = "cajaColoreada" + String.valueOf(i);
+
+				Dispatch.call(input, "setAttribute","id",id);
+
+				Dispatch estiloInput = Dispatch.get(input,"style").getDispatch();
+				Dispatch.put(estiloInput, "backgroundColor",colorFondoCajas);
+			}	
+
+
+		}
+
+		fecha = Dispatch.call(documento,"getElementById","{hc}dataVersion-{hc}docExt").getDispatch();
+		Dispatch estiloFecha = Dispatch.get(fecha,"style").getDispatch();
+		Dispatch.put(estiloFecha, "backgroundColor",colorFondoCajas);
+	}
 }
+
+
+
+

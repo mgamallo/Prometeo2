@@ -2,6 +2,9 @@ package es.mgamallo.prometeo;
 
 import java.util.Iterator;
 
+import com.jacob.activeX.ActiveXComponent;
+import com.jacob.com.Dispatch;
+
 public class XedocIndividualJacob {
 
 	public String nhc = "";
@@ -13,9 +16,16 @@ public class XedocIndividualJacob {
 	public String carpeta = "";
 	public String nombreFichero = "";
 	
-	public XedocIndividualJacob(String nombreFichero){
+	public String tipoSubida = "";       // x q i f
+	
+	public Dispatch documento;
+	public ActiveXComponent xedocDocumento;
+	
+	public XedocIndividualJacob(String nombreFichero, Dispatch documento, ActiveXComponent xedocDocumento){
 		
 		this.nombreFichero = nombreFichero;
+		this.documento = documento;
+		this.xedocDocumento = xedocDocumento;
 		
 		String campos[] = nombreFichero.split(" @");
 		if(campos.length == 4){
@@ -39,8 +49,12 @@ public class XedocIndividualJacob {
 				tipoDocumento = campos[3];
 			}
 		}
+		
+		tipoSubida = detectaTipoNodo(servicio, campos[3]);
+		System.out.println("El tipo de subida es... " + tipoSubida);
 	}
-	
+
+	/*
 	public String obtieneCodigoJavascript(){
 		
 		String cadena = insertaIds();
@@ -54,6 +68,8 @@ public class XedocIndividualJacob {
 		return cadena;
 	}
 	
+	*/
+	
 	private String insertaIds(){
 		String cadena = ""
 				+ "var buscando = document.querySelectorAll('.custom-combobox-input');"
@@ -64,13 +80,12 @@ public class XedocIndividualJacob {
 		return cadena;
 	}
 	
-	private String buscaNodo(){
+	public void buscaNodo(){
 		
 		String id = "";
-		String cadena = "var fecha;";
+	
 		if(servicio.equals("HOSP")){
 			id = "HOS";
-			cadena = id;
 		}
 		else if(servicio.equals("URG")){
 			id = "URG";
@@ -82,56 +97,89 @@ public class XedocIndividualJacob {
 			id = servicio;
 		}
 
+		if(tipoSubida.toLowerCase().equals("q")){
+			id = "QUI";
+		}
+		
 		if(id.equals("HOS") || id.equals("URG") || id.equals("QUI")){
+			String nombreId = id + "-noSeleccionable-rama";
+			Dispatch nodo = Dispatch.call(documento, "getElementById",nombreId).getDispatch();
+			Dispatch nodoLis = Dispatch.call(nodo, "getElementsByTagName","li").getDispatch();
+			System.out.println("Numero de uls...." + Dispatch.get(nodoLis,"length").toString());
+			Dispatch nodoLi = Dispatch.get(nodoLis, "0").getDispatch();
+			Dispatch nodoA = Dispatch.call(nodoLi, "getElementsByTagName","a").getDispatch();
+			System.out.println("Numero de as...." + Dispatch.get(nodoA,"length").toString());
+			
+			Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
+			Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
+	//		Dispatch.call(xedocDocumento, "navigate","javascript: var hola = document.getElementById('nodoSeleccionado');alert(hola.innerHTML);");
+			Dispatch.call(nodoAncla, "click");
+
+			
+			/*	
 			cadena = "var nodo = document.getElementById('" + id + "-noSeleccionable-rama');"
 					+ "var anclaNodo = nodo.getElementsByTagName('li')[0].getElementsByTagName('a')[0];"
 					+ "anclaNodo.setAttribute('id','nodoseleccionado');"
 					
 					// + "anclaNodo.click();"
 					+ "";
+			*/		
 			
 			if(id.equals("HOS") || id.equals("URG")){
+				
+				fecha = Dispatch.get(nodoAncla,"innerHTML").getString();
+				fecha = fecha.substring(fecha.length()-11);
+				/*
 				cadena += ""
 						+ "fecha = anclaNodo.innerHTML.slice(-11);"
 						+ "";
+				*/
 			}
 			else{
+				
+				fecha = Dispatch.get(nodoAncla,"innerHTML").getString();
+				int index = fecha.lastIndexOf("/");
+				fecha = fecha.substring(index-5,index+5);
+				/*
 				cadena += ""
 						+ "var index = anclaNodo.innerHTML.lastIndexOf('/');"
 						+ "fecha = anclaNodo.innerHTML.slice(index-5,index+5);"
 						+ "";
+				*/
 			}
 			
-			cadena += "alert(fecha);";
+			System.out.println(fecha);
+			
 		}
 
 		else{
 			// Es una consulta y hay que saber primero si va a ir al nodo general o no
 			// Programar
-			
+		/*	
 			cadena = "var nodo = document.getElementById('360340-1-2-" + id + "');"
 					+ "var anclaNodo = nodo.getElementsByTagName('a')[0];"
 					+ "anclaNodo.setAttribute('id','nodoseleccionado');"
 					// + "anclaNodo.click();"
 					+ "";
+					*/
 		}
 		
 		// nombreServicio = (String) InicioXedoc.nombreServicios.get(servicio);
-		
-		
-		return cadena;
+
 	}
 	
 	
-	private String putFecha(){
+	public void putFecha(Dispatch fechaDispatch){
 		
+		Dispatch.put(fechaDispatch,"value",fecha);
+		
+		/*
 		String cadena = ""
 				+ "var cajaFecha = document.getElementById('{hc}dataVersion-{hc}docExt');"
 				+ "cajaFecha.value = fecha;"
 		//		+ "alert(anclaNodo.id);"
 				+ "anclaNodo.click();";
-		
-		return cadena;
+		 */
 	}
 	
 	public String putServicio(String servicioFinal){
@@ -187,8 +235,33 @@ public class XedocIndividualJacob {
 		
 	}
 	
-	public static void main(String args[]){
-		XedocIndividualJacob xedoc = new XedocIndividualJacob("025_D_20150227_171616 $430 @118194 @HOSP @Ordes (médicas) r_f.pdf");
-		xedoc.imprimeDatos();
+	private static String detectaTipoNodo(String servicio, String nombreDocumento){
+		
+		String tipoNodo = "x";    // Nodo padre, sin excepciones
+		
+		/*
+		for(int i=0;i<Inicio.tablaExcepcionesXedoc.size();i++){
+			System.out.println(Inicio.tablaExcepcionesXedoc.get(i).servicio);
+			for(int j=0;j<Inicio.tablaExcepcionesXedoc.get(i).excepciones.size();j++){
+				System.out.println(Inicio.tablaExcepcionesXedoc.get(i).excepciones.get(j).nombreDocumento + 
+						" Tipo de excepción: " + Inicio.tablaExcepcionesXedoc.get(i).excepciones.get(j).tipoExcepcion);
+			}
+		}
+		*/
+		
+		
+		System.out.println("Tabla de excepciones .... ");
+		for(int i=0;i<Inicio.tablaExcepcionesXedoc.size();i++){
+			System.out.println("Servicio: " + InicioIanus.tablaExcepciones);
+			if(servicio.equals(Inicio.tablaExcepcionesXedoc.get(i).servicio)){
+				for(int j=0;j<Inicio.tablaExcepcionesXedoc.get(i).excepciones.size();j++){
+					if(nombreDocumento.equals(Inicio.tablaExcepcionesXedoc.get(i).excepciones.get(j).nombreDocumento)){
+						tipoNodo = Inicio.tablaExcepcionesXedoc.get(i).excepciones.get(j).tipoExcepcion;
+					}
+				}
+			}
+		}
+		return tipoNodo;
 	}
+
 }
