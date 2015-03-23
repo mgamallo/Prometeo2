@@ -12,8 +12,8 @@ public class Retardos {
 	public static int S_lento = 200;
 	public static int XS_lento = 400;
 	
-	
-	static public int retardoDibujarVentana = 100;
+
+	static public int retardoDibujarVentana = 1400;
 	
 	
 	static public int retardoTrasPulsarExaminar = 1100;

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,12 +41,17 @@ public class VentanaRetardos extends JFrame{
 	JLabel labelTrasPegarTipo = new JLabel("Retardo tras pegar Tipo    " + String.valueOf(Retardos.retardoTrasPegarTipo));	
 	
 	JButton botonResetear = new JButton("Resetear retardos");
+	JButton modoRapido = new JButton("Rapido");
+	JButton modoLento = new JButton("Lento");
+	
 	int retardoInicialCargarPaciente = Retardos.retardoCargarPaciente;
+	int retardoInicialDibujarVentana = Retardos.retardoDibujarVentana;
 	int retardoInicialExaminar = Retardos.retardoTrasPulsarExaminar;
 	int retardoInicialTrasPegarRuta = Retardos.retardoTrasPegarRuta;
 	int retardoInicialTrasPegarTipo = Retardos.retardoTrasPegarTipo;
 	
 	JSlider sliderCargarPaciente = new JSlider(JSlider.HORIZONTAL,5000,12500,Retardos.retardoCargarPaciente);
+	JSlider sliderDibujarVentana = new JSlider(JSlider.HORIZONTAL,500,2000,Retardos.retardoDibujarVentana);
 	JSlider sliderIntroNHC = new JSlider(JSlider.HORIZONTAL,0,1000,Retardos.retardoIntroducirNHC);
 //	JSlider sliderAsociar = new JSlider(JSlider.HORIZONTAL,0,3000,InicioIanus.retardoAsociar);
 //	JSlider sliderDibujarVentana = new JSlider(JSlider.HORIZONTAL,0,3000,InicioIanus.retardoAsociar);
@@ -56,18 +62,23 @@ public class VentanaRetardos extends JFrame{
 //	JSlider sliderAceptar = new JSlider(JSlider.HORIZONTAL,0,1000,InicioIanus.retardoAceptar);
 
 	JPanel panel = new JPanel();
+	JPanel panelSur = new JPanel();
+
+	private JLabel labelDibujarVentana = new JLabel("Retardo esperar a que se dibuje la ventana de asociar   " + String.valueOf(Retardos.retardoDibujarVentana));
 	
 	public VentanaRetardos() {
 		// TODO Auto-generated constructor stub
 		
 		setTitle("Temporizadores");
-		setSize(600,350);
+		setSize(650,450);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
 		
 		labelCargarPaciente.setFont(new Font("Arial", Font.BOLD, 16));
 		labelCargarPaciente.setForeground(Color.RED);
+		labelDibujarVentana.setFont(new Font("Arial", Font.BOLD, 16));
+		labelDibujarVentana.setForeground(Color.RED);
 		labelExplorar.setFont(new Font("Arial", Font.BOLD, 16));
 		labelExplorar.setForeground(Color.RED);
 		labelTrasPegarRuta.setFont(new Font("Arial", Font.BOLD, 16));
@@ -83,8 +94,8 @@ public class VentanaRetardos extends JFrame{
 //		panel.add(labelVentana);
 		panel.add(labelCargarPaciente);
 	    panel.add(sliderCargarPaciente);
-//		panel.add(sliderDibujarVentana);
-//		panel.add(labelVacio1);
+		panel.add(labelDibujarVentana);
+		panel.add(sliderDibujarVentana);
 //		panel.add(labelAsociar);
 //		panel.add(sliderAsociar);
 //		panel.add(labelVacio2);
@@ -107,15 +118,30 @@ public class VentanaRetardos extends JFrame{
 		panelPrincipal.setLayout(new BorderLayout());
 		panelPrincipal.add(panel,BorderLayout.CENTER);
 		
-		panelPrincipal.add(botonResetear,BorderLayout.SOUTH);
+		panelSur.setLayout(new BorderLayout());
+		panelSur.add(modoRapido,BorderLayout.WEST);
+		panelSur.add(botonResetear,BorderLayout.CENTER);
+		panelSur.add(modoLento,BorderLayout.EAST);
+		
+		panelPrincipal.add(panelSur,BorderLayout.SOUTH);
 		
 		botonResetear.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				
 				Retardos.retardoCargarPaciente = retardoInicialCargarPaciente;
+				Retardos.retardoDibujarVentana = retardoInicialDibujarVentana;
 				Retardos.retardoTrasPulsarExaminar = retardoInicialExaminar;
+				Retardos.retardoTrasPegarRuta = retardoInicialTrasPegarRuta;
+				Retardos.retardoTrasPegarTipo = retardoInicialTrasPegarTipo;
+				
+				sliderCargarPaciente.setValue(retardoInicialCargarPaciente);
+				labelCargarPaciente.setText("Retardo para cargar paciente      " + String.valueOf(Retardos.retardoCargarPaciente));
+				
+				sliderDibujarVentana.setValue(Retardos.retardoDibujarVentana);
+				labelDibujarVentana.setText("Retardo esperar a que se dibuje la ventana de asociar      " + String.valueOf(Retardos.retardoDibujarVentana));
 				
 				sliderExplorar.setValue(retardoInicialExaminar);
 				labelExplorar.setText("Retardo para pulsar el botón examinar      " + String.valueOf(Retardos.retardoTrasPulsarExaminar));
@@ -127,12 +153,50 @@ public class VentanaRetardos extends JFrame{
 				labelTrasPegarTipo.setText("Retardo tras pegar tipo      " + String.valueOf(Retardos.retardoTrasPegarTipo));
 
 				
-				sliderCargarPaciente.setValue(retardoInicialCargarPaciente);
-				labelCargarPaciente.setText("Retardo para cargar paciente      " + String.valueOf(Retardos.retardoCargarPaciente));
+
 
 			}
 		});
 		
+		modoRapido.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Retardos.retardoDibujarVentana = 700;
+				Retardos.retardoTrasPulsarExaminar = 700;
+				Retardos.retardoTrasPegarRuta = 150;
+				
+				sliderDibujarVentana.setValue(Retardos.retardoDibujarVentana);
+				labelDibujarVentana.setText("Retardo esperar a que se dibuje la ventana de asociar      " + String.valueOf(Retardos.retardoDibujarVentana));
+
+				sliderExplorar.setValue(Retardos.retardoTrasPulsarExaminar);
+				labelExplorar.setText("Retardo para pulsar el botón examinar      " + String.valueOf(Retardos.retardoTrasPulsarExaminar));
+	
+				sliderTrasPegarRuta.setValue(Retardos.retardoTrasPegarRuta);
+				labelTrasPegarRuta.setText("Retardo tras pegar ruta      " + String.valueOf(Retardos.retardoTrasPegarRuta));
+
+			
+			}
+		});
+		
+		
+		modoLento.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Retardos.retardoTrasPulsarExaminar = 1500;
+				Retardos.retardoTrasPegarRuta = 500;
+				
+				sliderExplorar.setValue(Retardos.retardoTrasPulsarExaminar);
+				labelExplorar.setText("Retardo para pulsar el botón examinar      " + String.valueOf(Retardos.retardoTrasPulsarExaminar));
+	
+				sliderTrasPegarRuta.setValue(Retardos.retardoTrasPegarRuta);
+				labelTrasPegarRuta.setText("Retardo tras pegar ruta      " + String.valueOf(Retardos.retardoTrasPegarRuta));
+
+			}
+		});
 		
 //	    sliderAsociar.setMinorTickSpacing(10);
 //	    sliderAsociar.setMajorTickSpacing(500);
@@ -151,24 +215,25 @@ public class VentanaRetardos extends JFrame{
 		});
 */
 		
-/*
- 	    sliderDibujarVentana.setMinorTickSpacing(10);
+
+ 	    sliderDibujarVentana.setMinorTickSpacing(100);
 
 	    sliderDibujarVentana.setMajorTickSpacing(500);
-	    // sliderAsociar.setPaintLabels(true);
-	    // sliderAsociar.setPaintTicks(true);
+	    sliderDibujarVentana.setPaintLabels(true);
+	    sliderDibujarVentana.setForeground(Color.gray);
+	    sliderDibujarVentana.setPaintTicks(true);
 	    sliderDibujarVentana.setBackground(Color.white);
 	    
 	    sliderDibujarVentana.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				InicioIanus.retardoAbrirVentanaPropiaAsociar = (int) sliderDibujarVentana.getValue();
-				labelVentana.setText("RETARDO ESPERAR A QUE SE DIBUJE LA VENTANA DE ASOCIAR   " + String.valueOf(InicioIanus.retardoAbrirVentanaPropiaAsociar));
+				Retardos.retardoDibujarVentana = (int) sliderDibujarVentana.getValue();
+				labelDibujarVentana.setText("Retardo esperar a que se dibuje la ventana de asociar   " + String.valueOf(Retardos.retardoDibujarVentana));
 				//System.out.println(InicioIanus.retardoAsociar);
 			}
 		});
-*/	    
+	    
 	    
 	    
 	    sliderCargarPaciente.setMinorTickSpacing(500);

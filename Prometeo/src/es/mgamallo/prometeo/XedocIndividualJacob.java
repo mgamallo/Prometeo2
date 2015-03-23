@@ -4,11 +4,13 @@ import java.util.Iterator;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
+import com.jacob.com.Variant;
 
 public class XedocIndividualJacob {
 
 	public String nhc = "";
 	public String servicio = "";
+	private String aliasServicio = "";
 	private String nombreServicio = "";
 	public String tipoDocumento = "";
 	public String titulo = "";
@@ -54,31 +56,7 @@ public class XedocIndividualJacob {
 		System.out.println("El tipo de subida es... " + tipoSubida);
 	}
 
-	/*
-	public String obtieneCodigoJavascript(){
-		
-		String cadena = insertaIds();
-		
-		cadena += buscaNodo();
-		
-		cadena += putFecha();
 
-		// cadena += putServicio();
-		
-		return cadena;
-	}
-	
-	*/
-	
-	private String insertaIds(){
-		String cadena = ""
-				+ "var buscando = document.querySelectorAll('.custom-combobox-input');"
-				+ "buscando[1].setAttribute('id','tipoDocXedoc');"
-				+ "buscando[2].setAttribute('id','servicioXedoc');"
-				+ "";
-		
-		return cadena;
-	}
 	
 	public void buscaNodo(){
 		
@@ -127,13 +105,27 @@ public class XedocIndividualJacob {
 			
 			if(id.equals("HOS") || id.equals("URG")){
 				
-				fecha = Dispatch.get(nodoAncla,"innerHTML").getString();
-				fecha = fecha.substring(fecha.length()-11);
+				String cadena = Dispatch.get(nodoAncla,"innerHTML").getString();
+				System.out.println(cadena);
+				fecha = cadena.substring(cadena.length()-11);
 				/*
 				cadena += ""
 						+ "fecha = anclaNodo.innerHTML.slice(-11);"
 						+ "";
 				*/
+				
+				int index = cadena.lastIndexOf(">") + 1;
+				
+				if(id.equals("HOS")){
+					aliasServicio = cadena.substring(index+4, index + 8);
+					
+				}
+				else{
+					aliasServicio = cadena.substring(index,index + 4);
+				}
+				
+				System.out.println(aliasServicio);
+				
 			}
 			else{
 				
@@ -173,46 +165,26 @@ public class XedocIndividualJacob {
 		
 		Dispatch.put(fechaDispatch,"value",fecha);
 		
-		/*
-		String cadena = ""
-				+ "var cajaFecha = document.getElementById('{hc}dataVersion-{hc}docExt');"
-				+ "cajaFecha.value = fecha;"
-		//		+ "alert(anclaNodo.id);"
-				+ "anclaNodo.click();";
-		 */
 	}
 	
-	public String putServicio(String servicioFinal){
+	public void seleccionarServicio(){
+		Dispatch caja = Dispatch.call(documento, "getElementById","cajaColoreada2").getDispatch();
+		String nombreCompleto = aliasServicio + "-" + (String) InicioXedoc.nombreServicios.get(aliasServicio);
+		Dispatch.put(caja,"value",nombreCompleto);
+		
+		Dispatch selectServicio = Dispatch.call(documento, "getElementById","{hc}servicioEspecialidad-{hc}docExt").getDispatch();
+		Dispatch opciones = Dispatch.call(selectServicio, "options").getDispatch();
+		
+		Variant variant = Dispatch.get(opciones, "innerHTML");
+		
+		System.out.println(variant.toString());
 		
 		/*
-		String cadena = ""
-				+ "var mapServicio = {};"
-				+ "";
-		
-		for(Iterator it = InicioXedoc.nombreServicios.keySet().iterator();it.hasNext();){
-			String clave = (String) it.next();
-			String valor = (String) InicioXedoc.nombreServicios.get(clave);
-			cadena += "mapServicio." + clave + "= '" + valor + "';";
-		}
-		
-		cadena += "alert(mapServicio['CARC']);";
+		Dispatch opcion = Dispatch.get(opciones,String.valueOf(index)).getDispatch();
+		Dispatch.put(opcion,"selected","true");
 		*/
-		
-		String nombreCompleto = servicioFinal + "-" + InicioXedoc.nombreServicios.get(servicioFinal);
-		
-		System.out.println(nombreCompleto);
-		
-		String cadena = ""
-				
-				+ "buscando[2].focus();"
-				+ "buscando[2].value = '" + nombreCompleto + "';"
-				+ "buscando[1].focus();"
-				+ "buscando[1].value = 'Nota ingreso';"				
-				+ "alert('" + nombreCompleto + "');"
-				+ "";
-		
-		return cadena;
 	}
+	
 	
 	private String ocultaNodos(){
 		String cadena = ""

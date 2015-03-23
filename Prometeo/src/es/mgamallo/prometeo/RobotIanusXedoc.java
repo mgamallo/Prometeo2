@@ -74,7 +74,7 @@ public class RobotIanusXedoc {
 					// 01 Pulsa boton examinar
 
 					if(!InicioIanus.versionar){
-						robot.delay(100 + Retardos.retardoDibujarVentana);
+						robot.delay(100);
 					}
 
 					robot.mouseMove(coordExaminar.x, coordExaminar.y);

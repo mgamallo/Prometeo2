@@ -473,7 +473,7 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 						
 						if(true){
 							try {
-								Thread.sleep(1400);
+								Thread.sleep(Retardos.retardoDibujarVentana);
 							} catch (InterruptedException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();

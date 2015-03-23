@@ -76,10 +76,23 @@ public class MaquetadoXedoc {
 	//	Dispatch.put(estiloFondoMain, "background",colorFondo);	
 		
 		////////////////////////////////////////////////////////////////////
+	
 		
 		Dispatch entornoLogin = Dispatch.call(documento,"getElementById","entornoLogin").getDispatch();
 		Dispatch estiloEntornoLogin = Dispatch.get(entornoLogin,"style").getDispatch();
 		Dispatch.put(estiloEntornoLogin, "display","none");	
+		
+/*		Concepto teorico. Crear y añadir un nodo a la pagina
+ 	
+		Dispatch parrafo = Dispatch.call(documento, "createElement","p").getDispatch();
+		Dispatch contenido = Dispatch.call(documento, "createTextNode","Parrafo añadido").getDispatch();
+		Dispatch bodys = Dispatch.call(documento, "getElementsByTagName","body").getDispatch();
+		Dispatch body = Dispatch.get(bodys,"0").getDispatch();
+		Dispatch.call(parrafo, "appendChild",contenido);
+		Dispatch.call(body, "appendChild",parrafo);
+*/
+		//////////////////////////////////////////////////////////
+		
 		
 		Dispatch branding = Dispatch.call(documento,"getElementById","branding").getDispatch();
 		Dispatch estiloBranding = Dispatch.get(branding,"style").getDispatch();
@@ -147,6 +160,7 @@ public class MaquetadoXedoc {
 		Dispatch estiloTablaElementosAjax = Dispatch.get(tablaElementosAjax,"style").getDispatch();
 		Dispatch.put(estiloTablaElementosAjax, "width","450px");	
 		Dispatch.put(estiloTablaElementosAjax, "height",altoArbol);
+		Dispatch.put(estiloTablaElementosAjax, "marginTop","-70px");
 	
 		Dispatch tablaMeritos = Dispatch.call(documento,"getElementById","tablaMeritos").getDispatch();
 		Dispatch estiloTablaMeritos = Dispatch.get(tablaMeritos,"style").getDispatch();
@@ -164,8 +178,8 @@ public class MaquetadoXedoc {
 		Dispatch estiloTablaAtributosAjax = Dispatch.get(tablaAtributosAjax,"style").getDispatch();
 		Dispatch.put(estiloTablaAtributosAjax, "minWidth","500px");	
 		Dispatch.put(estiloTablaAtributosAjax, "marginLeft","470px");
-		Dispatch.put(estiloTablaAtributosAjax, "marginTop","-970px");
-		
+	//	Dispatch.put(estiloTablaAtributosAjax, "marginTop","-970px");
+		Dispatch.put(estiloTablaAtributosAjax, "marginTop","-750px");
 		
 		//  TablaDocumento
 		///////////////////////////////////////////
@@ -292,7 +306,7 @@ public class MaquetadoXedoc {
 		XedocIndividualJacob xedoc = new XedocIndividualJacob(Dispatch.get(labelAtributo,"innerHTML").getString(),documento,xedocDocumento);
 	//	xedoc.imprimeDatos();
 		
-		seleccionarServicio("CARM",22);
+	//	seleccionarServicio("CARM",22);
 		putNHC(xedoc);
 		colorea();
 		
@@ -305,6 +319,7 @@ public class MaquetadoXedoc {
 		}
 		
 		xedoc.buscaNodo();
+		xedoc.seleccionarServicio();
 		xedoc.putFecha(fecha);
 	}
 	
@@ -394,11 +409,11 @@ public class MaquetadoXedoc {
 		 * 
 		 * */
 		
-		int numInput[] = { 133, 136};
+	//	int numInput[] = { 133, 136};
 		
-		for(int i=0;i<numInput.length;i++){
+		for(int i=130, j= 0 ;i<numInputs && j < 3;i++){
 
-			Dispatch input = Dispatch.call(inputs, String.valueOf(numInput[i])).getDispatch();
+			Dispatch input = Dispatch.call(inputs, String.valueOf(i)).getDispatch();
 
 			Variant nombreClase = Dispatch.call(input, "getAttribute","autocomplete");
 			System.out.println(nombreClase.toString());
@@ -407,12 +422,15 @@ public class MaquetadoXedoc {
 				System.out.println("Encontrado input");
 				System.out.println("Input numero: " + i + " encontrado.");
 				
-				String id = "cajaColoreada" + String.valueOf(i);
+				if(j != 0){
+					String id = "cajaColoreada" + String.valueOf(j);
 
-				Dispatch.call(input, "setAttribute","id",id);
+					Dispatch.call(input, "setAttribute","id",id);
 
-				Dispatch estiloInput = Dispatch.get(input,"style").getDispatch();
-				Dispatch.put(estiloInput, "backgroundColor",colorFondoCajas);
+					Dispatch estiloInput = Dispatch.get(input,"style").getDispatch();
+					Dispatch.put(estiloInput, "backgroundColor",colorFondoCajas);
+				}
+				j++;
 			}	
 
 
