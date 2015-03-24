@@ -12,6 +12,8 @@ public class InicioXedoc {
     static ActiveXComponent oWindows; 
     
     public static TreeMap<String, String> nombreServicios = new TreeMap<String, String>();
+    public static TreeMap<String, String> nombreDocumentos = new TreeMap<String, String>();
+    
     
     
     /* variables para las excepciones de los documentos */
@@ -29,13 +31,17 @@ public class InicioXedoc {
     	
     	
     	nombreServicios = Inicio.leerExcel.nombreServicios;
+    	nombreDocumentos = Inicio.leerExcel.nombreDocumentos;
     	
+    	
+    	
+    	/*
         for( Iterator it = nombreServicios.keySet().iterator(); it.hasNext();) {
         	String clave = (String)it.next();
         	String valor = (String)nombreServicios.get(clave);
         	System.out.println(clave + " : " + valor);
         }
-    	
+    	*/
     	
     	 // GestionJacobXedoc.capturaWebXedoc();
     	

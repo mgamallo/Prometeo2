@@ -29,6 +29,7 @@ public class LeerExcel {
 	private Nodo[] nodos;
 	
 	public TreeMap<String, String> nombreServicios = new TreeMap<String, String>();
+	public TreeMap<String, String> nombreDocumentos = new TreeMap<String, String>();
 	
 	public void leer(String archivoFuente){
 		
@@ -221,6 +222,28 @@ public class LeerExcel {
 	        for( Iterator it = nombreServicios.keySet().iterator(); it.hasNext();) {
 	        	String clave = (String)it.next();
 	        	String valor = (String)nombreServicios.get(clave);
+	        	System.out.println(clave + " : " + valor);
+	        }
+	        */
+	        
+	        // Obtiene el nombre de los documentos para Xedoc
+	        hoja = archivoExcel.getSheet(8);
+
+	        numFilas = 0;
+	        numColumnas = 2;
+	        while(!hoja.getCell(0,numFilas).getContents().toString().equals("#finV")){
+	        	numFilas++;
+	        }
+	        
+	        for(int fila=0;fila<numFilas;fila++){
+	        	nombreDocumentos.put(hoja.getCell(0,fila).getContents().toString(), 
+	        			hoja.getCell(1,fila).getContents().toString());
+	        }
+	        
+	       /* 
+	        for( Iterator it = nombreDocumentos.keySet().iterator(); it.hasNext();) {
+	        	String clave = (String)it.next();
+	        	String valor = (String)nombreDocumentos.get(clave);
 	        	System.out.println(clave + " : " + valor);
 	        }
 	        */

@@ -1,6 +1,7 @@
 package es.mgamallo.prometeo;
 
 import java.util.Iterator;
+import java.util.TreeMap;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
@@ -8,17 +9,25 @@ import com.jacob.com.Variant;
 
 public class XedocIndividualJacob {
 
+	private final String CONTINXENCIA = "Documento sen tipo (continxencia)";
+	
 	public String nhc = "";
 	public String servicio = "";
+	
 	private String aliasServicio = "";
 	private String nombreServicio = "";
+	
 	public String tipoDocumento = "";
 	public String titulo = "";
+	private TreeMap<String, String> nombreDocumentos = new TreeMap<String, String>();
+	private boolean tieneTitulo = false;
+	
 	public String fecha = "";
+	
 	public String carpeta = "";
 	public String nombreFichero = "";
 	
-	public String tipoSubida = "";       // x q i f
+	public String tipoSubida = "";       // x q i f e
 	
 	public Dispatch documento;
 	public ActiveXComponent xedocDocumento;
@@ -28,6 +37,8 @@ public class XedocIndividualJacob {
 		this.nombreFichero = nombreFichero;
 		this.documento = documento;
 		this.xedocDocumento = xedocDocumento;
+		
+		nombreDocumentos = Inicio.leerExcel.nombreDocumentos;
 		
 		String campos[] = nombreFichero.split(" @");
 		if(campos.length == 4){
@@ -46,10 +57,17 @@ public class XedocIndividualJacob {
 			if(index != -1){
 				tipoDocumento = campos[3].substring(0,index-1);
 				titulo = campos[3].substring(index + 1,campos[3].length()-1);
+				tieneTitulo = true;
 			}
 			else{
 				tipoDocumento = campos[3];
 			}
+		}
+		
+		if(!nombreDocumentos.containsKey(tipoDocumento)){
+			titulo = tipoDocumento;
+			tipoDocumento = CONTINXENCIA;
+			tieneTitulo = true;
 		}
 		
 		tipoSubida = detectaTipoNodo(servicio, campos[3]);
@@ -64,20 +82,23 @@ public class XedocIndividualJacob {
 	
 		if(servicio.equals("HOSP")){
 			id = "HOS";
+			if(tipoSubida.equals("q")){
+				id = "QUI";
+			}
 		}
 		else if(servicio.equals("URG")){
 			id = "URG";
 		}
-		else if(servicio.equals("QUI")){
+		else if(servicio.equals("CIA")){
 			id = "QUI";
+			if(!tipoSubida.equals("q")){
+				id = "HOS";
+			}
 		}
 		else{
 			id = servicio;
 		}
 
-		if(tipoSubida.toLowerCase().equals("q")){
-			id = "QUI";
-		}
 		
 		if(id.equals("HOS") || id.equals("URG") || id.equals("QUI")){
 			String nombreId = id + "-noSeleccionable-rama";
@@ -90,29 +111,13 @@ public class XedocIndividualJacob {
 			
 			Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
 			Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
-	//		Dispatch.call(xedocDocumento, "navigate","javascript: var hola = document.getElementById('nodoSeleccionado');alert(hola.innerHTML);");
 			Dispatch.call(nodoAncla, "click");
-
-			
-			/*	
-			cadena = "var nodo = document.getElementById('" + id + "-noSeleccionable-rama');"
-					+ "var anclaNodo = nodo.getElementsByTagName('li')[0].getElementsByTagName('a')[0];"
-					+ "anclaNodo.setAttribute('id','nodoseleccionado');"
-					
-					// + "anclaNodo.click();"
-					+ "";
-			*/		
 			
 			if(id.equals("HOS") || id.equals("URG")){
 				
 				String cadena = Dispatch.get(nodoAncla,"innerHTML").getString();
 				System.out.println(cadena);
 				fecha = cadena.substring(cadena.length()-11);
-				/*
-				cadena += ""
-						+ "fecha = anclaNodo.innerHTML.slice(-11);"
-						+ "";
-				*/
 				
 				int index = cadena.lastIndexOf(">") + 1;
 				
@@ -129,15 +134,12 @@ public class XedocIndividualJacob {
 			}
 			else{
 				
-				fecha = Dispatch.get(nodoAncla,"innerHTML").getString();
-				int index = fecha.lastIndexOf("/");
-				fecha = fecha.substring(index-5,index+5);
-				/*
-				cadena += ""
-						+ "var index = anclaNodo.innerHTML.lastIndexOf('/');"
-						+ "fecha = anclaNodo.innerHTML.slice(index-5,index+5);"
-						+ "";
-				*/
+				String cadena = Dispatch.get(nodoAncla,"innerHTML").getString();
+				System.out.println(cadena);
+				int index = cadena.lastIndexOf("/");
+				fecha = cadena.substring(index-5,index+5);
+				index = cadena.lastIndexOf(">") + 1;
+				aliasServicio = cadena.substring(index,index + 4);
 			}
 			
 			System.out.println(fecha);
@@ -147,16 +149,35 @@ public class XedocIndividualJacob {
 		else{
 			// Es una consulta y hay que saber primero si va a ir al nodo general o no
 			// Programar
-		/*	
-			cadena = "var nodo = document.getElementById('360340-1-2-" + id + "');"
-					+ "var anclaNodo = nodo.getElementsByTagName('a')[0];"
-					+ "anclaNodo.setAttribute('id','nodoseleccionado');"
-					// + "anclaNodo.click();"
-					+ "";
-					*/
+			
+			aliasServicio = servicio;
+			
+			if(tipoSubida.equals("f") || tipoSubida.equals("e") ){
+				id = servicio + "noSeleccionable-rama";
+
+				Dispatch nodo = Dispatch.call(documento, "getElementById",id).getDispatch();
+				Dispatch nodoLis = Dispatch.call(nodo, "getElementsByTagName","li").getDispatch();
+				System.out.println("Numero de lis...." + Dispatch.get(nodoLis,"length").toString());
+				Dispatch nodoLi = Dispatch.get(nodoLis, "0").getDispatch();
+				Dispatch nodoA = Dispatch.call(nodoLi, "getElementsByTagName","a").getDispatch();
+				System.out.println("Numero de as...." + Dispatch.get(nodoA,"length").toString());
+				
+				Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
+				Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
+				Dispatch.call(nodoAncla, "click");
+			}
+			else{
+				id = "360340-1-2-" + servicio;
+				
+				Dispatch nodo = Dispatch.call(documento, "getElementById",id).getDispatch();
+				Dispatch nodoA = Dispatch.call(nodo, "getElementsByTagName","a").getDispatch();
+				Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
+				Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
+				Dispatch.call(nodoAncla, "click");
+				
+			}
+
 		}
-		
-		// nombreServicio = (String) InicioXedoc.nombreServicios.get(servicio);
 
 	}
 	
@@ -168,34 +189,99 @@ public class XedocIndividualJacob {
 	}
 	
 	public void seleccionarServicio(){
+		
+		// A partir del alias del servicio, obtenemos un rango de indices (7) donde buscarlo en el select
+				
 		Dispatch caja = Dispatch.call(documento, "getElementById","cajaColoreada2").getDispatch();
-		String nombreCompleto = aliasServicio + "-" + (String) InicioXedoc.nombreServicios.get(aliasServicio);
-		Dispatch.put(caja,"value",nombreCompleto);
+		
+		String numOpcion = (String) InicioXedoc.nombreServicios.get(aliasServicio);
+		int numeroServicios = InicioXedoc.nombreServicios.size();
+		
+		System.out.println("Empieza a seleccionar servicio.");
+		System.out.println("Alias del servicio... " + aliasServicio);
+		System.out.println("Numero de seleccion " + numOpcion);
+		
+		System.out.println("Numero de servicios " + numeroServicios);
 		
 		Dispatch selectServicio = Dispatch.call(documento, "getElementById","{hc}servicioEspecialidad-{hc}docExt").getDispatch();
 		Dispatch opciones = Dispatch.call(selectServicio, "options").getDispatch();
 		
-		Variant variant = Dispatch.get(opciones, "innerHTML");
+		int min = 0;
+		int max = 0;
+		if(Integer.valueOf(numOpcion)-3 < 0 ){
+			min = 0;
+		}
+		else{
+			min = Integer.valueOf(numOpcion)-3;
+		}
 		
-		System.out.println(variant.toString());
+		if(Integer.valueOf(numOpcion)+4 > numeroServicios ){
+			max = numeroServicios;
+		}
+		else{
+			max = Integer.valueOf(numOpcion) + 4;
+		}
 		
-		/*
-		Dispatch opcion = Dispatch.get(opciones,String.valueOf(index)).getDispatch();
-		Dispatch.put(opcion,"selected","true");
-		*/
+		for(int i= min;i< max;i++){
+			Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
+			String nombreServicio = Dispatch.get(opcion,"text").toString();
+			if(nombreServicio.substring(0,4).equals(aliasServicio)){
+				Dispatch.put(opcion,"selected","true");
+				Dispatch.put(caja,"value",nombreServicio);
+			}
+		}
+
 	}
 	
-	
-	private String ocultaNodos(){
-		String cadena = ""
-				+ "var consultas = document.getElementById('CEX-noSeleccionable-rama');"
-				+ "var listaconsultas = consultas.getElementsByTagName('li');"
-				+ "for(var i=0;i<listaconsultas.length;i++){"
-					+ "if(listaconsultas[i].id.indexOf('-noSeleccionable-rama') != -1){"
-						+ ""
-				;
+	public void seleccionarDocumento(){
 		
-		return cadena;
+		// A partir del alias del servicio, obtenemos un rango de indices (7) donde buscarlo en el select
+		
+		Dispatch caja = Dispatch.call(documento, "getElementById","cajaColoreada1").getDispatch();
+		
+		String numOpcion = (String) InicioXedoc.nombreDocumentos.get(tipoDocumento);
+		System.out.println("El tipo de documento es... " + tipoDocumento);
+		System.out.println("El numero de opcion es... " + numOpcion);
+		
+		Dispatch selectTipoDocumento = Dispatch.call(documento, "getElementById","{hc}codDocEx-{hc}docExt").getDispatch();
+		Dispatch opciones = Dispatch.call(selectTipoDocumento, "options").getDispatch();
+		
+		for(int i= Integer.valueOf(numOpcion) - 3;i< Integer.valueOf(numOpcion) +4;i++){
+			Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
+			String nombreDocumento = Dispatch.get(opcion,"text").toString();
+			
+			if(tipoDocumento.equals(nombreDocumento)){
+				System.out.println(nombreDocumento);
+				Dispatch.put(opcion,"selected","true");
+				Dispatch.put(caja,"value",nombreDocumento);
+			}
+		}
+		
+		if(tieneTitulo){
+			caja = Dispatch.call(documento, "getElementById","{hc}titulo-{hc}docExt").getDispatch();
+			Dispatch.put(caja,"value",titulo);
+		}
+	}
+	
+	public void ocultaNodos(){
+		
+		System.out.println("Empieza a ocultar nodos.");
+		
+		Dispatch consultas = Dispatch.call(documento,"getElementById","CEX-noSeleccionable-rama").getDispatch();
+		Dispatch listaConsultas = Dispatch.call(documento, "getElementsByTagName","li").getDispatch();
+		
+		int numListas = Integer.valueOf(Dispatch.get(listaConsultas,"length").toString());
+		
+		for(int i=0;i<numListas;i++){
+			Dispatch lista = Dispatch.get(listaConsultas,String.valueOf(i)).getDispatch();
+			String nombreId = Dispatch.get(lista,"id").toString();
+			if(nombreId.contains("-noSeleccionable-rama")){
+				System.out.println(nombreId);
+			}
+		}
+		
+		System.out.println("Acabo de ocultar nodos.");
+
 	}
 	
 	public void imprimeDatos(){

@@ -305,8 +305,7 @@ public class MaquetadoXedoc {
 		
 		XedocIndividualJacob xedoc = new XedocIndividualJacob(Dispatch.get(labelAtributo,"innerHTML").getString(),documento,xedocDocumento);
 	//	xedoc.imprimeDatos();
-		
-	//	seleccionarServicio("CARM",22);
+
 		putNHC(xedoc);
 		colorea();
 		
@@ -319,17 +318,14 @@ public class MaquetadoXedoc {
 		}
 		
 		xedoc.buscaNodo();
+		xedoc.ocultaNodos();
 		xedoc.seleccionarServicio();
+		xedoc.seleccionarDocumento();
 		xedoc.putFecha(fecha);
 	}
 	
 	
-	public void seleccionarServicio(String servicio, int index){
-		Dispatch selectServicio = Dispatch.call(documento, "getElementById","{hc}servicioEspecialidad-{hc}docExt").getDispatch();
-		Dispatch opciones = Dispatch.call(selectServicio, "options").getDispatch();
-		Dispatch opcion = Dispatch.get(opciones,String.valueOf(index)).getDispatch();
-		Dispatch.put(opcion,"selected","true");
-	}
+
 	
 	public void seleccionarTipoYtitulo(String tipo, String titulo){
 		Dispatch selectTipo = Dispatch.call(documento, "getElementById","{hc}tipoSubtipoRef-{hc}docExt").getDispatch();
@@ -346,16 +342,19 @@ public class MaquetadoXedoc {
 	
 	public void putNHC(XedocIndividualJacob xedoc){
 		
-		// Las anclas tienen que ser:  135, 136, 137
+		// Las anclas tienen que ser:  135, 136, 137  
+		// Las anclas tienen que ser:  145, 146, 147  
+		
+		// System.out.println("Cambiando el nav....");
 		
 		Dispatch anclas = Dispatch.call(documento,"getElementsByTagName","a").getDispatch();
 		Variant numeroAnclas = Dispatch.get(anclas, "length");
 		int numAnclas = numeroAnclas.getInt();
-		System.out.println(numAnclas); 
+		// System.out.println("Numero de anclas... " + numAnclas); 
 		
 		
 		
-		for(int i=134;i<140;i++){
+		for(int i=130;i<numAnclas;i++){
 
 			Dispatch tituloAncla = Dispatch.get(anclas, String.valueOf(i)).getDispatch();
 			Variant valorTitle = Dispatch.call(tituloAncla, "getAttribute","title");
@@ -411,7 +410,7 @@ public class MaquetadoXedoc {
 		
 	//	int numInput[] = { 133, 136};
 		
-		for(int i=130, j= 0 ;i<numInputs && j < 3;i++){
+		for(int i=120, j= 0 ;i<numInputs && j < 3;i++){
 
 			Dispatch input = Dispatch.call(inputs, String.valueOf(i)).getDispatch();
 
