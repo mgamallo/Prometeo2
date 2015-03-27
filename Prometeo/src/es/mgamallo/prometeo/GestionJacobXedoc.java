@@ -12,7 +12,8 @@ import com.jacob.com.Variant;
 public class GestionJacobXedoc {
 	
 	public static ActiveXComponent ianusApoyoXedoc;
-	public static ActiveXComponent bandejaXedoc;
+	public static ActiveXComponent bandejaXedoc1;
+	public static ActiveXComponent bandejaXedoc2;
 	
 	
 	public static ActiveXComponent capturaUltimoExplorer(){
@@ -33,7 +34,15 @@ public class GestionJacobXedoc {
 	}
 	
 	
-	public static void capturaWebXedoc(){
+	public static void inicializa2Xedocs(){
+		capturaWebsXedoc();
+		formateaWebsXedoc(bandejaXedoc1);
+		formateaWebsXedoc(bandejaXedoc2);
+		formateaIanus(ianusApoyoXedoc);
+	}
+	
+	
+	public static void capturaWebsXedoc(){
 	    InicioXedoc.oShell = new ActiveXComponent("Shell.Application"); 
 	    InicioXedoc.oWindows = InicioXedoc.oShell.invokeGetComponent("Windows");
 	    
@@ -44,6 +53,8 @@ public class GestionJacobXedoc {
 			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
 			Thread.sleep(1000);
 			
+			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
+			Thread.sleep(1000);
 			
         } catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -56,7 +67,7 @@ public class GestionJacobXedoc {
         int iCount = InicioXedoc.oWindows.getProperty("Count").getInt();
         System.out.println("iCount: " + iCount);        
 		
-        for (int i=iCount-1,j= 1; i >iCount-3 ; i--,j++) {
+        for (int i=iCount-1,j= 1; i >iCount-4 ; i--,j++) {
             ActiveXComponent oWindow = InicioXedoc.oWindows.invokeGetComponent("Item", new Variant(i));     
             String sLocName = oWindow.getProperty("LocationName").getString();
             String sFullName = oWindow.getProperty("FullName").getString();
@@ -69,51 +80,30 @@ public class GestionJacobXedoc {
             }
             */
             if(j==1){
-            	bandejaXedoc = oWindow;
+            	bandejaXedoc1 = oWindow;
+        		Dispatch.call(bandejaXedoc1, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+
             }
-            
-            
             if(j==2){
             	// Inicio.paciente2.xedoc = oWindow;
+            	bandejaXedoc2 = oWindow;
+            	try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		Dispatch.call(bandejaXedoc2, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+            }
+            if(j==3){
             	ianusApoyoXedoc = oWindow;
             	Dispatch.call(ianusApoyoXedoc, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
+
             }
-            
         }
-        
-		Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
-		
-		Variant estado = Dispatch.call(bandejaXedoc,"readyState");
-		
-		System.out.println("Empieza el primer readyState");
-		
-		int i=0;
-		while(true /* && i < 25000 */){
-			estado = Dispatch.call(bandejaXedoc, "readyState");
-		//	System.out.println(i++);
-		//	System.out.println(estado.toString());
-			if(Integer.valueOf(estado.toString()) == 4){
-				System.out.println("El estado está en 4");
-				break;
-			}
-		}
-		
-		
-
-		
-		/*
-		try {
-		
-		Thread.sleep(900);	
-			
-		 Dispatch.call(Inicio.paciente2.xedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
-
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		
+	}
+	
+	public static void formateaWebsXedoc(ActiveXComponent bandejaXedoc){
 		
 		int ancho = 0;
 		int alto = 0;
@@ -181,6 +171,163 @@ public class GestionJacobXedoc {
 	    Dispatch.put(bandejaXedoc,"width",ancho);
 	    Dispatch.put(bandejaXedoc,"top",arriba);  
 	    Dispatch.put(bandejaXedoc,"left",izquierda);
+		
+		
+		}
+	}
+	
+	public static void formateaIanus(ActiveXComponent ianus){
+		
+	}
+	
+	public static void capturaWebXedoc(){
+	    InicioXedoc.oShell = new ActiveXComponent("Shell.Application"); 
+	    InicioXedoc.oWindows = InicioXedoc.oShell.invokeGetComponent("Windows");
+	    
+        try {
+			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
+			Thread.sleep(1000);
+			
+			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
+			Thread.sleep(1000);
+			
+			
+        } catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        int iCount = InicioXedoc.oWindows.getProperty("Count").getInt();
+        System.out.println("iCount: " + iCount);        
+		
+        for (int i=iCount-1,j= 1; i >iCount-3 ; i--,j++) {
+            ActiveXComponent oWindow = InicioXedoc.oWindows.invokeGetComponent("Item", new Variant(i));     
+            String sLocName = oWindow.getProperty("LocationName").getString();
+            String sFullName = oWindow.getProperty("FullName").getString();
+            boolean isIE = sFullName.toLowerCase().endsWith("iexplore.exe");
+            boolean bVisible = oWindow.getProperty("Visible").getBoolean();
+            System.out.println("i: " + i + ", loc: " + sLocName + ", name: " + sFullName + ", isIE: " + isIE + ", vis: " + bVisible);
+            /*
+            if ((isIE)&&(sLocName.startsWith("about:blank"))) {
+                oIE = oWindow;
+            }
+            */
+            if(j==1){
+            	bandejaXedoc1 = oWindow;
+            }
+            
+            
+            if(j==2){
+            	// Inicio.paciente2.xedoc = oWindow;
+            	ianusApoyoXedoc = oWindow;
+            	Dispatch.call(ianusApoyoXedoc, "Navigate","http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp");
+            }
+            
+        }
+        
+		Dispatch.call(bandejaXedoc1, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+		
+		Variant estado = Dispatch.call(bandejaXedoc1,"readyState");
+		
+		System.out.println("Empieza el primer readyState");
+		
+		int i=0;
+		while(true /* && i < 25000 */){
+			estado = Dispatch.call(bandejaXedoc1, "readyState");
+		//	System.out.println(i++);
+		//	System.out.println(estado.toString());
+			if(Integer.valueOf(estado.toString()) == 4){
+				System.out.println("El estado está en 4");
+				break;
+			}
+		}
+		
+		
+
+		
+		/*
+		try {
+		
+		Thread.sleep(900);	
+			
+		 Dispatch.call(Inicio.paciente2.xedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
+		
+		int ancho = 0;
+		int alto = 0;
+		int izquierda = 0;
+		int arriba = 0;
+		if(Inicio.numeroPantallas == 1){
+			ancho = 1070;
+			alto = 1049;
+			arriba = 0;
+			izquierda = 850;
+		}
+		else{
+			ancho = 1023;
+			alto = 1279;
+			arriba = 0;
+			izquierda = 1025;
+		}
+		
+	    Dispatch.put(bandejaXedoc1,"height",alto);
+	    Dispatch.put(bandejaXedoc1,"width",ancho);
+	    Dispatch.put(bandejaXedoc1,"top",arriba);  
+	    Dispatch.put(bandejaXedoc1,"left",izquierda);
+		
+		
+		
+		if(Inicio.contraseña){
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario0(Inicio.usuario));
+		
+			Dispatch.put(bandejaXedoc1,"menubar",false);
+			Dispatch.put(bandejaXedoc1,"toolbar",false);
+			
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario1(Inicio.usuario));
+
+			
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	 
+		
+		
+		if(Inicio.numeroPantallas == 1){
+			ancho = 1919;
+			alto = 1049;
+			arriba = 0;
+			izquierda = 0;
+		}
+		else{
+			ancho = 2047;
+			alto = 1251;
+			arriba = 0;
+			izquierda = 0;
+		}
+		
+	    Dispatch.put(bandejaXedoc1,"height",alto);
+	    Dispatch.put(bandejaXedoc1,"width",ancho);
+	    Dispatch.put(bandejaXedoc1,"top",arriba);  
+	    Dispatch.put(bandejaXedoc1,"left",izquierda);
 		
 		
 		}
@@ -255,7 +402,7 @@ public class GestionJacobXedoc {
             }
             */
             if(j==1){
-            	bandejaXedoc = oWindow;
+            	bandejaXedoc1 = oWindow;
             }
             /*
             if(j==2){
@@ -264,15 +411,15 @@ public class GestionJacobXedoc {
             */
         }
         
-		Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+		Dispatch.call(bandejaXedoc1, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
 		
-		Variant estado = Dispatch.call(bandejaXedoc,"readyState");
+		Variant estado = Dispatch.call(bandejaXedoc1,"readyState");
 		
 		System.out.println("Empieza el primer readyState");
 		
 		int i=0;
 		while(true /* && i < 25000 */){
-			estado = Dispatch.call(bandejaXedoc, "readyState");
+			estado = Dispatch.call(bandejaXedoc1, "readyState");
 		//	System.out.println(i++);
 		//	System.out.println(estado.toString());
 			if(Integer.valueOf(estado.toString()) == 4){
@@ -299,18 +446,18 @@ public class GestionJacobXedoc {
 			izquierda = 1025;
 		}
 		
-	    Dispatch.put(bandejaXedoc,"height",alto);
-	    Dispatch.put(bandejaXedoc,"width",ancho);
-	    Dispatch.put(bandejaXedoc,"top",arriba);  
-	    Dispatch.put(bandejaXedoc,"left",izquierda);
+	    Dispatch.put(bandejaXedoc1,"height",alto);
+	    Dispatch.put(bandejaXedoc1,"width",ancho);
+	    Dispatch.put(bandejaXedoc1,"top",arriba);  
+	    Dispatch.put(bandejaXedoc1,"left",izquierda);
 		
 		
 		
 		if(Inicio.contraseña){
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario0(Inicio.usuario));
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario0(Inicio.usuario));
 		
-			Dispatch.put(bandejaXedoc,"menubar",false);
-			Dispatch.put(bandejaXedoc,"toolbar",false);
+			Dispatch.put(bandejaXedoc1,"menubar",false);
+			Dispatch.put(bandejaXedoc1,"toolbar",false);
 			
 			try {
 				Thread.sleep(200);
@@ -319,7 +466,7 @@ public class GestionJacobXedoc {
 				e1.printStackTrace();
 			}
 			
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario1(Inicio.usuario));
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario1(Inicio.usuario));
 
 			
 		try {
@@ -344,10 +491,10 @@ public class GestionJacobXedoc {
 			izquierda = 0;
 		}
 		
-	    Dispatch.put(bandejaXedoc,"height",alto);
-	    Dispatch.put(bandejaXedoc,"width",ancho);
-	    Dispatch.put(bandejaXedoc,"top",arriba);  
-	    Dispatch.put(bandejaXedoc,"left",izquierda);
+	    Dispatch.put(bandejaXedoc1,"height",alto);
+	    Dispatch.put(bandejaXedoc1,"width",ancho);
+	    Dispatch.put(bandejaXedoc1,"top",arriba);  
+	    Dispatch.put(bandejaXedoc1,"left",izquierda);
 		
 		
 		}
@@ -359,7 +506,7 @@ public class GestionJacobXedoc {
 			
 			i=0;
 			while(true /* && i < 25000 */){
-				estado = Dispatch.call(bandejaXedoc, "readyState");
+				estado = Dispatch.call(bandejaXedoc1, "readyState");
 			//	System.out.println(i++);
 			//	System.out.println(estado.toString());
 				if(Integer.valueOf(estado.toString()) == 4){
@@ -368,13 +515,13 @@ public class GestionJacobXedoc {
 				}
 			}
 		    
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.selectMiBandeja());
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.selectMiBandeja());
 
 			System.out.println("Empieza el tercer readyState");
 			
 			i=0;
 			while(true /* && i < 25000 */){
-				estado = Dispatch.call(bandejaXedoc, "readyState");
+				estado = Dispatch.call(bandejaXedoc1, "readyState");
 			//	System.out.println(i++);
 			//	System.out.println(estado.toString());
 				if(Integer.valueOf(estado.toString()) == 4){
@@ -383,10 +530,10 @@ public class GestionJacobXedoc {
 				}
 			}
 			
-		    Dispatch.put(bandejaXedoc,"height",Inicio.altoP);
-		    Dispatch.put(bandejaXedoc,"width",Inicio.anchoP);
-		    Dispatch.put(bandejaXedoc,"top",0);  
-		    Dispatch.put(bandejaXedoc,"left",0);
+		    Dispatch.put(bandejaXedoc1,"height",Inicio.altoP);
+		    Dispatch.put(bandejaXedoc1,"width",Inicio.anchoP);
+		    Dispatch.put(bandejaXedoc1,"top",0);  
+		    Dispatch.put(bandejaXedoc1,"left",0);
 			
 			
 			try {
@@ -398,7 +545,7 @@ public class GestionJacobXedoc {
 			
 			
 			
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.contexto());
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.contexto());
 			
 			
 			
@@ -409,7 +556,7 @@ public class GestionJacobXedoc {
 				e.printStackTrace();
 			}
 			
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.rellenaContexto());
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.rellenaContexto());
 			
 			try {
 				Thread.sleep(1000);
@@ -418,14 +565,14 @@ public class GestionJacobXedoc {
 				e.printStackTrace();
 			}
 			
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.inicio1Xedoc());
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.inicio1Xedoc());
 
 			
 			System.out.println("Empieza el cuarto readyState");
 			
 			i=0;
 			while(true /* && i < 25000 */){
-				estado = Dispatch.call(bandejaXedoc, "readyState");
+				estado = Dispatch.call(bandejaXedoc1, "readyState");
 			//	System.out.println(i++);
 			//	System.out.println(estado.toString());
 				if(Integer.valueOf(estado.toString()) == 4){
@@ -446,7 +593,7 @@ public class GestionJacobXedoc {
 			
 
 			
-			Dispatch documento = Dispatch.call(bandejaXedoc, "Document").toDispatch();
+			Dispatch documento = Dispatch.call(bandejaXedoc1, "Document").toDispatch();
 			Dispatch branding = Dispatch.call(documento, "getElementById","branding").toDispatch();
 			Dispatch brandingStilo = Dispatch.get(branding, "style").toDispatch();
 			Dispatch.put(brandingStilo, "display","none");
@@ -507,7 +654,7 @@ public class GestionJacobXedoc {
 			}
 			
 			
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.maquetado2());
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.maquetado2());
 
 			 
 		}
@@ -550,7 +697,7 @@ public class GestionJacobXedoc {
             }
             */
             if(j==1){
-            	bandejaXedoc = oWindow;
+            	bandejaXedoc1 = oWindow;
             }
             /*
             if(j==2){
@@ -559,16 +706,16 @@ public class GestionJacobXedoc {
             */
         }
         
-		Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+		Dispatch.call(bandejaXedoc1, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
 		
-		Variant estado = Dispatch.call(bandejaXedoc,"readyState");
+		Variant estado = Dispatch.call(bandejaXedoc1,"readyState");
 		
 		System.out.println("Empieza el primer readyState");
 		
 		long tiempoInicial = System.currentTimeMillis();
 		int numRepeticiones = 0;
 		while(true){
-			estado = Dispatch.call(bandejaXedoc, "readyState");
+			estado = Dispatch.call(bandejaXedoc1, "readyState");
 		//	System.out.println(i++);
 		//	System.out.println(estado.toString());
 			if(Integer.valueOf(estado.toString()) == 4){
@@ -577,12 +724,12 @@ public class GestionJacobXedoc {
 			}
 			if(tiempoInicial + 3000 < System.currentTimeMillis()){
 				System.out.println("Reiniciando la navegación.");
-				Dispatch.call(bandejaXedoc, "Quit");
+				Dispatch.call(bandejaXedoc1, "Quit");
 				tiempoInicial = System.currentTimeMillis();
 				numRepeticiones++;
-				bandejaXedoc = new ActiveXComponent("InternetExplorer.Application");
+				bandejaXedoc1 = new ActiveXComponent("InternetExplorer.Application");
 				//Dispatch.call(bandejaXedoc, "Visible",true);
-				Dispatch.call(bandejaXedoc, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
+				Dispatch.call(bandejaXedoc1, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
 			}
 			if(numRepeticiones>2){
 				break;
@@ -607,18 +754,18 @@ public class GestionJacobXedoc {
 			izquierda = 1025;
 		}
 		
-	    Dispatch.put(bandejaXedoc,"height",alto);
-	    Dispatch.put(bandejaXedoc,"width",ancho);
-	    Dispatch.put(bandejaXedoc,"top",arriba);  
-	    Dispatch.put(bandejaXedoc,"left",izquierda);
+	    Dispatch.put(bandejaXedoc1,"height",alto);
+	    Dispatch.put(bandejaXedoc1,"width",ancho);
+	    Dispatch.put(bandejaXedoc1,"top",arriba);  
+	    Dispatch.put(bandejaXedoc1,"left",izquierda);
 		
 		
 		
 		if(Inicio.contraseña){
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario0(Inicio.usuario));
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario0(Inicio.usuario));
 		
-			Dispatch.put(bandejaXedoc,"menubar",false);
-			Dispatch.put(bandejaXedoc,"toolbar",false);
+			Dispatch.put(bandejaXedoc1,"menubar",false);
+			Dispatch.put(bandejaXedoc1,"toolbar",false);
 			
 			try {
 				Thread.sleep(200);
@@ -627,7 +774,7 @@ public class GestionJacobXedoc {
 				e1.printStackTrace();
 			}
 			
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario1(Inicio.usuario));
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.introUsuario1(Inicio.usuario));
 
 			
 		try {
@@ -652,10 +799,10 @@ public class GestionJacobXedoc {
 			izquierda = 0;
 		}
 		
-	    Dispatch.put(bandejaXedoc,"height",alto);
-	    Dispatch.put(bandejaXedoc,"width",ancho);
-	    Dispatch.put(bandejaXedoc,"top",arriba);  
-	    Dispatch.put(bandejaXedoc,"left",izquierda);
+	    Dispatch.put(bandejaXedoc1,"height",alto);
+	    Dispatch.put(bandejaXedoc1,"width",ancho);
+	    Dispatch.put(bandejaXedoc1,"top",arriba);  
+	    Dispatch.put(bandejaXedoc1,"left",izquierda);
 		
 		
 		}
@@ -666,7 +813,7 @@ public class GestionJacobXedoc {
 			System.out.println("Empieza el segundo readyState");
 			
 			while(true /* && i < 25000 */){
-				estado = Dispatch.call(bandejaXedoc, "readyState");
+				estado = Dispatch.call(bandejaXedoc1, "readyState");
 			//	System.out.println(i++);
 			//	System.out.println(estado.toString());
 				if(Integer.valueOf(estado.toString()) == 4){
@@ -675,12 +822,12 @@ public class GestionJacobXedoc {
 				}
 			}
 		    
-			Dispatch.call(bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.selectMiBandeja());
+			Dispatch.call(bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.selectMiBandeja());
 
 			System.out.println("Empieza el tercer readyState");
 			
 			while(true /* && i < 25000 */){
-				estado = Dispatch.call(bandejaXedoc, "readyState");
+				estado = Dispatch.call(bandejaXedoc1, "readyState");
 			//	System.out.println(i++);
 			//	System.out.println(estado.toString());
 				if(Integer.valueOf(estado.toString()) == 4){
@@ -689,10 +836,10 @@ public class GestionJacobXedoc {
 				}
 			}
 			
-		    Dispatch.put(bandejaXedoc,"height",Inicio.altoP);
-		    Dispatch.put(bandejaXedoc,"width",Inicio.anchoP);
-		    Dispatch.put(bandejaXedoc,"top",0);  
-		    Dispatch.put(bandejaXedoc,"left",0);
+		    Dispatch.put(bandejaXedoc1,"height",Inicio.altoP);
+		    Dispatch.put(bandejaXedoc1,"width",Inicio.anchoP);
+		    Dispatch.put(bandejaXedoc1,"top",0);  
+		    Dispatch.put(bandejaXedoc1,"left",0);
 			
 			
 			try {

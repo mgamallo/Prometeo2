@@ -165,13 +165,20 @@ public class MoverCarpetas {
 		int contadorMovidos=0;
 		int contadorError=0;
 		
-		rutaAsociados = devuelveFecha(rutaAsociados);
+		// Obsoleto. Cambiado para que se separe por dias
+		// rutaAsociados = devuelveFecha(rutaAsociados);
+		Calendario calendario = new Calendario();
+		rutaAsociados = calendario.getCarpetaFinal(true);
+		System.out.println("Ruta asociados: " + rutaAsociados);
+		
 		File directorio = new File(rutaAsociados);
 		boolean creaDirectorio = directorio.mkdirs();
 		
 		for(int i=0;i<carpetas.size();i++){
 			if(carpetas.get(i).asociado){
 				String rutaNueva = rutaAsociados + "\\" + carpetas.get(i).directorio.getName();
+				
+				System.out.println("Ruta asociados completa " + rutaNueva);
 				
 				File nombreNuevo = new File(rutaNueva);
 				boolean renombrado = carpetas.get(i).directorio.renameTo(nombreNuevo);

@@ -1,5 +1,7 @@
 package es.mgamallo.prometeo;
 
+import java.util.Calendar;
+
 public class CadenasJavascriptXedoc {
 
 	static public final String introUsuario0(Usuario usuario){
@@ -119,6 +121,33 @@ public class CadenasJavascriptXedoc {
 	}
 	
 	static public final String pruebaTabla(){
+		
+		String fechaInicio = "";
+		String fechaFin = "";
+
+		int diaHoy = 1;
+		int mesHoy = 1;
+		int añoHoy = 1;
+		
+		int diaHaceUnMes = 1;
+		int mesHaceUnMes = 1;
+		int añoHaceUnMes = 1;
+		
+		Calendar calendario = Calendar.getInstance();
+		diaHoy = calendario.get(Calendar.DAY_OF_MONTH);
+		mesHoy = calendario.get(Calendar.MONTH) + 1;
+		añoHoy = calendario.get(Calendar.YEAR);
+		
+		fechaFin = diaHoy + "/" + mesHoy + "/" + añoHoy;
+
+		calendario.add(Calendar.DAY_OF_MONTH,-45);
+		
+		diaHaceUnMes = calendario.get(Calendar.DAY_OF_MONTH);
+		mesHaceUnMes = calendario.get(Calendar.MONTH) + 1;
+		añoHaceUnMes = calendario.get(Calendar.YEAR);
+		
+		fechaInicio = diaHaceUnMes + "/" + mesHaceUnMes + "/" + añoHaceUnMes;
+		
 		String cadena = ""
 				+ ""
 				+ "var nhc;"
@@ -141,8 +170,8 @@ public class CadenasJavascriptXedoc {
 					+ "nhcElement.value= nhc;"
 					+ "var fechaI = document.getElementById('FechaIni');"
 					+ "var fechaF = document.getElementById('FechaFin');"
-					+ "fechaI.value = '01/01/2015';"
-					+ "fechaF.value = '22/02/2015';"
+					+ "fechaI.value = '" + fechaInicio + "';"
+					+ "fechaF.value = '" + fechaFin + "';"
 				//	+ "alert('hola');"
 					+ "document.getElementById('submitFormContexto').click();"
 					+ "var claveEntera = nhc + '-360340';"

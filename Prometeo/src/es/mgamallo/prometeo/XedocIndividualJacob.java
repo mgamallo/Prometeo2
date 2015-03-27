@@ -1,5 +1,6 @@
 package es.mgamallo.prometeo;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -10,6 +11,7 @@ import com.jacob.com.Variant;
 public class XedocIndividualJacob {
 
 	private final String CONTINXENCIA = "Documento sen tipo (continxencia)";
+	private final String COLORFONDOCAJAS = "RGB(253,247,133)";
 	
 	public String nhc = "";
 	public String servicio = "";
@@ -17,6 +19,7 @@ public class XedocIndividualJacob {
 	private String aliasServicio = "";
 	private String nombreServicio = "";
 	
+	public String nombreDocumento = "";
 	public String tipoDocumento = "";
 	public String titulo = "";
 	private TreeMap<String, String> nombreDocumentos = new TreeMap<String, String>();
@@ -52,6 +55,8 @@ public class XedocIndividualJacob {
 
 			int indexf = campos[3].lastIndexOf(" r _f");
 			campos[3] = campos[3].substring(0,indexf);
+			
+			nombreDocumento = campos[3];
 			
 			index = campos[3].indexOf("(");
 			if(index != -1){
@@ -183,8 +188,10 @@ public class XedocIndividualJacob {
 	
 	
 	public void putFecha(Dispatch fechaDispatch){
-		
-		Dispatch.put(fechaDispatch,"value",fecha);
+		if(fecha.length() != 0)
+			Dispatch.put(fechaDispatch,"value",fecha);
+		else
+			Dispatch.call(fechaDispatch,"focus");
 		
 	}
 	
@@ -240,13 +247,31 @@ public class XedocIndividualJacob {
 		Dispatch caja = Dispatch.call(documento, "getElementById","cajaColoreada1").getDispatch();
 		
 		String numOpcion = (String) InicioXedoc.nombreDocumentos.get(tipoDocumento);
+		int numeroDocumentos = InicioXedoc.nombreDocumentos.size();
 		System.out.println("El tipo de documento es... " + tipoDocumento);
 		System.out.println("El numero de opcion es... " + numOpcion);
 		
 		Dispatch selectTipoDocumento = Dispatch.call(documento, "getElementById","{hc}codDocEx-{hc}docExt").getDispatch();
 		Dispatch opciones = Dispatch.call(selectTipoDocumento, "options").getDispatch();
 		
-		for(int i= Integer.valueOf(numOpcion) - 3;i< Integer.valueOf(numOpcion) +4;i++){
+		int min = 0;
+		int max = 0;
+		if(Integer.valueOf(numOpcion)-3 < 0 ){
+			min = 0;
+		}
+		else{
+			min = Integer.valueOf(numOpcion)-3;
+		}
+		
+		if(Integer.valueOf(numOpcion)+4 > numeroDocumentos ){
+			max = numeroDocumentos;
+		}
+		else{
+			max = Integer.valueOf(numOpcion) + 4;
+		}
+		
+		
+		for(int i= min;i< max;i++){
 			Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
 			String nombreDocumento = Dispatch.get(opcion,"text").toString();
 			
@@ -259,28 +284,142 @@ public class XedocIndividualJacob {
 		
 		if(tieneTitulo){
 			caja = Dispatch.call(documento, "getElementById","{hc}titulo-{hc}docExt").getDispatch();
+			Dispatch estiloCaja = Dispatch.call(caja, "style").getDispatch();
 			Dispatch.put(caja,"value",titulo);
+			Dispatch.put(estiloCaja,"backgroundColor",COLORFONDOCAJAS);
+			Dispatch.put(estiloCaja,"font","bold 18px arial, sans-serif");
 		}
 	}
 	
+	
 	public void ocultaNodos(){
 		
-		System.out.println("Empieza a ocultar nodos.");
+		//  Cierra ramas no necesarias
 		
-		Dispatch consultas = Dispatch.call(documento,"getElementById","CEX-noSeleccionable-rama").getDispatch();
-		Dispatch listaConsultas = Dispatch.call(documento, "getElementsByTagName","li").getDispatch();
+		boolean ocultaNodosCEX = false;
 		
-		int numListas = Integer.valueOf(Dispatch.get(listaConsultas,"length").toString());
-		
-		for(int i=0;i<numListas;i++){
-			Dispatch lista = Dispatch.get(listaConsultas,String.valueOf(i)).getDispatch();
-			String nombreId = Dispatch.get(lista,"id").toString();
-			if(nombreId.contains("-noSeleccionable-rama")){
-				System.out.println(nombreId);
-			}
+		if(servicio.equals("HOSP") || servicio.equals("CIA")){
+			Dispatch cex = Dispatch.call(documento, "getElementById","CEX-noSeleccionable-rama").getDispatch();
+			Dispatch urg = Dispatch.call(documento, "getElementById","URG-noSeleccionable-rama").getDispatch();
+			Dispatch.call(cex,"setattribute","class","jstree-unchecked jstree-closed");
+			Dispatch.call(urg,"setattribute","class","jstree-unchecked jstree-closed");
 		}
+		else if(servicio.equals("URG")){
+			Dispatch cex = Dispatch.call(documento, "getElementById","CEX-noSeleccionable-rama").getDispatch();
+			Dispatch.call(cex,"setattribute","class","jstree-unchecked jstree-closed");
+		}
+		else{
+			Dispatch hosp = Dispatch.call(documento, "getElementById","HOS-noSeleccionable-rama").getDispatch();
+			Dispatch urg = Dispatch.call(documento, "getElementById","URG-noSeleccionable-rama").getDispatch();
+			Dispatch qui = Dispatch.call(documento, "getElementById","QUI-noSeleccionable-rama").getDispatch();
+
+			Dispatch.call(hosp,"setAttribute","class","jstree-unchecked jstree-closed");
+			Dispatch.call(urg,"setAttribute","class","jstree-unchecked jstree-closed");
+			Dispatch.call(qui,"setAttribute","class","jstree-unchecked jstree-closed");
+			
+			ocultaNodosCEX = true;
+		}
+
+		/*
+		// ocultando nodo urgencias
+		System.out.println("Ocultando nodo urgencias");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Dispatch urg = Dispatch.call(documento, "getElementById","URG-noSeleccionable-rama").getDispatch();
+		Dispatch.call(urg,"setAttribute","class","jstree-unchecked jstree-closed");
 		
-		System.out.println("Acabo de ocultar nodos.");
+		Dispatch.call(Inicio.documento1.xedoc,"navigate","javascript:var hola = document.getElementById('URG-noSeleccionable-rama');"
+				+ "hola.setAttribute('class','jstree-unchecked jstree-closed');alert('hola');");
+		*/
+		
+		//  Oculta nodos no necesarios de consultas
+		if(ocultaNodosCEX){
+			System.out.println("Empieza a ocultar nodos.");
+			
+			Dispatch consultas = Dispatch.call(documento,"getElementById","CEX-noSeleccionable-rama").getDispatch();
+			Dispatch listaConsultas = Dispatch.call(consultas, "getElementsByTagName","li").getDispatch();
+			
+			int numListas = Integer.valueOf(Dispatch.get(listaConsultas,"length").toString());
+			
+			ArrayList<String> serviciosPaciente = new ArrayList<String>();
+			
+			for(int i=0;i<numListas;i++){
+				Dispatch lista = Dispatch.get(listaConsultas,String.valueOf(i)).getDispatch();
+				String nombreId = Dispatch.get(lista,"id").toString();
+				if(nombreId.contains("-noSeleccionable-rama")){
+					int index = nombreId.indexOf("-");
+					String serv = nombreId.substring(0,index);
+					if(!serv.equals("CEX") && !serv.equals("OTROS")){
+						serviciosPaciente.add(serv);
+					}
+					if(serv.equals("OTROS")){
+						break;
+					}
+				}
+			}
+			
+			for(int i=0;i<serviciosPaciente.size();i++){
+				System.out.println(serviciosPaciente.get(i));
+			}
+			
+			consultas = Dispatch.call(documento,"getElementById","OTROS-noSeleccionable-rama").getDispatch();
+			listaConsultas = Dispatch.call(consultas, "getElementsByTagName","li").getDispatch();
+			
+			numListas = Integer.valueOf(Dispatch.get(listaConsultas,"length").toString());
+/*			
+			for(int i=0;i<numListas;i++){
+				Dispatch lista = Dispatch.get(listaConsultas,String.valueOf(i)).getDispatch();
+				String nombreId = Dispatch.get(lista,"id").toString();
+				Dispatch estiloLista = Dispatch.get(lista,"style").getDispatch();
+				Dispatch.put(estiloLista,"display","none");
+			}
+			
+			for(int i=0;i<serviciosPaciente.size();i++){
+				String id = "360340-1-2-" + serviciosPaciente.get(i);
+				Dispatch lista = Dispatch.get(documento,"getElementById").getDispatch();
+				Dispatch estiloLista = Dispatch.get(lista,"style").getDispatch();
+				Dispatch.put(estiloLista,"display","inline");
+			}
+			String id = "360340-1-2-" + aliasServicio;
+			Dispatch lista = Dispatch.get(documento,"getElementById").getDispatch();
+			Dispatch estiloLista = Dispatch.get(lista,"style").getDispatch();
+			Dispatch.put(estiloLista,"display","inline");
+*/			
+			for(int i=0,j=0;i<numListas;i++){
+				Dispatch lista = Dispatch.get(listaConsultas,String.valueOf(i)).getDispatch();
+				String nombreId = Dispatch.get(lista,"id").toString();
+				
+				System.out.println("Lista numero " + i + ". " + nombreId);
+				
+				if(j< serviciosPaciente.size()){
+					if(!nombreId.contains(serviciosPaciente.get(j))){
+					//	if(nombreId.contains("360340-1-2-")){
+						
+						if(!nombreId.contains(aliasServicio)){
+							Dispatch estiloLista = Dispatch.get(lista,"style").getDispatch();
+							Dispatch.put(estiloLista,"display","none");
+							System.out.println(nombreId + " ocultado.");
+						}
+					//	}
+					}
+					else{
+						j++;
+					}
+				}
+				else if(!nombreId.contains(aliasServicio)){
+					Dispatch estiloLista = Dispatch.get(lista,"style").getDispatch();
+					Dispatch.put(estiloLista,"display","none");
+					System.out.println(nombreId + " ocultado.");
+				}
+			}
+		
+			System.out.println("Acabo de ocultar nodos.");
+
+		}
 
 	}
 	

@@ -311,7 +311,7 @@ public class MaquetadoXedoc {
 		
 		
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -324,26 +324,15 @@ public class MaquetadoXedoc {
 		xedoc.putFecha(fecha);
 	}
 	
-	
 
-	
-	public void seleccionarTipoYtitulo(String tipo, String titulo){
-		Dispatch selectTipo = Dispatch.call(documento, "getElementById","{hc}tipoSubtipoRef-{hc}docExt").getDispatch();
-		Dispatch opciones = Dispatch.call(selectTipo, "options").getDispatch();
-		
-		// Inacabado
-		
-		// Dispatch opcion = Dispatch.get(opciones,String.valueOf(index)).getDispatch();
-		// Dispatch.put(opcion,"selected","true");
-		
-		
-	}
-	//	Coloca los datos del documento en el nav original
+
 	
 	public void putNHC(XedocIndividualJacob xedoc){
 		
+		//	Coloca los datos del documento en el nav original
+		
 		// Las anclas tienen que ser:  135, 136, 137  
-		// Las anclas tienen que ser:  145, 146, 147  
+		// o tienen que ser:  145, 146, 147  
 		
 		// System.out.println("Cambiando el nav....");
 		
@@ -354,7 +343,7 @@ public class MaquetadoXedoc {
 		
 		
 		
-		for(int i=130;i<numAnclas;i++){
+		for(int i=100;i<numAnclas;i++){
 
 			Dispatch tituloAncla = Dispatch.get(anclas, String.valueOf(i)).getDispatch();
 			Variant valorTitle = Dispatch.call(tituloAncla, "getAttribute","title");
@@ -366,6 +355,7 @@ public class MaquetadoXedoc {
 					Dispatch estiloTituloAnclaNhc = Dispatch.get(tituloAncla,"style").getDispatch();
 					Dispatch.put(estiloTituloAnclaNhc, "fontSize","30px");
 					Dispatch.put(estiloTituloAnclaNhc, "marginBottom","10px");
+					Dispatch.put(estiloTituloAnclaNhc, "marginRight","30px");
 					
 					String color = "yellow";
 					if(cadenaDocumentoPaciente.contains(xedoc.nhc)){
@@ -381,14 +371,21 @@ public class MaquetadoXedoc {
 				Dispatch estiloTituloAnclaServicio = Dispatch.get(tituloAncla,"style").getDispatch();
 				Dispatch.put(estiloTituloAnclaServicio, "fontSize","30px");
 				Dispatch.put(estiloTituloAnclaServicio, "color","red");
+				Dispatch.put(estiloTituloAnclaServicio, "marginRight","30px");
 			}
 			if(valorTitle.toString().equals("Búsqueda Documentos")){
 			//	System.out.println("Encontrada ancla inicio");
 			//	System.out.println("Ancla numero: " + i + " encontrada.");
-				Dispatch.put(tituloAncla, "innerHTML",xedoc.tipoDocumento.toUpperCase());
+				
+				String nombreAcortado = xedoc.nombreDocumento;
+				if(xedoc.nombreDocumento.length() > 30){
+					nombreAcortado = xedoc.nombreDocumento.substring(0,30);
+				}
+				Dispatch.put(tituloAncla, "innerHTML",nombreAcortado.toUpperCase());
 				Dispatch estiloTituloAnclaTipo = Dispatch.get(tituloAncla,"style").getDispatch();
 				Dispatch.put(estiloTituloAnclaTipo, "fontSize","30px");
 				Dispatch.put(estiloTituloAnclaTipo, "color","red");
+				Dispatch.put(estiloTituloAnclaTipo, "marginRight","30px");
 				break;
 			}
 	
@@ -410,7 +407,7 @@ public class MaquetadoXedoc {
 		
 	//	int numInput[] = { 133, 136};
 		
-		for(int i=120, j= 0 ;i<numInputs && j < 3;i++){
+		for(int i=100, j= 0 ;i<numInputs && j < 3;i++){
 
 			Dispatch input = Dispatch.call(inputs, String.valueOf(i)).getDispatch();
 
@@ -428,6 +425,10 @@ public class MaquetadoXedoc {
 
 					Dispatch estiloInput = Dispatch.get(input,"style").getDispatch();
 					Dispatch.put(estiloInput, "backgroundColor",colorFondoCajas);
+					Dispatch.put(estiloInput,"font","bold 18px arial, sans-serif");
+					Dispatch.put(estiloInput, "paddingLeft","10px");
+					Dispatch.put(estiloInput, "width","500px");
+					Dispatch.put(estiloInput, "color","red");
 				}
 				j++;
 			}	
@@ -438,6 +439,7 @@ public class MaquetadoXedoc {
 		fecha = Dispatch.call(documento,"getElementById","{hc}dataVersion-{hc}docExt").getDispatch();
 		Dispatch estiloFecha = Dispatch.get(fecha,"style").getDispatch();
 		Dispatch.put(estiloFecha, "backgroundColor",colorFondoCajas);
+		Dispatch.put(estiloFecha,"font","bold 20px arial, sans-serif");
 	}
 }
 

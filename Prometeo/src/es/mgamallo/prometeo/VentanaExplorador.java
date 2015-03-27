@@ -246,6 +246,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         panelPdfs.setPreferredSize(new java.awt.Dimension(50, 400));
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(50, 400));
+        jScrollPane1.setFocusable(false);
 
         listaPdfs.add(menuPop);
         

@@ -114,7 +114,7 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 		if(Inicio.xedoc){
 			// Tecla * asterisco
 			if(e.getKeyCode() == 106){
-				Dispatch.call(GestionJacobXedoc.bandejaXedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
+				Dispatch.call(GestionJacobXedoc.bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
 			}
 			
 			//	Tecla º
@@ -142,7 +142,7 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			
 			//  Flecha arriba
 			if(e.getKeyCode() == 38){
-				Dispatch.call(GestionJacobXedoc.bandejaXedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.pruebaTabla() );
+				Dispatch.call(GestionJacobXedoc.bandejaXedoc1, "Navigate","javascript:" +  CadenasJavascriptXedoc.pruebaTabla() );
 				
 			}
 			

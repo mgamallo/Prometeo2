@@ -504,7 +504,10 @@ public class InterfazPrincipal implements MouseListener{
 							
 							webBrowserOperaciones.executeJavascript("document.all.ins.click()");
 							
-							String rutaCopiaCarpetaDestino = Inicio.rutaXedocOriginales + "\\" + carpetaDestino.getName() + " " + Inicio.usuario.alias;
+							Calendario calendario = new Calendario();
+							String rutaCopiaCarpetaDestino = calendario.getCarpetaFinal(false);
+							
+							rutaCopiaCarpetaDestino = rutaCopiaCarpetaDestino + "\\" + carpetaDestino.getName() + " " + Inicio.usuario.alias;
 							System.out.println("Ruta de la copia de xedoc... \n" + rutaCopiaCarpetaDestino);
 							
 							CopiarDirectorio.copiarDirectorios(carpetaDestino, new File(rutaCopiaCarpetaDestino));

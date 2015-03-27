@@ -50,6 +50,8 @@ public class InicioXedoc {
     	
     	
     	  GestionJacobXedoc.CapturaWebXedoc_nuevoproyecto();
+    	
+    	// GestionJacobXedoc.inicializa2Xedocs();
     }
 	
 	
