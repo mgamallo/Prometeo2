@@ -7,8 +7,10 @@ import com.jacob.com.Variant;
 public class MaquetadoXedoc {
 
 	public ActiveXComponent xedocDocumento;
-	public static Dispatch documento;
-	public static Dispatch fecha;
+	public Dispatch documento;
+	public Dispatch fecha;
+	public String nombreXedoc;
+	
 	
 	String colorFondo = "#10324c";
 	String colorFondoInterno = "#9db7cc";
@@ -22,10 +24,11 @@ public class MaquetadoXedoc {
 			+ "ui-widget-content ui-state-default ui-corner-left ui-autocomplete-input";
 	
 	
-	public MaquetadoXedoc(ActiveXComponent xedocDocumento) {
+	public MaquetadoXedoc(ActiveXComponent xedocDocumento, String nombreXedoc) {
 		// TODO Auto-generated constructor stub
 						
 		this.xedocDocumento  = xedocDocumento;
+		this.nombreXedoc = nombreXedoc;
 		
 		documento = Dispatch.call(xedocDocumento,"document").getDispatch();
 		
@@ -69,7 +72,13 @@ public class MaquetadoXedoc {
 		
 		Dispatch fondoPagina = Dispatch.call(documento,"getElementById","page").getDispatch();
 		Dispatch estiloFondoPagina = Dispatch.get(fondoPagina,"style").getDispatch();
-		Dispatch.put(estiloFondoPagina, "background",colorFondo);	
+		Dispatch.put(estiloFondoPagina, "background",colorFondo);
+		
+		Dispatch botonSalir = Dispatch.call(documento,"getElementById","botonSalir").getDispatch();
+		Dispatch.put(botonSalir,"innerHTML",nombreXedoc);
+		Dispatch estiloBotonSalir = Dispatch.get(botonSalir,"style").getDispatch();
+		Dispatch.put(estiloBotonSalir,"font","bold 28px arial, sans-serif");
+		Dispatch.put(estiloBotonSalir, "color","red");
 		
 	//	Dispatch fondoMain = Dispatch.call(documento,"getElementById","content").getDispatch();
 	//	Dispatch estiloFondoMain = Dispatch.get(fondoMain,"style").getDispatch();

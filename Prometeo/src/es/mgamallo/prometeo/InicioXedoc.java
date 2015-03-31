@@ -43,15 +43,15 @@ public class InicioXedoc {
         }
     	*/
     	
-    	 // GestionJacobXedoc.capturaWebXedoc();
+    	//  GestionJacobXedoc.capturaWebXedoc();
     	
     	
     	// GestionJacobXedoc.pruebaCapturaWebXedoc();
     	
     	
-    	  GestionJacobXedoc.CapturaWebXedoc_nuevoproyecto();
+    	//  GestionJacobXedoc.CapturaWebXedoc_nuevoproyecto();
     	
-    	// GestionJacobXedoc.inicializa2Xedocs();
+    	 GestionJacobXedoc.inicializa2Xedocs();
     }
 	
 	

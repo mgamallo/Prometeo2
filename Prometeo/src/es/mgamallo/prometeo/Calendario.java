@@ -7,7 +7,12 @@ public class Calendario {
 	int dia;
 	int mes;
 	String nombreMes = "";
+	String nombreDiaHabil = "";
+	String fechaHabil = "";
+	
 	int año;
+	
+	
 	
 	public Calendario() {
 		// TODO Auto-generated constructor stub
@@ -17,28 +22,15 @@ public class Calendario {
 		mes = calendario.get(Calendar.MONTH);
 		año = calendario.get(Calendar.YEAR);
 		
-		switch(mes){
-		case 0:	nombreMes = "01 Enero";break;
-		case 1:	nombreMes = "02 Febrero";break;
-		case 2:	nombreMes = "03 Marzo";break;
-		case 3:	nombreMes = "04 Abril";break;
-		case 4:	nombreMes = "05 Mayo";break;
-		case 5:	nombreMes = "06 Junio";break;
-		case 6:	nombreMes = "07 Julio";break;
-		case 7:	nombreMes = "08 Agosto";break;
-		case 8:	nombreMes = "09 Septiembre";break;
-		case 9:	nombreMes = "10 Octubre";break;
-		case 10:	nombreMes = "11 Noviembre";break;
-		case 11:	nombreMes = "12 Diciembre";break;
-		}
+		nombreMes = getNombreMes(mes);
 	}
 
-	public String getCarpetaFinal(boolean ianus){
+	public String getCarpetaFinal(boolean ianus, boolean urgencias){
 		
 		String ruta = "";
 		
 		if(ianus){
-			if(Inicio.usuario.urgencias){
+			if(urgencias){
 				 ruta = Inicio.rutaAsociadosUrgencias;
 			}
 			else{
@@ -62,7 +54,6 @@ public class Calendario {
 		do{
 			cal.add(Calendar.DAY_OF_MONTH, -1);
 			diaSemana = cal.get(Calendar.DAY_OF_WEEK);
-			System.out.println(diaSemana);
 			if(diaSemana != 1 && diaSemana != 7 ){
 				noEncontrado = false;
 			}
@@ -70,25 +61,98 @@ public class Calendario {
 		while(noEncontrado );
 		
 		int diaHabil = cal.get(Calendar.DAY_OF_MONTH);
+		int diaHabilSemana = cal.get(Calendar.DAY_OF_WEEK);
+		mes = cal.get(Calendar.MONTH);
+		año = cal.get(Calendar.YEAR);
 		
-		/*
-		for(int i=1;i<8;i++){
-			System.out.print("Dia ... ");
-			dia = cal.get(Calendar.DAY_OF_MONTH);
-			System.out.println(dia);
-			System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-			cal.add(Calendar.DAY_OF_MONTH, -1);
+		nombreMes = getNombreMes(mes);
+
+		
+		String diaString = "";
+		if(diaHabil <10){
+			diaString = "0";
 		}
-		 */
-		System.out.println(diaHabil);
+		diaString += diaHabil;
+		
+		String mesString = "";
+		int mess = mes + 1;
+		if(mess < 10){
+			mesString = "0";
+		}
+		mesString += mess;
+		
+		fechaHabil = diaString + "/" + mesString + "/" + año;
+		
+	//	System.out.println("Dia habil " + diaHabilSemana);
+		nombreDiaHabil = getDiaSemana(diaHabilSemana);
+		
+		System.out.println("Ultimo día hábil " + diaHabil);
 		return diaHabil;
 	}
+	
+	private String getNombreMes(int mes){
+		
+		String nombre = "";
+		
+		switch(mes){
+		case 0:	nombre = "01 Enero";break;
+		case 1:	nombre = "02 Febrero";break;
+		case 2:	nombre = "03 Marzo";break;
+		case 3:	nombre = "04 Abril";break;
+		case 4:	nombre = "05 Mayo";break;
+		case 5:	nombre = "06 Junio";break;
+		case 6:	nombre = "07 Julio";break;
+		case 7:	nombre = "08 Agosto";break;
+		case 8:	nombre = "09 Septiembre";break;
+		case 9:	nombre = "10 Octubre";break;
+		case 10:	nombre = "11 Noviembre";break;
+		case 11:	nombre = "12 Diciembre";break;
+		}
+		
+		return nombre;
+	}
+	
+	private String getDiaSemana(int d){
+		
+		String cadena = "";
+		switch (d) {
+		case 1:
+			cadena = "Domingo";
+			break;
+		case 2:
+			cadena = "Lunes";
+			break;
+		case 3:
+			cadena = "Martes";
+			break;
+		case 4:
+			cadena = "Miércoles";
+			break;
+		case 5:
+			cadena = "Jueves";
+			break;
+		case 6:
+			cadena = "Viernes";
+			break;
+		case 7:
+			cadena = "Sábado";
+			break;
+
+		default:
+			break;
+		}
+		
+		System.out.println("El dia es " + cadena);
+		
+		return cadena;
+	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		Calendario calendario = new Calendario();
-		System.out.println(calendario.getCarpetaFinal(false));
+		System.out.println(calendario.getCarpetaFinal(false,true));
 		calendario.getUltimoDiaHabil();
 	}
 

@@ -101,6 +101,9 @@ public class Inicio {
 	static public boolean carpetaXedocFirmado = false;
 	static public String contestacionDudas = "";
 	
+	static public Estadistica estadistica;
+	
+	
 	/**
 	 * @param args
 	 */
@@ -191,6 +194,9 @@ public class Inicio {
 		panelPrincipal = new InterfazPrincipal("Prometeo 1.0.0", new Color(255,222,173), false);
 	
 		CapturaRatonYTeclado capturaTeclado = new CapturaRatonYTeclado();
+		
+		// Carga estadisticas. De momento del día anterior.
+		estadistica = new Estadistica();
 		
 		// Borrar
 		Detecta.detectaDudasJavier();

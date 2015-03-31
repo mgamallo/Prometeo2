@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Estadísticas</title>
+
+<script type="text/javascript">
+	function getEstadisticas(){
+		sendNSCommand("cargarEstadisticas");
+	}
+</script>
+
+<style>
+	span{
+		color: red;
+	}
+</style>
+</head>
+
+
+
+<body onload="getEstadisticas()">
+
+En construcción...
+<br/>
+<p>
+</p>
+<br/>
+<div>Estadística del <span id='dia'> ayer</span>
+</div>
+<br/>
+<div>Pdfs de documentación asociados con IANUS: <span id='ianusDoc'></span></div>
+<div>Pdfs de urgencias asociados con IANUS: <span id='ianusUrg'></span></div>
+<div>Pdfs asociados con XEDOC: <span id='xedoc'></span></div>
+<br/>
+<div> Pdfs totales: <span id='total'></span></div>
+
+
+
+</body>
+</html>

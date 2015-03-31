@@ -119,7 +119,9 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			
 			//	Tecla º
 			if(e.getKeyCode() == 92){
-				Dispatch.call(Inicio.documento1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf2() );
+	//			Dispatch.call(Inicio.documento1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf2() );
+				GestionJacobXedoc.captura2XedocIndividuales();
+			
 			}
 			
 			//	Tecla Avzar pagina
@@ -131,7 +133,7 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 					
 					 Thread.sleep(200);
 				
-					 MaquetadoXedoc maquetado = new MaquetadoXedoc(Inicio.documento1.xedoc);
+					 MaquetadoXedoc maquetado = new MaquetadoXedoc(Inicio.documento1.xedoc, "Xedoc 1");
 				
 				}catch(InterruptedException e1) {
 					// TODO Auto-generated catch block

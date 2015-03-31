@@ -168,7 +168,7 @@ public class MoverCarpetas {
 		// Obsoleto. Cambiado para que se separe por dias
 		// rutaAsociados = devuelveFecha(rutaAsociados);
 		Calendario calendario = new Calendario();
-		rutaAsociados = calendario.getCarpetaFinal(true);
+		rutaAsociados = calendario.getCarpetaFinal(true, Inicio.usuario.urgencias);
 		System.out.println("Ruta asociados: " + rutaAsociados);
 		
 		File directorio = new File(rutaAsociados);

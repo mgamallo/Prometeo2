@@ -5,17 +5,59 @@ import java.io.File;
 public class Estadistica {
 
 	Calendario calendario;
+	EstadisticaDia estadisticaDiaria;
+	
 	
 	public Estadistica() {
 		// TODO Auto-generated constructor stub
 		
 		calendario = new Calendario(); 
+		estadisticaDiaria = new EstadisticaDia(calendario);
 		
 	}
 	
-	private int getDocumentosAsociados(){
+
+	
+	
+	
+
+
+	
+	public static void main(String args[]){
+		new Estadistica();
+	}
+	
+}
+
+class EstadisticaDia{
+	
+	int numeroArchivosSubidosIanus;
+	int numeroArchivosSubidosIanusUrg;
+	int numeroArchivosSubidosXedoc;
+	
+	int diaHabil;
+	int mesHabil;
+	int añoHabil;
+	
+	Calendario calendario;
+	
+	public EstadisticaDia(Calendario calendario) {
+		// TODO Auto-generated constructor stub
 		
-		String ruta = calendario.getCarpetaFinal(true); 
+		this.calendario = calendario;
+		diaHabil = this.calendario.getUltimoDiaHabil();
+		
+		numeroArchivosSubidosIanus = getNumeroDeDocumentosSubidosDia(true, false);
+		numeroArchivosSubidosIanusUrg = getNumeroDeDocumentosSubidosDia(true, true);
+		numeroArchivosSubidosXedoc = getNumeroDeDocumentosSubidosDia(false, true);
+	
+	} 
+	
+	private int getNumeroDeDocumentosSubidosDia(boolean ianus, boolean urgencias){
+		
+		int numeroArchivos = 0;
+		
+		String ruta = calendario.getCarpetaFinal(ianus, urgencias); 
 		
 		File rutaHoy = new File(ruta);
 		File rutaMes = rutaHoy.getParentFile();
@@ -24,24 +66,28 @@ public class Estadistica {
 		
 		String rutaFinal = rutaMes.getAbsolutePath() + "\\" + ultimoDiaHabil;
 		
-		File directorioRutaFinal = new File(rutaFinal);
+	//	System.out.println("Ruta final del ultimo dia habil: ");
+	//	System.out.println(rutaFinal);
 		
+		numeroArchivos = getNumeroFicherosDirectorio( new File(rutaFinal));
 		
-		return 0;
+		return numeroArchivos;
 	}
 	
-	private int getDocumentosAsociadosUrgencias(){
+	private int getNumeroFicherosDirectorio(File directorio){
 		
-		String ruta = calendario.getCarpetaFinal(true); 
+		int numeroFicheros = 0;
 		
-		return 0;
+		File fichero[] = directorio.listFiles();
+		for(int i=0;i<fichero.length;i++){
+			if(fichero[i].isDirectory()){
+				numeroFicheros = numeroFicheros + getNumeroFicherosDirectorio(fichero[i]);
+			}
+			else{
+				numeroFicheros++;
+			}
+		}
+		
+		return numeroFicheros;
 	}
-	
-	private int getDocumentosXedoc(){
-		
-		String ruta = calendario.getCarpetaFinal(false); 
-		
-		return 0;
-	}
-
 }

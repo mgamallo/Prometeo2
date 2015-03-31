@@ -113,6 +113,7 @@ public class InterfazPrincipal implements MouseListener{
 	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
 	final String DIR_USUARIO = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuario.html";
 	static final String DIR_SALIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
+	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/estadistica.html";
 
 	
 	/*
@@ -352,6 +353,40 @@ public class InterfazPrincipal implements MouseListener{
 						panelActivo = NORMAS;
 						Inicio.listaNormasIanus = Txt.leerNormasTxt(Inicio.rutaNormas);
 					}
+					else if(command.equals("docSubidos")){
+						
+						webBrowserOperaciones.navigate(DIR_ESTADISTICAS);
+						
+						
+/*
+						int docIanus = estadistica.estadisticaDiaria.numeroArchivosSubidosIanus;
+						int docIanusUrg = estadistica.estadisticaDiaria.numeroArchivosSubidosIanusUrg;
+						int docXedoc = estadistica.estadisticaDiaria.numeroArchivosSubidosXedoc;
+*/						
+					}
+					else if(command.equals("cargarEstadisticas")){
+						
+						int total = Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanus 
+									+ Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanusUrg
+									+ Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosXedoc;
+						
+										
+						String cadenaJavascript = 
+								"var dia = document.getElementById('dia');" + LS +
+								"var ianusDoc = document.getElementById('ianusDoc');" + LS +
+								"var ianusUrg = document.getElementById('ianusUrg');" + LS +
+								"var xedoc = document.getElementById('xedoc');" + LS +
+								"var total = document.getElementById('total');" + LS +
+								"dia.innerHTML = '" + Inicio.estadistica.calendario.nombreDiaHabil + " " + Inicio.estadistica.calendario.fechaHabil + "';"
+										+ "ianusDoc.innerHTML = '" + Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanus +"';" + LS
+										+ "ianusUrg.innerHTML = '" + Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanusUrg +"';" + LS
+										+ "xedoc.innerHTML = '" + Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosXedoc +"';" + LS
+										+ "total.innerHTML = '" + total +"';" + LS
+										+ "";
+						
+						webBrowserOperaciones.executeJavascript(cadenaJavascript);
+						
+					}
 					else if(command.equals("carrusel")){
 						if(inicioPrograma){
 							String codigo = "";
@@ -505,7 +540,7 @@ public class InterfazPrincipal implements MouseListener{
 							webBrowserOperaciones.executeJavascript("document.all.ins.click()");
 							
 							Calendario calendario = new Calendario();
-							String rutaCopiaCarpetaDestino = calendario.getCarpetaFinal(false);
+							String rutaCopiaCarpetaDestino = calendario.getCarpetaFinal(false,Inicio.usuario.urgencias);
 							
 							rutaCopiaCarpetaDestino = rutaCopiaCarpetaDestino + "\\" + carpetaDestino.getName() + " " + Inicio.usuario.alias;
 							System.out.println("Ruta de la copia de xedoc... \n" + rutaCopiaCarpetaDestino);
@@ -809,6 +844,11 @@ public class InterfazPrincipal implements MouseListener{
 
 		// Panel Barra del titulo
 
+		Fecha fecha = new Fecha();
+		String fechaTexto = "   " + fecha.nombreDia.toUpperCase() + ", "
+				+ fecha.dia + " DE " + fecha.nombreMes.toUpperCase() + " DE " + fecha.año;
+		
+		
 		labelFecha = new JLabel();
 		labelMaximizar = new JLabel();
 		labelMinimizar = new JLabel();
@@ -820,7 +860,7 @@ public class InterfazPrincipal implements MouseListener{
 
 		labelFecha.setBackground(new java.awt.Color(0, 0, 0));
 		labelFecha.setForeground(new java.awt.Color(255, 255, 255));
-		labelFecha.setText("  JUEVES, 18 DE SEPTIEMBRE DE 2014");
+		labelFecha.setText(fechaTexto);
 
 		labelMaximizar.setBackground(new java.awt.Color(0, 0, 0));
 		labelMaximizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N

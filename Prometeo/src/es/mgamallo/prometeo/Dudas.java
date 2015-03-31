@@ -60,7 +60,9 @@ public class Dudas {
 	static public void abrirCarpetaXedocOriginales(){
 		
 		Calendario calendario = new Calendario();
-		String rutaCarpetaXedocOriginales = calendario.getCarpetaFinal(false);
+		String rutaCarpetaXedocOriginales = calendario.getCarpetaFinal(false, true);
+		
+		System.out.println(rutaCarpetaXedocOriginales);
 		
 		File f = new File(rutaCarpetaXedocOriginales);
 		if(f.exists()){

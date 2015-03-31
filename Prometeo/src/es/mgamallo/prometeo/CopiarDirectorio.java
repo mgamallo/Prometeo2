@@ -39,7 +39,7 @@ public class CopiarDirectorio {
                 if (d1.isDirectory()){
                         //Comprobamos si existe el directorio destino, si no lo creamos
                         if (!d2.exists()){                              
-                                d2.mkdir();
+                                d2.mkdirs();
                                 System.out.println("Creando directorio " + d2.toString());
                         }
 
