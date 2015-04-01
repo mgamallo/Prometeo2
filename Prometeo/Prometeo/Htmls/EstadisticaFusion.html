@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Estadísticas Fusion</title>
+
+<script type="text/javascript">
+	function getEstadisticas(){
+		sendNSCommand("cargarEstadisticas");
+	}
+</script>
+
+<script type="text/javascript" src="fusioncharts/fusioncharts.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.carbon.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.ocean.js"></script>
+
+<script type="text/javascript">
+
+	FusionCharts.ready(function() {
+		var revenueChart0 = new FusionCharts({
+			type : "column2d",
+			renderAt : "chartContainer",
+			width : "620",
+			height : "310",
+			dataFormat : "json",
+			dataSource : {
+				"chart" : {
+					"caption" : "Gráfica Semanal Total",
+					"subCaption" : "Marzo",
+				//	"xAxisName" : "Month",
+				//	"yAxisName" : "Revenues (In USD)",
+					"theme" : "zune"
+				},
+				"data" : [ {
+					"label" : "Lunes",
+					"value" : "1500"
+				}, {
+					"label" : "Martes",
+					"value" : "1700"
+				}, {
+					"label" : "Miercoles",
+					"value" : "1350"
+				}, {
+					"label" : "Jueves",
+					"value" : "1100"
+				}, {
+					"label" : "Viernes",
+					"value" : "1400"
+				}]
+			}
+
+		});
+		revenueChart0.render("chartContainer");
+	});
+</script>
+
+<script type="text/javascript">
+FusionCharts.ready(function() {
+	var revenueChart1 = new FusionCharts({
+		type : "pie3d",
+		renderAt : "chartContainer1",
+		width : "620",
+		height : "310",
+		dataFormat : "json",
+		dataSource :  {
+		    "chart": {
+		        "caption": "Distribución diaria",
+		     //   "palette": "2",
+		        "animation": "1",
+		        "formatnumberscale": "1",
+		        "decimals": "0",
+		        "showLegend": "1",
+		        "legendBorderAlpha": "0",
+		      //  "numberprefix": "$",
+		        "pieslicedepth": "10",
+		        "startingangle": "200",
+		        "showBorder": "0",
+		        "showHoverEffect": "1",
+		        "toolTipColor": "#ffffff",
+		        "toolTipBgColor": "#000000",
+		        "toolTipBgAlpha": "80",
+		        "toolTipBorderRadius": "2",
+		        "toolTipPadding": "5",
+		        "use3DLighting": "1",
+		        "radius3D": "40"
+		    },
+		    "data": [
+		        {
+		            "label": "Xedoc",
+		            "value": "150",
+		            "issliced": "1",
+		            "color": "#FA9000"
+		        },
+		        {
+		            "label": "Ianus Doc.",
+		            "value": "1200",
+		            "issliced": "1",
+		            "color": "#C40000"
+		        },
+		        {
+		            "label": "Ianus Urg.",
+		            "value": "320",
+		            "issliced": "0",
+	            	"color": "#750303"
+		        }
+		    ]
+		}
+
+		});	
+		revenueChart1.render("chartContainer1");
+	});
+
+</script>
+
+<style>
+	span{
+		color: red;
+	}
+</style>
+</head>
+
+
+
+<body onload="getEstadisticas()">
+
+En construcción...
+<br/>
+<p>
+</p>
+<br/>
+<div>Estadística del <span id='dia'> ayer</span>
+</div>
+<br/>
+<div>Pdfs de documentación asociados con IANUS: <span id='ianusDoc'></span></div>
+<div>Pdfs de urgencias asociados con IANUS: <span id='ianusUrg'></span></div>
+<div>Pdfs asociados con XEDOC: <span id='xedoc'></span></div>
+<br/>
+<div> Pdfs totales: <span id='total'></span></div>
+
+<br>
+<br/>
+<div id="chartContainer">FusionCharts XT will load here!</div>
+<br>
+<br/>
+<div id="chartContainer1">FusionCharts XT will load here!</div>
+<br>
+<br/>
+<div id="chartContainer2">FusionCharts XT will load here!</div>
+</body>
+</html>

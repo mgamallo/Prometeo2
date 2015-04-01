@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Estadísticas</title>
+
+<script type="text/javascript" src="js/jschartscc.js"></script>
+
+<script type="text/javascript">
+	function getEstadisticas(){
+		sendNSCommand("cargarEstadisticas");
+	}
+</script>
+
+<style>
+	span{
+		color: red;
+	}
+	
+	#circulo{
+		width: 620px;
+		height: 321px;
+		background: black;
+		float: right;
+	}
+</style>
+</head>
+
+
+
+<body onload="getEstadisticas()">
+
+En construcción...
+<br/>
+<p>
+</p>
+<br/>
+<div>Estadística del <span id='dia'> ayer</span>
+</div>
+<br/>
+<div>Pdfs de documentación asociados con IANUS: <span id='ianusDoc'></span></div>
+<div>Pdfs de urgencias asociados con IANUS: <span id='ianusUrg'></span></div>
+<div>Pdfs asociados con XEDOC: <span id='xedoc'></span></div>
+<br/>
+<div> Pdfs totales: <span id='total'></span></div>
+
+
+<div id="graph">Loading graph...</div>
+
+<script type="text/javascript">
+	var myData = new Array(['Lunes', 137], ['Martes', 222], ['Miercoles', 233], ['Jueves', 160], ['Viernes', 234]);
+	var colors = ['#2D6B96', '#327AAD', '#3E90C9', '#55A7E3', '#60B6F0'];
+	var myChart = new JSChart('graph', 'bar');
+	myChart.setDataArray(myData);
+	myChart.colorizeBars(colors);
+	myChart.setTitle('Gráfica semanal Total');
+	myChart.setTitleColor('#8E8E8E');
+	myChart.setAxisNameX('');
+	myChart.setAxisNameY('');
+	myChart.setAxisColor('#C4C4C4');
+	myChart.setAxisNameFontSize(16);
+	myChart.setAxisNameColor('#999');
+	myChart.setAxisValuesColor('#777');
+	myChart.setAxisColor('#B5B5B5');
+	myChart.setAxisWidth(1);
+	myChart.setBarValuesColor('#2F6D99');
+	myChart.setBarOpacity(0.5);
+	myChart.setAxisPaddingTop(60);
+	myChart.setAxisPaddingBottom(40);
+	myChart.setAxisPaddingLeft(45);
+	myChart.setTitleFontSize(11);
+	myChart.setBarBorderWidth(0);
+	myChart.setBarSpacingRatio(50);
+	myChart.setBarOpacity(0.9);
+	myChart.setFlagRadius(6);
+	myChart.setTooltip(['Martes', 'U.S.A and Canada']);
+	myChart.setTooltipPosition('nw');
+	myChart.setTooltipOffset(3);
+	myChart.setSize(616, 321);
+	myChart.setBackgroundImage('chart_bg.jpg');
+	myChart.draw();
+</script>
+
+
+<div id="circulo" >Loading graph...</div>
+
+<script type="text/javascript">
+	var myData = new Array(['Ianus Doc', 42], ['Ianus Urg', 38], ['Xedoc', 10]);
+	var colors = ['#C40000', '#750303' /* ,  '#F9ECA2' */ , '#FA9000' /* , '#FA5400' */];
+	var myChart = new JSChart('circulo', 'pie');
+	myChart.setDataArray(myData);
+	myChart.colorizePie(colors);
+	myChart.setTitle('Distribución semanal de los documentos subidos');
+	myChart.setTitleColor('#8E8E8E');
+	myChart.setTitleFontSize(11);
+	myChart.setTextPaddingTop(30);
+	myChart.setSize(616, 321);
+	myChart.setPiePosition(308, 170);
+	myChart.setPieRadius(85);
+	myChart.setPieUnitsColor('#555');
+	myChart.setBackgroundImage('chart_bg.jpg');
+	myChart.draw();
+</script>
+
+<p id='cuadro'>
+Hola
+<br>
+<br>
+Hola
+</p>
+
+</body>
+</html>

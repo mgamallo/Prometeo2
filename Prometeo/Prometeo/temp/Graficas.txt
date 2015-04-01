@@ -1,0 +1,19 @@
+Gráficos Fusion Charts
+
+Grafico de barras con dos series (2014, 2015). Mensual. Se puede ocultar una de las series pinchando sobre la leyenda.
+Grafico de barras. Se pulsa sobre una, y aparece otro gráfico con la distribución interna de la barra.
+Gráfica con movimiento
+
+
+Grafica barras. Dias semana, cada día tres barras. Se pueden ocultar.
+Grafica barras. Dias semana. Al pinchar se abre otro gráfico.
+
+Grafica de lineas. Que marque el máximo.
+
+Grafica con zoom.
+
+Un gráfico de burbuja: En estudio.
+
+Gráfica de pirámide. Complementaria a una gráfica de circulo.
+
+Gráfico de circulo multinivel. Xedoc. Dentro de xedoc los 3 documentos más subidos.
