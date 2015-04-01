@@ -69,7 +69,9 @@ class EstadisticaDia{
 	//	System.out.println("Ruta final del ultimo dia habil: ");
 	//	System.out.println(rutaFinal);
 		
-		numeroArchivos = getNumeroFicherosDirectorio( new File(rutaFinal));
+		File ficheroRutaFinal = new File(rutaFinal);
+		if(ficheroRutaFinal.exists())
+			numeroArchivos = getNumeroFicherosDirectorio( ficheroRutaFinal);
 		
 		return numeroArchivos;
 	}

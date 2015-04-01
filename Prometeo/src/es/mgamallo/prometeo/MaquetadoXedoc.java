@@ -331,10 +331,17 @@ public class MaquetadoXedoc {
 		xedoc.seleccionarServicio();
 		xedoc.seleccionarDocumento();
 		xedoc.putFecha(fecha);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		xedoc.getFocus();
+		
 	}
 	
-
-
 	
 	public void putNHC(XedocIndividualJacob xedoc){
 		
@@ -450,6 +457,7 @@ public class MaquetadoXedoc {
 		Dispatch.put(estiloFecha, "backgroundColor",colorFondoCajas);
 		Dispatch.put(estiloFecha,"font","bold 20px arial, sans-serif");
 	}
+	
 }
 
 

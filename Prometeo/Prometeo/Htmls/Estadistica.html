@@ -4,6 +4,13 @@
 <meta charset="ISO-8859-1">
 <title>Estadísticas</title>
 
+<script type="text/javascript" src="fusioncharts/fusioncharts.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.carbon.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.ocean.js"></script>
+
+
 <script type="text/javascript">
 	function getEstadisticas(){
 		sendNSCommand("cargarEstadisticas");
@@ -15,6 +22,110 @@
 		color: red;
 	}
 </style>
+
+<script type="text/javascript">
+
+	FusionCharts.ready(function() {
+		var revenueChart0 = new FusionCharts({
+			type : "column2d",
+			renderAt : "chartContainer",
+			width : "620",
+			height : "310",
+			dataFormat : "json",
+			dataSource : {
+				"chart" : {
+					"caption" : "Gráfica Semanal Total",
+					"subCaption" : "Marzo",
+				//	"xAxisName" : "Month",
+				//	"yAxisName" : "Revenues (In USD)",
+					"theme" : "zune"
+				},
+				"data" : [ {
+					"label" : "Lunes",
+					"value" : "1500"
+				}, {
+					"label" : "Martes",
+					"value" : "1700"
+				}, {
+					"label" : "Miercoles",
+					"value" : "1350"
+				}, {
+					"label" : "Jueves",
+					"value" : "1100"
+				}, {
+					"label" : "Viernes",
+					"value" : "1400"
+				}]
+			}
+
+		});
+	//	revenueChart0.render("chartContainer");
+	});
+</script>
+
+<script type="text/javascript">
+
+var xedocf = "200";
+var ianusDocf = "1200";
+var ianusUrgf = "600";
+
+var grafico = new FusionCharts.ready(function() {
+	var revenueChart1 = new FusionCharts({
+		type : "pie3d",
+		renderAt : "chartContainer1",
+		width : "620",
+		height : "310",
+		dataFormat : "json",
+		dataSource :  {
+		    "chart": {
+		        "caption": "Distribución diaria",
+		     //   "palette": "2",
+		        "animation": "0",
+		        "formatnumberscale": "1",
+		        "decimals": "0",
+		        "showLegend": "1",
+		        "legendBorderAlpha": "0",
+		      //  "numberprefix": "$",
+		        "pieslicedepth": "10",
+		        "startingangle": "200",
+		        "showBorder": "0",
+		        "showHoverEffect": "1",
+		        "toolTipColor": "#ffffff",
+		        "toolTipBgColor": "#000000",
+		        "toolTipBgAlpha": "80",
+		        "toolTipBorderRadius": "2",
+		        "toolTipPadding": "5",
+		        "use3DLighting": "1",
+		        "radius3D": "40"
+		    },
+		    "data": [
+		        {
+		            "label": "Xedoc",
+		            "value": xedocf,
+		            "issliced": "1",
+		            "color": "#FA9000"
+		        },
+		        {
+		            "label": "Ianus Doc.",
+		            "value": ianusDocf,
+		            "issliced": "1",
+		            "color": "#C40000"
+		        },
+		        {
+		            "label": "Ianus Urg.",
+		            "value": ianusUrgf,
+		            "issliced": "0",
+	            	"color": "#750303"
+		        }
+		    ]
+		}
+
+		});	
+		//revenueChart1.render("chartContainer1");
+	});
+
+</script>
+
 </head>
 
 
@@ -35,7 +146,8 @@ En construcción...
 <br/>
 <div> Pdfs totales: <span id='total'></span></div>
 
-
+<div id="chartContainer"></div>
+<div id="chartContainer1"></div>
 
 </body>
 </html>

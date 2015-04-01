@@ -22,6 +22,10 @@ public class GestionJacobXedoc {
 	public static int RANGO_DIAS_CONSULTA = 45;
 	
 	
+	public static boolean xedoc1visible;
+	
+	private static int borrar = 1;
+	
 	public static ActiveXComponent capturaUltimoExplorer(){
         int iCount = InicioXedoc.oWindows.getProperty("Count").getInt();
         System.out.println("iCount: " + iCount);  
@@ -33,8 +37,21 @@ public class GestionJacobXedoc {
         boolean bVisible = oWindow.getProperty("Visible").getBoolean();
         System.out.println("i: " + (iCount-1) + ", loc: " + sLocName + ", name: " + sFullName + ", isIE: " + isIE + ", vis: " + bVisible);
 
-
-       	Inicio.documento1.xedoc = oWindow;
+        if(borrar == 1){
+          	Inicio.documento1.xedoc = oWindow;
+           	
+           	Dispatch doc = Dispatch.call(Inicio.documento1.xedoc, "document").getDispatch();
+           	Dispatch.put(doc,"title","Xedoc 1");
+           	borrar++;
+        }
+        
+        if(borrar == 2){
+          	Inicio.documento2.xedoc = oWindow;
+           	
+           	Dispatch doc = Dispatch.call(Inicio.documento2.xedoc, "document").getDispatch();
+           	Dispatch.put(doc,"title","Xedoc 2");
+           	borrar = 1;
+        }
 
         return oWindow;
 	}
@@ -60,6 +77,16 @@ public class GestionJacobXedoc {
             boolean bVisible = oWindow.getProperty("Visible").getBoolean();
             System.out.println("i: " + i + ", loc: " + sLocName + ", name: " + sFullName + ", isIE: " + isIE + ", vis: " + bVisible);
 
+            Dispatch doc = Dispatch.call(oWindow, "document").getDispatch();
+            String titulo = Dispatch.get(doc, "title").getString();
+            
+            if(titulo.contains("Bandeja 1")){
+            	System.out.println("Tendría que ser el 1");
+            }
+            if(titulo.contains("Bandeja 2")){
+            	System.out.println("Tendría que ser el 2");
+            }            
+            
             if(j==1){
             	Inicio.documento1.xedoc = oWindow;
              }
@@ -132,7 +159,6 @@ public class GestionJacobXedoc {
             if(j==1){
             	bandejaXedoc1 = oWindow;
         		Dispatch.call(bandejaXedoc1, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
-
             }
             if(j==2){
             	// Inicio.paciente2.xedoc = oWindow;
@@ -246,6 +272,8 @@ public class GestionJacobXedoc {
 				break;
 			}
 		}
+		
+		
 	}
 	
 	public static void formateaIanus(ActiveXComponent ianus){
@@ -287,6 +315,7 @@ public class GestionJacobXedoc {
 
 		Dispatch documento = Dispatch.call(bandejaXedoc,"document").getDispatch();
 		
+		
 		Dispatch entornoLogin = Dispatch.call(documento,"getElementById","entornoLogin").getDispatch();
 		Dispatch.put(entornoLogin,"innerHTML",nombreBandeja);
 		Dispatch estiloEntornoLogin = Dispatch.get(entornoLogin,"style").getDispatch();
@@ -298,13 +327,17 @@ public class GestionJacobXedoc {
 		Dispatch header = Dispatch.call(documento, "getElementById","header").getDispatch();
 		Dispatch estiloHeader = Dispatch.get(header, "style").getDispatch();
 		
-		if(nombreBandeja.equals("Bandeja Xedoc 1"))
+		if(nombreBandeja.equals("Bandeja Xedoc 1")){
 			Dispatch.put(estiloHeader, "background","black");	
+			Dispatch.put(documento,"title","Bandeja 1");
+		}
 		else{
 			Dispatch.put(estiloHeader, "background","black");	
 			Dispatch.put(estiloEntornoLogin, "color","red");
+			Dispatch.put(documento,"title","Bandeja 2");
 		}
 	}
+	
 	
 	public static void capturaBandeja(ActiveXComponent bandejaXedoc, int filaInicial){
 		
@@ -394,7 +427,14 @@ public class GestionJacobXedoc {
 				+ "";
 		
 		Dispatch.call(bandejaXedoc, "Navigate","javascript:" +  cadena );
-				
+		
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		capturaUltimoExplorer();
 	}
 	
 	
@@ -411,11 +451,60 @@ public class GestionJacobXedoc {
 			 		
 			 MaquetadoXedoc maquetado2 = new MaquetadoXedoc(Inicio.documento2.xedoc, "Xedoc 2");
 		
+			 
+			 xedoc1visible = true;
+			 
 		}catch(InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
+	
+	
+	public static void aceptar(){
+		
+		ActiveXComponent xedocActivo;
+		
+		if(xedoc1visible){
+			xedocActivo = Inicio.documento1.xedoc;
+		}
+		else{
+			xedocActivo = Inicio.documento2.xedoc;
+		}
+		
+		System.out.println("clickeando");
+		
+		Dispatch documento = Dispatch.call(xedocActivo, "document").getDispatch();
+		Dispatch enviar = Dispatch.call(documento,"getElementById","submitFormFirmar").getDispatch();
+		Variant var = Dispatch.call(enviar,"click");
+		
+		System.out.println("Empezando robot");
+		try {
+			Robot robot = new Robot();
+			robot.delay(5000);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			robot.delay(200);
+			System.out.println("Presionado enter");
+			
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+/******************************************************************/	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

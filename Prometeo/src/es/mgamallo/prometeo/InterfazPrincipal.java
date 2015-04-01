@@ -386,6 +386,38 @@ public class InterfazPrincipal implements MouseListener{
 						
 						webBrowserOperaciones.executeJavascript(cadenaJavascript);
 						
+						/*
+						cadenaJavascript = ""
+								+ ""
+								+ "FusionCharts.ready(function() {" + LS +
+									"var revenueChart1 = new FusionCharts({" + LS +
+										"type : 'pie3d', renderAt : 'chartContainer1'," + LS +
+										"width : '620', height : '310', dataFormat : 'json'," + LS +
+										"dataSource :  {" + LS +
+										    "'chart': { " + LS +
+										        "'caption': 'Distribución diaria','animation': '0','formatnumberscale': '1'," + LS +
+										        "'decimals': '0', 'showLegend': '1', 'legendBorderAlpha': '0'," + LS +
+										        "'pieslicedepth': '10', 'startingangle': '200', 'showBorder': '0'," + LS +
+										        "'showHoverEffect': '1', 'toolTipColor': '#ffffff', 'toolTipBgColor': '#000000'," + LS +
+										        "'toolTipBgAlpha': '80', 'toolTipBorderRadius': '2', 'toolTipPadding': '5'," + LS +
+										        "'use3DLighting': '1', 'radius3D': '40'}," + LS +
+										    "'data': [" + LS +
+										        "{ 'label': 'Xedoc', 'value': '" + Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosXedoc + "', " + LS +
+										            "'issliced': '1', 'color': '#FA9000' }," + LS +
+										        "{ 'label': 'Ianus Doc.', 'value': '" + Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanus + "', " + LS +
+										            "'issliced': '1', 'color': '#C40000' }," + LS +
+										        "{ 'label': 'Ianus Urg.', 'value': '" + Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanusUrg + "', " + LS +
+										            "'issliced': '0', 'color': '#750303' }" + LS +
+										            "]" + LS +
+										  "}" + LS +
+									"});" + LS +	
+									"revenueChart1.render('chartContainer1');" + LS +
+								"});'" + LS 
+								+ "";
+						 
+						
+						 webBrowserOperaciones.executeJavascript(cadenaJavascript);
+						 */
 					}
 					else if(command.equals("carrusel")){
 						if(inicioPrograma){

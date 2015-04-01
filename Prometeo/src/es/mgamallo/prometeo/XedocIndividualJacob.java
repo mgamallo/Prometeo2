@@ -461,4 +461,8 @@ public class XedocIndividualJacob {
 		return tipoNodo;
 	}
 
+	public void getFocus(){
+		Dispatch enviar = Dispatch.call(documento, "getElementById","submitFormFirmar").getDispatch();
+		Dispatch.get(enviar,"focus");
+	}
 }
