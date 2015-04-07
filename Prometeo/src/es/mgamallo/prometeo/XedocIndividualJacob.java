@@ -107,6 +107,7 @@ public class XedocIndividualJacob {
 		
 		if(id.equals("HOS") || id.equals("URG") || id.equals("QUI")){
 			String nombreId = id + "-noSeleccionable-rama";
+			System.out.println(nombreId);
 			Dispatch nodo = Dispatch.call(documento, "getElementById",nombreId).getDispatch();
 			Dispatch nodoLis = Dispatch.call(nodo, "getElementsByTagName","li").getDispatch();
 			System.out.println("Numero de uls...." + Dispatch.get(nodoLis,"length").toString());

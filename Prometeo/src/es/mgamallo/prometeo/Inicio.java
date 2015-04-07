@@ -87,7 +87,7 @@ public class Inicio {
 
 	static public boolean ocr = true;
 	static public boolean ianus1onTop = true;
-
+	static public boolean xedoc1onTop = true;
 
 	static public Gestion2Ianus gestion;
 	
@@ -103,6 +103,7 @@ public class Inicio {
 	
 	static public Estadistica estadistica;
 	
+	static public VentanaControlXedoc ventanaControlXedoc; 
 	
 	/**
 	 * @param args

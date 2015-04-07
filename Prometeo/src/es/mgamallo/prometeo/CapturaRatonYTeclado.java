@@ -1,6 +1,7 @@
 package es.mgamallo.prometeo;
 
 import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -114,7 +115,39 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 		if(Inicio.xedoc){
 			// Tecla * asterisco
 			if(e.getKeyCode() == 106){
-				Dispatch.call(GestionJacobXedoc.bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
+				
+				if(InicioXedoc.antiguo)
+					Dispatch.call(GestionJacobXedoc.bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
+				else{
+					if(Inicio.xedoc1onTop){
+
+						Dispatch.call(Inicio.documento1.xedoc,"visible",false);
+						Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.DARK_GRAY);
+						try {
+							Thread.sleep(200);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						Dispatch.call(Inicio.documento2.xedoc,"visible",true);
+						Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
+						Inicio.xedoc1onTop = false;
+					}
+					else{
+
+						Dispatch.call(Inicio.documento1.xedoc,"visible",false);
+						Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.DARK_GRAY);
+						try {
+							Thread.sleep(200);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						Dispatch.call(Inicio.documento2.xedoc,"visible",true);
+						Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
+						Inicio.xedoc1onTop = false;
+					}
+				}
 			}
 			
 			//	Tecla º

@@ -7,14 +7,14 @@ import java.util.TreeMap;
 import com.jacob.activeX.ActiveXComponent;
 
 public class InicioXedoc {
-	
+		
     static ActiveXComponent oShell;  
     static ActiveXComponent oWindows; 
     
     public static TreeMap<String, String> nombreServicios = new TreeMap<String, String>();
     public static TreeMap<String, String> nombreDocumentos = new TreeMap<String, String>();
     
-    
+    static boolean antiguo = true;   //  Variable para borrar
     
     /* variables para las excepciones de los documentos */
     
@@ -51,7 +51,8 @@ public class InicioXedoc {
     	
     	//  GestionJacobXedoc.CapturaWebXedoc_nuevoproyecto();
     	
-    	 GestionJacobXedoc.inicializa2Xedocs();
+    	  GestionJacobXedoc.inicializa2Xedocs();
+    	  antiguo = false;
     }
 	
 	

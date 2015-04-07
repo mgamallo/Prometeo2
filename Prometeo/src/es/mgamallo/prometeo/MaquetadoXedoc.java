@@ -33,6 +33,13 @@ public class MaquetadoXedoc {
 		documento = Dispatch.call(xedocDocumento,"document").getDispatch();
 		
 		inicializaMaquetado(this.xedocDocumento);
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		maquetado01();
 	}
 	
@@ -63,7 +70,6 @@ public class MaquetadoXedoc {
 	    Dispatch.put(xedocDocumento,"left",izquierda);
 		Dispatch.put(xedocDocumento,"menubar",false);
 		Dispatch.put(xedocDocumento,"toolbar",false);
-		
 
 	}
 	
