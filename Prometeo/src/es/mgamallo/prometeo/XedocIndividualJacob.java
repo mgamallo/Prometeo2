@@ -189,8 +189,10 @@ public class XedocIndividualJacob {
 	
 	
 	public void putFecha(Dispatch fechaDispatch){
-		if(fecha.length() != 0)
+		if(fecha.length() != 0){
 			Dispatch.put(fechaDispatch,"value",fecha);
+			Dispatch.call(fechaDispatch,"focus");
+		}
 		else
 			Dispatch.call(fechaDispatch,"focus");
 		
@@ -214,30 +216,36 @@ public class XedocIndividualJacob {
 		Dispatch selectServicio = Dispatch.call(documento, "getElementById","{hc}servicioEspecialidad-{hc}docExt").getDispatch();
 		Dispatch opciones = Dispatch.call(selectServicio, "options").getDispatch();
 		
-		int min = 0;
-		int max = 0;
-		if(Integer.valueOf(numOpcion)-3 < 0 ){
-			min = 0;
-		}
-		else{
-			min = Integer.valueOf(numOpcion)-3;
-		}
 		
-		if(Integer.valueOf(numOpcion)+4 > numeroServicios ){
-			max = numeroServicios;
-		}
-		else{
-			max = Integer.valueOf(numOpcion) + 4;
-		}
+		System.out.println("numOpcion vale... " + numOpcion);
 		
-		for(int i= min;i< max;i++){
-			Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
-			String nombreServicio = Dispatch.get(opcion,"text").toString();
-			if(nombreServicio.substring(0,4).equals(aliasServicio)){
-				Dispatch.put(opcion,"selected","true");
-				Dispatch.put(caja,"value",nombreServicio);
+		if(numOpcion != null){
+			int min = 0;
+			int max = 0;
+			if(Integer.valueOf(numOpcion)-3 < 0 ){
+				min = 0;
+			}
+			else{
+				min = Integer.valueOf(numOpcion)-3;
+			}
+			
+			if(Integer.valueOf(numOpcion)+4 > numeroServicios ){
+				max = numeroServicios;
+			}
+			else{
+				max = Integer.valueOf(numOpcion) + 4;
+			}
+			
+			for(int i= min;i< max;i++){
+				Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
+				String nombreServicio = Dispatch.get(opcion,"text").toString();
+				if(nombreServicio.substring(0,4).equals(aliasServicio)){
+					Dispatch.put(opcion,"selected","true");
+					Dispatch.put(caja,"value",nombreServicio);
+				}
 			}
 		}
+
 
 	}
 	

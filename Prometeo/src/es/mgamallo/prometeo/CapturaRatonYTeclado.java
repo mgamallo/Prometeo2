@@ -116,38 +116,44 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			// Tecla * asterisco
 			if(e.getKeyCode() == 106){
 				
-				if(InicioXedoc.antiguo)
-					Dispatch.call(GestionJacobXedoc.bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
-				else{
-					if(Inicio.xedoc1onTop){
+						if(InicioXedoc.antiguo)
+							Dispatch.call(GestionJacobXedoc.bandejaXedoc1, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
+						else{
+							if(Inicio.xedoc1onTop){
 
-						Dispatch.call(Inicio.documento1.xedoc,"visible",false);
-						Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.DARK_GRAY);
-						try {
-							Thread.sleep(200);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						Dispatch.call(Inicio.documento2.xedoc,"visible",true);
-						Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
-						Inicio.xedoc1onTop = false;
-					}
-					else{
+						//		Dispatch.put(Inicio.documento1.xedoc,"visible","false");
+								Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.DARK_GRAY);
+								try {
+									Thread.sleep(200);
+								} catch (InterruptedException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+						//		Dispatch.put(Inicio.documento2.xedoc,"visible","true");
+								Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
+								Inicio.xedoc1onTop = false;
+								
+								GestionJacobXedoc.cargaNuevoPdf(Inicio.documento1.xedoc);
+							}
+							else{
 
-						Dispatch.call(Inicio.documento1.xedoc,"visible",false);
-						Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.DARK_GRAY);
-						try {
-							Thread.sleep(200);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						//		Dispatch.put(Inicio.documento2.xedoc,"visible","false");
+								Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.DARK_GRAY);
+								try {
+									Thread.sleep(200);
+								} catch (InterruptedException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+						//		Dispatch.put(Inicio.documento1.xedoc,"visible","true");
+								Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.green);
+								Inicio.xedoc1onTop = true;
+								
+								GestionJacobXedoc.cargaNuevoPdf(Inicio.documento2.xedoc);
+							}
 						}
-						Dispatch.call(Inicio.documento2.xedoc,"visible",true);
-						Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
-						Inicio.xedoc1onTop = false;
-					}
-				}
+
+						
 			}
 			
 			//	Tecla º

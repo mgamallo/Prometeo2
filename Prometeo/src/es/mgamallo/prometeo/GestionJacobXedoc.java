@@ -1412,4 +1412,148 @@ public class GestionJacobXedoc {
 		 Dispatch.call(xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.zoomPdf()  /* CadenasJavascriptXedoc.maquetado2() */ );
 	}
 	
+	
+	public static void cargaNuevoPdf(ActiveXComponent xedoc){
+		
+		Dispatch documento = Dispatch.get(xedoc, "document").getDispatch();
+		Dispatch siguiente = Dispatch.call(documento,"getElementById","siguiente").getDispatch();
+		if(siguiente != null){
+			Dispatch.call(siguiente, "click");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			siguiente = Dispatch.call(documento,"getElementById","siguiente").getDispatch();
+			if(siguiente != null){
+				Dispatch.call(siguiente, "click");
+				
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				Dispatch labelAtributo = Dispatch.call(documento,"getElementById","labelAtributo").getDispatch();
+				String nombreFichero = Dispatch.get(labelAtributo,"innerHTML").getString();
+				String nhc = extraerNHC(nombreFichero);
+				
+				Dispatch loadContexto = Dispatch.call(documento,"getElementById","loadContexto").getDispatch();
+				String nombrePacienteContexto = Dispatch.get(loadContexto,"innerHTML").getString();
+				
+				
+				System.out.println(nhc);
+				System.out.println(nombrePacienteContexto);
+				
+				if(!nombrePacienteContexto.contains(nhc)){
+					
+					Dispatch contexto = Dispatch.call(documento, "getElementById","contextoMenuSuperior").getDispatch();
+					Dispatch.call(contexto, "click");
+					
+					String fechaInicio = "";
+					String fechaFin = "";
+					
+					String fechas[] = getFechasContexto();
+					fechaInicio = fechas[0];
+					fechaFin = fechas[1];
+					
+					Dispatch numeroHC = Dispatch.call(documento, "getElementById","{hc}numeroHC").getDispatch();
+					Dispatch.put(numeroHC,"value",nhc);
+					
+					Dispatch fechaI = Dispatch.call(documento,"getElementById","FechaIni").getDispatch();
+					Dispatch fechaF = Dispatch.call(documento,"getElementById","FechaFin").getDispatch();
+					
+					Dispatch.put(fechaI,"value",fechaInicio);
+					Dispatch.put(fechaF,"value",fechaFin);
+					
+					Dispatch submitFormContexto =  Dispatch.call(documento,"getElementById","submitFormContexto").getDispatch();
+					Dispatch.call(submitFormContexto, "click");
+					
+					try {
+						Thread.sleep(4000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					String cambiarContexto = "nhc-360340";
+					String codigoJavascript = "javascript:cambiarContexto('" + cambiarContexto + "');";
+					
+					Dispatch.call(xedoc, "navigate",codigoJavascript);
+					
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					String xed = "Xedoc ";
+					if(Inicio.xedoc1onTop){
+						xed += 2;
+					}
+					else{
+						xed += 1;
+					}
+					new MaquetadoXedoc(xedoc, xed);
+				}
+				
+
+			}
+			
+		}
+	}
+	
+	
+	private static String extraerNHC(String nombreFichero){
+		
+		String nhc = "";
+		
+		String campos[] = nombreFichero.split(" @");
+		if(campos.length == 4){
+			nhc = campos[1];
+		}
+		
+		return nhc;
+	}
+	
+	private static String[] getFechasContexto(){
+		
+		String fechas[] = new String[2];
+		
+		String fechaInicio = "";
+		String fechaFin = "";
+
+		int diaHoy = 1;
+		int mesHoy = 1;
+		int añoHoy = 1;
+		
+		int diaHaceUnMes = 1;
+		int mesHaceUnMes = 1;
+		int añoHaceUnMes = 1;
+		
+		Calendar calendario = Calendar.getInstance();
+		diaHoy = calendario.get(Calendar.DAY_OF_MONTH);
+		mesHoy = calendario.get(Calendar.MONTH) + 1;
+		añoHoy = calendario.get(Calendar.YEAR);
+		
+		fechaFin = diaHoy + "/" + mesHoy + "/" + añoHoy;
+
+		calendario.add(Calendar.DAY_OF_MONTH,- RANGO_DIAS_CONSULTA);
+		
+		diaHaceUnMes = calendario.get(Calendar.DAY_OF_MONTH);
+		mesHaceUnMes = calendario.get(Calendar.MONTH) + 1;
+		añoHaceUnMes = calendario.get(Calendar.YEAR);
+		
+		fechaInicio = diaHaceUnMes + "/" + mesHaceUnMes + "/" + añoHaceUnMes;
+		
+		fechas[0] = fechaInicio;
+		fechas[1] = fechaFin;
+		
+		return fechas;
+
+	}
 }

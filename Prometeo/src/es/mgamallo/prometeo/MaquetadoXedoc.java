@@ -217,7 +217,7 @@ public class MaquetadoXedoc {
 		Dispatch loadContexto = Dispatch.call(documento,"getElementById","loadContexto").getDispatch();
 		Dispatch estiloLoadContexto = Dispatch.get(loadContexto,"style").getDispatch();
 		Dispatch.put(estiloLoadContexto, "width","800px");
-		Dispatch.put(estiloLoadContexto, "marginLeft","-700px");
+		Dispatch.put(estiloLoadContexto, "marginLeft","-600px");
 		Dispatch.put(estiloLoadContexto, "color","yellow");
 		Dispatch.put(estiloLoadContexto, "fontSize","25px");
 		
