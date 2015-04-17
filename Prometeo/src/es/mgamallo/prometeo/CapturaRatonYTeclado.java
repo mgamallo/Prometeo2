@@ -3,9 +3,12 @@ package es.mgamallo.prometeo;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -121,40 +124,82 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 						else{
 							if(Inicio.xedoc1onTop){
 
-						//		Dispatch.put(Inicio.documento1.xedoc,"visible","false");
-								Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.DARK_GRAY);
-								try {
-									Thread.sleep(200);
-								} catch (InterruptedException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-						//		Dispatch.put(Inicio.documento2.xedoc,"visible","true");
-								Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
-								Inicio.xedoc1onTop = false;
-								
-								GestionJacobXedoc.cargaNuevoPdf(Inicio.documento1.xedoc);
-							}
-							else{
+								Dispatch.put(Inicio.documento1.xedoc,"visible","false");
+								if(Inicio.xedoc2activo){
+									Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.DARK_GRAY);
+									try {
+										Thread.sleep(200);
+									} catch (InterruptedException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									Dispatch.put(Inicio.documento2.xedoc,"visible","true");
+									Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
+									Inicio.xedoc1onTop = false;
+									
+									Robot robot;
+									try {
+										robot = new Robot();
+										
+										Point p = MouseInfo.getPointerInfo().getLocation();
+																				
+										robot.delay(300);
+										robot.mouseMove(40, 15);
+										robot.mousePress(InputEvent.BUTTON1_MASK);
+										robot.mouseRelease(InputEvent.BUTTON1_MASK);
+										robot.delay(200);
+										robot.mouseMove(p.x, p.y);
+										
+									} catch (AWTException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
 
-						//		Dispatch.put(Inicio.documento2.xedoc,"visible","false");
-								Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.DARK_GRAY);
-								try {
-									Thread.sleep(200);
-								} catch (InterruptedException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
+									
+									GestionJacobXedoc.cargaNuevoPdf(Inicio.documento1.xedoc);
 								}
-						//		Dispatch.put(Inicio.documento1.xedoc,"visible","true");
-								Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.green);
-								Inicio.xedoc1onTop = true;
-								
-								GestionJacobXedoc.cargaNuevoPdf(Inicio.documento2.xedoc);
+								else{
+									GestionJacobXedoc.finXedoc(Inicio.documento1.xedoc,"Xedoc1");
+								}
+			
+							}
+							else if(!Inicio.xedoc1onTop && Inicio.xedoc1activo){
+
+								Dispatch.put(Inicio.documento2.xedoc,"visible","false");
+								if(Inicio.xedoc2activo){
+									Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.DARK_GRAY);
+									try {
+										Thread.sleep(200);
+									} catch (InterruptedException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									Dispatch.put(Inicio.documento1.xedoc,"visible","true");
+									Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.green);
+									Inicio.xedoc1onTop = true;
+									
+									Robot robot;
+									try {
+										robot = new Robot();
+										robot.delay(300);
+										robot.mousePress(InputEvent.BUTTON1_MASK);
+										robot.mouseRelease(InputEvent.BUTTON1_MASK);
+									} catch (AWTException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									
+									
+									GestionJacobXedoc.cargaNuevoPdf(Inicio.documento2.xedoc);
+								}
+								else{
+									GestionJacobXedoc.finXedoc(Inicio.documento2.xedoc,"Xedoc2");
+								}
 							}
 						}
-
-						
 			}
+			
+			/*
 			
 			//	Tecla º
 			if(e.getKeyCode() == 92){
@@ -170,7 +215,8 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			
 			}
 			
-			
+			*/
+			/*
 			//	Tecla Avzar pagina			if(e.getKeyCode() == 34){
 			if(e.getKeyCode() == 34){
 		//		Dispatch.call(Inicio.documento1.xedoc, "Navigate","javascript:" +  CadenasJavascriptXedoc.zoomPdf3() );
@@ -187,7 +233,8 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 					e1.printStackTrace();
 				}
 			}
-			
+			*/
+			/*
 			
 			//  Flecha arriba
 			if(e.getKeyCode() == 38){
@@ -195,117 +242,9 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 				
 			}
 			
+			*/
 			//  Flecha derecha
 			if(e.getKeyCode() == 39){
-				
-
-				Object nombreFichero = "";
-				Object nombreServicio = "";
-				Dispatch documento = null;
-				
-				try {
-					GestionJacobXedoc.capturaUltimoExplorer();
-					
-					 Thread.sleep(200);
-
-					
-					documento = Dispatch.call(Inicio.documento1.xedoc,"document").toDispatch();
-					Dispatch nombreF = Dispatch.call(documento, "getElementById","labelAtributo").toDispatch();
-					nombreFichero = Dispatch.call(nombreF, "innerHTML");
-					System.out.println("El objeto es... " + nombreFichero);
-					
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			//	Dispatch.call(Inicio.documento1.xedoc, "Navigate","javascript:" + CadenasJavascriptXedoc.completaDatos() /* CadenasJavascriptXedoc.cargaPdf() */ );
-				
-				XedocIndividual xedoc = new XedocIndividual(nombreFichero.toString());
-				
-				Dispatch.call(Inicio.documento1.xedoc, "Navigate","javascript:" + xedoc.obtieneCodigoJavascript());
-			
-				try {
-					Thread.sleep(2000);
-					
-
-					
-					
-					try {
-						Robot robot = new Robot();
-						
-						robot.keyPress(KeyEvent.VK_ENTER);
-						robot.keyRelease(KeyEvent.VK_ENTER);
-						
-						Dispatch ancla = Dispatch.call(documento, "getElementById","nodoseleccionado").toDispatch();
-						nombreServicio = Dispatch.call(ancla, "innerHTML");
-						String nombreAncla = nombreServicio.toString();
-						System.out.println(nombreAncla);
-						int index = nombreAncla.lastIndexOf(">")+1;
-						nombreAncla = nombreAncla.substring(index);
-						String campos[] = nombreAncla.split("-");
-						
-						String servicioFinal = "";
-						
-						///  Revisaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar
-						if(campos[0].equals("HOS")){
-							servicioFinal = campos[1];
-						}
-						else{
-							servicioFinal = campos[0];
-						}
-						
-						System.out.println(servicioFinal);
-						
-						Portapapeles.copiarAlPortapapeles(xedoc.tipoDocumento);
-						
-						Dispatch cajaTipoDoc = Dispatch.call(documento,"getElementById","tipoDocXedoc").toDispatch();
-						Dispatch.call(cajaTipoDoc,"focus");
-						
-						robot.delay(300);
-						robot.keyPress(KeyEvent.VK_CONTROL);
-						robot.keyPress(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_CONTROL);
-						robot.delay(200);
-						robot.keyPress(KeyEvent.VK_DOWN);
-						robot.keyRelease(KeyEvent.VK_DOWN);
-						robot.delay(200);
-						robot.keyPress(KeyEvent.VK_ENTER);
-						robot.keyRelease(KeyEvent.VK_ENTER);
-						
-						Portapapeles.copiarAlPortapapeles(servicioFinal);
-						
-						Dispatch cajaServicio = Dispatch.call(documento,"getElementById","servicioXedoc").toDispatch();
-						Dispatch.call(cajaServicio,"focus");
-						
-						robot.delay(500);
-						robot.keyPress(KeyEvent.VK_CONTROL);
-						robot.keyPress(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_CONTROL);
-						robot.delay(200);
-						robot.keyPress(KeyEvent.VK_DOWN);
-						robot.keyRelease(KeyEvent.VK_DOWN);
-						robot.delay(200);
-						robot.keyPress(KeyEvent.VK_ENTER);
-						robot.keyRelease(KeyEvent.VK_ENTER);
-						
-					} catch (AWTException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					
-
-					
-					
-				//	Dispatch.call(Inicio.documento1.xedoc, "Navigate","javascript:" + xedoc.putServicio(servicioFinal));
-
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 			
 			//  Flecha abajo

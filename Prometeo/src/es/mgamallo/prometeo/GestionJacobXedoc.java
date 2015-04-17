@@ -27,7 +27,6 @@ public class GestionJacobXedoc {
 	private static boolean xedocImpar = true;
 	
 	public static boolean xedoc1visible;
-
 	
 	public static void inicializa2Xedocs(){
 		
@@ -53,18 +52,6 @@ public class GestionJacobXedoc {
 		
 		Inicio.panelPrincipal.frame.setExtendedState(Frame.ICONIFIED);	
 		
-		/*
-		
-		
-	// Cargar aquí la ventana con las opciones de la bandeja:
-	// 1 Capturar la bandeja, y empezar por los dos primeros nhcs
-	// 2 Solo capturar la bandeja, con mensaje de confirmación
-			
-		capturaBandeja(bandejaXedoc1,0);
-		capturaBandeja(bandejaXedoc2,1);
-	//	capturaBandeja(bandejaXedoc2);
-
-		*/
 	}
 	
 	
@@ -96,12 +83,7 @@ public class GestionJacobXedoc {
         int iCount = InicioXedoc.oWindows.getProperty("Count").getInt();
         System.out.println("iCount: " + iCount);  
         
-        try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
         for (int i=iCount-1,j= 1; i >iCount-3 ; i--,j++) {
             ActiveXComponent oWindow = InicioXedoc.oWindows.invokeGetComponent("Item", new Variant(i));     
@@ -110,24 +92,21 @@ public class GestionJacobXedoc {
             boolean isIE = sFullName.toLowerCase().endsWith("iexplore.exe");
             boolean bVisible = oWindow.getProperty("Visible").getBoolean();
             System.out.println("i: " + i + ", loc: " + sLocName + ", name: " + sFullName + ", isIE: " + isIE + ", vis: " + bVisible);
-
-            Dispatch doc = Dispatch.call(oWindow, "document").getDispatch();
-            String titulo = Dispatch.get(doc, "title").getString();
             
-            if(titulo.contains("Bandeja 1")){
-            	System.out.println("Tendría que ser el 1");
-            }
-            if(titulo.contains("Bandeja 2")){
-            	System.out.println("Tendría que ser el 2");
-            }            
-            
-            if(j==1){
-            	Inicio.documento1.xedoc = oWindow;
-             }
             if(j==2){
+            	Inicio.documento1.xedoc = oWindow;
+                Dispatch doc1 = Dispatch.call(Inicio.documento1.xedoc, "document").getDispatch();
+                Dispatch.put(doc1,"title","Xedoc 1");
+             }
+            if(j==1){
             	// Inicio.paciente2.xedoc = oWindow;
             	Inicio.documento2.xedoc = oWindow;
+                Dispatch doc2 = Dispatch.call(Inicio.documento2.xedoc, "document").getDispatch();
+                Dispatch.put(doc2,"title","Xedoc 2");
             }	
+            
+
+
         }
          
 	}
@@ -138,7 +117,9 @@ public class GestionJacobXedoc {
 	
 	public static void capturaWebsXedoc(){
 		
-		Cerrar.cerrarTodo();
+		for(int i=0;i<2;i++)
+			Cerrar.cerrarIexplorer();;
+		
 		xedocImpar = true;
 		
 	    InicioXedoc.oShell = new ActiveXComponent("Shell.Application"); 
@@ -172,11 +153,13 @@ public class GestionJacobXedoc {
             boolean isIE = sFullName.toLowerCase().endsWith("iexplore.exe");
             boolean bVisible = oWindow.getProperty("Visible").getBoolean();
             System.out.println("i: " + i + ", loc: " + sLocName + ", name: " + sFullName + ", isIE: " + isIE + ", vis: " + bVisible);
+            
             /*
             if ((isIE)&&(sLocName.startsWith("about:blank"))) {
                 oIE = oWindow;
             }
             */
+            
             if(j==1){
             	bandejaXedoc1 = oWindow;
         		Dispatch.call(bandejaXedoc1, "Navigate","http://xedocidx.sergas.local/xedoc_idx/login");
@@ -375,35 +358,7 @@ public class GestionJacobXedoc {
 		}
 	}
 	
-	
-	public static void capturaBandeja(ActiveXComponent bandejaXedoc, String nombreXedoc, int filaInicial){
-		
-		String fechaInicio = "";
-		String fechaFin = "";
-
-		int diaHoy = 1;
-		int mesHoy = 1;
-		int añoHoy = 1;
-		
-		int diaHaceUnMes = 1;
-		int mesHaceUnMes = 1;
-		int añoHaceUnMes = 1;
-		
-		Calendar calendario = Calendar.getInstance();
-		diaHoy = calendario.get(Calendar.DAY_OF_MONTH);
-		mesHoy = calendario.get(Calendar.MONTH) + 1;
-		añoHoy = calendario.get(Calendar.YEAR);
-		
-		fechaFin = diaHoy + "/" + mesHoy + "/" + añoHoy;
-
-		calendario.add(Calendar.DAY_OF_MONTH,- RANGO_DIAS_CONSULTA);
-		
-		diaHaceUnMes = calendario.get(Calendar.DAY_OF_MONTH);
-		mesHaceUnMes = calendario.get(Calendar.MONTH) + 1;
-		añoHaceUnMes = calendario.get(Calendar.YEAR);
-		
-		fechaInicio = diaHaceUnMes + "/" + mesHaceUnMes + "/" + añoHaceUnMes;
-		
+	private static String getCadenaComun(int filaInicial, String fechaInicio, String fechaFin){
 		String cadenaComun = ""
 				+ ""
 				+ "var nhc;"
@@ -452,6 +407,43 @@ public class GestionJacobXedoc {
 				+ "var filas = celdas.length / 5;"
 				+ "";
 		
+		return cadenaComun;
+	}
+	
+	
+	public static void capturaBandeja(ActiveXComponent bandejaXedoc1, ActiveXComponent xedoc2, String nombreXedoc1, String nombreXedoc2, int filaInicial1, int finlaInicial2){
+		
+		String fechaInicio = "";
+		String fechaFin = "";
+
+		int diaHoy = 1;
+		int mesHoy = 1;
+		int añoHoy = 1;
+		
+		int diaHaceUnMes = 1;
+		int mesHaceUnMes = 1;
+		int añoHaceUnMes = 1;
+		
+		Calendar calendario = Calendar.getInstance();
+		diaHoy = calendario.get(Calendar.DAY_OF_MONTH);
+		mesHoy = calendario.get(Calendar.MONTH) + 1;
+		añoHoy = calendario.get(Calendar.YEAR);
+		
+		fechaFin = diaHoy + "/" + mesHoy + "/" + añoHoy;
+
+		calendario.add(Calendar.DAY_OF_MONTH,- RANGO_DIAS_CONSULTA);
+		
+		diaHaceUnMes = calendario.get(Calendar.DAY_OF_MONTH);
+		mesHaceUnMes = calendario.get(Calendar.MONTH) + 1;
+		añoHaceUnMes = calendario.get(Calendar.YEAR);
+		
+		fechaInicio = diaHaceUnMes + "/" + mesHaceUnMes + "/" + añoHaceUnMes;
+		
+		String cadenaComun1 = getCadenaComun(filaInicial1, fechaInicio, fechaFin);
+		String cadenaComun2 = getCadenaComun(finlaInicial2, fechaInicio, fechaFin);
+		
+
+		
 		String cadena_blank = ""		
 				+ "var numFila = 1;"
 				+ "for(var i=0;i<filas;i++){"
@@ -476,17 +468,31 @@ public class GestionJacobXedoc {
 				+ "celdas[filaInicial*5 + 2].click();"
 		//		+ "alert(filas);"
 				+ "";
+				
 		
-		String cadena = cadenaComun;
+		String cadena1 = cadenaComun1 + cadena_blank;
+		String cadena2 = cadenaComun2 + cadena_sin_blank;
 		
+		/*
 		if(nombreXedoc.contains("Xedoc 1")){
 			cadena += cadena_blank;
 		}
 		else if(nombreXedoc.contains("Xedoc 2")){
 			cadena += cadena_sin_blank;
 		}
+	
 		
 		Dispatch.call(bandejaXedoc, "Navigate","javascript:" +  cadena );
+		*/
+		
+		Dispatch.call(bandejaXedoc1, "Navigate","javascript:" +  cadena1 );
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Dispatch.call(xedoc2, "Navigate","javascript:" +  cadena2 );
 		
 		try {
 			Thread.sleep(10000);
@@ -496,12 +502,34 @@ public class GestionJacobXedoc {
 		}
 		
 		capturaUltimoExplorer();
+		// capturaUltimos2Explorer();
 		
-		if(nombreXedoc.contains("Xedoc 2")){
-			Inicio.documento2.xedoc = bandejaXedoc;
+		
+		if(nombreXedoc2.contains("Xedoc 2")){
+			Inicio.documento2.xedoc = xedoc2;
 	        Dispatch doc = Dispatch.call(Inicio.documento2.xedoc, "document").getDispatch();
 	        Dispatch.put(doc,"title","Xedoc 2");
 		}
+		
+		
+
+		new MaquetadoXedoc(Inicio.documento1.xedoc, "Xedoc 1");
+		
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		new MaquetadoXedoc(Inicio.documento2.xedoc, "Xedoc 2");
+		Dispatch.put(Inicio.documento2.xedoc,"visible","false");
+		
+		xedoc1visible = true;
+		Dispatch.put(bandejaXedoc1,"visible","false");
+		Inicio.ventanaControlXedoc.jBbandeja1.setBackground(Color.DARK_GRAY);
+		Inicio.ventanaControlXedoc.panelMover.setBackground(Color.green);
+		
 		
 	}
 	
@@ -556,23 +584,14 @@ public class GestionJacobXedoc {
 		
 		System.out.println("clickeando");
 		
+		
+		HiloXedoc hilo = new HiloXedoc(2000);
+		hilo.start();
+		
 		Dispatch documento = Dispatch.call(xedocActivo, "document").getDispatch();
 		Dispatch enviar = Dispatch.call(documento,"getElementById","submitFormFirmar").getDispatch();
 		Variant var = Dispatch.call(enviar,"click");
 		
-		System.out.println("Empezando robot");
-		try {
-			Robot robot = new Robot();
-			robot.delay(5000);
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-			robot.delay(200);
-			System.out.println("Presionado enter");
-			
-		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	
@@ -1413,25 +1432,63 @@ public class GestionJacobXedoc {
 	}
 	
 	
+	
 	public static void cargaNuevoPdf(ActiveXComponent xedoc){
 		
 		Dispatch documento = Dispatch.get(xedoc, "document").getDispatch();
 		Dispatch siguiente = Dispatch.call(documento,"getElementById","siguiente").getDispatch();
-		if(siguiente != null){
-			Dispatch.call(siguiente, "click");
+		
+		
+		
+		String contenidoDeSiguiente;
+		
+		if(!Inicio.saltarXedoc){
 			try {
-				Thread.sleep(1500);
-			} catch (InterruptedException e) {
+				contenidoDeSiguiente = Dispatch.get(siguiente,"innerHTML").toString();
+				System.out.println("Contenido de siguiente1... " + contenidoDeSiguiente );
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				contenidoDeSiguiente = null;
+			}
+		}
+		else{
+			contenidoDeSiguiente = "ok";
+		}
+
+		
+		if(contenidoDeSiguiente != null){
+			
+			if(!Inicio.saltarXedoc){
+				Dispatch.call(siguiente, "click");
+			}	
+				
+			try {
+					Thread.sleep(2000); 
+			} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+			}
+
+			Inicio.saltarXedoc = false;
+			
+			documento = Dispatch.get(xedoc, "document").getDispatch();
+			siguiente = Dispatch.call(documento,"getElementById","siguiente").getDispatch();
+			
+			System.out.println("Siguiente... " + siguiente);
+			
+			try {
+				contenidoDeSiguiente = Dispatch.get(siguiente,"innerHTML").toString();
+				System.out.println("Contenido de siguiente2... " + contenidoDeSiguiente );
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				contenidoDeSiguiente = null;
 			}
 			
-			siguiente = Dispatch.call(documento,"getElementById","siguiente").getDispatch();
-			if(siguiente != null){
+			if(contenidoDeSiguiente != null){
 				Dispatch.call(siguiente, "click");
 				
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(2000);  
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1479,7 +1536,7 @@ public class GestionJacobXedoc {
 						e.printStackTrace();
 					}
 					
-					String cambiarContexto = "nhc-360340";
+					String cambiarContexto = nhc + "-360340";
 					String codigoJavascript = "javascript:cambiarContexto('" + cambiarContexto + "');";
 					
 					Dispatch.call(xedoc, "navigate",codigoJavascript);
@@ -1500,10 +1557,40 @@ public class GestionJacobXedoc {
 					}
 					new MaquetadoXedoc(xedoc, xed);
 				}
-				
+				else{
+					String xed = "Xedoc ";
+					if(Inicio.xedoc1onTop){
+						xed += 2;
+					}
+					else{
+						xed += 1;
+					}
+					new MaquetadoXedoc(xedoc, xed);
+				}
 
 			}
-			
+			else{
+				String xed = "Xedoc ";
+				if(Inicio.xedoc1onTop){
+					xed += 2;
+				}
+				else{
+					xed += 1;
+				}
+				finXedoc(xedoc, xed);
+				System.out.println("Este xedoc se acabó en 2.");
+			}
+		}
+		else{
+			String xed = "Xedoc ";
+			if(Inicio.xedoc1onTop){
+				xed += 2;
+			}
+			else{
+				xed += 1;
+			}
+			finXedoc(xedoc, xed);
+			System.out.println("Este xedoc se acabó en 1.");
 		}
 	}
 	
@@ -1555,5 +1642,20 @@ public class GestionJacobXedoc {
 		
 		return fechas;
 
+	}
+	
+	public static void finXedoc(ActiveXComponent xedoc, String nombre ){
+		
+		Dispatch.call(xedoc, "quit");
+		if(nombre.equals("Xedoc1")){
+			Inicio.xedoc1activo = false;
+			Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.red);
+			
+		}
+		else{
+			Inicio.xedoc2activo = false;
+			Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.red);
+		}
+		
 	}
 }

@@ -1,5 +1,6 @@
 package es.mgamallo.prometeo;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -32,27 +33,15 @@ public class InicioXedoc {
     	
     	nombreServicios = Inicio.leerExcel.nombreServicios;
     	nombreDocumentos = Inicio.leerExcel.nombreDocumentos;
+    	    	
+    	GestionJacobXedoc.inicializa2Xedocs();
+    	GestionJacobXedoc.xedoc1visible = true;
+    	Inicio.ventanaControlXedoc.jBxedoc1.setBackground(Color.green);
+    	Inicio.ventanaControlXedoc.jBxedoc2.setBackground(Color.green);
+    	Inicio.xedoc1activo = true;
+    	Inicio.xedoc2activo = true;
     	
-    	
-    	
-    	/*
-        for( Iterator it = nombreServicios.keySet().iterator(); it.hasNext();) {
-        	String clave = (String)it.next();
-        	String valor = (String)nombreServicios.get(clave);
-        	System.out.println(clave + " : " + valor);
-        }
-    	*/
-    	
-    	//  GestionJacobXedoc.capturaWebXedoc();
-    	
-    	
-    	// GestionJacobXedoc.pruebaCapturaWebXedoc();
-    	
-    	
-    	//  GestionJacobXedoc.CapturaWebXedoc_nuevoproyecto();
-    	
-    	  GestionJacobXedoc.inicializa2Xedocs();
-    	  antiguo = false;
+    	antiguo = false;
     }
 	
 	

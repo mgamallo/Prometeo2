@@ -1,5 +1,7 @@
 package es.mgamallo.prometeo;
 
+import java.util.TreeMap;
+
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
@@ -41,6 +43,11 @@ public class MaquetadoXedoc {
 		}
 		
 		maquetado01();
+	}
+	
+	public MaquetadoXedoc(ActiveXComponent xedocDocumento,boolean soloTitulo){
+		this.xedocDocumento = xedocDocumento;
+		documento = Dispatch.call(this.xedocDocumento, "document").getDispatch();
 	}
 	
 	
@@ -121,20 +128,32 @@ public class MaquetadoXedoc {
 		//	Columna Izquierda
 		//////////////////////////////////////////////
 		
-		Dispatch columnaI = Dispatch.call(documento,"getElementById","columnaIzquierdaEdicion").getDispatch();
-		Dispatch estiloColumnaI = Dispatch.get(columnaI,"style").getDispatch();
-		Dispatch.put(estiloColumnaI, "height","1200px");	
-		Dispatch.put(estiloColumnaI, "width","800px");
 		
-		Dispatch completePreview = Dispatch.call(documento,"getElementById","completePreview").getDispatch();
-		Dispatch estilocompletePreview = Dispatch.get(completePreview,"style").getDispatch();
-		Dispatch.put(estilocompletePreview, "height","1200px");	
-		Dispatch.put(estilocompletePreview, "width","800px");
 		
-		Dispatch previewer = Dispatch.call(documento,"getElementById","previewer").getDispatch();
-		Dispatch estiloPreviewer = Dispatch.get(previewer,"style").getDispatch();
-		Dispatch.put(estiloPreviewer, "height","1200px");	
-		Dispatch.put(estiloPreviewer, "width","800px");
+		try {
+			Dispatch columnaI = Dispatch.call(documento,"getElementById","columnaIzquierdaEdicion").getDispatch();
+			Dispatch estiloColumnaI = Dispatch.get(columnaI,"style").getDispatch();
+			Dispatch.put(estiloColumnaI, "height","1200px");	
+			Dispatch.put(estiloColumnaI, "width","800px");
+			
+			Dispatch completePreview = Dispatch.call(documento,"getElementById","completePreview").getDispatch();
+			Dispatch estilocompletePreview = Dispatch.get(completePreview,"style").getDispatch();
+			Dispatch.put(estilocompletePreview, "height","1200px");	
+			Dispatch.put(estilocompletePreview, "width","800px");
+
+
+// comprobar cuando no carga el pdf		
+			
+			Dispatch previewer = Dispatch.call(documento,"getElementById","previewer").getDispatch();
+			Dispatch estiloPreviewer = Dispatch.get(previewer,"style").getDispatch();
+			Dispatch.put(estiloPreviewer, "height","1200px");	
+			Dispatch.put(estiloPreviewer, "width","800px");
+		
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			System.out.println("No cargó el pdf");
+		}
 		
 		
 		//	Columna Derecha
@@ -277,6 +296,7 @@ public class MaquetadoXedoc {
 				
 				Dispatch tituloSeccion = Dispatch.get(titulosSeccion, String.valueOf(i)).getDispatch();
 				Variant valorId = Dispatch.call(tituloSeccion, "getAttribute","id");
+				
 				// System.out.println(valorId.toString());
 				if(valorId.toString().equals("nuevaSeccionEdicion")){
 					if(contador == 4 || contador == 3 || contador == 2){
@@ -321,35 +341,44 @@ public class MaquetadoXedoc {
 		XedocIndividualJacob xedoc = new XedocIndividualJacob(Dispatch.get(labelAtributo,"innerHTML").getString(),documento,xedocDocumento);
 	//	xedoc.imprimeDatos();
 
-		putNHC(xedoc);
-		colorea();
 		
+		boolean errorNhc = false;
 		
 		try {
-			Thread.sleep(1000);
+		//	Thread.sleep(1500);
+			errorNhc = putNHC(xedoc);
+		//	Thread.sleep(1000);
+			colorea();
+			
+		//	Thread.sleep(1000);
+			Thread.sleep(50);  // Para que no de error el catch
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		xedoc.buscaNodo();
-		xedoc.ocultaNodos();
-		xedoc.seleccionarServicio();
-		xedoc.seleccionarDocumento();
-		xedoc.putFecha(fecha);
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(!errorNhc){
+			xedoc.buscaNodo();
+			xedoc.ocultaNodos();
+			xedoc.seleccionarServicio();
+			xedoc.seleccionarDocumento();
+			xedoc.putFecha(fecha);
+			
+			/*
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			xedoc.getFocus();
+			*/
 		}
-		xedoc.getFocus();
 		
 	}
 	
 	
-	public void putNHC(XedocIndividualJacob xedoc){
+	public boolean putNHC(XedocIndividualJacob xedoc){
 		
 		//	Coloca los datos del documento en el nav original
 		
@@ -357,6 +386,8 @@ public class MaquetadoXedoc {
 		// o tienen que ser:  145, 146, 147  
 		
 		// System.out.println("Cambiando el nav....");
+		
+		boolean errorNhc = false;
 		
 		Dispatch anclas = Dispatch.call(documento,"getElementsByTagName","a").getDispatch();
 		Variant numeroAnclas = Dispatch.get(anclas, "length");
@@ -369,10 +400,14 @@ public class MaquetadoXedoc {
 
 			Dispatch tituloAncla = Dispatch.get(anclas, String.valueOf(i)).getDispatch();
 			Variant valorTitle = Dispatch.call(tituloAncla, "getAttribute","title");
-			System.out.println(valorTitle.toString());
+		//	System.out.println(valorTitle.toString());
+			
 			if(valorTitle.toString().equals("Inicio")){
 				//	System.out.println("Encontrada ancla inicio");
 				//	System.out.println("Ancla numero: " + i + " encontrada.");
+					Dispatch.call(tituloAncla,"setAttribute","id","nhcNav");
+
+					
 					Dispatch.put(tituloAncla, "innerHTML",xedoc.nhc);
 					Dispatch estiloTituloAnclaNhc = Dispatch.get(tituloAncla,"style").getDispatch();
 					Dispatch.put(estiloTituloAnclaNhc, "fontSize","30px");
@@ -383,12 +418,21 @@ public class MaquetadoXedoc {
 					if(cadenaDocumentoPaciente.contains(xedoc.nhc)){
 						color = "red";
 					}
+					else{
+						Dispatch contexto = Dispatch.call(documento, "getElementById","contextoMenuSuperior").getDispatch();
+						Dispatch.call(contexto, "click");
+						
+						errorNhc = true;
+					}
 					
 					Dispatch.put(estiloTituloAnclaNhc, "color",color);
 			}
 			else if(valorTitle.toString().equals("Documentos Pendentes")){
 				// System.out.println("Encontrada ancla inicio");
 				// System.out.println("Ancla numero: " + i + " encontrada.");
+				
+				Dispatch.call(tituloAncla,"setAttribute","id","servicioNav");
+				
 				Dispatch.put(tituloAncla, "innerHTML",xedoc.servicio);
 				Dispatch estiloTituloAnclaServicio = Dispatch.get(tituloAncla,"style").getDispatch();
 				Dispatch.put(estiloTituloAnclaServicio, "fontSize","30px");
@@ -399,9 +443,11 @@ public class MaquetadoXedoc {
 			//	System.out.println("Encontrada ancla inicio");
 			//	System.out.println("Ancla numero: " + i + " encontrada.");
 				
+				Dispatch.call(tituloAncla,"setAttribute","id","tituloNav");
+				
 				String nombreAcortado = xedoc.nombreDocumento;
-				if(xedoc.nombreDocumento.length() > 30){
-					nombreAcortado = xedoc.nombreDocumento.substring(0,30);
+				if(xedoc.nombreDocumento.length() > 20){
+					nombreAcortado = xedoc.nombreDocumento.substring(0,20);
 				}
 				Dispatch.put(tituloAncla, "innerHTML",nombreAcortado.toUpperCase());
 				Dispatch estiloTituloAnclaTipo = Dispatch.get(tituloAncla,"style").getDispatch();
@@ -412,6 +458,8 @@ public class MaquetadoXedoc {
 			}
 	
 		}
+		
+		return errorNhc;
 	}
 	
 	
@@ -419,7 +467,7 @@ public class MaquetadoXedoc {
 		Dispatch inputs = Dispatch.call(documento,"getElementsByTagName","input").getDispatch();
 		Variant numeroInputs = Dispatch.get(inputs, "length");
 		int numInputs = numeroInputs.getInt();
-		System.out.println(numInputs); 
+		System.out.println("Numero de inputs... " + numInputs); 
 		
 		
 		/*
@@ -429,15 +477,19 @@ public class MaquetadoXedoc {
 		
 	//	int numInput[] = { 133, 136};
 		
+		// int i = 0;  seguro pero lento
+		
 		for(int i=100, j= 0 ;i<numInputs && j < 3;i++){
 
+			String rgb = "rgb(255,255,255)";
+			
 			Dispatch input = Dispatch.call(inputs, String.valueOf(i)).getDispatch();
 
-			Variant nombreClase = Dispatch.call(input, "getAttribute","autocomplete");
-			System.out.println(nombreClase.toString());
-
-			if(nombreClase.toString().equals("off")){
-				System.out.println("Encontrado input");
+			Dispatch estiloInputCelda = Dispatch.call(input, "getAttribute","style").getDispatch();
+			String colorFondoCelda = Dispatch.get(estiloInputCelda,"backgroundColor").getString();
+			
+			if(colorFondoCelda.equals(rgb)){
+				System.out.println("Encontrado input cajita");
 				System.out.println("Input numero: " + i + " encontrado.");
 				
 				if(j != 0){
@@ -462,6 +514,102 @@ public class MaquetadoXedoc {
 		Dispatch estiloFecha = Dispatch.get(fecha,"style").getDispatch();
 		Dispatch.put(estiloFecha, "backgroundColor",colorFondoCajas);
 		Dispatch.put(estiloFecha,"font","bold 20px arial, sans-serif");
+	}
+	
+	
+	public void putTitulo(){
+		// Dispatch titulo = Dispatch.call(documento, "getElementById","tituloNav").getDispatch();
+		
+		Dispatch labelAtributo = Dispatch.call(documento,"getElementById","labelAtributo").getDispatch();
+		
+		String nombreArchivo = Dispatch.get(labelAtributo,"innerHTML").getString();
+		
+		String nombreDocumento = "";
+		String tipoDocumento = "";
+		String tituloDocumento = "";
+		
+		boolean tieneTitulo = false;
+		TreeMap<String, String> nombreDocumentos = Inicio.leerExcel.nombreDocumentos;
+		
+		String campos[] = nombreArchivo.split(" @");
+		if(campos.length == 4){
+			int indexf = campos[3].lastIndexOf(" r _f");
+			
+			if(indexf == -1){
+				indexf = campos[3].lastIndexOf(".pdf");
+			}
+			
+			campos[3] = campos[3].substring(0,indexf);
+			
+			nombreDocumento = campos[3];
+			
+			int index = campos[3].indexOf("(");
+			if(index != -1){
+				tipoDocumento = campos[3].substring(0,index-1);
+				tituloDocumento = campos[3].substring(index + 1,campos[3].length()-1);
+				tieneTitulo = true;
+			}
+			else{
+				tipoDocumento = campos[3];
+			}
+		}
+		
+		if(!nombreDocumentos.containsKey(tipoDocumento)){
+			
+			if(tipoDocumento.equals(XedocIndividualJacob.INFORME_ALTA_URG)){
+				tipoDocumento = XedocIndividualJacob.INFORME_ALTA_URG_XEDOC;
+			}
+			else{
+				tituloDocumento = tipoDocumento;
+				tipoDocumento = XedocIndividualJacob.CONTINXENCIA;
+				tieneTitulo = true;
+			}
+
+		}
+		
+		 Dispatch cajaTipoDocumento = Dispatch.call(documento, "getElementById","cajaColoreada1").getDispatch();
+		 
+			String numOpcion = (String) InicioXedoc.nombreDocumentos.get(tipoDocumento);
+			int numeroDocumentos = InicioXedoc.nombreDocumentos.size();
+			System.out.println("El tipo de documento es... " + tipoDocumento);
+			System.out.println("El numero de opcion es... " + numOpcion);
+			
+			Dispatch selectTipoDocumento = Dispatch.call(documento, "getElementById","{hc}codDocEx-{hc}docExt").getDispatch();
+			Dispatch opciones = Dispatch.call(selectTipoDocumento, "options").getDispatch();
+			
+			int min = 0;
+			int max = 0;
+			if(Integer.valueOf(numOpcion)-3 < 0 ){
+				min = 0;
+			}
+			else{
+				min = Integer.valueOf(numOpcion)-3;
+			}
+			
+			if(Integer.valueOf(numOpcion)+4 > numeroDocumentos ){
+				max = numeroDocumentos;
+			}
+			else{
+				max = Integer.valueOf(numOpcion) + 4;
+			}
+			
+			
+			for(int i= min;i< max;i++){
+				Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
+				String nombreDoc = Dispatch.get(opcion,"text").toString();
+				
+				if(tipoDocumento.equals(nombreDoc)){
+					System.out.println(nombreDoc);
+					Dispatch.put(opcion,"selected","true");
+					Dispatch.put(cajaTipoDocumento,"value",nombreDoc);
+				}
+			}
+			
+			if(tieneTitulo){
+				cajaTipoDocumento = Dispatch.call(documento, "getElementById","{hc}titulo-{hc}docExt").getDispatch();
+				Dispatch.put(cajaTipoDocumento,"value",tituloDocumento);
+
+			}
 	}
 	
 }

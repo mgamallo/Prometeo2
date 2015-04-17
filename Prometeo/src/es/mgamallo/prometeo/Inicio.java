@@ -104,7 +104,9 @@ public class Inicio {
 	static public Estadistica estadistica;
 	
 	static public VentanaControlXedoc ventanaControlXedoc; 
-	
+	static public boolean xedoc1activo = true;
+	static public boolean xedoc2activo = true;
+	static public boolean saltarXedoc = false;
 	/**
 	 * @param args
 	 */

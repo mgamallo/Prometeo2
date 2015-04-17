@@ -10,7 +10,13 @@ import com.jacob.com.Variant;
 
 public class XedocIndividualJacob {
 
-	private final String CONTINXENCIA = "Documento sen tipo (continxencia)";
+	public static final String CONTINXENCIA = "Documento sen tipo (continxencia)";
+	
+	public static final String INFORME_ALTA_URG = "Informe alta";
+	public static final String INFORME_ALTA_URG_XEDOC = "Informe alta (URG)";
+	
+	private final String SERVICIO_DESCONOCIDO = "Des";
+	
 	private final String COLORFONDOCAJAS = "RGB(253,247,133)";
 	
 	public String nhc = "";
@@ -70,11 +76,19 @@ public class XedocIndividualJacob {
 		}
 		
 		if(!nombreDocumentos.containsKey(tipoDocumento)){
-			titulo = tipoDocumento;
-			tipoDocumento = CONTINXENCIA;
-			tieneTitulo = true;
+			
+			if(tipoDocumento.equals(INFORME_ALTA_URG)){
+				tipoDocumento = INFORME_ALTA_URG_XEDOC;
+			}
+			else{
+				titulo = tipoDocumento;
+				tipoDocumento = CONTINXENCIA;
+				tieneTitulo = true;
+			}
+
 		}
 		
+		System.out.println("Servicio... " + servicio + ". campos3... " + campos[3]);
 		tipoSubida = detectaTipoNodo(servicio, campos[3]);
 		System.out.println("El tipo de subida es... " + tipoSubida);
 	}
@@ -109,46 +123,75 @@ public class XedocIndividualJacob {
 			String nombreId = id + "-noSeleccionable-rama";
 			System.out.println(nombreId);
 			Dispatch nodo = Dispatch.call(documento, "getElementById",nombreId).getDispatch();
-			Dispatch nodoLis = Dispatch.call(nodo, "getElementsByTagName","li").getDispatch();
-			System.out.println("Numero de uls...." + Dispatch.get(nodoLis,"length").toString());
-			Dispatch nodoLi = Dispatch.get(nodoLis, "0").getDispatch();
-			Dispatch nodoA = Dispatch.call(nodoLi, "getElementsByTagName","a").getDispatch();
-			System.out.println("Numero de as...." + Dispatch.get(nodoA,"length").toString());
 			
-			Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
-			Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
-			Dispatch.call(nodoAncla, "click");
+			System.out.println("Dispatch nodo...");
+			System.out.println("ID... " + id);
+			System.out.println("Dispatch... " + nodo);
+			System.out.println("Dispatch... " + Dispatch.get(nodo,"innerHTML").toString());
 			
-			if(id.equals("HOS") || id.equals("URG")){
+			if(nodo != null){
+				Dispatch nodoLis = Dispatch.call(nodo, "getElementsByTagName","li").getDispatch();
 				
-				String cadena = Dispatch.get(nodoAncla,"innerHTML").getString();
-				System.out.println(cadena);
-				fecha = cadena.substring(cadena.length()-11);
+				int numeroDeUls = Integer.valueOf(Dispatch.get(nodoLis,"length").toString());
+				System.out.println("Numero de uls...." + numeroDeUls);
+				Dispatch nodoLi = Dispatch.get(nodoLis, "0").getDispatch();
 				
-				int index = cadena.lastIndexOf(">") + 1;
+				String episodioHosp = Dispatch.get(nodoLi,"innerHTML").toString();
+				if(episodioHosp.contains("HADO")){
+					if(numeroDeUls > 1){
+						nodoLi = Dispatch.get(nodoLis,"1").getDispatch();
+					}
+				}
 				
-				if(id.equals("HOS")){
-					aliasServicio = cadena.substring(index+4, index + 8);
+				
+				Dispatch nodoA = Dispatch.call(nodoLi, "getElementsByTagName","a").getDispatch();
+				Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
+
+				
+				
+				Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
+				Dispatch estiloNodoAncla = Dispatch.call(nodoAncla,"getAttribute","style").getDispatch();
+				Dispatch.put(estiloNodoAncla,"fontWeight","bolder");
+				Dispatch.put(estiloNodoAncla,"color","red");
+				Dispatch.call(nodoAncla, "click");
+				
+				if(id.equals("HOS") || id.equals("URG")){
+					
+					String cadena = Dispatch.get(nodoAncla,"innerHTML").getString();
+					System.out.println(cadena);
+					fecha = cadena.substring(cadena.length()-11);
+					
+					int index = cadena.lastIndexOf(">") + 1;
+					
+					if(id.equals("HOS")){
+						aliasServicio = cadena.substring(index+4, index + 8);
+						
+					}
+					else{
+						aliasServicio = cadena.substring(index,index + 4);
+					}
+					
+					System.out.println(aliasServicio);
 					
 				}
 				else{
+					
+					String cadena = Dispatch.get(nodoAncla,"innerHTML").getString();
+					System.out.println(cadena);
+					int index = cadena.lastIndexOf("/");
+					fecha = cadena.substring(index-5,index+5);
+					index = cadena.lastIndexOf(">") + 1;
 					aliasServicio = cadena.substring(index,index + 4);
 				}
 				
-				System.out.println(aliasServicio);
-				
+				System.out.println(fecha);
 			}
 			else{
-				
-				String cadena = Dispatch.get(nodoAncla,"innerHTML").getString();
-				System.out.println(cadena);
-				int index = cadena.lastIndexOf("/");
-				fecha = cadena.substring(index-5,index+5);
-				index = cadena.lastIndexOf(">") + 1;
-				aliasServicio = cadena.substring(index,index + 4);
+				System.out.println("nodo no existe");
 			}
 			
-			System.out.println(fecha);
+	/**** aquí hay error por null ****/		
+
 			
 		}
 
@@ -156,32 +199,46 @@ public class XedocIndividualJacob {
 			// Es una consulta y hay que saber primero si va a ir al nodo general o no
 			// Programar
 			
-			aliasServicio = servicio;
-			
-			if(tipoSubida.equals("f") || tipoSubida.equals("e") ){
-				id = servicio + "noSeleccionable-rama";
+			if(!servicio.equals(SERVICIO_DESCONOCIDO)){
+				aliasServicio = servicio;
+				
+				if(tipoSubida.equals("f") || tipoSubida.equals("e") ){
+					id = servicio + "noSeleccionable-rama";
 
-				Dispatch nodo = Dispatch.call(documento, "getElementById",id).getDispatch();
-				Dispatch nodoLis = Dispatch.call(nodo, "getElementsByTagName","li").getDispatch();
-				System.out.println("Numero de lis...." + Dispatch.get(nodoLis,"length").toString());
-				Dispatch nodoLi = Dispatch.get(nodoLis, "0").getDispatch();
-				Dispatch nodoA = Dispatch.call(nodoLi, "getElementsByTagName","a").getDispatch();
-				System.out.println("Numero de as...." + Dispatch.get(nodoA,"length").toString());
+					Dispatch nodo = Dispatch.call(documento, "getElementById",id).getDispatch();
+					Dispatch nodoLis = Dispatch.call(nodo, "getElementsByTagName","li").getDispatch();
+					System.out.println("Numero de lis...." + Dispatch.get(nodoLis,"length").toString());
+					Dispatch nodoLi = Dispatch.get(nodoLis, "0").getDispatch();
+					Dispatch nodoA = Dispatch.call(nodoLi, "getElementsByTagName","a").getDispatch();
+					System.out.println("Numero de as...." + Dispatch.get(nodoA,"length").toString());
+					
+					Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
+					
+					Dispatch estiloNodoAncla = Dispatch.call(nodoAncla,"getAttribute","style").getDispatch();
+					Dispatch.put(estiloNodoAncla,"fontWeight","bolder");
+					Dispatch.put(estiloNodoAncla,"color","red");
+					Dispatch.call(nodoAncla, "click");
+					
+					Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
+					Dispatch.call(nodoAncla, "click");
+				}
+				else{
+					id = "360340-1-2-" + servicio;
+					
+					Dispatch nodo = Dispatch.call(documento, "getElementById",id).getDispatch();
+					Dispatch nodoA = Dispatch.call(nodo, "getElementsByTagName","a").getDispatch();
+					
+					//  Caso de que el servicio no figure
+					if(nodoA != null){
+						Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
+						Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
+						Dispatch.call(nodoAncla, "click");
+					}
 				
-				Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
-				Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
-				Dispatch.call(nodoAncla, "click");
+				}
 			}
-			else{
-				id = "360340-1-2-" + servicio;
-				
-				Dispatch nodo = Dispatch.call(documento, "getElementById",id).getDispatch();
-				Dispatch nodoA = Dispatch.call(nodo, "getElementsByTagName","a").getDispatch();
-				Dispatch nodoAncla = Dispatch.get(nodoA,"0").getDispatch();
-				Dispatch.call(nodoAncla,"setAttribute","id","nodoSeleccionado");
-				Dispatch.call(nodoAncla, "click");
-				
-			}
+			
+
 
 		}
 
@@ -189,6 +246,19 @@ public class XedocIndividualJacob {
 	
 	
 	public void putFecha(Dispatch fechaDispatch){
+
+		
+		try {
+			Dispatch nodoAncla = Dispatch.call(documento, "getElementById","nodoSeleccionado").getDispatch();
+			Dispatch estiloNodoAncla = Dispatch.call(nodoAncla,"getAttribute","style").getDispatch();
+			Dispatch.put(estiloNodoAncla,"fontWeight","bolder");
+			Dispatch.put(estiloNodoAncla,"color","black");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Ningún nodo seleccionado.");
+		}
+		
 		if(fecha.length() != 0){
 			Dispatch.put(fechaDispatch,"value",fecha);
 			Dispatch.call(fechaDispatch,"focus");
@@ -201,50 +271,54 @@ public class XedocIndividualJacob {
 	public void seleccionarServicio(){
 		
 		// A partir del alias del servicio, obtenemos un rango de indices (7) donde buscarlo en el select
+		
+		if(!servicio.equals(SERVICIO_DESCONOCIDO)){
+			Dispatch caja = Dispatch.call(documento, "getElementById","cajaColoreada2").getDispatch();
+			
+			String numOpcion = (String) InicioXedoc.nombreServicios.get(aliasServicio);
+			int numeroServicios = InicioXedoc.nombreServicios.size();
+			
+			System.out.println("Empieza a seleccionar servicio.");
+			System.out.println("Alias del servicio... " + aliasServicio);
+			System.out.println("Numero de seleccion " + numOpcion);
+			
+			System.out.println("Numero de servicios " + numeroServicios);
+			
+			Dispatch selectServicio = Dispatch.call(documento, "getElementById","{hc}servicioEspecialidad-{hc}docExt").getDispatch();
+			Dispatch opciones = Dispatch.call(selectServicio, "options").getDispatch();
+			
+			
+			System.out.println("numOpcion vale... " + numOpcion);
+			
+			if(numOpcion != null){
+				int min = 0;
+				int max = 0;
+				if(Integer.valueOf(numOpcion)-3 < 0 ){
+					min = 0;
+				}
+				else{
+					min = Integer.valueOf(numOpcion)-3;
+				}
 				
-		Dispatch caja = Dispatch.call(documento, "getElementById","cajaColoreada2").getDispatch();
-		
-		String numOpcion = (String) InicioXedoc.nombreServicios.get(aliasServicio);
-		int numeroServicios = InicioXedoc.nombreServicios.size();
-		
-		System.out.println("Empieza a seleccionar servicio.");
-		System.out.println("Alias del servicio... " + aliasServicio);
-		System.out.println("Numero de seleccion " + numOpcion);
-		
-		System.out.println("Numero de servicios " + numeroServicios);
-		
-		Dispatch selectServicio = Dispatch.call(documento, "getElementById","{hc}servicioEspecialidad-{hc}docExt").getDispatch();
-		Dispatch opciones = Dispatch.call(selectServicio, "options").getDispatch();
-		
-		
-		System.out.println("numOpcion vale... " + numOpcion);
-		
-		if(numOpcion != null){
-			int min = 0;
-			int max = 0;
-			if(Integer.valueOf(numOpcion)-3 < 0 ){
-				min = 0;
-			}
-			else{
-				min = Integer.valueOf(numOpcion)-3;
-			}
-			
-			if(Integer.valueOf(numOpcion)+4 > numeroServicios ){
-				max = numeroServicios;
-			}
-			else{
-				max = Integer.valueOf(numOpcion) + 4;
-			}
-			
-			for(int i= min;i< max;i++){
-				Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
-				String nombreServicio = Dispatch.get(opcion,"text").toString();
-				if(nombreServicio.substring(0,4).equals(aliasServicio)){
-					Dispatch.put(opcion,"selected","true");
-					Dispatch.put(caja,"value",nombreServicio);
+				if(Integer.valueOf(numOpcion)+4 > numeroServicios ){
+					max = numeroServicios;
+				}
+				else{
+					max = Integer.valueOf(numOpcion) + 4;
+				}
+				
+				for(int i= min;i< max;i++){
+					Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
+					String nombreServicio = Dispatch.get(opcion,"text").toString();
+					if(nombreServicio.substring(0,4).equals(aliasServicio)){
+						Dispatch.put(opcion,"selected","true");
+						Dispatch.put(caja,"value",nombreServicio);
+					}
 				}
 			}
+
 		}
+		
 
 
 	}
@@ -294,6 +368,7 @@ public class XedocIndividualJacob {
 		if(tieneTitulo){
 			caja = Dispatch.call(documento, "getElementById","{hc}titulo-{hc}docExt").getDispatch();
 			Dispatch estiloCaja = Dispatch.call(caja, "style").getDispatch();
+			Dispatch.put(estiloCaja,"width", "250px");
 			Dispatch.put(caja,"value",titulo);
 			Dispatch.put(estiloCaja,"backgroundColor",COLORFONDOCAJAS);
 			Dispatch.put(estiloCaja,"font","bold 18px arial, sans-serif");
@@ -474,4 +549,7 @@ public class XedocIndividualJacob {
 		Dispatch enviar = Dispatch.call(documento, "getElementById","submitFormFirmar").getDispatch();
 		Dispatch.get(enviar,"focus");
 	}
+	
+	
+	
 }
