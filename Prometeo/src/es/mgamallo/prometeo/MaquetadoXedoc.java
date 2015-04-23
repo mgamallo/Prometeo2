@@ -167,7 +167,14 @@ public class MaquetadoXedoc {
 		Dispatch columnaD = Dispatch.call(documento,"getElementById","columnaDerechaEdicion").getDispatch();
 		Dispatch estiloColumnaD = Dispatch.get(columnaD,"style").getDispatch();
 		Dispatch.put(estiloColumnaD, "width","1000px");	
-		Dispatch.put(estiloColumnaD, "marginLeft","800px");
+		
+		if(Inicio.numeroPantallas == 1){
+			Dispatch.put(estiloColumnaD, "marginLeft","800px");
+		}
+		else{
+			Dispatch.put(estiloColumnaD, "marginLeft","960px");
+		}
+		
 		
 		
 		Dispatch tablaAtributos = Dispatch.call(documento,"getElementById","tablaAtributos").getDispatch();

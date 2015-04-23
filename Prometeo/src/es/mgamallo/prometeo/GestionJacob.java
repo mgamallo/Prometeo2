@@ -91,7 +91,7 @@ public class GestionJacob {
 		    Dispatch.put(Inicio.paciente1.ianus,"top",130);  // 180
 		    Dispatch.put(Inicio.paciente1.ianus,"left",1024);
 		    if(Inicio.numeroPantallas == 1){
-		    	Dispatch.put(Inicio.paciente1.ianus,"height",1052-130);  // 1099
+		    	Dispatch.put(Inicio.paciente1.ianus,"height",1172-130);  // 1099
 		    	Dispatch.put(Inicio.paciente1.ianus,"width",895);
 		    }
 			

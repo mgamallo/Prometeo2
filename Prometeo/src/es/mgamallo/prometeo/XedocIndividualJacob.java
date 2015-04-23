@@ -15,6 +15,16 @@ public class XedocIndividualJacob {
 	public static final String INFORME_ALTA_URG = "Informe alta";
 	public static final String INFORME_ALTA_URG_XEDOC = "Informe alta (URG)";
 	
+	public static final String AUTOSET = "Autoset";
+	public static final String FICHA_REHAB = "Ficha RHB";
+	public static final String TRANSFUSION = "Transfusión";
+	public static final String INFORME_FARMACIA = "Informe Farmacia";
+
+	public static final String SOLICITUDE = "Solicitude";
+	public static final String TEST_UREASA = "Test de ureasa";
+
+	private boolean excepcionTipo = false;
+	
 	private final String SERVICIO_DESCONOCIDO = "Des";
 	
 	private final String COLORFONDOCAJAS = "RGB(253,247,133)";
@@ -75,6 +85,8 @@ public class XedocIndividualJacob {
 			}
 		}
 		
+		excepcionTipo = false;
+		
 		if(!nombreDocumentos.containsKey(tipoDocumento)){
 			
 			if(tipoDocumento.equals(INFORME_ALTA_URG)){
@@ -82,7 +94,15 @@ public class XedocIndividualJacob {
 			}
 			else{
 				titulo = tipoDocumento;
-				tipoDocumento = CONTINXENCIA;
+				if(tipoDocumento.equals(AUTOSET) || tipoDocumento.equals(FICHA_REHAB)
+						|| tipoDocumento.equals(TRANSFUSION) || tipoDocumento.equals(INFORME_FARMACIA)
+						|| tipoDocumento.equals(SOLICITUDE) || tipoDocumento.equals(TEST_UREASA)){
+					tipoDocumento = " ";
+					excepcionTipo = true;
+				}
+				else{
+					tipoDocumento = CONTINXENCIA;
+				}
 				tieneTitulo = true;
 			}
 
@@ -329,41 +349,45 @@ public class XedocIndividualJacob {
 		
 		Dispatch caja = Dispatch.call(documento, "getElementById","cajaColoreada1").getDispatch();
 		
-		String numOpcion = (String) InicioXedoc.nombreDocumentos.get(tipoDocumento);
-		int numeroDocumentos = InicioXedoc.nombreDocumentos.size();
-		System.out.println("El tipo de documento es... " + tipoDocumento);
-		System.out.println("El numero de opcion es... " + numOpcion);
 		
-		Dispatch selectTipoDocumento = Dispatch.call(documento, "getElementById","{hc}codDocEx-{hc}docExt").getDispatch();
-		Dispatch opciones = Dispatch.call(selectTipoDocumento, "options").getDispatch();
-		
-		int min = 0;
-		int max = 0;
-		if(Integer.valueOf(numOpcion)-3 < 0 ){
-			min = 0;
-		}
-		else{
-			min = Integer.valueOf(numOpcion)-3;
-		}
-		
-		if(Integer.valueOf(numOpcion)+4 > numeroDocumentos ){
-			max = numeroDocumentos;
-		}
-		else{
-			max = Integer.valueOf(numOpcion) + 4;
-		}
-		
-		
-		for(int i= min;i< max;i++){
-			Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
-			String nombreDocumento = Dispatch.get(opcion,"text").toString();
+		if(!excepcionTipo){
+			String numOpcion = (String) InicioXedoc.nombreDocumentos.get(tipoDocumento);
+			int numeroDocumentos = InicioXedoc.nombreDocumentos.size();
+			System.out.println("El tipo de documento es... " + tipoDocumento);
+			System.out.println("El numero de opcion es... " + numOpcion);
 			
-			if(tipoDocumento.equals(nombreDocumento)){
-				System.out.println(nombreDocumento);
-				Dispatch.put(opcion,"selected","true");
-				Dispatch.put(caja,"value",nombreDocumento);
+			Dispatch selectTipoDocumento = Dispatch.call(documento, "getElementById","{hc}codDocEx-{hc}docExt").getDispatch();
+			Dispatch opciones = Dispatch.call(selectTipoDocumento, "options").getDispatch();
+			
+			int min = 0;
+			int max = 0;
+			if(Integer.valueOf(numOpcion)-3 < 0 ){
+				min = 0;
+			}
+			else{
+				min = Integer.valueOf(numOpcion)-3;
+			}
+			
+			if(Integer.valueOf(numOpcion)+4 > numeroDocumentos ){
+				max = numeroDocumentos;
+			}
+			else{
+				max = Integer.valueOf(numOpcion) + 4;
+			}
+			
+			
+			for(int i= min;i< max;i++){
+				Dispatch opcion = Dispatch.get(opciones, String.valueOf(i)).getDispatch();
+				String nombreDocumento = Dispatch.get(opcion,"text").toString();
+				
+				if(tipoDocumento.equals(nombreDocumento)){
+					System.out.println(nombreDocumento);
+					Dispatch.put(opcion,"selected","true");
+					Dispatch.put(caja,"value",nombreDocumento);
+				}
 			}
 		}
+
 		
 		if(tieneTitulo){
 			caja = Dispatch.call(documento, "getElementById","{hc}titulo-{hc}docExt").getDispatch();

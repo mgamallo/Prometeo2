@@ -124,7 +124,7 @@ public class Inicio {
 		
 		if(numeroPantallas==1){
 			rVentanaExploradorMin = new Rectangle(851, 0, 175, 800);
-			rVentanaExploradorMax = new Rectangle(851, 0, 175, 1052);
+			rVentanaExploradorMax = new Rectangle(851, 0, 175, 1172);
 			rVentanaNombres = new Rectangle(0, 751, 1024, 250);
 		}
 

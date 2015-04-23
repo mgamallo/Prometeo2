@@ -371,7 +371,7 @@ public class GestionJacobXedoc {
 					+ "campos[3] = campos[3].replace('r_f.pdf','');"
 					+ "nhc = campos[1];"
 					+ "filaSeleccionada = nodo.id;"
-				//	+ "alert(filaSeleccionada);"
+					+ "alert(filaSeleccionada);"
 					+ "cargaContexto();"
 				+ "}"
 				
@@ -383,7 +383,7 @@ public class GestionJacobXedoc {
 					+ "var fechaF = document.getElementById('FechaFin');"
 					+ "fechaI.value = '" + fechaInicio + "';"
 					+ "fechaF.value = '" + fechaFin + "';"
-				//	+ "alert('hola');"
+					+ "alert('En medio de la carga de contexto');"
 					+ "document.getElementById('submitFormContexto').click();"
 					+ "var claveEntera = nhc + '-360340';"
 					+ "setTimeout(function(){cambiarContexto(claveEntera);"
@@ -446,15 +446,18 @@ public class GestionJacobXedoc {
 		
 		String cadena_blank = ""		
 				+ "var numFila = 1;"
+				+ "var sal = 'holaaa';"
 				+ "for(var i=0;i<filas;i++){"
 					+ "celdas[i*5 + 2].setAttribute('id',i);"
-					+ "celdas[i*5 + 2].setAttribute('onclick','getNHC(this);');"
+					+ "celdas[i*5 + 2].setAttribute('onclick','getNHC(this);');"  
+			//		+ "celdas[i*5 + 2].setAttribute('onclick','javascript:alert(sal);try{getNHC(this)}catch(e){alert(e)}');"  
+			
 					+ "var anclas = celdas[i*5 + 4].getElementsByTagName('a');"
 					+ "anclas[0].target = '_blank';"
 					+ "numFila++;"
 				+ "}"
 				+ "celdas[filaInicial*5 + 2].click();"
-		//		+ "alert(filas);"
+			//	+ "alert(filas);"
 				+ "";
 		
 		String cadena_sin_blank = ""
@@ -466,12 +469,14 @@ public class GestionJacobXedoc {
 					+ "numFila++;"
 				+ "}"
 				+ "celdas[filaInicial*5 + 2].click();"
-		//		+ "alert(filas);"
+			//	+ "alert(filas);"
 				+ "";
 				
 		
 		String cadena1 = cadenaComun1 + cadena_blank;
 		String cadena2 = cadenaComun2 + cadena_sin_blank;
+		
+		System.out.println("Cadena 1 " + cadena1);
 		
 		/*
 		if(nombreXedoc.contains("Xedoc 1")){
@@ -486,6 +491,8 @@ public class GestionJacobXedoc {
 		*/
 		
 		Dispatch.call(bandejaXedoc1, "Navigate","javascript:" +  cadena1 );
+		
+		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
