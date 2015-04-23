@@ -371,7 +371,7 @@ public class GestionJacobXedoc {
 					+ "campos[3] = campos[3].replace('r_f.pdf','');"
 					+ "nhc = campos[1];"
 					+ "filaSeleccionada = nodo.id;"
-					+ "alert(filaSeleccionada);"
+				//	+ "alert(filaSeleccionada);"
 					+ "cargaContexto();"
 				+ "}"
 				
@@ -383,7 +383,7 @@ public class GestionJacobXedoc {
 					+ "var fechaF = document.getElementById('FechaFin');"
 					+ "fechaI.value = '" + fechaInicio + "';"
 					+ "fechaF.value = '" + fechaFin + "';"
-					+ "alert('En medio de la carga de contexto');"
+				//	+ "alert('En medio de la carga de contexto');"
 					+ "document.getElementById('submitFormContexto').click();"
 					+ "var claveEntera = nhc + '-360340';"
 					+ "setTimeout(function(){cambiarContexto(claveEntera);"
