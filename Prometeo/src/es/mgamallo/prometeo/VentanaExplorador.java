@@ -601,6 +601,19 @@ public class VentanaExplorador extends javax.swing.JFrame {
     		System.out.println("El pdf seleccionado es el " + Inicio.indiceArchivoSelecc);
     		
     		Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
+    		
+			if(Inicio.esWin64){
+				new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+			}
+			else{
+				SwingUtilities.invokeLater(new Runnable() {
+    				public void run() {  
+    					Inicio.panelPrincipal.webBrowserOperaciones.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+    				}
+    			});  
+			}
+    		
+    		
     		Inicio.panelPrincipal.webBrowserOperaciones
     			.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
     		
@@ -646,11 +659,18 @@ public class VentanaExplorador extends javax.swing.JFrame {
         			
         			Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
          			
-        			SwingUtilities.invokeLater(new Runnable() {
-        				public void run() {  
-        					Inicio.panelPrincipal.webBrowserOperaciones.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
-        				}
-        			});  
+        			if(Inicio.esWin64){
+        				new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+        			}
+        			else{
+        				SwingUtilities.invokeLater(new Runnable() {
+            				public void run() {  
+            					Inicio.panelPrincipal.webBrowserOperaciones.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+            				}
+            			});  
+        			}
+        			
+        	
         			
         			Inicio.vControlIanus.panelBotones.setBackground(new Color(80,200,120));
  

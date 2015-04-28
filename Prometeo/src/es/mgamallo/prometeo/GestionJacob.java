@@ -26,19 +26,41 @@ public class GestionJacob {
 	    InicioIanus.oShell = new ActiveXComponent("Shell.Application"); 
 	    InicioIanus.oWindows = InicioIanus.oShell.invokeGetComponent("Windows");
 
-        
-        try {
-			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe -nomerge");
-			Thread.sleep(1000);
-			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe -nomerge");
-			Thread.sleep(1000);
-        } catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	    
+	    if(	Inicio.nombrePc.toLowerCase().contains("mahc04p") ||
+		    	Inicio.nombrePc.toLowerCase().contains("mahc03p") ||
+		    	Inicio.nombrePc.toLowerCase().contains("mahc21p")   
+		    		){
+		        try {
+					Runtime.getRuntime().exec("C:/Program Files (x86)/Internet Explorer/iexplore.exe -nomerge");
+					Thread.sleep(1000);
+					
+					Runtime.getRuntime().exec("C:/Program Files (x86)/Internet Explorer/iexplore.exe -nomerge");
+					Thread.sleep(1000);
+					
+		        } catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
+	    else{
+	        try {
+				Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe -nomerge");
+				Thread.sleep(1000);
+				Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe -nomerge");
+				Thread.sleep(1000);
+	        } catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+
         
         int iCount = InicioIanus.oWindows.getProperty("Count").getInt();
         System.out.println("iCount: " + iCount);        

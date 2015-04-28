@@ -6,8 +6,10 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -21,6 +23,11 @@ public class Inicio {
 	protected static final String LS = System.getProperty("line.separator");
 	
 	public static InterfazPrincipal panelPrincipal;
+	
+	public static String nombrePc = "";
+	public static final String RUTAPC = "c:/ianus/ianus.txt"; 
+	
+	public static boolean esWin64 = false;
 	
 	public static int numeroPantallas = 0;
 	public static int anchoP = 0;
@@ -122,6 +129,7 @@ public class Inicio {
 				
 		numeroPantallas = gs.length;
 		
+		
 		if(numeroPantallas==1){
 			rVentanaExploradorMin = new Rectangle(851, 0, 175, 800);
 			rVentanaExploradorMax = new Rectangle(851, 0, 175, 1172);
@@ -135,6 +143,18 @@ public class Inicio {
 	    System.out.println("El numero de pantallas es " + numeroPantallas);
 	    System.out.println("Resolución: " + anchoP + ", " + altoP);
 		
+	    
+		nombrePc = new IdentificarPc().getIdentificacion(RUTAPC);
+		
+		if(  nombrePc.toLowerCase().contains("mahc03p") ||
+					nombrePc.toLowerCase().contains("mahc04p") ||
+					nombrePc.toLowerCase().contains("mahc21p") 
+				){
+			
+			esWin64 = true;
+		}
+	    
+	    
 	    
 	    usuarioLogeadoWindows = System.getProperty("user.name");
 	    System.out.println("Usuario logeado: " + usuarioLogeadoWindows);
@@ -277,4 +297,25 @@ public class Inicio {
 	
 }
 
+class IdentificarPc {
+
+	
+	String getIdentificacion(String ruta){
+		File f = new File(ruta);
+		Scanner s;
+		String pc = "NoN";
+		try{
+			s = new Scanner(f);
+			if (s.hasNextLine()){
+				 pc = s.nextLine();
+				System.out.println(pc);
+			}
+			s.close();
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		
+		return pc;
+	}
+}	
 
