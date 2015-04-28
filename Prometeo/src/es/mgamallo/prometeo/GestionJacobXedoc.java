@@ -36,6 +36,13 @@ public class GestionJacobXedoc {
 
 		
 		formateaWebsXedoc(bandejaXedoc1);
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		formateaWebsXedoc(xedoc2);
 		formateaIanus(ianusApoyoXedoc);
 		Dispatch.put(ianusApoyoXedoc, "visible","false");
@@ -285,6 +292,7 @@ public class GestionJacobXedoc {
 
 		System.out.println("Empieza el tercer readyState");
 		
+		
 		while(true){
 			estado = Dispatch.call(bandejaXedoc, "readyState");
 			if(Integer.valueOf(estado.toString()) == 4){
@@ -293,7 +301,14 @@ public class GestionJacobXedoc {
 			}
 		}
 		
-		
+		/*
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		*/
 	}
 	
 	public static void formateaIanus(ActiveXComponent ianus){

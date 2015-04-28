@@ -28,9 +28,9 @@ public class GestionJacob {
 
         
         try {
-			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
+			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe -nomerge");
 			Thread.sleep(1000);
-			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe");
+			Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe -nomerge");
 			Thread.sleep(1000);
         } catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -110,7 +110,7 @@ public class GestionJacob {
 		    Dispatch.put(Inicio.paciente2.ianus,"left",1024);
 		    
 		    if(Inicio.numeroPantallas == 1){
-		    	Dispatch.put(Inicio.paciente2.ianus,"height",1052-130);  // 1099
+		    	Dispatch.put(Inicio.paciente2.ianus,"height",1172-130);  // 1099
 		    	Dispatch.put(Inicio.paciente2.ianus,"width",895);
 		    }
 		    
