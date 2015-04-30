@@ -179,19 +179,38 @@ public class InterfazPrincipal implements MouseListener{
 					Inicio.carpetaXedocFirmado = false;
 					
 					panelActivo = ABRIR;
+					
+					if(Inicio.esWin64){
+						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					}
+					
 				} else if ("ayuda".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_AYUDA);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = AYUDA;
+					
+					if(Inicio.esWin64){
+						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					}
+					
 				} else if ("normas".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_NORMAS);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = NORMAS;
+					
+					if(Inicio.esWin64){
+						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					}
+					
 					Inicio.listaNormasIanus = Txt.leerNormasTxt(Inicio.rutaNormas);
 				} else if ("avisos".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_AVISOS);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = AVISOS;
+					
+					if(Inicio.esWin64){
+						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					}
 				}
 				if ("usuario".equals(command)) {
 					maximizada = Pantalla.restaurar(frame);
@@ -202,16 +221,25 @@ public class InterfazPrincipal implements MouseListener{
 					MiHilo miHilo = new MiHilo(Inicio.usuario,500);
 					miHilo.start();
 					panelActivo = USUARIO;
+					
+					if(Inicio.esWin64){
+						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					}
+					
 				} else if ("salir".equals(command)) {
 					webBrowserOperaciones.navigate(DIR_SALIR);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = SALIR;
 					inicioCarpetasSubidas = true;
 
+					if(Inicio.esWin64){
+						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					}
 					// frame.dispose();
 				} else if ("minimizar".equals(command)) {
 					frame.setState(frame.ICONIFIED);
 				}
+				
 			}
 		});
 
@@ -985,15 +1013,18 @@ public class InterfazPrincipal implements MouseListener{
 
 	public void setPdf(String ruta, String nombrePdf, Color color) {
 
-		webBrowserControl.navigate(ruta);
+		if(!Inicio.esWin64){
+			webBrowserControl.navigate(ruta);
 
-		TitledBorder tb = BorderFactory.createTitledBorder(
-				BorderFactory.createEtchedBorder(), "  " + nombrePdf
-						+ "        ", TitledBorder.RIGHT, TitledBorder.TOP,
-				new Font("TimesRoman", Font.BOLD, 14), Color.black);
+			TitledBorder tb = BorderFactory.createTitledBorder(
+					BorderFactory.createEtchedBorder(), "  " + nombrePdf
+							+ "        ", TitledBorder.RIGHT, TitledBorder.TOP,
+					new Font("TimesRoman", Font.BOLD, 14), Color.black);
 
-		panelOperaciones.setBorder(tb);
-		panelOperaciones.setBackground(color);
+			panelOperaciones.setBorder(tb);
+			panelOperaciones.setBackground(color);
+		}
+
 
 	}
 	
@@ -1041,7 +1072,7 @@ public class InterfazPrincipal implements MouseListener{
 				frame.setSize(850, 1000);
 				frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 				
-				frame.setMinimumSize(new Dimension(800, 300));
+				frame.setMinimumSize(new Dimension(800, 120));
 				frame.setLocationByPlatform(true);
 
 				panelOperaciones.setBackground(color);

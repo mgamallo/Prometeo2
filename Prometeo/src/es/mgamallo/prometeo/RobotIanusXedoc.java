@@ -49,6 +49,15 @@ public class RobotIanusXedoc {
 		coordAceptar.y = Inicio.inicioIanus.coordenadasAsociar[7][columna];
 		coordTipoDoc.x = Inicio.inicioIanus.coordenadasAsociar[8][columna];
 		coordTipoDoc.y = Inicio.inicioIanus.coordenadasAsociar[9][columna];
+		
+		if(Inicio.esWin64){
+			coordExaminar.y = coordExaminar.y + 12;
+			coordLupa.y = coordLupa.y + 12;
+			coordTitulo.y = coordTitulo.y +12;
+			coordAceptar.y = coordAceptar.y +12;
+			coordTipoDoc.y = coordTipoDoc.y +12;
+		}
+		
 
 		System.out.println(coordExaminar.y + ", " + coordAceptar.y);
 	}
@@ -66,6 +75,9 @@ public class RobotIanusXedoc {
 
 //		if (!InicioIanus.versionar) {
 			tieneTipo = compruebaAsociar(tituloCDU);
+			
+			tieneTipo = true;
+			
 			if (tieneTipo) {
 				Robot robot;
 				try {

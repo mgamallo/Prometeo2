@@ -2,6 +2,7 @@ package es.mgamallo.prometeo;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -37,7 +38,9 @@ public class Inicio {
 	static public Usuario usuario = new Usuario();
 	static public boolean contraseña = true;
 	
-	static Rectangle rVentanaInterfazPrincipalMin = new Rectangle(0, 0, 850, 1000);
+	static public Dimension tamañoInterfazPrincipalWin64 = new Dimension(850,120);
+	
+	static Rectangle rVentanaInterfazPrincipalMin = new Rectangle(0, 0, 850, 120);
 	static Rectangle rVentanaInterfazPrincipalMax = new Rectangle(0, 0, 850, 1250);
 	static Rectangle rVentanaExploradorMin = new Rectangle(851, 0, 175, 1000);
 	static Rectangle rVentanaExploradorMax = new Rectangle(851, 0, 175, 1250);
@@ -152,8 +155,12 @@ public class Inicio {
 				){
 			
 			esWin64 = true;
+			
+			Retardos.retardoIntroducirNHC = 1000;
+			Retardos.retardoCargarPaciente = 7000;
+			Retardos.retardoTrasPulsarExaminar = 700;
 		}
-	    
+	    System.out.println("Es Win64... " + esWin64);
 	    
 	    
 	    usuarioLogeadoWindows = System.getProperty("user.name");

@@ -293,6 +293,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
         jSplitPane1.setTopComponent(panelPdfs);
         
+        boton2ianus.setFocusable(false);
         boton2ianus.setText("Inicio 2 ianus");
         boton2ianus.setBackground(Color.yellow);
         boton2ianus.addActionListener(new java.awt.event.ActionListener() {
@@ -302,7 +303,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
 
-        
+        botonReiniciarNavegadores.setFocusable(false);
         botonReiniciarNavegadores.setText("Reiniciar navegadores");
         botonReiniciarNavegadores.setBackground(Color.red);
         botonReiniciarNavegadores.addActionListener(new java.awt.event.ActionListener() {
@@ -313,7 +314,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
 
-        
+        botonHabilitarTeclas.setFocusable(false);
         botonHabilitarTeclas.setText("Deshabilitar teclas");	
         botonHabilitarTeclas.setBackground(Color.green);
         botonHabilitarTeclas.addActionListener(new java.awt.event.ActionListener() {
@@ -326,7 +327,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
         });
 
  
-        
+        jButton11.setFocusable(false);
         jButton11.setText("Ianus 1");
         jButton11.setBackground(Color.pink);
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -335,7 +336,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
         
-        
+        jButton12.setFocusable(false);
         jButton12.setText("Ianus 2");
         jButton12.setBackground(Color.pink);
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -345,7 +346,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
         
-        
+        jButton4.setFocusable(false);
         jButton4.setText("versionar");
         jButton4.setVisible(false);
         jButton4.addActionListener(new ActionListener() {
@@ -356,6 +357,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
+        botonReiniciarNHC.setFocusable(false);
         botonReiniciarNHC.setBackground(Color.orange);
         botonReiniciarNHC.setText("Reiniciar NHC");
         botonReiniciarNHC.addActionListener(new java.awt.event.ActionListener() {
@@ -364,6 +366,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setFocusable(false);
         jButton6.setVisible(false);
         jButton6.setText("V auto OFF");
         jButton6.setBackground(Color.gray);
@@ -381,7 +384,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
             }
         });
         
-
+        botonResetearSubida.setFocusable(false);
         botonResetearSubida.setEnabled(false);
         botonResetearSubida.setText("Resetear subida");
         botonResetearSubida.addActionListener(new ActionListener() {
@@ -394,6 +397,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
+        botonRetardos.setFocusable(false);
         botonRetardos.setText("Retardos");
         botonRetardos.setVisible(true);
         botonRetardos.setBackground(new Color(103,170,238));
@@ -406,6 +410,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
+        jButton9.setFocusable(false);
         jButton9.setText("Actualizar ianus");
         jButton9.setVisible(false);
         jButton9.addActionListener(new ActionListener() {
@@ -417,6 +422,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
+        jButton10.setFocusable(false);
         jButton10.setText("Ianus visibles");
         jButton10.setBackground(Color.pink);
         jButton10.addActionListener(new ActionListener() {
@@ -436,6 +442,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
+        botonVentanaNombres.setFocusable(false);
         botonVentanaNombres.setText("Ventana nombres");
         botonVentanaNombres.addActionListener(new ActionListener() {
 			
@@ -461,8 +468,11 @@ public class VentanaExplorador extends javax.swing.JFrame {
 			}
 		});
 
+        botonSalirOAsociar.setFocusable(false);
         botonSalirOAsociar.setText("Asociar o Salir");
         botonSalirOAsociar.setVisible(false);
+        
+        panelControl.setFocusable(false);
         
         javax.swing.GroupLayout panelControlLayout = new javax.swing.GroupLayout(panelControl);
         panelControl.setLayout(panelControlLayout);       
@@ -603,7 +613,8 @@ public class VentanaExplorador extends javax.swing.JFrame {
     		Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
     		
 			if(Inicio.esWin64){
-				new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+				// new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+				new VisualizaPdfReader(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
 			}
 			else{
 				SwingUtilities.invokeLater(new Runnable() {
@@ -623,6 +634,7 @@ public class VentanaExplorador extends javax.swing.JFrame {
     		Inicio.vControlIanus.labelNombrePdf.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nombreArchivo);
     		
     	}else if(ev.getButton() == 2){
+    		
     		System.out.println("Boton central");
     	}
     	else{
@@ -660,7 +672,9 @@ public class VentanaExplorador extends javax.swing.JFrame {
         			Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
          			
         			if(Inicio.esWin64){
-        				new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+        				// new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+        				new VisualizaPdfReader(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+
         			}
         			else{
         				SwingUtilities.invokeLater(new Runnable() {

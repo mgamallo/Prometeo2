@@ -27,10 +27,9 @@ public class GestionJacob {
 	    InicioIanus.oWindows = InicioIanus.oShell.invokeGetComponent("Windows");
 
 	    
-	    if(	Inicio.nombrePc.toLowerCase().contains("mahc04p") ||
-		    	Inicio.nombrePc.toLowerCase().contains("mahc03p") ||
-		    	Inicio.nombrePc.toLowerCase().contains("mahc21p")   
-		    		){
+	    if(	Inicio.esWin64 ){
+	    	
+	    		System.out.println("Capturando ianus en 64");
 		        try {
 					Runtime.getRuntime().exec("C:/Program Files (x86)/Internet Explorer/iexplore.exe -nomerge");
 					Thread.sleep(1000);
@@ -47,6 +46,8 @@ public class GestionJacob {
 				}
 		}
 	    else{
+	    	
+	    	System.out.println("Capturando ianus en 32");
 	        try {
 				Runtime.getRuntime().exec("C:/Archivos de programa/Internet Explorer/iexplore.exe -nomerge");
 				Thread.sleep(1000);

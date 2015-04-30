@@ -52,7 +52,7 @@ public class VisualizaPdfWeb {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.out.println("Error localizando pdf");
+				System.out.println("Error localizando pdf " + i);
 				e.printStackTrace();
 			}
 		}
@@ -64,6 +64,9 @@ public class VisualizaPdfWeb {
 		Dispatch.put(IE, "left", 0);
 		Dispatch.put(IE, "width", 850);
 		Dispatch.put(IE, "AddressBar","false");
+		
+		System.out.println("Formato 850 100");
+		Inicio.panelPrincipal.frame.setSize(850,100);
 	}
 	
 	public static void main(String[] args) {

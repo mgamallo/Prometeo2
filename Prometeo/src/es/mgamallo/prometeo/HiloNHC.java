@@ -33,6 +33,8 @@ public class HiloNHC extends Thread{
 			public void run() {
 
 				 try {
+					System.out.println("Empieza el hilo de introducir nhc " + nombreIanus); 
+				//	Thread.sleep(1000); 
 					Dispatch.call(ianus, "navigate",introduceNhc1);
 					Thread.sleep(Retardos.retardoIntroducirNHC);
 					Dispatch.call(ianus, "navigate",CadenasJavascript.introducirNHC2(nhc));

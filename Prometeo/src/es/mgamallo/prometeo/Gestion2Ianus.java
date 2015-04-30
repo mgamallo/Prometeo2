@@ -4,6 +4,8 @@ package es.mgamallo.prometeo;
 import java.awt.Color;
 
 
+
+
 import javax.swing.SwingUtilities;
 
 import com.jacob.activeX.ActiveXComponent;
@@ -58,8 +60,15 @@ public class Gestion2Ianus {
 		
 		Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
 		
+		if(!Inicio.esWin64){
 		Inicio.panelPrincipal.webBrowserOperaciones
 		.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+		}
+		else{
+		//	new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+			new VisualizaPdfReader(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+		}
+		
 		
 		Inicio.vControlIanus.botonNHC.setText(Inicio.documento[indiceNhc1].nhc);
 		Inicio.vControlIanus.botonServicio.setText(Inicio.documento[indiceNhc1].servicio);
@@ -235,6 +244,18 @@ public class Gestion2Ianus {
 							if(indiceNhc1 != -1){
 								Inicio.nhcDelIanus1 = Inicio.documento[indiceNhc1].nhc;
 								
+								/*
+								if(Inicio.esWin64){
+									try {
+										Thread.sleep(750);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+								 */
+								
+								
 								introduceNHC(Inicio.paciente1.ianus, nombreIanus1, Inicio.nhcDelIanus1,Retardos.retIntroNHC);
 								// Inicio.ianus1.frame.setAlwaysOnTop(false);
 								// Inicio.ianus2.frame.setAlwaysOnTop(true);
@@ -326,6 +347,17 @@ public class Gestion2Ianus {
 							
 							if(indiceNhc2 != -1){
 								Inicio.nhcDelIanus2 = Inicio.documento[indiceNhc2].nhc;
+								
+								/*
+								if(Inicio.esWin64){
+									try {
+										Thread.sleep(750);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+								*/
 								
 								introduceNHC(Inicio.paciente2.ianus, nombreIanus2,Inicio.nhcDelIanus2,Retardos.retIntroNHC);
 								// Inicio.ianus2.frame.setAlwaysOnTop(false);

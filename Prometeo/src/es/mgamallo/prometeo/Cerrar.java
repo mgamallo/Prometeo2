@@ -9,13 +9,23 @@ public class Cerrar {
 	static public void cerrarTodo(){
 		String cmd1 = "taskkill.exe /F /IM /T AcroRd32.exe ";
 		String cmd2 = "taskkill.exe /F /IM /T iexplore.exe ";
+		String cmd3 = "taskkill.exe /F /IM /T Acrobat.exe ";
 		
-		Process hijo1, hijo2;
+		Process hijo1, hijo2, hijo3;
 		
 		cerrarIexplorer();
 		
 		try {
 			hijo1 = Runtime.getRuntime().exec(cmd1);
+			
+			/*
+			if(Inicio.esWin64){
+				hijo1 = Runtime.getRuntime().exec(cmd3);
+			}
+			else{
+				hijo1 = Runtime.getRuntime().exec(cmd1);
+			}
+			*/
 			
 		//	hijo2 = Runtime.getRuntime().exec(cmd2);
 			
