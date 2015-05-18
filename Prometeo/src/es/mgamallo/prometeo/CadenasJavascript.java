@@ -325,8 +325,16 @@ public class CadenasJavascript {
 				+ "}"
 				+ "";
 		
+		String introducirSoloNHC = ""
+				+ "window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " + nhc + ";"
+				+ "";
+		
+		String introducirEnUnPaso = ""
+				+ "window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " + nhc + ";"
+				+ "var anclas = window.frames.principal.mainFrame.document.anchors;anclas[0].click();";
+		
 		// return introducirNHCresumido;
-		return "javascript:" + introducirConFuncion1;
+		return "javascript: " + introducirEnUnPaso;
 	}
 
 	
@@ -338,7 +346,10 @@ public class CadenasJavascript {
 		
 		String introducirConFuncion2 = "javascript:introNHC(" + nhc + ")";
 		
-		return introducirConFuncion2;
+		String introducirNHCfase2b = 
+				"javascript:window.frames.principal.mainFrame.document.anchors;hola[0].click();";
+		
+		return introducirNHCfase2b;
 	}
 	
 	static public final String reloadNhc01(){
@@ -356,7 +367,12 @@ public class CadenasJavascript {
 				+ "pag.busquedaAvanzada();"
 				+ "";
 		
-		return reload2;
+		String reload2a = ""
+				+ "var hola = principal.mainFrame.document.anchors;"
+				+ "hola[1].click();"
+				+ "";
+		
+		return reload2a;
 	}
 	
 	static public final String reloadNhc03(){

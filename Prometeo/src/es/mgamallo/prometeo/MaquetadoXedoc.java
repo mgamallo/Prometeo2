@@ -486,13 +486,20 @@ public class MaquetadoXedoc {
 		
 		// int i = 0;  seguro pero lento
 		
-		for(int i=100, j= 0 ;i<numInputs && j < 3;i++){
+		for(int i=110, j= 0 ;i<numInputs && j < 3;i++){
 
 			String rgb = "rgb(255,255,255)";
 			
 			Dispatch input = Dispatch.call(inputs, String.valueOf(i)).getDispatch();
 
-			Dispatch estiloInputCelda = Dispatch.call(input, "getAttribute","style").getDispatch();
+			Dispatch estiloInputCelda;
+			try {
+				estiloInputCelda = Dispatch.call(input, "getAttribute","style").getDispatch();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error en el dispatch");
+				continue;
+			}
 			String colorFondoCelda = Dispatch.get(estiloInputCelda,"backgroundColor").getString();
 			
 			if(colorFondoCelda.equals(rgb)){

@@ -755,11 +755,11 @@ public class GestionJacob {
 			
 			try {
 				Dispatch.call(Inicio.paciente2.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc01());
-				Thread.sleep(300);
+				Thread.sleep(600);
 				Dispatch.call(Inicio.paciente2.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc02());
-				Thread.sleep(300);
+				Thread.sleep(600);
 				Dispatch.call(Inicio.paciente2.ianus,"navigate","javascript:" +CadenasJavascript.reloadNhc03());
-				Thread.sleep(300);
+				Thread.sleep(600);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

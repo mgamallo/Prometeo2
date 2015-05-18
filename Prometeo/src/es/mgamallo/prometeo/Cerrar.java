@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 public class Cerrar {
 
 	static public void cerrarTodo(){
-		String cmd1 = "taskkill.exe /F /IM /T AcroRd32.exe ";
+		String cmd1 = "taskkill.exe /F /IM AcroRd32.exe ";
 		String cmd2 = "taskkill.exe /F /IM /T iexplore.exe ";
 		String cmd3 = "taskkill.exe /F /IM /T Acrobat.exe ";
 		
