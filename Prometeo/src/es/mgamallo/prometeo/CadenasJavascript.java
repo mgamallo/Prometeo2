@@ -331,7 +331,11 @@ public class CadenasJavascript {
 		
 		String introducirEnUnPaso = ""
 				+ "window.frames.principal.mainFrame.document.buscarPacienteForm.ID_NHC.value = " + nhc + ";"
-				+ "var anclas = window.frames.principal.mainFrame.document.anchors;anclas[0].click();";
+			//	+ "var anclas = window.frames.principal.mainFrame.document.anchors;"
+			//	+ "setTimeout(function(){ window.frames.principal.mainFrame.document.anchors[0].click();alert('hola');}, 100);"
+			
+				+ "var anclas = window.frames.principal.mainFrame.document.anchors;anclas[0].click();"
+				+ "";
 		
 		// return introducirNHCresumido;
 		return "javascript: " + introducirEnUnPaso;
