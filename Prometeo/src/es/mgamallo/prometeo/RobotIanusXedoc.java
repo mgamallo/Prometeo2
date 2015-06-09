@@ -90,7 +90,9 @@ public class RobotIanusXedoc {
 					}
 
 					robot.mouseMove(coordExaminar.x, coordExaminar.y);
-
+					
+					System.out.println("Color boton: " + Integer.toHexString(robot.getPixelColor(coordExaminar.x,coordExaminar.y).getRGB()));
+					
 					robot.delay(25);
 					robot.mousePress(InputEvent.BUTTON1_MASK);
 					robot.mouseRelease(InputEvent.BUTTON1_MASK);
