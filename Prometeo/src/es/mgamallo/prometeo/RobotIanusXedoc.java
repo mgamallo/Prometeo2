@@ -58,12 +58,13 @@ public class RobotIanusXedoc {
 			coordTipoDoc.y = coordTipoDoc.y +12;
 		}
 		
-		if(Inicio.nombrePc.contains("mahc35p")){
-			coordExaminar.y = coordExaminar.y - 60;
-			coordLupa.y = coordLupa.y - 60;
-			coordTitulo.y = coordTitulo.y - 60;
-			coordAceptar.y = coordAceptar.y - 60;
-			coordTipoDoc.y = coordTipoDoc.y - 60;
+		if(Inicio.nombrePc.toLowerCase().contains("mahc35p")){
+			System.out.println("Cambiamos coordenadas");
+			coordExaminar.y = coordExaminar.y + 60;
+			coordLupa.y = coordLupa.y + 60;
+			coordTitulo.y = coordTitulo.y + 60;
+			coordAceptar.y = coordAceptar.y + 60;
+			coordTipoDoc.y = coordTipoDoc.y + 60;
 		}
 
 		System.out.println(coordExaminar.y + ", " + coordAceptar.y);

@@ -160,6 +160,13 @@ public class Inicio {
 			Retardos.retardoCargarPaciente = 7000;
 			Retardos.retardoTrasPulsarExaminar = 700;
 		}
+		
+		if(nombrePc.toLowerCase().contains("mahc03p")){
+			Retardos.retardoCargarPaciente = 7000;
+			Retardos.retardoDibujarVentana = 1400;
+			Retardos.retardoTrasPulsarExaminar = 1100;
+			Retardos.retardoTrasPegarRuta = 250;
+		}
 	    System.out.println("Es Win64... " + esWin64);
 	    
 	    
