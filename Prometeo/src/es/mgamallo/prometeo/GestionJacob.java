@@ -119,8 +119,10 @@ public class GestionJacob {
 		    
 		    
 		    if(Inicio.numeroPantallas == 1){
-		    	Dispatch.put(Inicio.paciente1.ianus,"height",1172-130);  // 1099
+		    	Dispatch.put(Inicio.paciente1.ianus,"height",1172-105);  // 1099
+		    	Dispatch.put(Inicio.paciente1.ianus,"top",105);
 		    	Dispatch.put(Inicio.paciente1.ianus,"width",895);
+		    	Dispatch.put(Inicio.paciente1.ianus,"left",1024 - 175);
 		    }
 			
 //		    introduceUsuarioJacob(Inicio.ianus2, Inicio.usuario);
@@ -141,8 +143,10 @@ public class GestionJacob {
 		    Dispatch.put(Inicio.paciente2.ianus,"left",1024);
 		    
 		    if(Inicio.numeroPantallas == 1){
-		    	Dispatch.put(Inicio.paciente2.ianus,"height",1172-130);  // 1099
+		    	Dispatch.put(Inicio.paciente2.ianus,"height",1172-105);  // 1099
+		    	Dispatch.put(Inicio.paciente2.ianus,"top",105);
 		    	Dispatch.put(Inicio.paciente2.ianus,"width",895);
+		    	Dispatch.put(Inicio.paciente2.ianus,"left",1024 - 175);
 		    }
 		    
 		}

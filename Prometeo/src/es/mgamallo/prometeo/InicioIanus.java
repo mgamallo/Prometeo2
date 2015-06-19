@@ -126,7 +126,9 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			Inicio.vNombres.setVisible(false);
 			
 			Inicio.vExplorador = new VentanaExplorador(pdfs);
-			Inicio.vExplorador.setBounds(Inicio.rVentanaExploradorMax);
+
+				Inicio.vExplorador.setBounds(Inicio.rVentanaExploradorMax);
+
 			Inicio.vExplorador.setVisible(true);
 			Inicio.vExplorador.setPdfs(pdfs);
 			
@@ -138,7 +140,8 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 			
 			Inicio.vControlIanus.setBounds(1024, 0, ancho, alto - 50);
 			if(Inicio.numeroPantallas == 1){
-				Inicio.vControlIanus.setBounds(1024, 0, 895, alto - 50);
+				Inicio.vControlIanus.setBounds(1024 -175, 0, 895, alto - 75);
+				Inicio.vExplorador.setBounds(Inicio.anchoP - 175,0,175,1250);
 			}
 		}
 		else{
