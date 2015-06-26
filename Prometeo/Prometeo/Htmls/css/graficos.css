@@ -1,0 +1,78 @@
+@CHARSET "ISO-8859-1";
+
+
+#fecha{
+	width: 800px;
+	text-align: right;
+	margin: 20px auto 10px auto;
+}
+
+.datos{
+	width: 300px;
+	float: left;
+	display: none;
+}
+
+.centrar{
+	width: 800px;
+	margin: auto;
+	display: block;
+	text-align: center;
+}
+
+#chartTarta, #chart5DiasE{
+	display: block;
+	margin: 15px auto 10px auto;
+	text-align: center;
+	border-radius: 4px;	
+}
+
+#chart5DiasE{
+	padding: 3px;
+	/* float: left; */
+	margin: 15px auto 0 auto;
+}
+
+#chart5DiasA, #chart5DiasC{
+	float: left;
+
+	display: block;
+	margin: 15px auto 0 0; 
+	border-radius: 4px;
+	width: 48%;
+
+}
+
+
+#chart5DiasB, #chart5DiasD{
+	float: right;
+
+	display: block;
+	margin: 15px auto 0 0; 
+	border-radius: 4px;
+	width: 48%;
+
+}
+
+#ocultar{
+	visibility: hidden;
+}
+
+
+
+
+
+#chart5DiasD{
+	height: 240px;
+	text-align: left;
+}
+
+.pequeño, .tarta{
+	border: 2px solid #c8c8c8; 
+	padding: 3px;
+}
+
+.pequeño:hover, .tarta:hover {
+ 	box-shadow: 0px 0px 10px 0px #787878;
+ 	background-color: rgb(255,253,208);
+ }

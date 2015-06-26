@@ -5,14 +5,14 @@ import java.io.File;
 public class Estadistica {
 
 	Calendario calendario;
-	EstadisticaDia estadisticaDiaria;
+	EstadisticaDiaHabil estadisticaDiaria;
 	
 	
 	public Estadistica() {
 		// TODO Auto-generated constructor stub
 		
 		calendario = new Calendario(); 
-		estadisticaDiaria = new EstadisticaDia(calendario);
+		estadisticaDiaria = new EstadisticaDiaHabil(calendario);
 		
 	}
 	
@@ -29,7 +29,7 @@ public class Estadistica {
 	
 }
 
-class EstadisticaDia{
+class EstadisticaDiaHabil{
 	
 	int numeroArchivosSubidosIanus;
 	int numeroArchivosSubidosIanusUrg;
@@ -41,7 +41,7 @@ class EstadisticaDia{
 	
 	Calendario calendario;
 	
-	public EstadisticaDia(Calendario calendario) {
+	public EstadisticaDiaHabil(Calendario calendario) {
 		// TODO Auto-generated constructor stub
 		
 		this.calendario = calendario;

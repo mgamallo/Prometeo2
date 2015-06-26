@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Estadísticas</title>
+
+<script type="text/javascript">
+	function getEstadisticas(){
+		sendNSCommand("cargarEstadisticas");
+	}
+</script>
+
+<link rel="stylesheet" href="css/graficos.css">
+
+<script type="text/javascript" src="fusioncharts/fusioncharts.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.carbon.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+<script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.ocean.js"></script>
+
+<script type="text/javascript">
+
+	FusionCharts.ready(function() {
+		var revenueChart0 = new FusionCharts({
+			type : "column2d",
+			renderAt : "chart5DiasA",
+			width : "360",
+			height : "240",
+			dataFormat : "xml",
+			dataSource : 
+				"<chart caption='Gráfica Semanal Total' theme='fint' rotateValues='0' bgcolor='FFFFFF' useroundedges='1' showborder='0' palettecolors='#008ee4,#6baa01,#f8bd19,#e44a00,#33bdda'><set label='Jueves' value='282'/><set label='Viernes' value='441'/><set label='Lunes' value='135'/><set label='Martes' value='232'/><set label='Miércoles' value='264'/></chart>"
+		});
+		revenueChart0.render("chart5DiasA");
+	});
+</script>
+
+
+<script type="text/javascript">
+
+	FusionCharts.ready(function() {
+		var revenueChart0 = new FusionCharts({
+			type : "column2d",
+			renderAt : "chart5DiasB",
+			width : "360",
+			height : "240",
+			dataFormat : "json",
+			dataSource : 
+
+			{
+			    "chart": {
+			        "palette": "2",
+			        "caption": "Product Comparison",
+			        "showlabels": "1",
+			        "showvalues": "0",
+			        "numberprefix": "$",
+			        "showsum": "1",
+			        "decimals": "0",
+			        "useroundedges": "1",
+			        "legendborderalpha": "0",
+			        "showborder": "0"
+			    },
+			    "categories": [
+			        {
+			            "category": [
+			                {
+			                    "label": "Product A"
+			                },
+			                {
+			                    "label": "Product B"
+			                },
+			                {
+			                    "label": "Product C"
+			                },
+			                {
+			                    "label": "Product D"
+			                },
+			                {
+			                    "label": "Product E"
+			                }
+			            ]
+			        }
+			    ],
+			    "dataset": [
+			        {
+			            "seriesname": "2004",
+			            "color": "AFD8F8",
+			            "showvalues": "0",
+			            "data": [
+			                {
+			                    "value": "25601.34"
+			                },
+			                {
+			                    "value": "20148.82"
+			                },
+			                {
+			                    "value": "17372.76"
+			                },
+			                {
+			                    "value": "35407.15"
+			                },
+			                {
+			                    "value": "38105.68"
+			                }
+			            ]
+			        },
+			        {
+			            "seriesname": "2005",
+			            "color": "F6BD0F",
+			            "showvalues": "0",
+			            "data": [
+			                {
+			                    "value": "57401.85"
+			                },
+			                {
+			                    "value": "41941.19"
+			                },
+			                {
+			                    "value": "45263.37"
+			                },
+			                {
+			                    "value": "117320.16"
+			                },
+			                {
+			                    "value": "114845.27"
+			                }
+			            ]
+			        },
+			        {
+			            "seriesname": "2006",
+			            "color": "8BBA00",
+			            "showvalues": "0",
+			            "data": [
+			                {
+			                    "value": "45000.65"
+			                },
+			                {
+			                    "value": "44835.76"
+			                },
+			                {
+			                    "value": "18722.18"
+			                },
+			                {
+			                    "value": "77557.31"
+			                },
+			                {
+			                    "value": "92633.68"
+			                }
+			            ]
+			        }
+			    ]
+			}
+				
+				
+		});
+		revenueChart0.render("chart5DiasB");
+	});
+</script>
+
+<script type="text/javascript">
+
+	FusionCharts.ready(function() {
+		var revenueChart0 = new FusionCharts({
+			type : "column2d",
+			renderAt : "chart5DiasC",
+			width : "360",
+			height : "240",
+			dataFormat : "xml",
+			dataSource : 
+				"<chart caption='Gráfica Anual 1' theme='fint'><set label='Jueves' value='282'/><set label='Viernes' value='441'/><set label='Lunes' value='135'/><set label='Martes' value='232'/><set label='Miércoles' value='264'/></chart>"
+
+		});
+		revenueChart0.render("chart5DiasC");
+	});
+</script>
+
+
+<script type="text/javascript">
+
+	FusionCharts.ready(function() {
+		var radio = [],
+			radElem,
+			val,
+			revenueChart0 = new FusionCharts({
+			type : "column2d",
+			renderAt : "chart5DiasE",
+			width : "750",
+			height : "200",
+			dataFormat : "json",
+			dataSource : 
+				/*
+				"<chart caption='Sales by country' showlabels='1' showvalues='1' decimals='0' numberprefix='$' placevaluesinside='1' rotatevalues='1' bgcolor='FFFFFF' legendshadow='0' legendborderalpha='50' canvasborderthickness='1' canvasborderalpha='50' palettecolors='#AFD8F8,#F6BD0F,#8BBA00' showborder='0'><categories><category label='Austria' /><category label='Brazil' /><category label='France' /><category label='Italy' /><category label='USA' /></categories><dataset seriesname='2011'><set value='25601.34' /><set value='20148.82' /><set value='17372.76' /><set value='35407.15' /><set value='38105.68' /></dataset><dataset seriesname='2012'><set value='57401.85' /><set value='41941.19' /><set value='45263.37' /><set value='117320.16' /><set value='114845.27' /></dataset><dataset seriesname='2013'><set value='45000.65' /><set value='44835.76' /><set value='18722.18' /><set value='77557.31' /><set value='92633.68' /></dataset></chart>"
+				*/
+				
+				{
+	                "chart": {
+	                    "caption": "Monthly revenue",
+	                    "subCaption": "Last year",
+	                    "xAxisName": "Month",
+	                    "yAxisName": "Revenue (In USD)",
+	                    "numberPrefix": "$",
+	                    "theme": "fint"
+	                },
+
+	                "data": [
+	                    {
+	                        "label": "Jan",
+	                        "value": "420000"
+	                    },
+	                    {
+	                        "label": "Feb",
+	                        "value": "810000"
+	                    },
+	                    {
+	                        "label": "Mar",
+	                        "value": "720000"
+	                    },
+	                    {
+	                        "label": "Apr",
+	                        "value": "550000"
+	                    },
+	                    {
+	                        "label": "May",
+	                        "value": "910000"
+	                    },
+	                    {
+	                        "label": "Jun",
+	                        "value": "510000"
+	                    },
+	                    {
+	                        "label": "Jul",
+	                        "value": "680000"
+	                    },
+	                    {
+	                        "label": "Aug",
+	                        "value": "620000"
+	                    },
+	                    {
+	                        "label": "Sep",
+	                        "value": "610000"
+	                    },
+	                    {
+	                        "label": "Oct",
+	                        "value": "490000"
+	                    },
+	                    {
+	                        "label": "Nov",
+	                        "value": "900000"
+	                    },
+	                    {
+	                        "label": "Dec",
+	                        "value": "730000"
+	                    }
+	                ]
+	            }
+				
+				
+		});
+		revenueChart0.render("chart5DiasE");
+		
+		  radio = document.getElementsByTagName('input');
+		    for (i = 0; i < radio.length; i++) {
+		        radElem = radio[i];
+		        if (radElem.type === 'radio') {
+		            radElem.onclick = function(){
+		                val = this.getAttribute('value');
+		                val && revenueChart.chartType(val);
+		            };
+		        }
+		    }
+	});
+</script>
+
+
+<script type="text/javascript">
+FusionCharts.ready(function() {
+	var revenueChart1 = new FusionCharts({
+		type : "pie3d",
+		renderAt : "chartTarta",
+		width : "620",
+		height : "240",
+		dataFormat : "json",
+		dataSource :  {
+		    "chart": {
+		        "caption": "Distribución diaria",
+		     //   "palette": "2",
+		        "animation": "1",
+		        "formatNumberScale": "0",
+		        "decimals": "0",
+		        "showLegend": "1",
+		        "legendBorderAlpha": "0",
+		      //  "numberprefix": "$",
+		        "pieslicedepth": "10",
+		        "startingangle": "200",
+		        "showBorder": "0",
+		        "showHoverEffect": "1",
+		        "toolTipColor": "#ffffff",
+		        "toolTipBgColor": "#000000",
+		        "toolTipBgAlpha": "80",
+		        "toolTipBorderRadius": "2",
+		        "toolTipPadding": "5",
+		        "use3DLighting": "1",
+		        "radius3D": "40"
+		    },
+		    "data": [
+		        {
+		            "label": "Xedoc",
+		            "value": "150",
+		            "issliced": "1",
+		            "color": "#FA9000"
+		        },
+		        {
+		            "label": "Ianus Doc",
+		            "value": "1200",
+		            "issliced": "1",
+		            "color": "#C40000"
+		        },
+		        {
+		            "label": "Ianus Urg",
+		            "value": "320",
+		            "issliced": "0",
+	            	"color": "#750303"
+		        }
+		    ]
+		}
+
+		});	
+		revenueChart1.render("chartTarta");
+	});
+
+</script>
+
+<style>
+	span{
+		color: red;
+	}
+</style>
+</head>
+
+
+
+<body onload="getEstadisticas()">
+
+<div class="datos">
+	<!--  <div>Estadística del <span id='dia'> ayer</span> -->
+
+
+</div>
+
+<div class="cabecera">
+	<div id="fecha">Estadística del <span id='dia'> ayer</span>
+</div>
+
+<div class="pestañas">
+
+</div>
+
+<div class="centrar">
+	<div class="tarta" id="chartTarta">FusionCharts XT will load here!</div>
+</div>
+
+
+	<div class="centrar">
+		<div class="pequeño" id="chart5DiasA">FusionCharts XT will load here!</div>
+		<div class="pequeño" id="chart5DiasB">FusionCharts XT will load here!</div>
+	</div>
+	
+	<div class="centrar">
+		<div class="pequeño" id="chart5DiasC">FusionCharts XT will load here!</div>
+		<div class="pequeño" id="chart5DiasD">
+			<div>Pdfs de documentación asociados con IANUS: <span id='ianusDoc'></span></div>
+			<div>Pdfs de urgencias asociados con IANUS: <span id='ianusUrg'></span></div>
+			<div>Pdfs asociados con XEDOC: <span id='xedoc'></span></div>
+			<div> Pdfs totales: <span id='total'></span></div>
+		</div>
+	</div>
+
+<span id="ocultar">Grafica Acumulada</span>
+
+<div class="centrar">
+	<div class="tarta" id="chart5DiasE">FusionCharts XT will load here!</div>
+</div>
+
+<div id='controllers'>
+    <label><input name='chart-type' id='line' type='radio' value='line' /> Line chart</label>
+    <label><input name='chart-type' id='bar' type='radio' value='bar2d' /> Bar chart</label>
+    <label><input name='chart-type' id='column' type='radio' value='column2d' checked='true' /> Column chart</label>
+
+</div>
+
+</body>
+</html>
