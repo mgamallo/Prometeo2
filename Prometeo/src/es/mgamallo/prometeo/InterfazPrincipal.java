@@ -97,6 +97,7 @@ public class InterfazPrincipal implements MouseListener{
 	private final String NORMAS = "Normas";
 	private final String AVISOS = "Avisos";
 	private final String USUARIO = "Usuario";
+	private final String ESTADISTICAS = "Estadisticas";
 	public static final String SALIR = "Salir";
 
 	public String panelActivo = USUARIO;
@@ -115,7 +116,7 @@ public class InterfazPrincipal implements MouseListener{
 	static final String DIR_SALIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
 //	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/estadistica.html";
 
-	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/PruebaEstadisticas.html";
+	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
 	
 	/*
 	final String DIR_CONTROL = Inicio.unidadHDD + ":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/prometeo/Htmls/control/control.html";
@@ -385,7 +386,7 @@ public class InterfazPrincipal implements MouseListener{
 					else if(command.equals("docSubidos")){
 						
 						webBrowserOperaciones.navigate(DIR_ESTADISTICAS);
-						
+						panelActivo = ESTADISTICAS;
 						
 /*
 						int docIanus = estadistica.estadisticaDiaria.numeroArchivosSubidosIanus;
@@ -501,6 +502,39 @@ public class InterfazPrincipal implements MouseListener{
 					
 					
 				}
+				
+				
+	//   Estadisticas *****************************************************************
+				else if (panelActivo.equals(ESTADISTICAS)) {
+					
+					// 0 Todos
+					// 1 Ianus
+					// 2 Urg
+					// 3 Xedoc
+					
+					
+					
+					GestionEstadistica ges = new GestionEstadistica();
+					
+					
+					System.out.println("El comando es.... " + command.toString());
+					
+					webBrowserOperaciones.executeJavascript(ges.cadena5Dias[0]);
+					
+					if(command.equals("5diasTotal")){
+						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[0]);
+					}else if(command.equals("5diasIanus")){
+						System.out.println("Vamos progresando");
+						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[1]);
+						
+					}else if(command.equals("5diasUrgencias")){
+						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[2]);
+					}else if(command.equals("5diasXedoc")){
+						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[3]);
+					}		
+							
+				}
+				
 				
 	//   ABRIR *****************************************************************
 				else if (panelActivo.equals(ABRIR)) {
