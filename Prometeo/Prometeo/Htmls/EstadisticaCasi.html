@@ -43,7 +43,6 @@
 	        selElem.onclick = function(){
 	        	sendNSCommand("5dias" + this.value);
 	        };
-
 	    }
 		
 		
@@ -54,7 +53,13 @@
 <script type="text/javascript">
 
 	FusionCharts.ready(function() {
-		var revenueChart0 = new FusionCharts({
+		var seleccionAño,
+			seleccionMes,
+			seleccionesTipo,
+			selElemA,
+			selElemM,
+			selElemT,
+			revenueChart0 = new FusionCharts({
 			type : "column2d",
 			renderAt : "chart5DiasB",
 			width : "360",
@@ -63,119 +68,74 @@
 			dataSource : 
 
 			{
-			    "chart": {
-			        "palette": "2",
-			        "caption": "Product Comparison",
-			        "showlabels": "1",
-			        "showvalues": "0",
-			        "numberprefix": "$",
-			        "showsum": "1",
-			        "decimals": "0",
-			        "useroundedges": "1",
-			        "legendborderalpha": "0",
-			        "showborder": "0"
-			    },
-			    "categories": [
-			        {
-			            "category": [
-			                {
-			                    "label": "Product A"
-			                },
-			                {
-			                    "label": "Product B"
-			                },
-			                {
-			                    "label": "Product C"
-			                },
-			                {
-			                    "label": "Product D"
-			                },
-			                {
-			                    "label": "Product E"
-			                }
-			            ]
-			        }
-			    ],
-			    "dataset": [
-			        {
-			            "seriesname": "2004",
-			            "color": "AFD8F8",
-			            "showvalues": "0",
-			            "data": [
-			                {
-			                    "value": "25601.34"
-			                },
-			                {
-			                    "value": "20148.82"
-			                },
-			                {
-			                    "value": "17372.76"
-			                },
-			                {
-			                    "value": "35407.15"
-			                },
-			                {
-			                    "value": "38105.68"
-			                }
-			            ]
-			        },
-			        {
-			            "seriesname": "2005",
-			            "color": "F6BD0F",
-			            "showvalues": "0",
-			            "data": [
-			                {
-			                    "value": "57401.85"
-			                },
-			                {
-			                    "value": "41941.19"
-			                },
-			                {
-			                    "value": "45263.37"
-			                },
-			                {
-			                    "value": "117320.16"
-			                },
-			                {
-			                    "value": "114845.27"
-			                }
-			            ]
-			        },
-			        {
-			            "seriesname": "2006",
-			            "color": "8BBA00",
-			            "showvalues": "0",
-			            "data": [
-			                {
-			                    "value": "45000.65"
-			                },
-			                {
-			                    "value": "44835.76"
-			                },
-			                {
-			                    "value": "18722.18"
-			                },
-			                {
-			                    "value": "77557.31"
-			                },
-			                {
-			                    "value": "92633.68"
-			                }
-			            ]
-			        }
-			    ]
+
 			}
 				
 				
 		});
 		revenueChart0.render("chart5DiasB");
+		
+		seleccionAño = document.getElementById('Mes_año');
+		inputs = seleccionAño.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemA = inputs[i];
+	        selElemA.onclick = function(){
+	        	
+	        	var mes = document.getElementById('Mes_mes').value;
+	        	var año = this.value
+	        	var tip = document.getElementById('Mes_tipo').value;
+	        	
+	        	var cadena = año + mes + tip;
+	        	
+	        	sendNSCommand('Mes' + cadena);
+	        	
+	        };
+	    }
+	    
+		seleccionMes = document.getElementById('Mes_mes');
+		inputs = seleccionMes.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemM = inputs[i];
+	        selElemM.onclick = function(){
+	        	
+	        	var año = document.getElementById('Mes_año').value;
+	        	var mes = this.value
+	        	var tip = document.getElementById('Mes_tipo').value;
+	        	
+	        	var cadena = año + mes + tip;
+	        	
+	        	sendNSCommand('Mes' + cadena);
+	        	
+	        };
+	    }
+	    
+		seleccionTipo = document.getElementById('Mes_tipo');
+		inputs = seleccionTipo.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemT = inputs[i];
+	        selElemT.onclick = function(){
+	        	
+	        	var año = document.getElementById('Mes_año').value;
+	        	var tip = this.value
+	        	var mes = document.getElementById('Mes_mes').value;
+	        	
+	        	var cadena = año + mes + tip;
+	        	
+	        	sendNSCommand('Mes' + cadena);
+	        	
+	        };
+	    }
 	});
 </script>
 
 <script type="text/javascript">
 
 	FusionCharts.ready(function() {
-		var revenueChart0 = new FusionCharts({
+		var seleccionAño,
+			seleccionTipo,
+			selElemA,
+			selElemT,
+			revenueChart0 = new FusionCharts({
 			type : "column2d",
 			renderAt : "chart5DiasC",
 			width : "360",
@@ -186,6 +146,39 @@
 
 		});
 		revenueChart0.render("chart5DiasC");
+		
+		seleccionAño = document.getElementById('Año_año');
+		inputs = seleccionAño.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemA = inputs[i];
+	        selElemA.onclick = function(){
+	        	
+	        	var año = this.value
+	        	var tip = document.getElementById('Año_tipo').value;
+	        	
+	        	var cadena = año + tip;
+	        	
+	        	sendNSCommand('Año' + cadena);
+	        	
+	        };
+	    }
+	    
+	    
+		seleccionTipo = document.getElementById('Año_tipo');
+		inputs = seleccionTipo.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemT = inputs[i];
+	        selElemT.onclick = function(){
+	        	
+	        	var año = document.getElementById('Año_año').value;
+	        	var tip = this.value
+	        	
+	        	var cadena = año + tip;
+	        	
+	        	sendNSCommand('Año' + cadena);
+	        	
+	        };
+	    }
 	});
 </script>
 
@@ -193,96 +186,54 @@
 <script type="text/javascript">
 
 	FusionCharts.ready(function() {
-		var radio = [],
-			radElem,
-			val,
+		var val,
+			inputs,
+			selElemG,
+			selElemT,
+			seleccionGrafico,
+			seleccionTipo,
 			revenueChart0 = new FusionCharts({
-			type : "column2d",
+			type : "mscolumn2d",
 			renderAt : "chart5DiasE",
-			width : "750",
+			width : "760",
 			height : "200",
 			dataFormat : "json",
 			dataSource : 
-				/*
-				"<chart caption='Sales by country' showlabels='1' showvalues='1' decimals='0' numberprefix='$' placevaluesinside='1' rotatevalues='1' bgcolor='FFFFFF' legendshadow='0' legendborderalpha='50' canvasborderthickness='1' canvasborderalpha='50' palettecolors='#AFD8F8,#F6BD0F,#8BBA00' showborder='0'><categories><category label='Austria' /><category label='Brazil' /><category label='France' /><category label='Italy' /><category label='USA' /></categories><dataset seriesname='2011'><set value='25601.34' /><set value='20148.82' /><set value='17372.76' /><set value='35407.15' /><set value='38105.68' /></dataset><dataset seriesname='2012'><set value='57401.85' /><set value='41941.19' /><set value='45263.37' /><set value='117320.16' /><set value='114845.27' /></dataset><dataset seriesname='2013'><set value='45000.65' /><set value='44835.76' /><set value='18722.18' /><set value='77557.31' /><set value='92633.68' /></dataset></chart>"
-				*/
-				
-				{
-	                "chart": {
-	                    "caption": "Monthly revenue",
-	                    "subCaption": "Last year",
-	                    "xAxisName": "Month",
-	                    "yAxisName": "Revenue (In USD)",
-	                    "numberPrefix": "$",
-	                    "theme": "fint"
-	                },
-
-	                "data": [
-	                    {
-	                        "label": "Jan",
-	                        "value": "420000"
-	                    },
-	                    {
-	                        "label": "Feb",
-	                        "value": "810000"
-	                    },
-	                    {
-	                        "label": "Mar",
-	                        "value": "720000"
-	                    },
-	                    {
-	                        "label": "Apr",
-	                        "value": "550000"
-	                    },
-	                    {
-	                        "label": "May",
-	                        "value": "910000"
-	                    },
-	                    {
-	                        "label": "Jun",
-	                        "value": "510000"
-	                    },
-	                    {
-	                        "label": "Jul",
-	                        "value": "680000"
-	                    },
-	                    {
-	                        "label": "Aug",
-	                        "value": "620000"
-	                    },
-	                    {
-	                        "label": "Sep",
-	                        "value": "610000"
-	                    },
-	                    {
-	                        "label": "Oct",
-	                        "value": "490000"
-	                    },
-	                    {
-	                        "label": "Nov",
-	                        "value": "900000"
-	                    },
-	                    {
-	                        "label": "Dec",
-	                        "value": "730000"
-	                    }
-	                ]
-	            }
-				
-				
+				{}
 		});
 		revenueChart0.render("chart5DiasE");
 		
-		  radio = document.getElementsByTagName('input');
-		    for (i = 0; i < radio.length; i++) {
-		        radElem = radio[i];
-		        if (radElem.type === 'radio') {
-		            radElem.onclick = function(){
-		                val = this.getAttribute('value');
-		                val && revenueChart.chartType(val);
-		            };
-		        }
-		    }
+		
+		seleccionGrafico = document.getElementById('Años_grafico');
+		inputs = seleccionGrafico.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemG = inputs[i];
+	        selElemG.onclick = function(){
+	        	var graf = this.value;
+	        	var tip = document.getElementById('Años_tipo').value;
+	        	
+	        	var cadena = graf + "_" + tip;
+	        	
+	        	sendNSCommand('Añs' + cadena);
+	        };
+	    }
+		
+		seleccionTipo = document.getElementById('Años_tipo');
+		inputs = seleccionTipo.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemT = inputs[i];
+	        selElemT.onclick = function(){
+
+	        	var graf = document.getElementById('Años_grafico').value;
+	        	var tip = this.value
+	        	
+	        	var cadena = graf + "_" + tip;
+	        	
+	        	sendNSCommand('Añs' + cadena);
+
+	        };
+	    }
+		
 	});
 </script>
 
@@ -297,7 +248,7 @@ FusionCharts.ready(function() {
 		dataFormat : "json",
 		dataSource :  {
 		    "chart": {
-		        "caption": "Distribución diaria",
+		     //   "caption": "Distribución diaria",
 		     //   "palette": "2",
 		        "animation": "1",
 		        "formatNumberScale": "0",
@@ -352,9 +303,9 @@ FusionCharts.ready(function() {
 </style>
 </head>
 
+<!--  onload="getEstadisticas()" -->
 
-
-<body <!--  onload="getEstadisticas()" -->>
+<body onload="getEstadisticas()">
 
 <div class="datos">
 	<!--  <div>Estadística del <span id='dia'> ayer</span> -->
@@ -363,7 +314,8 @@ FusionCharts.ready(function() {
 </div>
 
 <div class="cabecera">
-	<div id="fecha">Estadística del <span id='dia'> ayer</span>
+	<div id="fecha"> Estadística del <span id='dia'> ayer</span>
+	</div>
 </div>
 
 <div class="pestañas">
@@ -381,9 +333,6 @@ FusionCharts.ready(function() {
 				ULTIMOS 5 DIAS
 			</div>
 			<div class="tipoSubida"> 
-			
-			
-			
 				<select name='secciones' id='secciones5dias'>
 					<option value='Ianus' > Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
@@ -398,30 +347,64 @@ FusionCharts.ready(function() {
 	</div>
 	<div class = "centrar">
 		<div class="pequeñoD">
+			<div class = 'titulo'>
+				Mensual
+			</div>
 			<div class = "tipoSubida">
-				<select name='secciones'>
+				<select name='secciones' id='Mes_tipo'>
 					<option value='Ianus'> Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
 					<option value = 'Total' selected> Total </option>
 				</select>
 			</div>
+			<div class = "mes">
+				<select name='meses' id='Mes_mes'>
+					<option value='01'> Enero</option>
+					<option value='02'> Febrero </option>
+					<option value='03'> Marzo </option>
+					<option value='04'> Abril</option>
+					<option value='05' selected> Mayo </option>
+					<option value='06'> Junio </option>
+					<option value='07'> Julio </option>
+					<option value='08'> Agosto </option>
+					<option value='09'> Setiembre </option>
+					<option value='10'> Octubre </option>
+					<option value='11'> Noviembre </option>
+					<option value='12'> Diciembre </option>
+				</select>
+			</div>
+			<div class = "año">
+				<select name='años' id='Mes_año'>
+					<option value='2015' selected> 2015</option>
+					<option value='2014'> 2014 </option>
+				</select>
+			</div>
+
 			<div id="chart5DiasB">FusionCharts XT will load here!</div>
 		</div>
 	</div>
 	
 	<div class="centrar">
 		<div class="pequeñoI">
+			<div class = 'titulo'>
+				Anual
+			</div>
 			<div class="tipoSubida"> 
-				<select name='secciones'>
+				<select name='secciones' id='Año_tipo'>
 					<option value='Ianus'> Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
 					<option value = 'Total' selected> Total </option>
 				</select>
 			</div>
+			<div class = "año">
+				<select name='años' id='Año_año'>
+					<option value='2015' selected> 2015</option>
+					<option value='2014'> 2014 </option>
+				</select>
+			</div>
 			<div id="chart5DiasC">FusionCharts XT will load here!</div>
-
 		</div> 
 		
 	</div>
@@ -442,24 +425,35 @@ FusionCharts.ready(function() {
 				<div>Pdfs asociados con XEDOC: <span id='xedoc'></span></div>
 				<div> Pdfs totales: <span id='total'></span></div>
 			</div>
-
 		</div> 
-		
 	</div>	
 	
 
 <span id="ocultar">Grafica Acumulada</span>
 
 <div class="centrar">
-	<div class="tipoSubida" id="años"> 
-				<select name='secciones'>
+	<div class="ancho" id="ultimo">
+			<div class = 'titulo'>
+				Anual
+			</div>
+			<div class="tipo" > 
+				<select name='secciones' id="Años_tipo">
 					<option value='Ianus'> Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
 					<option value = 'Total' selected> Total </option>
 				</select>
+			</div>
+			<div class = "grafico">
+				<select name='tipoGrafico' id='Años_grafico'>
+					<option value='mscolumn2d' selected> Barras</option>
+					<option value='mscolumn3d'> Barras 3D</option>
+					<option value='msarea'> Area</option>
+					<option value='msline'> Líneas </option>
+				</select>
+			</div>
+			<div id="chart5DiasE">FusionCharts XT will load here!</div>
 	</div>
-	<div class="tarta" id="chart5DiasE">FusionCharts XT will load here!</div>
 </div>
 
 </body>

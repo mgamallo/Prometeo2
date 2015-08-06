@@ -116,7 +116,9 @@ public class InterfazPrincipal implements MouseListener{
 	static final String DIR_SALIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
 //	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/estadistica.html";
 
-	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
+//	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
+	
+	final String DIR_ESTADISTICAS = "C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
 	
 	/*
 	final String DIR_CONTROL = Inicio.unidadHDD + ":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/prometeo/Htmls/control/control.html";
@@ -396,6 +398,10 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					else if(command.equals("cargarEstadisticas")){
 						
+												
+						
+						/*
+						
 						int total = Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanus 
 									+ Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosIanusUrg
 									+ Inicio.estadistica.estadisticaDiaria.numeroArchivosSubidosXedoc;
@@ -415,6 +421,8 @@ public class InterfazPrincipal implements MouseListener{
 										+ "";
 						
 						webBrowserOperaciones.executeJavascript(cadenaJavascript);
+						
+						*/
 						
 						/*
 						cadenaJavascript = ""
@@ -519,7 +527,16 @@ public class InterfazPrincipal implements MouseListener{
 					
 					System.out.println("El comando es.... " + command.toString());
 					
-					webBrowserOperaciones.executeJavascript(ges.cadena5Dias[0]);
+					if(command.equals("cargarEstadisticas")){
+						
+						System.out.println("El comando es Inicializando ... " + command.toString());
+						
+						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[0]);
+						webBrowserOperaciones.executeJavascript(ges.graficoTarta);
+						webBrowserOperaciones.executeJavascript(ges.cadenaMes);
+						webBrowserOperaciones.executeJavascript(ges.cadenaAñoMes);
+						webBrowserOperaciones.executeJavascript(ges.cadenaAños);
+					}
 					
 					if(command.equals("5diasTotal")){
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[0]);
@@ -531,8 +548,87 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[2]);
 					}else if(command.equals("5diasXedoc")){
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[3]);
-					}		
-							
+					}
+					else if(command.substring(0,3).equals("Mes")){
+						String año = command.substring(3,7);
+						String mes = command.substring(7,9);
+						String tipo = command.substring(9);
+						
+						// 1 Todos
+						// 2 Ianus
+						// 3 Urg
+						// 4 Xedoc
+						
+						int tip = 0;
+						if(tipo.equals("Total")){
+							tip = 1;
+						}
+						else if(tipo.equals("Ianus")){
+							tip = 2;
+						}
+						else if(tipo.equals("Urgencias")){
+							tip = 3;
+						}
+						else if(tipo.equals("Xedoc")){
+							tip = 4;
+						}
+						
+						webBrowserOperaciones.executeJavascript(ges.getJSONMesDias(tip, año, mes));
+					}
+					else if(command.substring(0,3).equals("Año")){
+						String año = command.substring(3,7);
+						String tipo = command.substring(7);
+						
+						// 1 Todos
+						// 2 Ianus
+						// 3 Urg
+						// 4 Xedoc
+						
+						int tip = 0;
+						if(tipo.equals("Total")){
+							tip = 1;
+						}
+						else if(tipo.equals("Ianus")){
+							tip = 2;
+						}
+						else if(tipo.equals("Urgencias")){
+							tip = 3;
+						}
+						else if(tipo.equals("Xedoc")){
+							tip = 4;
+						}
+						
+						webBrowserOperaciones.executeJavascript(ges.getJSONAnualMes(tip, año));
+					}
+					else if(command.substring(0,3).equals("Añs")){
+					//	area2d_Total
+						String cadena = command.substring(3);
+						String[] partes = cadena.split("_");
+						
+						// 1 Todos
+						// 2 Ianus
+						// 3 Urg
+						// 4 Xedoc
+						
+						String tipo = partes[1];
+						
+						int tip = 0;
+						if(tipo.equals("Total")){
+							tip = 1;
+						}
+						else if(tipo.equals("Ianus")){
+							tip = 2;
+						}
+						else if(tipo.equals("Urgencias")){
+							tip = 3;
+						}
+						else if(tipo.equals("Xedoc")){
+							tip = 4;
+						}
+						
+						webBrowserOperaciones.executeJavascript(ges.getJSONTipoGrafico(tip,partes[0] ));
+						
+					}
 				}
 				
 				

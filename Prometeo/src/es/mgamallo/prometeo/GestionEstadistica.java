@@ -20,25 +20,42 @@ public class GestionEstadistica {
 	
 	ArrayList<EstadisticaDia> estadisticaTotal = new ArrayList<EstadisticaDia>();
 	
-	
+	String graficoTarta = "";
 	String cadena5Dias[] = new String[4];
+	String cadenaMes = "";
+	String cadenaAñoMes = "";
+	String cadenaAños = "";
 	
 	String maximoTotal = "";
 	String maximoXedoc = "";
 	String maximoIanus = "";
 	String maximoUrg = "";
+	
+	String mediaTotal = "";
+	String mediaXedoc = "";
+	String mediaIanus = "";
+	String mediaUrg = "";
+	
+	
 			
 	
 	static public void main(String args[]){
 		new GestionEstadistica();
 	}
 	
+	
 	public GestionEstadistica() {
 		// TODO Auto-generated constructor stub
 		
+		/*
 		listaXedoc = leerFicheroEstadistica("C:\\desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Estadisticas\\Xedoc.txt");
 		listaUrg = leerFicheroEstadistica("C:\\desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Estadisticas\\Urgencias.txt");
 		listaIanus = leerFicheroEstadistica("C:\\desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Estadisticas\\Documentacion.txt");
+		*/
+		
+		listaXedoc = leerFicheroEstadistica("C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Estadisticas/Xedoc.txt");
+		listaUrg = leerFicheroEstadistica("C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Estadisticas/Urgencias.txt");
+		listaIanus = leerFicheroEstadistica("C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Estadisticas/Documentacion.txt");
 
 		estadisticaXedoc = convertirEstadisticaDia(listaXedoc);
 		estadisticaUrg = convertirEstadisticaDia(listaUrg);
@@ -51,12 +68,18 @@ public class GestionEstadistica {
 		maximoUrg = getMaximaSubida(estadisticaUrg);
 		maximoXedoc = getMaximaSubida(estadisticaXedoc);
 		
+		mediaTotal = getMediaSubidaAnual(estadisticaTotal,"2015");
+		mediaIanus = getMediaSubidaAnual(estadisticaIanus,"2015");
+		mediaUrg = getMediaSubidaAnual(estadisticaUrg,"2015");
+		mediaXedoc = getMediaSubidaAnual(estadisticaXedoc,"2015");
+		
 		System.out.println(maximoTotal);
 		System.out.println(maximoIanus);
 		System.out.println(maximoUrg);
 		System.out.println(maximoXedoc);
 	
-		getJSONAyer();
+		graficoTarta = getJSONAyer();
+		
 		
 		/*
 		for(int i=estadisticaTotal.size()-1, j=0;j<5;i--,j++){
@@ -73,7 +96,10 @@ public class GestionEstadistica {
 			cadena5Dias[i-1] = getJSON5Dias(i);
 		}
 		
-
+		
+		cadenaMes = getJSONMesDias(1,"2015","06");
+		cadenaAñoMes = getJSONAnualMes(1,"2015");
+		cadenaAños = getJSONTipoGrafico(1,"mscolumn2d");
 		
 		/*
 		String codigoXML5DiasX = getXML5Dias(estadisticaXedoc, "Xedoc semanal");
@@ -208,6 +234,7 @@ public class GestionEstadistica {
 		return lista;
 	}
 	
+	
 	private ArrayList<EstadisticaDia> convertirEstadisticaDia(ArrayList<String> lista){
 		
 		ArrayList<EstadisticaDia> estadistica = new ArrayList<EstadisticaDia>();
@@ -265,8 +292,11 @@ public class GestionEstadistica {
 					    	+ "dataFormat : 'json',"
 					    	+ "dataSource : {"
 					    		+ "chart : {"
-					    			+ "caption : '" + "Distribución diaria" + "',"
+					    		//	+ "caption : 'Distribución diaria',"
 					    			+ "animation : '1',"
+					    			+ "formatNumberScale : '0',"
+					    			+ "decimals : '0',"
+					    		//	+ "formatNumber : '0',"
 					    		//	+ "theme : 'fint',
 					    			+ "showLegend: '1',"
 					    			+ "legendBorderAlpha : '0',"
@@ -280,36 +310,33 @@ public class GestionEstadistica {
 							        + "toolTipBorderRadius: '2',"
 							        + "toolTipPadding: '5',"
 							        + "use3DLighting: '1',"
-							        + "radius3D: '40',"
-					    			+ "formatNumber : '0',"
-					    			+ "formatNumberScale : '0',"
-					    			+ "bgcolor : 'ffffff',"
-					    			+ "},"
+							        + "radius3D: '40'"
+					    		+ "},"
 					    			
 					    		+ "data : ["
 					    			+ "{"
 					    				+ "label : 'Xedoc',"
-					    				+ "value : '" + estadisticaXedoc.get(estadisticaXedoc.size()-1).numeroFicheros + "',"
+					    				+ "value :  '" + estadisticaXedoc.get(estadisticaXedoc.size()-3).numeroFicheros + "'," 
 					    				+ "issliced : '1',"
 					    				+ "color : '#fa9000'"
 					    			+ "},"
 						    		+ "{"
 					    				+ "label : 'Ianus Doc',"
-					    				+ "value : '" + estadisticaIanus.get(estadisticaIanus.size()-1).numeroFicheros + "',"
+					    				+ "value : '" + estadisticaIanus.get(estadisticaIanus.size()-3).numeroFicheros + "',"
 					    				+ "issliced : '1',"
 					    				+ "color : '#c40000'"
 					    			+ "},"
 						    		+ "{"
 					    				+ "label : 'Ianus Urg',"
-					    				+ "value : '" + estadisticaUrg.get(estadisticaUrg.size()-1).numeroFicheros + "',"
-					    				+ "issliced : '1',"
+					    				+ "value : '" + estadisticaUrg.get(estadisticaUrg.size()-3).numeroFicheros + "',"
+						    			+ "issliced : '1',"
 					    				+ "color : '#750303'"
 					    			+ "}"					    				
 					    		+ "]"
 					    	+ "}"
 					    	+ ""
 					    	+ "});"
-					    	+ "chartTarta.render(chartTarta);"
+					    	+ "chartTarta.render('chartTarta');"
 					    + "});"
 					    + ""
 					    + "";
@@ -318,6 +345,7 @@ public class GestionEstadistica {
 		
 		return cadena01;
 	}
+	
 	
 	public String getJSON5Dias(int tipo){
 
@@ -329,6 +357,7 @@ public class GestionEstadistica {
 		ArrayList<EstadisticaDia> lista = new ArrayList<EstadisticaDia>();
 		String titulo = "";
 		String max = "";
+		String med = "";
 		
 		String limiteVertical = "";
 		
@@ -337,22 +366,25 @@ public class GestionEstadistica {
 			  	lista = estadisticaTotal;
 			  	titulo = "Total";
 			  	max = maximoTotal;
-			  	
+			  	med = mediaTotal;
 			  	break;
 		case 2:
 				lista = estadisticaIanus;
 				titulo = "Ianus";
 				max = maximoIanus;
+				med = mediaIanus;
 				break;
 		case 3:
 				lista = estadisticaUrg;
 				titulo = "Urgencias";
 				max = maximoUrg;
+				med = mediaUrg;
 				break;
 		case 4:
 				lista = estadisticaXedoc;
 				titulo = "Xedoc";
 				max = maximoXedoc;
+				med = mediaXedoc;
 				break;
 		}
 		
@@ -411,7 +443,7 @@ public class GestionEstadistica {
 					    			+ "rotateValues : '0',"
 					    			+ "formatNumber : '0',"
 					    			+ "formatNumberScale : '0',"
-					    			+ "bgcolor : 'ffffff',"
+					    			+ "bgcolor : '#ffffff',"
 					    			+ "useroundedges : '1',"
 					    			+ "showborder : '0',"
 					    			+ "palettecolors : '#008ee4,#6baa01,#f8bd19,#e44a00,#33bdda',"
@@ -448,6 +480,13 @@ public class GestionEstadistica {
 										 	+ "valueOnRight : '1',"
 										 	+ "tooltext : 'Maxima subida de $startvalue',"
 										 	+ "displayvalue : 'Máximo'"
+										+ "},"
+										+ "{ "
+											+ "startvalue : '" + med + "',"
+										 	+ "color : '#c40000',"
+										 	+ "valueOnRight : '1',"
+										 	+ "tooltext : 'Media anual de $startvalue',"
+										 	+ "displayvalue : 'Media'"
 										 + "}"
 										+ "]"
 								+ "}"
@@ -465,6 +504,678 @@ public class GestionEstadistica {
 		
 		return (cadena01 + cadena02 + cadena03);
 	}
+
+	
+	public String getJSONMesDias(int tipo, String año, String mes){
+
+		// 1 Todos
+		// 2 Ianus
+		// 3 Urg
+		// 4 Xedoc
+		
+		class ParDiaDocs{
+			String dia = "";
+			String numDocs = "";
+			
+			ParDiaDocs(String dia, String numDocs){
+				this.dia = dia;
+				this.numDocs = numDocs;
+			}
+		}
+		
+				
+		ArrayList<EstadisticaDia> lista = new ArrayList<EstadisticaDia>();
+		String titulo = "";
+		String max = "";
+		String med = "";
+		
+		String limiteVertical = "";
+		
+		switch (tipo) {
+		case 1:
+			  	lista = estadisticaTotal;
+			  	titulo = "Total";
+			  	max = maximoTotal;
+			  	med = mediaTotal;
+			  	break;
+		case 2:
+				lista = estadisticaIanus;
+				titulo = "Ianus";
+				max = maximoIanus;
+				med = mediaIanus;
+				break;
+		case 3:
+				lista = estadisticaUrg;
+				titulo = "Urgencias";
+				max = maximoUrg;
+				med = mediaUrg;
+				break;
+		case 4:
+				lista = estadisticaXedoc;
+				titulo = "Xedoc";
+				max = maximoXedoc;
+				med = mediaXedoc;
+				break;
+		}
+
+		String mascaraFecha = año + mes;
+		ArrayList<ParDiaDocs> pares = new ArrayList<ParDiaDocs>();
+			
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).fecha.substring(0,6).equals(mascaraFecha)){
+				ParDiaDocs par = new ParDiaDocs(lista.get(i).fecha.substring(6,8), lista.get(i).numeroFicheros);
+				if(Integer.valueOf(par.numDocs) > 500  || tipo != 1)
+					pares.add(par);
+			}
+		}
+	
+		
+		
+		int num = (int) (Integer.valueOf(max) * 1.1);
+		
+		limiteVertical = String.valueOf(num);
+		
+		String cadena01 = ""
+				+ ""
+				+ "FusionCharts.ready(function() {"
+					+ "var seleccion, inputs, selElem, "
+				    	+ "chartMes = new FusionCharts({"
+					    	+ "type : 'column2d',"
+					    	+ "renderAt : 'chart5DiasB',"
+					    	+ "width : '360',"
+					    	+ "height : '240',"
+					    	+ "dataFormat : 'json',"
+					    	+ "dataSource : {"
+					    		+ "chart : {"
+					    			+ "caption : '" + titulo + "',"
+					    			+ "theme : 'fint',"
+					    			+ "yAxisMaxValue : '" + limiteVertical + "',"
+					    			+ "rotateValues : '0',"
+					    			+ "formatNumber : '0',"
+					    			+ "formatNumberScale : '0',"
+					    			+ "bgcolor : '#ffffff',"
+					    			+ "usePlotGradientColor : '1',"
+					    		//	+ "useroundedges : '1',"
+					    		//	+ "showborder : '0',"
+					    			+ "showValues : '0',"
+					    			+ "canvasborderthickness: '1',"
+					    			+ "canvasborderalpha : '50',"
+					    			+ "palettecolors : '#8BBA00',"
+					    			+ "},"
+					    			
+					    		+ "data : "
+					    		+ ""
+					    		+ "";
+		
+		String cadena02 = ""
+				+ "[";
+		
+		for(int i=0;i<pares.size();i++){
+			cadena02 += (
+							"{ label: '" + pares.get(i).dia
+					     + "', value: '" + pares.get(i).numDocs + "'}"
+						);
+			if(i != pares.size()-1){
+				cadena02 += ",";
+			}
+			else{
+				cadena02 += "],";
+			}
+		}
+		
+		
+		if(pares.size() == 0){
+			cadena02 += (
+					"{ label: '" + "Sin Datos"
+			     + "', value: '" + 0 + "'}"
+			     + "],"
+				);
+		}
+		
+		String cadena03 = ""
+							+ "trendlines : ["
+								+ "{"
+									+ "line: ["
+										+ "{ "
+											+ "startvalue : '" + max + "',"
+										 	+ "color : '#1aaf5d',"
+										 	+ "valueOnRight : '1',"
+										 	+ "tooltext : 'Maxima subida de $startvalue',"
+										 	+ "displayvalue : 'Máximo'"
+										+ "},"
+										+ "{ "
+											+ "startvalue : '" + med + "',"
+										 	+ "color : '#c40000',"
+										 	+ "valueOnRight : '1',"
+										 	+ "tooltext : 'Media anual de $startvalue',"
+										 	+ "displayvalue : 'Media'"
+										 + "}"
+										+ "]"
+								+ "}"
+							   + "]"
+						    + "}"
+						 + "});"
+						 + ""
+						 + "chartMes.render('chart5DiasB');"
+					+ "})"
+					+ "";
+
+		
+		
+	//	System.out.println(cadena01 + cadena02 + cadena03);
+		
+		return (cadena01 + cadena02 + cadena03);
+	}
+	
+	
+	public String getJSONAnualMes(int tipo, String año){
+
+		// 1 Todos
+		// 2 Ianus
+		// 3 Urg
+		// 4 Xedoc
+		
+		class ParMesDocs{
+			String mes = "";
+			String numDocs = "";
+			
+			ParMesDocs(String mes, String numDocs){
+				this.mes = mes;
+				this.numDocs = numDocs;
+			}
+		}
+		
+				
+		ArrayList<EstadisticaDia> lista = new ArrayList<EstadisticaDia>();
+		String titulo = "";
+		
+		String limiteVertical = "";
+		
+		switch (tipo) {
+		case 1:
+			  	lista = estadisticaTotal;
+			  	titulo = "Total";
+			  	break;
+		case 2:
+				lista = estadisticaIanus;
+				titulo = "Ianus";
+				break;
+		case 3:
+				lista = estadisticaUrg;
+				titulo = "Urgencias";
+				break;
+		case 4:
+				lista = estadisticaXedoc;
+				titulo = "Xedoc";
+				break;
+		}
+
+		String mascaraFecha = año;
+		ArrayList<ParMesDocs> pares = new ArrayList<ParMesDocs>();
+		
+		int sumTotal = 0;
+		int maximo = 0;
+		int media = 0;
+			
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).fecha.substring(0,4).equals(mascaraFecha)){
+				
+				String mes = lista.get(i).fecha.substring(4,6);
+				
+				int sum = 0;
+				int numDias = 0;
+				
+				while(i < lista.size()  && lista.get(i).fecha.substring(4,6).equals(mes)){
+					sum = sum + Integer.valueOf(lista.get(i).numeroFicheros);
+					numDias++;
+					i++;
+				}
+				
+				if(sum > maximo){
+					maximo = sum;
+				}
+				
+				sumTotal += sum;
+				
+				mes = getMes(mes);
+				
+				ParMesDocs par = new ParMesDocs(mes, String.valueOf(sum));
+				pares.add(par);
+			}
+		}
+	
+		int numPares = pares.size();
+		if(numPares == 0)
+			media = 0;
+		else
+			media = sumTotal / pares.size();
+		
+		
+		int num = (int) (maximo * 1.1);
+		
+		limiteVertical = String.valueOf(num);
+		
+		String cadena01 = ""
+				+ ""
+				+ "FusionCharts.ready(function() {"
+					+ "var seleccion, inputs, selElem, "
+				    	+ "chartAñoMes = new FusionCharts({"
+					    	+ "type : 'column2d',"
+					    	+ "renderAt : 'chart5DiasC',"
+					    	+ "width : '360',"
+					    	+ "height : '240',"
+					    	+ "dataFormat : 'json',"
+					    	+ "dataSource : {"
+					    		+ "chart : {"
+					    			+ "caption : '" + titulo + "',"
+					    			+ "theme : 'fint',"
+					    			+ "yAxisMaxValue : '" + limiteVertical + "',"
+					    		//	+ "rotateValues : '0',"
+					    			+ "formatNumber : '0',"
+					    			+ "formatNumberScale : '0',"
+					    			+ "bgcolor : '#ffffff',"
+					    		//	+ "plotgradientcolor: '',"
+					    			+ "basefontcolor: '000000',"
+					    			+ "usePlotGradientColor : '1',"
+					    		//	+ "useroundedges : '1',"
+					    			+ "showborder : '0',"
+					    		//	+ "showValues : '0',"
+					    			+ "canvasborderthickness: '1',"
+					    			+ "canvasborderalpha : '50',"
+					    			+ "palettecolors : '#e44a00',"
+					    			+ "},"
+					    			
+					    		+ "data : "
+					    		+ ""
+					    		+ "";
+		
+		String cadena02 = ""
+				+ "[";
+		
+		for(int i=0;i<pares.size();i++){
+			cadena02 += (
+							"{ label: '" + pares.get(i).mes
+					     + "', value: '" + pares.get(i).numDocs + "'}"
+						);
+			if(i != pares.size()-1){
+				cadena02 += ",";
+			}
+			else{
+				cadena02 += "],";
+			}
+		}
+		
+		if(pares.size() == 0){
+			cadena02 += (
+					"{ label: '" + "Sin Datos"
+			     + "', value: '" + 0 + "'}"
+			     + "],"
+				);
+		}
+		
+		String cadena03 = ""
+							+ "trendlines : ["
+								+ "{"
+									+ "line: ["
+										+ "{ "
+											+ "startvalue : '" + maximo + "',"
+										 	+ "color : '#1aaf5d',"
+										 	+ "valueOnRight : '1',"
+										 	+ "tooltext : 'Maxima subida de $startvalue',"
+										 	+ "displayvalue : 'Máximo'"
+										+ "},"
+										+ "{ "
+											+ "startvalue : '" + media + "',"
+										 	+ "color : '#c40000',"
+										 	+ "valueOnRight : '1',"
+										 	+ "tooltext : 'Media anual de $startvalue',"
+										 	+ "displayvalue : 'Media'"
+										 + "}"
+										+ "]"
+								+ "}"
+							   + "]"
+						    + "}"
+						 + "});"
+						 + ""
+						 + "chartAñoMes.render('chart5DiasC');"
+					+ "})"
+					+ "";
+
+		
+		
+		System.out.println(cadena01 + cadena02 + cadena03);
+		
+		return (cadena01 + cadena02 + cadena03);
+	}
+	
+	
+	public String getJSONTipoGrafico(int tipo, String tipoGrafico){
+		
+		class ParMesDocs{
+			String mes = "";
+			String numDocs = "";
+			
+			ParMesDocs(String mes, String numDocs){
+				this.mes = mes;
+				this.numDocs = numDocs;
+			}
+		}
+		
+		
+		class DatosGraficoAnual{
+			String año = "";
+			ArrayList<ParMesDocs> pares = new ArrayList<ParMesDocs>();
+			
+			DatosGraficoAnual(String año, ArrayList<ParMesDocs> pares){
+				this.año = año;
+				this.pares = pares;
+			}
+		}
+		
+		
+		ArrayList<DatosGraficoAnual> datosGraficosAnuales = new ArrayList<DatosGraficoAnual>();
+		
+				
+		ArrayList<EstadisticaDia> lista = new ArrayList<EstadisticaDia>();
+		String titulo = "";
+		
+		String limiteVertical = "";
+		
+		switch (tipo) {
+		case 1:
+			  	lista = estadisticaTotal;
+			  	titulo = "Total";
+			  	break;
+		case 2:
+				lista = estadisticaIanus;
+				titulo = "Ianus";
+				break;
+		case 3:
+				lista = estadisticaUrg;
+				titulo = "Urgencias";
+				break;
+		case 4:
+				lista = estadisticaXedoc;
+				titulo = "Xedoc";
+				break;
+		}
+
+		String mascaraFecha[] = {"2014", "2015"};
+		
+		
+		
+				//new ArrayList<ParMesDocs>();
+		
+		int sumTotal = 0;
+		int maximo = 0;
+		int media = 0;
+		
+		String añoActual = lista.get(0).fecha.substring(0,4);
+		
+		for(int i=0;i<lista.size();i++){
+			
+			ArrayList<ParMesDocs> pares = new ArrayList<ParMesDocs>();
+			
+			while(i<lista.size() 
+						&& lista.get(i).fecha.substring(0,4).equals(añoActual)){
+				
+				String mes = lista.get(i).fecha.substring(4,6);
+				
+				int sum = 0;
+				
+				while(i<lista.size() 
+						&& lista.get(i).fecha.substring(0,4).equals(añoActual) 
+						&& lista.get(i).fecha.substring(4,6).equals(mes)){
+					
+					sum = sum + Integer.valueOf(lista.get(i).numeroFicheros);
+					i++;
+				}
+				
+				if(sum > maximo){
+					maximo = sum;
+				}
+				
+				sumTotal += sum;
+				
+				mes = getMes(mes);
+				
+				ParMesDocs par = new ParMesDocs(mes, String.valueOf(sum));
+				pares.add(par);
+								
+			}
+			
+			datosGraficosAnuales.add(new DatosGraficoAnual(añoActual, pares));
+			if(i<lista.size()){
+				añoActual = lista.get(i).fecha.substring(0,4);
+			}
+			
+		}
+		
+		
+		System.out.println("Tamaño del array... " + datosGraficosAnuales.size());
+		
+	/*	System.out.println(datosGraficosAnuales.get(0).pares.get(0).mes);
+	/*	System.out.println(datosGraficosAnuales.get(1).pares.get(0).mes);
+		
+		/*
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).fecha.substring(0,4).equals(mascaraFecha)){
+				
+				String mes = lista.get(i).fecha.substring(4,6);
+				
+				int sum = 0;
+				
+				while(i < lista.size()  && lista.get(i).fecha.substring(4,6).equals(mes)){
+					sum = sum + Integer.valueOf(lista.get(i).numeroFicheros);
+					i++;
+				}
+				
+				if(sum > maximo){
+					maximo = sum;
+				}
+				
+				sumTotal += sum;
+				
+				mes = getMes(mes);
+				
+				ParMesDocs par = new ParMesDocs(mes, String.valueOf(sum));
+				pares.add(par);
+			}
+		}
+	
+		int numPares = pares.size();
+		if(numPares == 0)
+			media = 0;
+		else
+			media = sumTotal / pares.size();
+		
+		*/
+		
+		int num = (int) (maximo * 1.1);
+		
+		limiteVertical = String.valueOf(num);
+		
+		String cadena01 = ""
+				+ ""
+				+ "FusionCharts.ready(function() {"
+					+ "var seleccion, inputs, selElem, "
+				    	+ "chartAñoMes = new FusionCharts({"
+					    	+ "type : '"  + tipoGrafico  + "',"
+					    	+ "renderAt : 'chart5DiasE',"
+					    	+ "width : '760',"
+					    	+ "height : '200',"
+					    	+ "dataFormat : 'json',"
+					    	+ "dataSource : {"
+					    		+ "chart : {"
+
+									+ "useroundedges : '1',"
+					    		
+					    		//	+ "caption : '" + titulo + "',"
+					    			+ "theme : 'fint',"
+					    			+ "yAxisMaxValue : '" + limiteVertical + "',"
+					    		//	+ "rotateValues : '0',"
+					    			+ "formatNumber : '0',"
+					    			+ "formatNumberScale : '0',"
+					    			+ "bgcolor : '#ffffff',"
+					    		//	+ "plotgradientcolor: '',"
+					    			+ "basefontcolor: '000000',"
+					    			+ "usePlotGradientColor : '1',"
+					    		//	+ "useroundedges : '1',"
+					    			+ "showborder : '0',"
+					    		//	+ "showValues : '0',"
+					    			+ "canvasborderthickness: '1',"
+					    			+ "canvasborderalpha : '50',"
+					    			+ "palettecolors : '#6baa01,#e44a00,#33bdda'"
+					    			+ "},"
+					    			
+					    		+ "categories : ["
+					    			+ "{"
+					    				+ "category : ["
+					    					+ "{ label : 'Ene'},"
+					    					+ "{ label : 'Feb'},"
+					    					+ "{ label : 'Mar'},"
+					    					+ "{ label : 'Abr'},"
+					    					+ "{ label : 'May'},"
+					    					+ "{ label : 'Jun'},"
+					    					+ "{ label : 'Jul'},"
+					    					+ "{ label : 'Ago'},"
+					    					+ "{ label : 'Sep'},"
+					    					+ "{ label : 'Oct'},"
+					    					+ "{ label : 'Nov'},"
+					    					+ "{ label : 'Dic'}"
+					    				+ "]"
+					    			+ "}"
+					    		+ "],"
+					    		
+					    		+ "dataset : ["
+					    			+ "";
+		
+		String cadena02 = ""
+				+ "";
+		
+		for(int i=0;i<datosGraficosAnuales.size();i++){
+			cadena02 += (
+					
+				"{"
+					+ "seriesname : '" + datosGraficosAnuales.get(i).año + "',"
+					+ "data : ["
+					);
+			
+			for(int j=0, z=0;j<12;j++){
+				
+				if(z<datosGraficosAnuales.get(i).pares.size()){
+					if(!datosGraficosAnuales.get(i).pares.get(z).mes.equals(getMes(j+1))){
+						cadena02 += (
+								"{ value : '0' }"
+								
+								);
+						if(j != 11){
+							cadena02 += ",";
+						}
+						z++;
+					}
+					else{
+						cadena02 += (
+								"{ value : '" + datosGraficosAnuales.get(i).pares.get(z).numDocs + "'}"
+								
+								);
+						
+						if(j != 11){
+							cadena02 += ",";
+						}
+						z++;
+					}
+				}
+				else{
+					cadena02 += (
+							"{ value : '0' }"
+							
+							);
+					if(j != 11){
+						cadena02 += ",";
+					}
+					z++;
+				}
+
+			}
+			
+			cadena02 += ""
+						+ "]"
+					+ "}";
+			
+			if(i != datosGraficosAnuales.size()-1){
+				cadena02 += ",";
+			}
+		}
+		
+		cadena02 += "],";
+		
+	/*	
+		for(int i=0;i<pares.size();i++){
+			cadena02 += (
+							"{ label: '" + pares.get(i).mes
+					     + "', value: '" + pares.get(i).numDocs + "'}"
+						);
+			if(i != pares.size()-1){
+				cadena02 += ",";
+			}
+			else{
+				cadena02 += "],";
+			}
+		}
+		
+		if(pares.size() == 0){
+			cadena02 += (
+					"{ label: '" + "Sin Datos"
+			     + "', value: '" + 0 + "'}"
+			     + "],"
+				);
+		}
+		
+		*/
+		
+		
+		String cadena03 = ""
+							+ "trendlines : ["
+								+ "{"
+									+ "line: ["
+										+ "{ "
+											+ "startvalue : '" + maximo + "',"
+										 	+ "color : '#1aaf5d',"
+										 	+ "valueOnRight : '1',"
+										 	+ "tooltext : 'Maxima subida de $startvalue',"
+										 	+ "displayvalue : 'Máximo'"
+										+ "}"
+										+ ""
+								/*		+ ""
+										+ ","
+										+ "{ "
+											+ "startvalue : '" + 40000 + "',"
+										 	+ "color : '#c40000',"
+										 	+ "valueOnRight : '1',"
+										 	+ "tooltext : 'Media anual de $startvalue',"
+										 	+ "displayvalue : 'Media'"                          
+										 + "}"
+										 + ""
+										 + ""  */
+										+ "]"
+								+ "}"
+							   + "]"
+						    + "}"
+						 + "});"
+						 + ""
+						 + "chartAñoMes.render('chart5DiasE');"
+					+ "});"
+					+ "";
+
+		
+		
+		System.out.println(cadena01 + cadena02 + cadena03);
+		
+		return (cadena01 + cadena02 + cadena03);
+	}
+	
+		
 	
 	private String getXML5Dias(ArrayList<EstadisticaDia> estadistica, String titulo){
 		
@@ -503,4 +1214,123 @@ public class GestionEstadistica {
 		
 		return String.valueOf(maximo);
 	}
+	
+	
+	private String getMediaSubidaAnual(ArrayList<EstadisticaDia> estadistica, String año){
+		
+		int suma = 0;
+		int media = 0;
+		int dias = 0;
+		
+		for(int i=0;i<estadistica.size();i++){
+			String fecha = estadistica.get(i).fecha;
+			if(fecha.substring(0,4).equals(año)){
+				dias++;
+				int cantidad = Integer.valueOf(estadistica.get(i).numeroFicheros);
+				suma = suma + cantidad;
+			}
+		}
+		
+		media = suma / dias;
+		
+		return String.valueOf(media);
+	}
+	
+	
+	private String getMes(String mes){
+		
+		int mesNum = Integer.valueOf(mes);
+		
+		switch (mesNum) {
+		case 1:
+			mes = "Ene";
+			break;
+		case 2:
+			mes = "Feb";
+			break;
+		case 3:
+			mes = "Mar";
+			break;
+		case 4:
+			mes = "Abr";
+			break;
+		case 5:
+			mes = "May";
+			break;
+		case 6:
+			mes = "Jun";
+			break;
+		case 7:
+			mes = "Jul";
+			break;
+		case 8:
+			mes = "Ago";
+			break;
+		case 9:
+			mes = "Sep";
+			break;
+		case 10:
+			mes = "Oct";
+			break;
+		case 11:
+			mes = "Nov";
+			break;
+		case 12:
+			mes = "Dic";
+			break;
+
+		}
+		
+		return mes;
+	}
+	
+	
+	
+	private String getMes(int mesNum){
+
+		String mes = "";
+		
+		switch (mesNum) {
+		case 1:
+			mes = "Ene";
+			break;
+		case 2:
+			mes = "Feb";
+			break;
+		case 3:
+			mes = "Mar";
+			break;
+		case 4:
+			mes = "Abr";
+			break;
+		case 5:
+			mes = "May";
+			break;
+		case 6:
+			mes = "Jun";
+			break;
+		case 7:
+			mes = "Jul";
+			break;
+		case 8:
+			mes = "Ago";
+			break;
+		case 9:
+			mes = "Sep";
+			break;
+		case 10:
+			mes = "Oct";
+			break;
+		case 11:
+			mes = "Nov";
+			break;
+		case 12:
+			mes = "Dic";
+			break;
+
+		}
+		
+		return mes;
+	}
+	
 }
