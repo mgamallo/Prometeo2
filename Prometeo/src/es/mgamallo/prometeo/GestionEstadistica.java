@@ -53,9 +53,9 @@ public class GestionEstadistica {
 		listaIanus = leerFicheroEstadistica("C:\\desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Estadisticas\\Documentacion.txt");
 		*/
 		
-		listaXedoc = leerFicheroEstadistica("C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Estadisticas/Xedoc.txt");
-		listaUrg = leerFicheroEstadistica("C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Estadisticas/Urgencias.txt");
-		listaIanus = leerFicheroEstadistica("C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Estadisticas/Documentacion.txt");
+		listaXedoc = leerFicheroEstadistica(Inicio.rutaEstadisticaXedoc + "Xedoc.txt");
+		listaUrg = leerFicheroEstadistica(Inicio.rutaEstadisticaUrg + "Urgencias.txt");
+		listaIanus = leerFicheroEstadistica(Inicio.rutaEstadisticaIanus + "Documentacion.txt");
 
 		estadisticaXedoc = convertirEstadisticaDia(listaXedoc);
 		estadisticaUrg = convertirEstadisticaDia(listaUrg);

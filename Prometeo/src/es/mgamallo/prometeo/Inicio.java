@@ -57,6 +57,10 @@ public class Inicio {
 	static public String rutaDudas = ":\\digitalización\\00 documentacion\\99 Dudas";
 	static public String rutaXedocOriginales = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\05 XEDOC ORIGINALES";
 	
+	static public String rutaEstadisticaXedoc = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\05 XEDOC ORIGINALES\\";
+	static public String rutaEstadisticaIanus = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\04 Asociado\\";
+	static public String rutaEstadisticaUrg = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 ASOCIADO\\";
+	
 	// Revisar estas rutas
 	static public String rutaNormas = "c:\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\txt\\Normas\\";
 	// static public String rutaNormas = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Prometeo\\txt\\Normas";
@@ -208,6 +212,12 @@ public class Inicio {
 		rutaAsociados = unidadHDDvirtual + rutaAsociados;
 		rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
 		rutaDudas = unidadHDDvirtual + rutaDudas;
+		
+		rutaEstadisticaXedoc = unidadHDDvirtual + rutaEstadisticaXedoc;
+		rutaEstadisticaIanus = unidadHDDvirtual + rutaEstadisticaIanus;
+		rutaEstadisticaUrg = unidadHDDvirtual + rutaEstadisticaUrg;
+		
+		System.out.println(rutaEstadisticaIanus);
 		
 	//	rutaNormas = unidadHDDvirtual + rutaNormas;
 		

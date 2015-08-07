@@ -80,6 +80,8 @@ import chrriis.dj.nativeswing.swtimpl.demo.examples.webbrowser.ClasspathPages;
 
 public class InterfazPrincipal implements MouseListener{
 
+	public static String fechaHoy = "";
+	
 	protected static final String LS = System.getProperty("line.separator");
 	
 	private boolean inicioPrograma = true;
@@ -116,9 +118,9 @@ public class InterfazPrincipal implements MouseListener{
 	static final String DIR_SALIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/salir.html";
 //	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/estadistica.html";
 
-//	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
+	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
 	
-	final String DIR_ESTADISTICAS = "C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
+//	final String DIR_ESTADISTICAS = "C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
 	
 	/*
 	final String DIR_CONTROL = Inicio.unidadHDD + ":/DIGITALIZACIÓN/00 DOCUMENTACION/99 Nombres Normalizados/Prometeo/prometeo/Htmls/control/control.html";
@@ -389,7 +391,7 @@ public class InterfazPrincipal implements MouseListener{
 						
 						webBrowserOperaciones.navigate(DIR_ESTADISTICAS);
 						panelActivo = ESTADISTICAS;
-						
+
 /*
 						int docIanus = estadistica.estadisticaDiaria.numeroArchivosSubidosIanus;
 						int docIanusUrg = estadistica.estadisticaDiaria.numeroArchivosSubidosIanusUrg;
@@ -531,6 +533,12 @@ public class InterfazPrincipal implements MouseListener{
 						
 						System.out.println("El comando es Inicializando ... " + command.toString());
 						
+						String cod = ""
+								+ "var f = document.getElementById('fecha');" + LS
+								+ "f.innerHTML = '" + fechaHoy + "';" + LS;
+						
+						webBrowserOperaciones.executeJavascript(cod);
+						
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[0]);
 						webBrowserOperaciones.executeJavascript(ges.graficoTarta);
 						webBrowserOperaciones.executeJavascript(ges.cadenaMes);
@@ -541,9 +549,7 @@ public class InterfazPrincipal implements MouseListener{
 					if(command.equals("5diasTotal")){
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[0]);
 					}else if(command.equals("5diasIanus")){
-						System.out.println("Vamos progresando");
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[1]);
-						
 					}else if(command.equals("5diasUrgencias")){
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[2]);
 					}else if(command.equals("5diasXedoc")){
@@ -558,6 +564,7 @@ public class InterfazPrincipal implements MouseListener{
 						// 2 Ianus
 						// 3 Urg
 						// 4 Xedoc
+						
 						
 						int tip = 0;
 						if(tipo.equals("Total")){
@@ -1039,6 +1046,7 @@ public class InterfazPrincipal implements MouseListener{
 		String fechaTexto = "   " + fecha.nombreDia.toUpperCase() + ", "
 				+ fecha.dia + " DE " + fecha.nombreMes.toUpperCase() + " DE " + fecha.año;
 		
+		fechaHoy = fechaTexto;
 		
 		labelFecha = new JLabel();
 		labelMaximizar = new JLabel();

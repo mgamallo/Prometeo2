@@ -41,7 +41,8 @@
 	    for (var i = 0; i < inputs.length; i++) {
 	        selElem = inputs[i];
 	        selElem.onclick = function(){
-	        	sendNSCommand("5dias" + this.value);
+	        	// sendNSCommand("5dias" + this.value);
+	        	// alert(selElem.value);
 	        };
 	    }
 		
@@ -296,11 +297,49 @@ FusionCharts.ready(function() {
 
 </script>
 
-<style>
-	span{
-		color: red;
+<script type="text/javascript">
+	function tipoEstadistica(tipoDoc){
+		// alert(tipoDoc);
+		sendNSCommand("5dias" + tipoDoc);
+		// alert('enviado');
 	}
-</style>
+</script>
+
+<script type="text/javascript">
+	function seleccionado(tipoDoc){
+		 sendNSCommand(tipoDoc);
+	}
+	
+	function seleccionadoGraf(grafico, tipoDoc){
+		 if(grafico == "Mes"){
+	        	var año = document.getElementById('Mes_año').value;
+	        	var mes = document.getElementById('Mes_mes').value;
+	        	var tip = document.getElementById('Mes_tipo').value;
+	        	
+	        	var cadena = año + mes + tip;
+	        	
+	        	sendNSCommand(grafico + cadena);
+		 }
+		 		 
+		 if(grafico == "Año"){
+	        	var año = document.getElementById('Año_año').value;
+	        	var tip = document.getElementById('Año_tipo').value;
+	        	
+	        	var cadena = año + tip;
+	        	
+	        	sendNSCommand(grafico + cadena);
+		 }
+		 
+		 if(grafico == "Añs"){
+	        	var graf = document.getElementById('Años_grafico').value;
+	        	var tip = document.getElementById('Años_tipo').value;
+	        	
+	        	var cadena = graf + "_" + tip;
+	        	
+	        	sendNSCommand('Añs' + cadena);
+		 }
+	}
+</script>
 </head>
 
 <!--  onload="getEstadisticas()" -->
@@ -314,8 +353,14 @@ FusionCharts.ready(function() {
 </div>
 
 <div class="cabecera">
-	<div id="fecha"> Estadística del <span id='dia'> ayer</span>
-	</div>
+	<ul class='lista'>
+		<li><a href="#" onclick="tipoEstadistica('Ianus')">Ianus</a></li>
+		<li><a href="#" onclick="tipoEstadistica('Urgencias')">Urgencias</a></li>
+		<li><a href="#" onclick="tipoEstadistica('Xedoc')">Xedoc</a></li>
+		<li><a href="#" onclick="tipoEstadistica('Total')">Total</a></li>
+		<li><span id='fecha'> Estadística del <span id='dia'> ayer</span></span></li>
+	</ul>
+	
 </div>
 
 <div class="pestañas">
@@ -333,7 +378,7 @@ FusionCharts.ready(function() {
 				ULTIMOS 5 DIAS
 			</div>
 			<div class="tipoSubida"> 
-				<select name='secciones' id='secciones5dias'>
+				<select name='secciones' id='secciones5dias' onchange='seleccionado("5dias" + value);'>
 					<option value='Ianus' > Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
@@ -351,7 +396,7 @@ FusionCharts.ready(function() {
 				Mensual
 			</div>
 			<div class = "tipoSubida">
-				<select name='secciones' id='Mes_tipo'>
+				<select name='secciones' id='Mes_tipo' onchange='seleccionadoGraf("Mes",value);'>
 					<option value='Ianus'> Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
@@ -359,7 +404,7 @@ FusionCharts.ready(function() {
 				</select>
 			</div>
 			<div class = "mes">
-				<select name='meses' id='Mes_mes'>
+				<select name='meses' id='Mes_mes' onchange='seleccionadoGraf("Mes",value);'>
 					<option value='01'> Enero</option>
 					<option value='02'> Febrero </option>
 					<option value='03'> Marzo </option>
@@ -375,7 +420,7 @@ FusionCharts.ready(function() {
 				</select>
 			</div>
 			<div class = "año">
-				<select name='años' id='Mes_año'>
+				<select name='años' id='Mes_año' onchange='seleccionadoGraf("Mes",value);'>
 					<option value='2015' selected> 2015</option>
 					<option value='2014'> 2014 </option>
 				</select>
@@ -391,7 +436,7 @@ FusionCharts.ready(function() {
 				Anual
 			</div>
 			<div class="tipoSubida"> 
-				<select name='secciones' id='Año_tipo'>
+				<select name='secciones' id='Año_tipo' onchange='seleccionadoGraf("Año",value);'>
 					<option value='Ianus'> Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
@@ -399,7 +444,7 @@ FusionCharts.ready(function() {
 				</select>
 			</div>
 			<div class = "año">
-				<select name='años' id='Año_año'>
+				<select name='años' id='Año_año' onchange='seleccionadoGraf("Año",value);'>
 					<option value='2015' selected> 2015</option>
 					<option value='2014'> 2014 </option>
 				</select>
@@ -437,7 +482,7 @@ FusionCharts.ready(function() {
 				Anual
 			</div>
 			<div class="tipo" > 
-				<select name='secciones' id="Años_tipo">
+				<select name='secciones' id="Años_tipo" onchange='seleccionadoGraf("Añs",value);'>
 					<option value='Ianus'> Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
@@ -445,7 +490,7 @@ FusionCharts.ready(function() {
 				</select>
 			</div>
 			<div class = "grafico">
-				<select name='tipoGrafico' id='Años_grafico'>
+				<select name='tipoGrafico' id='Años_grafico' onchange='seleccionadoGraf("Añs",value);'>
 					<option value='mscolumn2d' selected> Barras</option>
 					<option value='mscolumn3d'> Barras 3D</option>
 					<option value='msarea'> Area</option>

@@ -1,10 +1,52 @@
 @CHARSET "ISO-8859-1";
 
+.lista{
+	padding: 0;
+	height: 25px;
+}
+
+.lista li {
+	display: inline;
+	height: 30px;
+}
+
+.lista li a{
+	font-family: Arial;
+	font-size: 15px;
+	text-decoration: none;
+	text-align: center;
+	float: left;
+	padding: 5px 30px 5px 10px;
+	/* margin-right: 10px; */
+	background-color: black;
+	color: #fff;
+}
+
+.lista li a:hover{
+	background-color: #ffff46;
+	margin-top: -2px;
+	padding-bottom: 8px;
+	color: #800000;
+	border-bottom-style: solid;
+	border-bottom-color: #800000;
+	border-bottom-width: 5px;
+}
+
+.cabecera{
+	width: 800px;
+	margin: 20px auto 10px auto;
+}
 
 #fecha{
-	width: 800px;
 	text-align: right;
-	margin: 20px auto 10px auto;
+	font-family: Arial;
+	font-size: 15px;
+	text-decoration: none;
+	float: left;
+	padding: 10px;
+	margin-right: 10px;
+	width: auto;
+	float: right;
 }
 
 .datos{
