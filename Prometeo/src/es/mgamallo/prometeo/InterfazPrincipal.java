@@ -119,7 +119,7 @@ public class InterfazPrincipal implements MouseListener{
 //	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/estadistica.html";
 
 	final String DIR_ESTADISTICAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
-	
+	final String CARGANDO_ESTADISTICAS = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/Cargando estadisticas.html";
 //	final String DIR_ESTADISTICAS = "C:/Users/Manuel/git/Prometeo2/Prometeo/Prometeo/Htmls/EstadisticaCasi.html";
 	
 	/*
@@ -390,6 +390,7 @@ public class InterfazPrincipal implements MouseListener{
 					else if(command.equals("docSubidos")){
 						
 						webBrowserOperaciones.navigate(DIR_ESTADISTICAS);
+						// webBrowserOperaciones.navigate(CARGANDO_ESTADISTICAS);
 						panelActivo = ESTADISTICAS;
 
 /*
@@ -398,8 +399,8 @@ public class InterfazPrincipal implements MouseListener{
 						int docXedoc = estadistica.estadisticaDiaria.numeroArchivosSubidosXedoc;
 */						
 					}
-					else if(command.equals("cargarEstadisticas")){
-						
+			/*		else if(command.equals("cargarEstadisticas")){
+				*/		
 												
 						
 						/*
@@ -458,7 +459,9 @@ public class InterfazPrincipal implements MouseListener{
 						
 						 webBrowserOperaciones.executeJavascript(cadenaJavascript);
 						 */
-					}
+			/*		}
+			 
+			 */
 					else if(command.equals("carrusel")){
 						if(inicioPrograma){
 							String codigo = "";
@@ -522,9 +525,8 @@ public class InterfazPrincipal implements MouseListener{
 					// 2 Urg
 					// 3 Xedoc
 					
-					
-					
 					GestionEstadistica ges = new GestionEstadistica();
+					
 					
 					
 					System.out.println("El comando es.... " + command.toString());
@@ -544,6 +546,8 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(ges.cadenaMes);
 						webBrowserOperaciones.executeJavascript(ges.cadenaAñoMes);
 						webBrowserOperaciones.executeJavascript(ges.cadenaAños);
+						
+												
 					}
 					
 					if(command.equals("5diasTotal")){
@@ -636,6 +640,7 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(ges.getJSONTipoGrafico(tip,partes[0] ));
 						
 					}
+
 				}
 				
 				

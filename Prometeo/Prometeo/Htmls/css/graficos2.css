@@ -1,5 +1,9 @@
 @CHARSET "ISO-8859-1";
 
+#cargando{
+	visibility: hidden;
+}
+
 .lista{
 	padding: 0;
 	height: 25px;

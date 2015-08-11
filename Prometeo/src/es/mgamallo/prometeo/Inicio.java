@@ -181,6 +181,7 @@ public class Inicio {
 	    	
 	    }
 	    
+	    
 		// Inicializamos el interfaz cargando los usuarios
 		
 		cargarUsuarios();
@@ -218,6 +219,13 @@ public class Inicio {
 		rutaEstadisticaUrg = unidadHDDvirtual + rutaEstadisticaUrg;
 		
 		System.out.println(rutaEstadisticaIanus);
+		
+		
+	    // Cargamos las estadisticas
+	    
+	   HiloEstadisticas hiloEstadisticas = new HiloEstadisticas();
+	   hiloEstadisticas.start();
+		
 		
 	//	rutaNormas = unidadHDDvirtual + rutaNormas;
 		
@@ -343,3 +351,12 @@ class IdentificarPc {
 	}
 }	
 
+
+class HiloEstadisticas extends Thread {
+
+	public void run() {
+			
+			 new CargaEstadisticasInicio();
+
+	}
+}

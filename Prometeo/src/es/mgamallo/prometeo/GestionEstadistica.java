@@ -56,6 +56,8 @@ public class GestionEstadistica {
 		listaXedoc = leerFicheroEstadistica(Inicio.rutaEstadisticaXedoc + "Xedoc.txt");
 		listaUrg = leerFicheroEstadistica(Inicio.rutaEstadisticaUrg + "Urgencias.txt");
 		listaIanus = leerFicheroEstadistica(Inicio.rutaEstadisticaIanus + "Documentacion.txt");
+		
+	//	System.out.println(Inicio.rutaEstadisticaIanus + "Documentacion.txt");
 
 		estadisticaXedoc = convertirEstadisticaDia(listaXedoc);
 		estadisticaUrg = convertirEstadisticaDia(listaUrg);
@@ -203,6 +205,8 @@ public class GestionEstadistica {
 		
 		ArrayList <String> lista = new ArrayList<String>();
 		
+		System.out.println("La ruta es... " + ruta);
+		
 		FileReader f = null;
 		BufferedReader b = null;
 		
@@ -240,6 +244,7 @@ public class GestionEstadistica {
 		ArrayList<EstadisticaDia> estadistica = new ArrayList<EstadisticaDia>();
 		
 		for(int i=0;i<lista.size();i++){
+			System.out.println(lista.get(i));
 			estadistica.add(new EstadisticaDia(lista.get(i)));
 		}
 		return estadistica;
@@ -1166,6 +1171,10 @@ public class GestionEstadistica {
 						 + ""
 						 + "chartAñoMes.render('chart5DiasE');"
 					+ "});"
+					+ ""
+					+ "var h = document.getElementById('cargando');"
+					+ "h.style.visibility = 'visible';"
+					+ ""
 					+ "";
 
 		
