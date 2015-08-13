@@ -66,6 +66,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -104,6 +105,8 @@ public class InterfazPrincipal implements MouseListener{
 
 	public String panelActivo = USUARIO;
 	public boolean abracadabra = false;
+	
+	final String CUADRANTE_ARCHIVO = "http://cuadrantearchivo.appspot.com/";
 	
 	final String DIR_CONTROL = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
 	final String DIR_OPERACIONES = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
@@ -399,6 +402,10 @@ public class InterfazPrincipal implements MouseListener{
 						int docXedoc = estadistica.estadisticaDiaria.numeroArchivosSubidosXedoc;
 */						
 					}
+					else if(command.equals("cuadrantearchivo")){
+						webBrowserOperaciones.navigate(CUADRANTE_ARCHIVO);
+						maximizada = Pantalla.maximizar(frame);
+					}
 			/*		else if(command.equals("cargarEstadisticas")){
 				*/		
 												
@@ -520,6 +527,8 @@ public class InterfazPrincipal implements MouseListener{
 	//   Estadisticas *****************************************************************
 				else if (panelActivo.equals(ESTADISTICAS)) {
 					
+					maximizada = Pantalla.maximizar(frame);
+					
 					// 0 Todos
 					// 1 Ianus
 					// 2 Urg
@@ -558,6 +567,12 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[2]);
 					}else if(command.equals("5diasXedoc")){
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[3]);
+					}
+					else if(command.contains("Todos")){
+						String tipo = command.substring(5);
+						if(command.contains("Ianus")){
+							webBrowserOperaciones.executeJavascript(ges.cadena5Dias[1]);
+						}
 					}
 					else if(command.substring(0,3).equals("Mes")){
 						String año = command.substring(3,7);
@@ -639,8 +654,10 @@ public class InterfazPrincipal implements MouseListener{
 						
 						webBrowserOperaciones.executeJavascript(ges.getJSONTipoGrafico(tip,partes[0] ));
 						
+						
 					}
 
+					
 				}
 				
 				
@@ -1171,6 +1188,7 @@ public class InterfazPrincipal implements MouseListener{
 
 
 	}
+	
 	
 
 	/* Standard main method to try that test as a standalone application. */

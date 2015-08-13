@@ -11,6 +11,7 @@ public class Fecha {
 	int año;
 	String nombreMes = "";
 	String nombreMesYnumero = "";
+	String numeroMes = "";
 	String nombreDia = "";
 
 	
@@ -33,6 +34,7 @@ public class Fecha {
 		
 		nombreDia = getDiaSemana(diaSemana);
 		nombreMes = getNombreMes(mes);
+		numeroMes = getNumeroMes(mes);
 		nombreMesYnumero = getNombreMesYNumero(mes);
 	}
 	
@@ -91,6 +93,27 @@ public class Fecha {
 		return nombre;
 	}
 	
+	private String getNumeroMes(int mes){
+		
+		String nombre = "";
+		
+		switch(mes){
+		case 0:	nombre = "01";break;
+		case 1:	nombre = "02";break;
+		case 2:	nombre = "03";break;
+		case 3:	nombre = "04";break;
+		case 4:	nombre = "05";break;
+		case 5:	nombre = "06";break;
+		case 6:	nombre = "07";break;
+		case 7:	nombre = "08";break;
+		case 8:	nombre = "09";break;
+		case 9:	nombre = "10";break;
+		case 10:	nombre = "11";break;
+		case 11:	nombre = "12";break;
+		}
+		
+		return nombre;
+	}
 	
 	private String getNombreMesYNumero(int mes){
 		

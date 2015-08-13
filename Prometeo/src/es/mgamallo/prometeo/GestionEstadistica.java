@@ -36,8 +36,9 @@ public class GestionEstadistica {
 	String mediaIanus = "";
 	String mediaUrg = "";
 	
-	
-			
+	static String añoActual = "";
+	static String mesActual = "";
+	static Fecha fecha;
 	
 	static public void main(String args[]){
 		new GestionEstadistica();
@@ -63,6 +64,11 @@ public class GestionEstadistica {
 		estadisticaUrg = convertirEstadisticaDia(listaUrg);
 		estadisticaIanus = convertirEstadisticaDia(listaIanus);
 		
+		
+		recolocaSabados(estadisticaXedoc);
+		recolocaSabados(estadisticaUrg);
+		recolocaSabados(estadisticaIanus);
+		
 		getFusionListas();
 		
 		maximoTotal = getMaximaSubida(estadisticaTotal);
@@ -70,16 +76,22 @@ public class GestionEstadistica {
 		maximoUrg = getMaximaSubida(estadisticaUrg);
 		maximoXedoc = getMaximaSubida(estadisticaXedoc);
 		
-		mediaTotal = getMediaSubidaAnual(estadisticaTotal,"2015");
-		mediaIanus = getMediaSubidaAnual(estadisticaIanus,"2015");
-		mediaUrg = getMediaSubidaAnual(estadisticaUrg,"2015");
-		mediaXedoc = getMediaSubidaAnual(estadisticaXedoc,"2015");
+		fecha = new Fecha();
+		añoActual = String.valueOf(fecha.año);
+		mesActual = fecha.numeroMes;
 		
+		mediaTotal = getMediaSubidaAnual(estadisticaTotal,añoActual);
+		mediaIanus = getMediaSubidaAnual(estadisticaIanus,añoActual);
+		mediaUrg = getMediaSubidaAnual(estadisticaUrg,añoActual);
+		mediaXedoc = getMediaSubidaAnual(estadisticaXedoc,añoActual);
+		
+		/*
 		System.out.println(maximoTotal);
 		System.out.println(maximoIanus);
 		System.out.println(maximoUrg);
 		System.out.println(maximoXedoc);
-	
+		*/
+		
 		graficoTarta = getJSONAyer();
 		
 		
@@ -99,8 +111,8 @@ public class GestionEstadistica {
 		}
 		
 		
-		cadenaMes = getJSONMesDias(1,"2015","06");
-		cadenaAñoMes = getJSONAnualMes(1,"2015");
+		cadenaMes = getJSONMesDias(1,añoActual,mesActual);
+		cadenaAñoMes = getJSONAnualMes(1,añoActual);
 		cadenaAños = getJSONTipoGrafico(1,"mscolumn2d");
 		
 		/*
@@ -286,6 +298,13 @@ public class GestionEstadistica {
 	
 	
 	public String getJSONAyer(){
+		
+		String cadenaFecha = estadisticaIanus.get(estadisticaIanus.size()-1).fecha;
+		
+		FechaGraficos f = new FechaGraficos(cadenaFecha);
+		cadenaFecha = f.dia + " de " + f.mes + " de " + f.año; 
+		
+		
 		String cadena01 = ""
 				+ ""
 				+ "FusionCharts.ready(function() {"
@@ -297,7 +316,7 @@ public class GestionEstadistica {
 					    	+ "dataFormat : 'json',"
 					    	+ "dataSource : {"
 					    		+ "chart : {"
-					    		//	+ "caption : 'Distribución diaria',"
+					    			+ "caption : '" + cadenaFecha + "',"
 					    			+ "animation : '1',"
 					    			+ "formatNumberScale : '0',"
 					    			+ "decimals : '0',"
@@ -321,19 +340,19 @@ public class GestionEstadistica {
 					    		+ "data : ["
 					    			+ "{"
 					    				+ "label : 'Xedoc',"
-					    				+ "value :  '" + estadisticaXedoc.get(estadisticaXedoc.size()-3).numeroFicheros + "'," 
+					    				+ "value :  '" + estadisticaXedoc.get(estadisticaXedoc.size()-1).numeroFicheros + "'," 
 					    				+ "issliced : '1',"
 					    				+ "color : '#fa9000'"
 					    			+ "},"
 						    		+ "{"
 					    				+ "label : 'Ianus Doc',"
-					    				+ "value : '" + estadisticaIanus.get(estadisticaIanus.size()-3).numeroFicheros + "',"
+					    				+ "value : '" + estadisticaIanus.get(estadisticaIanus.size()-1).numeroFicheros + "',"
 					    				+ "issliced : '1',"
 					    				+ "color : '#c40000'"
 					    			+ "},"
 						    		+ "{"
 					    				+ "label : 'Ianus Urg',"
-					    				+ "value : '" + estadisticaUrg.get(estadisticaUrg.size()-3).numeroFicheros + "',"
+					    				+ "value : '" + estadisticaUrg.get(estadisticaUrg.size()-1).numeroFicheros + "',"
 						    			+ "issliced : '1',"
 					    				+ "color : '#750303'"
 					    			+ "}"					    				
@@ -461,12 +480,12 @@ public class GestionEstadistica {
 		String cadena02 = ""
 				+ "[";
 		
-		for(int i=6;i>1;i--){
+		for(int i=5;i>0;i--){
 			cadena02 += (
 							"{ label: '" + lista.get(lista.size() - i).diaSemana 
 					     + "', value: '" + lista.get(lista.size() - i).numeroFicheros + "'}"
 						);
-			if(i != 2){
+			if(i != 1){
 				cadena02 += ",";
 			}
 			else{
@@ -500,6 +519,14 @@ public class GestionEstadistica {
 						 + "});"
 						 + ""
 						 + "chart5Dias.render('chart5DiasA');"
+						 + ""
+						 + "var h = document.getElementById('secciones5dias');"
+						 + "var k = h.getElementsByTagName('option');"
+						 + "for(var i=0;i<h.options.length;i++){"
+						 	  + "if(k[i].value.localeCompare('" + titulo + "') == 0){"
+						 	  		+ "k[i].selected = 'selected';"
+						 	  + "}"
+						 + "}"
 					+ "})"
 					+ "";
 
@@ -535,6 +562,14 @@ public class GestionEstadistica {
 		String med = "";
 		
 		String limiteVertical = "";
+		
+
+			mediaTotal = getMediaSubidaAnual(estadisticaTotal,año);
+			mediaIanus = getMediaSubidaAnual(estadisticaIanus,año);
+			mediaUrg = getMediaSubidaAnual(estadisticaUrg,año);
+			mediaXedoc = getMediaSubidaAnual(estadisticaXedoc,año);
+
+		
 		
 		switch (tipo) {
 		case 1:
@@ -574,7 +609,7 @@ public class GestionEstadistica {
 			}
 		}
 	
-		
+		int numeroMes = Integer.valueOf(mes) - 1;
 		
 		int num = (int) (Integer.valueOf(max) * 1.1);
 		
@@ -662,6 +697,20 @@ public class GestionEstadistica {
 						 + "});"
 						 + ""
 						 + "chartMes.render('chart5DiasB');"
+						 + ""
+						 + "var h = document.getElementById('Mes_año');"
+						 + "var k = h.getElementsByTagName('option');"
+						 + "for(var i=0;i<h.options.length;i++){"
+						 	  + "if(k[i].value.localeCompare('" + año + "') == 0){"
+						 	  		+ "k[i].selected = 'selected';"
+						 	  + "}"
+						 + "}"
+						 + ""
+						 
+    					 + "var h = document.getElementById('Mes_mes');"
+						 + "var k = h.getElementsByTagName('option');"
+						 + "k[" + numeroMes + "].selected = 'selected';"
+						 + ""
 					+ "})"
 					+ "";
 
@@ -843,6 +892,15 @@ public class GestionEstadistica {
 						 + "});"
 						 + ""
 						 + "chartAñoMes.render('chart5DiasC');"
+						 
+						 + "var h = document.getElementById('Año_año');"
+						 + "var k = h.getElementsByTagName('option');"
+						 + "for(var i=0;i<h.options.length;i++){"
+						 	  + "if(k[i].value.localeCompare('" + año + "') == 0){"
+						 	  		+ "k[i].selected = 'selected';"
+						 	  + "}"
+						 + "}"
+					
 					+ "})"
 					+ "";
 
@@ -1227,6 +1285,8 @@ public class GestionEstadistica {
 	
 	private String getMediaSubidaAnual(ArrayList<EstadisticaDia> estadistica, String año){
 		
+		System.out.println(año);
+		
 		int suma = 0;
 		int media = 0;
 		int dias = 0;
@@ -1239,10 +1299,40 @@ public class GestionEstadistica {
 				suma = suma + cantidad;
 			}
 		}
-		
-		media = suma / dias;
+		if(dias != 0){
+			media = suma / dias;
+		}
+		else{
+			media = 0;
+		}
 		
 		return String.valueOf(media);
+	}
+	
+	
+	private void recolocaSabados(ArrayList<EstadisticaDia> lista){
+		
+	//	System.out.println("Tamaño... " + lista.size());
+		
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).diaSemana.equals("Sábado")){
+				if(i>0){
+					int numDocSabado = Integer.valueOf(lista.get(i).numeroFicheros);
+					int numDocAnterior = Integer.valueOf(lista.get(i-1).numeroFicheros);
+					int suma = numDocAnterior + numDocSabado;
+					lista.get(i-1).numeroFicheros = String.valueOf(suma);
+					lista.remove(i);i--;
+				}
+			}
+		}
+		
+		/*
+		System.out.println("Tamaño... " + lista.size());
+		
+		for(int i=0;i<lista.size();i++){
+			System.out.println(lista.get(i).fecha + "  -  " + lista.get(i).diaSemana);
+		}
+		*/
 	}
 	
 	
@@ -1342,4 +1432,41 @@ public class GestionEstadistica {
 		return mes;
 	}
 	
+}
+
+class FechaGraficos{
+	String dia = "";
+	String mes = "";
+	String año = "";
+	
+	FechaGraficos(String fecha) {
+		// TODO Auto-generated method stub
+		año = fecha.substring(0,4);
+		mes = fecha.substring(4,6);
+		int aux = Integer.valueOf(mes);
+		mes = getNombreMes(aux);
+		dia = fecha.substring(6);
+	}
+	
+	private String getNombreMes(int mes){
+		
+		String nombre = "";
+		
+		switch(mes){
+		case 0:	nombre = "Enero";break;
+		case 1:	nombre = "Febrero";break;
+		case 2:	nombre = "Marzo";break;
+		case 3:	nombre = "Abril";break;
+		case 4:	nombre = "Mayo";break;
+		case 5:	nombre = "Junio";break;
+		case 6:	nombre = "Julio";break;
+		case 7:	nombre = "Agosto";break;
+		case 8:	nombre = "Septiembre";break;
+		case 9:	nombre = "Octubre";break;
+		case 10:	nombre = "Noviembre";break;
+		case 11:	nombre = "Diciembre";break;
+		}
+		
+		return nombre;
+	}
 }

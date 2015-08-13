@@ -135,7 +135,7 @@ public class RobotIanusXedoc {
 						if (indexParentesis != -1) {
 							
 							titulo = tituloCDU.substring(indexParentesis + 1,tituloCDU.length() - 1);
-							tituloCDU = tituloCDU.substring(0,indexParentesis);
+							tituloCDU = tituloCDU.substring(0,indexParentesis-1);
 							System.out.println(tituloCDU);
 							System.out.println(titulo);
 						}

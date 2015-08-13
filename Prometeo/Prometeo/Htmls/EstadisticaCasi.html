@@ -41,7 +41,7 @@
 	    for (var i = 0; i < inputs.length; i++) {
 	        selElem = inputs[i];
 	        selElem.onclick = function(){
-	        	// sendNSCommand("5dias" + this.value);
+	        	 sendNSCommand("5dias" + this.value);
 	        	// alert(selElem.value);
 	        };
 	    }
@@ -299,18 +299,55 @@ FusionCharts.ready(function() {
 
 <script type="text/javascript">
 	function tipoEstadistica(tipoDoc){
-		// alert(tipoDoc);
-		sendNSCommand("5dias" + tipoDoc);
-		// alert('enviado');
+
+		var valor = 3;
+		
+		// Ianus 0
+		// Urgencias 1
+		// Xedoc 2
+		// Total 3
+		
+		if(tipoDoc == 'Total'){
+			valor = 3;
+		}
+		else if(tipoDoc == 'Ianus'){
+			valor = 0;
+		}
+		else if(tipoDoc == 'Urgencias'){
+			valor = 1;
+		}
+		else if(tipoDoc == 'Xedoc'){
+			valor = 2;
+		}
+
+			 	
+		var tip = document.getElementById('secciones5dias');
+		var h = tip.getElementsByTagName('option');
+		h[valor].selected = 'selected';
+		h[valor].click();
+
+		var tip = document.getElementById('Mes_tipo');
+		var h = tip.getElementsByTagName('option');
+		h[valor].selected = 'selected';
+		h[valor].click();
+
+		var tip = document.getElementById('Año_tipo');
+		var h = tip.getElementsByTagName('option');
+		h[valor].selected = 'selected';
+		h[valor].click();
+
+		var tip = document.getElementById('Años_tipo');
+		var h = tip.getElementsByTagName('option');
+		h[valor].selected = 'selected';
+		h[valor].click();
+
 	}
 </script>
 
 <script type="text/javascript">
-	function seleccionado(tipoDoc){
-		 sendNSCommand(tipoDoc);
-	}
-	
+
 	function seleccionadoGraf(grafico, tipoDoc){
+		
 		 if(grafico == "Mes"){
 	        	var año = document.getElementById('Mes_año').value;
 	        	var mes = document.getElementById('Mes_mes').value;
@@ -337,6 +374,11 @@ FusionCharts.ready(function() {
 	        	var cadena = graf + "_" + tip;
 	        	
 	        	sendNSCommand('Añs' + cadena);
+		 }
+		 
+		 if(grafico == "5dias"){
+			 
+			    sendNSCommand('5dias' + tipoDoc);
 		 }
 	}
 </script>
@@ -378,7 +420,7 @@ FusionCharts.ready(function() {
 				ULTIMOS 5 DIAS
 			</div>
 			<div class="tipoSubida"> 
-				<select name='secciones' id='secciones5dias' onchange='seleccionado("5dias" + value);'>
+				<select name='secciones' id='secciones5dias' onchange='seleccionadoGraf("5dias",value);'>
 					<option value='Ianus' > Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
@@ -410,7 +452,7 @@ FusionCharts.ready(function() {
 					<option value='03'> Marzo </option>
 					<option value='04'> Abril</option>
 					<option value='05'> Mayo </option>
-					<option value='06' selected> Junio </option>
+					<option value='06'> Junio </option>
 					<option value='07'> Julio </option>
 					<option value='08'> Agosto </option>
 					<option value='09'> Setiembre </option>
@@ -421,7 +463,7 @@ FusionCharts.ready(function() {
 			</div>
 			<div class = "año">
 				<select name='años' id='Mes_año' onchange='seleccionadoGraf("Mes",value);'>
-					<option value='2015' selected> 2015</option>
+					<option value='2015'> 2015</option>
 					<option value='2014'> 2014 </option>
 				</select>
 			</div>
@@ -445,7 +487,7 @@ FusionCharts.ready(function() {
 			</div>
 			<div class = "año">
 				<select name='años' id='Año_año' onchange='seleccionadoGraf("Año",value);'>
-					<option value='2015' selected> 2015</option>
+					<option value='2015'> 2015</option>
 					<option value='2014'> 2014 </option>
 				</select>
 			</div>
