@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="utf-8" />
+<title>Abrir carpeta</title>
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<link rel="stylesheet" href="css/drag.css">
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro-button-set.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-hint.js"></script>
+<script src="js/metro/metro-input-control.js"></script>
+<script src="js/yui-min.js"></script>
+
+<script>function hola(){document.all.ins.click()};</script>
+
+</head>
+<body class="metro" >  <!-- onload="hola()" -->
+
+	<div class="tile-area tile-area-dark" style="width: 600px; height: 1200px">
+		<!-- tile-area-dark -->
+
+		<h1 class="tile-area-title fg-white">
+			Abrir <span id="firmado">Firmado</span>
+		</h1>
+
+
+		<div class="grid fluid">
+			<div class="row">
+				<div class="span2">
+					
+					<br>
+					
+					<div class="row">
+						<div class="span12">
+							<a href="command://aptdoRevis"
+								class="tile half bg-magenta bg-hover-cyan"
+								title="Apartado|Apartado en la carpeta revisado"
+								data-hint-position="bottom">
+								<div class="tile-content icon">
+									<i class="icon-cone"></i>
+								</div>
+							</a> 
+							<a href="command://aptdoFirm"
+								class="tile half bg-violet bg-hover-cyan"
+								title="Apartado|Apartado en la carpeta firmado"
+								data-hint-position="bottom">
+								<div class="tile-content icon">
+									<i class=" icon-wrench"></i>
+								</div>
+							</a> 
+							<a href="command://dudas"
+								class="tile half bg-orange bg-hover-lightGreen"
+								title="Dudas|Dudas resueltas"
+								data-hint-position="bottom">
+								<div class="tile-content icon">
+									<i class="icon-help"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="span12">
+							<a class="tile half bg-emerald" title="Menu abrir" href="command://abrir">
+								<div class="tile-content icon">
+									<i class="icon-folder"></i>
+								</div>
+							</a> 
+							<a class="tile half bg-crimson"  title="actualizar" id="ins" name="prueba" href="command://firmado">
+								<div class="tile-content icon">
+									<i class="icon-cycle"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="span12">
+							<a class="tile half bg-yellow" title="Iniciar Xedoc" href="command://iniciarXedoc">
+								<div class="tile-content icon">
+									<i class="icon-lightning fg-crimson"></i>
+								</div>
+							</a> 
+							<a class="tile half bg-magenta"  title="Carpeta Xedoc Originales" href="command://carpetaXedocO">
+								<div class="tile-content icon">
+									<i class="icon-basket"></i>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<br>
+					<span class="fg-white">Documentos totales: <strong class="fg-crimson" id="pdfstotales"> 589</strong></span>
+					<br>
+					<span class="fg-white">Documentos pendientes: <strong class="fg-crimson" id="pdfspendientes"> 209</strong></span>
+				</div>
+				<div class="span8" id="insertar" name="hola">
+
+
+				
+				</div>
+				<div id="Xedoc">
+					<div id="workarea">
+					    <div class="slot" id="t1">Ana</div>
+					    <div class="slot" id="b1">Asun</div>
+					    <div class="slot" id="b2">Conchi</div>
+					    <div class="slot" id="b3">Esther</div>
+					    <div class="slot" id="b4">Iago</div>
+					    <div class="slot" id="t2">Irene</div>
+					    <div class="player" id="pt1">Isa</div>
+					    <div class="player" id="pt2">Juanma</div>
+					    <div class="player" id="pb1">Man</div>
+					    <div class="player" id="pb2">Oscar</div>
+					    <div class="player" id="pboth1">Salva</div>
+					    <div class="player" id="pboth2">Ruben</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		
+
+		
+	</div>
+
+	<script type="text/javascript">
+	
+	YUI().use('dd-drop', 'dd-proxy', 'dd-constrain', function(Y) {
+
+	    var slots = Y.one('#workarea').all('.slot');
+	    Y.each(slots, function(v, k) {
+	        var id = v.get('id'), groups = ['two'];
+	        switch (id) {
+	            case 't1':
+	            case 't2':
+	                groups = ['one'];
+	                break;
+	        }
+	        var drop = new Y.DD.Drop({
+	            node: v,
+	            groups: groups
+	        });
+	    });
+
+	    var players = Y.one('#workarea').all('.player');
+	    Y.each(players, function(v, k) {
+	        var id = v.get('id'), groups = ['one', 'two'];
+	        switch (id) {
+	            case 'pt1':
+	            case 'pt2':
+	                groups = ['one'];
+	                break;
+	            case 'pb1':
+	            case 'pb2':
+	                groups = ['two'];
+	                break;
+	        }
+	        var drag = new Y.DD.Drag({
+	            node: v,
+	            groups: groups
+	        }).plug(Y.Plugin.DDProxy, {
+	            moveOnEnd: false
+	        }).plug(Y.Plugin.DDConstrained, {
+	            constrain2node: '#workarea'
+	        });
+	        drag.on('drag:start', function() {
+	            var p = this.get('dragNode'),
+	                n = this.get('node');
+	                n.setStyle('opacity', .25);
+	                if (!this._playerStart) {
+	                    this._playerStart = this.nodeXY;
+	                }
+	            p.set('innerHTML', n.get('innerHTML'));
+	            p.setStyles({
+	                backgroundColor: n.getStyle('backgroundColor'),
+	                color: n.getStyle('color'),
+	                opacity: .65
+	            });
+	        });
+	        drag.on('drag:end', function() {
+	            var n = this.get('node');
+	            n.setStyle('opacity', '1');
+	        });
+	        drag.on('drag:drophit', function(e) {
+	            var xy = e.drop.get('node').getXY();
+	            this.get('node').setXY(xy, Y.UA.ie);
+	        });
+	        drag.on('drag:dropmiss', function(e) {
+	            if (this._playerStart) {
+	                this.get('node').setXY(this._playerStart, Y.UA.ie);
+	                this._playerStart = null;
+	            }
+	        });
+	    });
+	});
+	
+	
+	</script>
+
+
+
+	
+</body>
+</html>
