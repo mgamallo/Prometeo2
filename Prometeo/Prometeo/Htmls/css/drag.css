@@ -4,6 +4,7 @@ body{
 	background-color: #000000;
 }
 
+
 .row{
 	margin-left: 10px;
 }
@@ -25,9 +26,9 @@ body{
 
 .player {
   /*  border: 2px solid #808080; */
-    color: #000000;
     text-align: center;
   /*  position: relative; */
+  	color: white;
     float: left; 
     margin: 4px;
     width: 60px;
@@ -36,8 +37,8 @@ body{
     z-index: 1;
     cursor: move;
 	font-family:Georgia,serif;
-	font-weight: 100;
-	padding: 16px 0 0 0;
+	font-weight: 600;
+	/* padding: 16px 0 0 0; */
 }
 
 
@@ -110,7 +111,7 @@ body{
 }
 
 .usuarios, .pendiente{
-	margin-left: 10px;
+	margin-left: 5px;
 	padding-top: 10px;
 	width: 70px;
 	height: 830px;
@@ -123,10 +124,12 @@ body{
 }
 
 #workarea {
-	margin-top: 20px;
-    height: 840px;
-    width: 100%;
+	margin: 20px auto 20px auto;
+    height: 940px;
+    width: 99%;
+    text-align: center;
     background-color: #ffffff;
+    padding-top: 20px;
     
 }
 #workarea .yui3-dd-drop-active-valid {
@@ -141,7 +144,7 @@ body{
 
 .areaTrabajo{
 	float: left;
-	margin-left: 40px;
+	margin-left: 10px;
 	padding-top: 10px;
 }
 
@@ -151,16 +154,17 @@ body{
 
 .col{
 	float: left;
-	margin-right: 30px;
+	margin-right: 5px;
 }
 
 .carpetas{
 	float: left;
-	margin-right: 30px;
-	width: 300px;
+	margin-right: 0;
+	width: 220px;
 	height: 800px;
 	/* border: 1px solid black;  */
 }
+
 
 #play ul {
     /* Snipped */
@@ -179,7 +183,7 @@ body{
     #play ul {
       /*  border: 1px solid black; */
         width: 210px;
-        height: 700px;
+        height: 800px;
         float: left;
         padding: 0;
         zoom: 1;
@@ -197,18 +201,27 @@ body{
         position: relative;
     }
     #play ul li.list1 {
-        background-color: #ff0000;
+        background-color: #00b9b9;
         border:1px solid #004C6D; 
         width: 200px;
     }
     #play ul li.list2 {
-        background-color: #EDFF9F;
-        border:1px solid #CDCDCD;
-        width: 100px;
+        background-color: #00b9b9;
+        border:1px solid #004C6D;
+        width: 150px;
     }
     #play ul li.list3 {
         background-color: #00b9b9;
-        border:1px solid #CDCDCD;
-        width: 150px;
+        border:1px solid #004C6D;
+        width: 175px;
     }
+ul li{
+	text-align: left;
+}
+
+.pdfs{
+	float: right;
+	font-size: small;
+	color: white;
+}
 

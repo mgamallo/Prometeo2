@@ -113,6 +113,10 @@ public class InterfazPrincipal implements MouseListener{
 
 //	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
 	final String DIR_ABRIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir.html";
+	final String DIR_ABRIR_X = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrirXedoc2.html";
+
+	
+	
 	final String DIR_AYUDA = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
 	final String DIR_NORMAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas.html";
 	final String DIR_AVISOS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
@@ -403,7 +407,8 @@ public class InterfazPrincipal implements MouseListener{
 */						
 					}
 					else if(command.equals("cuadrantearchivo")){
-						webBrowserOperaciones.navigate(CUADRANTE_ARCHIVO);
+						// webBrowserOperaciones.navigate(CUADRANTE_ARCHIVO);
+						webBrowserOperaciones.navigate(DIR_ABRIR_X);
 						maximizada = Pantalla.maximizar(frame);
 					}
 			/*		else if(command.equals("cargarEstadisticas")){

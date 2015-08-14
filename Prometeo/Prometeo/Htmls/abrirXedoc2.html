@@ -20,16 +20,12 @@
 </head>
 <body class="metro" >  <!-- onload="hola()" -->
 
-
-			<div class="row">
-					
-					<br>
-					
+				<div class="row" style="margin: 20px auto 40px 10px">	
 					<div class="row" style="float: right; margin-right: 20px;">
 
 							<a class="tile half bg-emerald" title="Menu abrir" href="command://abrir">
 								<div class="tile-content icon">
-									<i class="icon-folder"></i>
+									<i class="icon-upload"></i>
 								</div>
 							</a> 
 
@@ -38,7 +34,7 @@
 					
 					<div class="row">
 
-							<h1 class="tile-area-title fg-white" style="float: left; margin: 0 100px 10px 10px;">Xedoc</h1>
+							<h1 class="tile-area-title fg-white" style="float: left; margin: 0 100px 10px 10px; font-size: 40px;">Xedoc</h1>
 				
 							<a class="tile half bg-crimson"  title="actualizar" id="ins" name="prueba" href="command://firmado">
 								<div class="tile-content icon">
@@ -69,22 +65,23 @@
 					<span class="fg-white">Documentos pendientes: <strong class="fg-crimson" id="pdfspendientes"> 209</strong></span>
 					
 
-
+				</div>
+				
 				<div id="Xedoc">
 					<div id="workarea">
 						<div class="usuarios">
-						    <div class="player" id="ana">Ana</div>
-						    <div class="player" id="asun">Asun</div>
-						    <div class="player" id="conchi">Conchi</div>
-						    <div class="player" id="esther">Esther</div>
-						    <div class="player" id="iago">Iago</div>
-						    <div class="player" id="irene">Irene</div>
-						    <div class="player" id="isa">Isa</div>
-						    <div class="player" id="juanma">Juanma</div>
-						    <div class="player" id="man">Man</div>
-						    <div class="player" id="oscar">Oscar</div>
-						    <div class="player" id="salva">Salva</div>
-						    <div class="player" id="ruben">Ruben</div>
+						    <div class="player" id="ana"><h3 style="color: white;">Ana</h3></div>
+						    <div class="player" id="asun"><h3 style="color: white;">Asun</h3></div>
+						    <div class="player" id="conchi"><h3 style="color: white;">Conchi</h3></div>
+						    <div class="player" id="esther"><h3 style="color: white;">Esther</h3></div>
+						    <div class="player" id="iago"><h3 style="color: white;">Iago</h3></div>
+						    <div class="player" id="irene"><h3 style="color: white;">Irene</h3></div>
+						    <div class="player" id="isa"><h3 style="color: white;">Isa</h3></div>
+						    <div class="player" id="juanma"><h3 style="color: white;">Juanma</h3></div>
+						    <div class="player" id="man"><h3 style="color: white;">Man</h3></div>
+						    <div class="player" id="oscar"><h3 style="color: white;">Oscar</h3></div>
+						    <div class="player" id="salva"><h3 style="color: white;">Salva</h3></div>
+						    <div class="player" id="ruben"><h3 style="color: white;">Ruben</h3></div>
 					    </div>
 					    
 					    <div class="pendiente">
@@ -109,28 +106,6 @@
 								<div class="slot" id="b1">usario 1</div>
 								<div id="play">
 								        <ul id="list1" class="yui3-dd-drop">
-								        <!--  
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_19">Item #1</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_95">Item #2</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_155">Item #3</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_213">Item #4</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_271">Item #5</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_329">Item #6</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_387">Item #7</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_445">Item #8</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_503">Item #9</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_561">Item #10</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_619">Item #11</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_677">Item #12</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_735">Item #13</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_793">Item #14</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_851">Item #15</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_909">Item #16</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_967">Item #17</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1025">Item #18</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1083">Item #19</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1141">Item #20</li>
-								        -->
 								        </ul>
 								</div>
 							</div>
@@ -139,30 +114,6 @@
 								<div class="slot" id="b2">usario 2</div>
 								<div id="play">
 								        <ul id="list2" class="yui3-dd-drop">
-								        
-								        <!--  
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_19">Item #1</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_95">Item #2</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_155">Item #3</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_213">Item #4</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_271">Item #5</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_329">Item #6</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_387">Item #7</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_445">Item #8</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_503">Item #9</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_561">Item #10</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_619">Item #11</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_677">Item #12</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_735">Item #13</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_793">Item #14</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_851">Item #15</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_909">Item #16</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_967">Item #17</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1025">Item #18</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1083">Item #19</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1141">Item #20</li>
-								        -->
-								        
 										</ul>
 								</div>
 							</div>
@@ -171,8 +122,8 @@
 							<div class="carpetas">
 								<div id="play">
 								        <ul id="list3" class="yui3-dd-drop">
-								        	<li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_19">Item #1</li>
-								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_95">Item #2</li>
+								        	<li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_19">#453 <span class="pdfs">Ingresos <strong>50</strong></span></li>
+								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_95">#447 <span class="pdfs"><strong>48</strong></span></li>
 								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_155">Item #3</li>
 								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_213">Item #4</li>
 								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_271">Item #5</li>
@@ -180,7 +131,7 @@
 								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_387">Item #7</li>
 								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_445">Item #8</li>
 								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_503">Item #9</li>
-								            <li class="list3 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_561">Item</li>
+								            <li class="list3 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_561">#465 <span class="pdfs">Ingresos <strong>78</strong></span></li>
 								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_619">Item #11</li>
 								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_677">Item #12</li>
 								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_735">Item #13</li>
@@ -212,41 +163,32 @@
 				
 
 				</div>
-			</div>
+
 
 
 	<script type="text/javascript">
 	
 		YUI().use('dd-drop', 'dd-proxy', 'dd-constrain', function(Y) {
 	
+			var coordOrigen;
+			
 		    var slots = Y.one('#workarea').all('.slot');
+		    
+		    
 		    Y.each(slots, function(v, k) {
-		        var id = v.get('id'), groups = ['two'];
-		        switch (id) {
-		            case 't1':
-		            case 't2':
-		                groups = ['one'];
-		                break;
-		        }
+		        var id = v.get('id'), groups = ['one'];
+
 		        var drop = new Y.DD.Drop({
 		            node: v,
 		            groups: groups
 		        });
 		    });
-	
+			
+			
 		    var players = Y.one('#workarea').all('.player');
 		    Y.each(players, function(v, k) {
-		        var id = v.get('id'), groups = ['one', 'two'];
-		        switch (id) {
-		            case 'pt1':
-		            case 'pt2':
-		                groups = ['one'];
-		                break;
-		            case 'pb1':
-		            case 'pb2':
-		                groups = ['two'];
-		                break;
-		        }
+		        var id = v.get('id'), groups = ['one'];
+
 		        var drag = new Y.DD.Drag({
 		            node: v,
 		            groups: groups
@@ -255,6 +197,7 @@
 		        }).plug(Y.Plugin.DDConstrained, {
 		            constrain2node: '#workarea'
 		        });
+		        
 		        drag.on('drag:start', function() {
 		            var p = this.get('dragNode'),
 		                n = this.get('node');
@@ -268,6 +211,9 @@
 		                color: n.getStyle('color'),
 		                opacity: .65
 		            });
+		            
+		            var xy = this.get('node').getXY();
+		            coordOrigen = xy;
 		        });
 		        drag.on('drag:end', function() {
 		            var n = this.get('node');
@@ -275,12 +221,18 @@
 		        });
 		        drag.on('drag:drophit', function(e) {
 		            var xy = e.drop.get('node').getXY();
-		            this.get('node').setXY(xy, Y.UA.ie);
+		            
+		            this.get('node').setXY(xy);
 		        });
 		        drag.on('drag:dropmiss', function(e) {
 		            if (this._playerStart) {
 		                this.get('node').setXY(this._playerStart, Y.UA.ie);
+		                var con = this.get('node').getXY();
 		                this._playerStart = null;
+		                if(con[0] - coordOrigen[0] == 13){
+		                	this.get('node').setXY(coordOrigen);
+		                }
+		                
 		            }
 		        });
 		    });
