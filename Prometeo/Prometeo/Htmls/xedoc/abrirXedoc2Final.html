@@ -1,0 +1,359 @@
+
+						<div>
+							
+						</div>
+					
+					
+					</div>
+					    
+					    
+					    
+					    
+					    
+					    
+					    
+					    
+					</div>
+				
+
+				</div>
+
+
+
+	<script type="text/javascript">
+	
+		YUI().use('dd-drop', 'dd-proxy', 'dd-constrain', function(Y) {
+	
+			var coordOrigen;
+			var quitarUsuarioLista;
+			
+			
+			var listaA = { usuario: ""};
+			var listaB = { usuario: ""};
+			var listaC = { usuario: ""};
+			
+			
+			var mensajes = document.getElementById('mensajes');
+			var submensajes1 = document.getElementById('listaA');
+			var submensajes2 = document.getElementById('listaB');
+			var submensajes3 = document.getElementById('listaC');
+			
+			var usuario = "";
+			
+		    var slots = Y.one('#workarea').all('.slot');
+		    
+		    
+		    Y.each(slots, function(v, k) {
+		        var id = v.get('id'), groups = ['one'];
+
+		        var drop = new Y.DD.Drop({
+		            node: v,
+		            groups: groups
+		        });
+
+		    });
+			
+			
+		    var players = Y.one('#workarea').all('.player');
+		    Y.each(players, function(v, k) {
+		        var id = v.get('id'), groups = ['one'];
+
+		        var drag = new Y.DD.Drag({
+		            node: v,
+		            groups: groups
+		        }).plug(Y.Plugin.DDProxy, {
+		            moveOnEnd: false
+		        }).plug(Y.Plugin.DDConstrained, {
+		            constrain2node: '#workarea'
+		        });
+		        
+		        drag.on('drag:start', function() {
+		            var p = this.get('dragNode'),
+		                n = this.get('node');
+		                n.setStyle('opacity', .25);
+		                if (!this._playerStart) {
+		                    this._playerStart = this.nodeXY;
+		                }
+		            
+		            var aux = n.get('id');
+		            var aux2 = document.getElementById(aux);
+		            var aux3 = aux2.getElementsByTagName('h3');
+		                
+		            p.set('innerHTML',  n.get('innerHTML') );
+		            p.setStyles({
+		                backgroundColor: n.getStyle('backgroundColor'),
+		                color: n.getStyle('color'),
+		                opacity: .65
+		            });
+		            
+		            var xy = this.get('node').getXY();
+		            coordOrigen = xy;
+		            
+		            mensajes.innerHTML = "Empezó el arrastre";
+		            usuario = aux3[0].id;
+		        });
+		        
+		        drag.on('drag:end', function() {
+		            var n = this.get('node');
+		            n.setStyle('opacity', '1');
+		            var sss = n.get('id');
+		            var clave = sss[1];
+		            clave = 'p' + clave;
+		            document.getElementById('sum1').innerHTML = document.getElementById(clave).innerHTML;
+		            
+		          //  mensajes.innerHTML = "Terminó el arrastre";
+		            
+		        });
+		        
+		        drag.on('drag:drophit', function(e) {
+		        	
+		        	
+		        	var nodus = e.drop.get('node');
+		        	var nodoId = nodus.get('id');
+		        	
+		        	var nodoArrastrado = this.get('node').get('id');
+		            var aux2 = document.getElementById(nodoArrastrado);
+		            var aux3 = aux2.getElementsByTagName('h3');
+		            
+		            var aux4 = document.getElementById('b1');
+		            
+		            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+		            	aux4.innerHTML = 'vacío';
+		            }
+		            
+		            var aux4 = document.getElementById('b2');
+		            
+		            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+		            	aux4.innerHTML = 'vacío';
+		            }
+		            
+		            var aux4 = document.getElementById('b3');
+		            
+		            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+		            	aux4.innerHTML = 'vacío';
+		            }
+		            
+		            
+			            
+		            if(nodoId.indexOf('b1') != -1){
+		            	
+		            	var aux = document.getElementById('b1');
+		            	var auxInner= aux.innerHTML;
+		            	
+		            	if(auxInner.indexOf('vacío') != -1){
+			            	submensajes1.innerHTML = usuario;
+			            	listaA.usuario = usuario;
+			            	aux.innerHTML = usuario;
+			            	
+				            var xy = nodus.getXY();
+				            this.get('node').setXY(xy);
+		            	}
+		            }else if(nodoId.indexOf('b2') != -1){
+		            	var aux = document.getElementById('b2');
+		            	var auxInner= aux.innerHTML;
+		            	
+		            	if(auxInner.indexOf('vacío') != -1){
+			            	submensajes2.innerHTML = usuario;
+			            	listaB.usuario = usuario;
+			            	aux.innerHTML = usuario;
+			            	
+				            var xy = nodus.getXY();
+				            this.get('node').setXY(xy);
+		            	}
+		            }else if(nodoId.indexOf('b3') != -1){
+		            	var aux = document.getElementById('b3');
+		            	var auxInner= aux.innerHTML;
+		            	
+		            	if(auxInner.indexOf('vacío') != -1){
+			            	submensajes3.innerHTML = usuario;
+			            	listaC.usuario = usuario;
+			            	aux.innerHTML = usuario;
+			            	
+				            var xy = nodus.getXY();
+				            this.get('node').setXY(xy);
+		            	}
+		            }
+		            
+
+		            
+		            mensajes.innerHTML = "Arrastre terminado con éxito.";
+		            
+		            
+		         //  	submensajes1.innerHTML = this.get('node').get('innerHTML');
+		         //	submensajes1.innerHTML = nodus.get('innerHTML');
+		        });
+		        
+		        
+		        drag.on('drag:dropmiss', function(e) {
+		            if (this._playerStart) {
+		            	
+		            	
+			            var nodoId = this.get('node').get('id');
+
+			            
+			            var aux2 = document.getElementById(nodoId);
+			            var aux3 = aux2.getElementsByTagName('h3');
+			            
+			            var aux4 = document.getElementById('b1');
+			            
+			            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+			            	aux4.innerHTML = 'vacío';
+			            }
+		            	
+			            var aux4 = document.getElementById('b2');
+			            
+			            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+			            	aux4.innerHTML = 'vacío';
+			            }
+			            
+			            var aux4 = document.getElementById('b3');
+			            
+			            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+			            	aux4.innerHTML = 'vacío';
+			            }
+			            
+		            	
+		                this.get('node').setXY(this._playerStart, Y.UA.ie);
+		                var con = this.get('node').getXY();
+		                this._playerStart = null;
+		                
+		                this.get('node').setStyles(
+								{
+									position : 'relative',
+									left: '0px',
+									top: '0px'
+								});
+		                
+		                mensajes.innerHTML = "Arrastre terminado con fracaso.";
+						
+		            }
+		        });
+		    });
+		});
+	
+	
+	</script>
+
+	<script type="text/javascript">
+		YUI().use(
+				'dd-constrain',
+				'dd-proxy',
+				'dd-drop',
+				'dd-scroll',
+				function(Y) {
+					//Listen for all drop:over events
+					//Y.DD.DDM._debugShim = true;
+
+					Y.DD.DDM.on('drop:over', function(e) {
+						//Get a reference to our drag and drop nodes
+						var drag = e.drag.get('node'), drop = e.drop
+								.get('node');
+
+						//Are we dropping on a li node?
+						if (drop.get('tagName').toLowerCase() === 'li') {
+							//Are we not going up?
+							if (!goingUp) {
+								drop = drop.get('nextSibling');
+							}
+							//Add the node to this list
+							e.drop.get('node').get('parentNode').insertBefore(
+									drag, drop);
+							//Set the new parentScroll on the nodescroll plugin
+							e.drag.nodescroll.set('parentScroll', e.drop.get(
+									'node').get('parentNode'));
+							//Resize this nodes shim, so we can drop on it later.
+							e.drop.sizeShim();
+						}
+					});
+					//Listen for all drag:drag events
+					Y.DD.DDM.on('drag:drag', function(e) {
+						//Get the last y point
+						var y = e.target.lastXY[1];
+						//is it greater than the lastY var?
+						if (y < lastY) {
+							//We are going up
+							goingUp = true;
+						} else {
+							//We are going down.
+							goingUp = false;
+						}
+						//Cache for next check
+						lastY = y;
+						Y.DD.DDM.syncActiveShims(true);
+					});
+					//Listen for all drag:start events
+					Y.DD.DDM.on('drag:start', function(e) {
+						//Get our drag object
+						var drag = e.target;
+						//Set some styles here
+						drag.get('node').setStyle('opacity', '.25');
+						drag.get('dragNode').set('innerHTML',
+								drag.get('node').get('innerHTML'));
+						drag.get('dragNode').setStyles(
+								{
+									opacity : '.5',
+									borderColor : drag.get('node').getStyle(
+											'borderColor'),
+									backgroundColor : drag.get('node')
+											.getStyle('backgroundColor')
+								});
+					});
+					//Listen for a drag:end events
+					Y.DD.DDM.on('drag:end', function(e) {
+						var drag = e.target;
+						//Put our styles back
+						drag.get('node').setStyles({
+							visibility : '',
+							opacity : '1'
+						});
+					});
+					//Listen for all drag:drophit events
+					Y.DD.DDM.on('drag:drophit', function(e) {
+						var drop = e.drop.get('node'), drag = e.drag
+								.get('node');
+
+						//if we are not on an li, we must have been dropped on a ul
+						if (drop.get('tagName').toLowerCase() !== 'li') {
+							if (!drop.contains(drag)) {
+								drop.appendChild(drag);
+								//Set the new parentScroll on the nodescroll plugin
+								e.drag.nodescroll.set('parentScroll', e.drop
+										.get('node'));
+							}
+						}
+					});
+
+					//Static Vars
+					var goingUp = false, lastY = 0;
+
+					//Get the list of li's in the lists and make them draggable
+					var lis = Y.all('.plai ul li');
+					lis.each(function(v, k) {
+						var dd = new Y.DD.Drag({
+							node : v,
+							target : {
+								padding : '0 0 0 20'
+							}
+						}).plug(Y.Plugin.DDProxy, {
+							moveOnEnd : false
+					/*	}).plug(Y.Plugin.DDConstrained, {
+							constrain2node : '.plai'  */
+						}).plug(Y.Plugin.DDNodeScroll, {
+							node : v.get('parentNode')
+						});
+					});
+
+					//Create simple targets for the 2 lists.
+					var uls = Y.all('.plai ul');
+					uls.each(function(v, k) {
+						var tar = new Y.DD.Drop({
+							node : v
+						});
+					});
+
+				});
+	</script>
+
+
+</body>
+</html>

@@ -67,6 +67,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -115,6 +116,10 @@ public class InterfazPrincipal implements MouseListener{
 //	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
 	final String DIR_ABRIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir.html";
 	final String DIR_ABRIR_X = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrirXedoc.html";
+	
+	final String DIR_ABRIR_X1 = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/xedoc/abrirXedoc1Inicio.html";
+	final String DIR_ABRIR_X2 = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/xedoc/abrirXedoc2Final.html";
+	final String DIR_ABRIR_XFINAL = ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrirXedocFinal.html";
 
 	
 	
@@ -347,8 +352,10 @@ public class InterfazPrincipal implements MouseListener{
 						Inicio.xedoc = true;
 						Inicio.carpetaXedocFirmado = true;
 						
+						getHTMLXedoc();
+						
 						webBrowserOperaciones.setVisible(true);
-						webBrowserOperaciones.navigate(DIR_ABRIR_X);
+						webBrowserOperaciones.navigate(Inicio.unidadHDDejecutable + DIR_ABRIR_XFINAL);
 						panelActivo = ABRIR;
 						
 				//		InicioXedoc xedoc = new InicioXedoc();
@@ -1228,6 +1235,21 @@ public class InterfazPrincipal implements MouseListener{
 
 	}
 	
+	public void getHTMLXedoc(){
+		
+		String textoInicial = LeerArchivos.obtenerHtml(DIR_ABRIR_X1);
+		String textoFinal = LeerArchivos.obtenerHtml(DIR_ABRIR_X2);
+		
+		carpeta = new Carpetas(true);
+		
+		String textoCentral;
+		
+		textoCentral = carpeta.getCodigoJavascriptXedoc();
+
+		String htmlCompleto = textoInicial + textoCentral + textoFinal;
+		
+		EscribirArchivos.escribeHtml(htmlCompleto, DIR_ABRIR_XFINAL);
+	}
 	
 
 	/* Standard main method to try that test as a standalone application. */

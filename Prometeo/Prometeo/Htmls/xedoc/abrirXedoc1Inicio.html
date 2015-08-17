@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="utf-8" />
+<title>Abrir carpeta Xedoc</title>
+<link rel="stylesheet" href="css/metro-bootstrap.css">
+<link rel="stylesheet" href="css/iconFont.css">
+<link rel="stylesheet" href="css/drag.css">
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.widget.min.js"></script>
+<script src="js/metro/metro-button-set.js"></script>
+<script src="js/metro/metro.min.js"></script>
+<script src="js/metro/metro-hint.js"></script>
+<script src="js/metro/metro-input-control.js"></script>
+<script src="js/yui-min.js"></script>
+
+<script>
+	function hola(){
+		document.all.ins.click()
+		};
+</script>
+<script type="text/javascript">
+	function inicializa(){
+		var subido = [0,0,20,0,15,0,0,0,30,0,2,0];
+		
+		for(var i=1;i<13;i++){
+			var nid = "p" + i;
+			var nodo = document.getElementById(nid);
+			nodo.innerHTML = subido[i-1];
+		}
+		
+	}
+	</script>
+</head>
+<body class="metro" >  <!-- onload="hola()" onload="inicializa()" -->
+
+				<div class="row" style="margin: 20px auto 40px 10px">	
+					<div class="row" style="float: right; margin-right: 20px;">
+
+							<a class="tile half bg-emerald" title="Subir a Xedoc" href="command://enviarXedoc">
+								<div class="tile-content icon">
+									<i class="icon-upload"></i>
+								</div>
+							</a> 
+
+					</div>
+					
+					
+					<div class="row">
+
+							<h1 class="tile-area-title fg-white" style="float: left; margin: 0 100px 10px 10px; font-size: 40px;">Xedoc</h1>
+				
+							<a class="tile half bg-crimson"  title="actualizar" id="ins" name="prueba" href="command://firmado">
+								<div class="tile-content icon">
+									<i class="icon-cycle"></i>
+								</div>
+							</a>
+	
+					</div>
+					
+					<div class="row">
+
+							<a class="tile half bg-yellow" title="Iniciar Altair" href="command://iniciarXedoc">
+								<div class="tile-content icon">
+									<i class="icon-lightning fg-crimson"></i>
+								</div>
+							</a> 
+							<a class="tile half bg-magenta"  title="Carpeta Xedoc Originales" href="command://carpetaXedocO">
+								<div class="tile-content icon">
+									<i class="icon-basket"></i>
+								</div>
+							</a>
+
+					</div>
+					
+					<br>
+					<span class="fg-white">Documentos totales: <strong class="fg-crimson" id="pdfstotales"> 589</strong></span>
+					<br>
+					<span class="fg-white">Documentos pendientes: <strong class="fg-crimson" id="pdfspendientes"> 209</strong></span>
+					
+
+				</div>
+				
+				
+				
+				<div id="Xedoc">
+				
+					<span id="mensajes" style="color: white; display: block;">Aparecen los mensajes</span>
+					
+					<span id="listaA" style="color: white; display: block;">Vacio</span>
+					<span id="listaB" style="color: white; display: block;">Vacio</span>
+					<span id="listaC" style="color: white; display: block;">Vacio</span>
+									
+					<div id="workarea">
+						<div class="usuarios">
+						    <div class="player" id="u1"><h3 id="Ana" style="color: white;">Ana</h3></div>
+						    <div class="player" id="u2"><h3 id="Asun" style="color: white;">Asun</h3></div>
+						    <div class="player" id="u3"><h3 id="Conchi" style="color: white;">Conchi</h3></div>
+						    <div class="player" id="u4"><h3 id="Esther" style="color: white;">Esther</h3></div>
+						    <div class="player" id="u5"><h3 id="Iago" style="color: white;">Iago</h3></div>
+						    <div class="player" id="u6"><h3 id="Irene" style="color: white;">Irene</h3></div>
+						    <div class="player" id="u7"><h3 id="Isa" style="color: white;">Isa</h3></div>
+						    <div class="player" id="u8"><h3 id="Juanma" style="color: white;">Juanma</h3></div>
+						    <div class="player" id="u9"><h3 id="Man" style="color: white;">Man</h3></div>
+						    <div class="player" id="u10"><h3 id="Oscar" style="color: white;">Oscar</h3></div>
+						    <div class="player" id="u11"><h3 id="Salva" style="color: white;">Salva</h3></div>
+						    <div class="player" id="u12"><h3 id="Ruben" style="color: white;">Ruben</h3></div>
+					    </div>
+					    
+					    <div class="pendiente">
+						    <div class="Pend" id="p1">0</div>
+						    <div class="Pend" id="p2">10</div>
+						    <div class="Pend" id="p3">0</div>
+						    <div class="Pend" id="p4">30</div>
+						    <div class="Pend" id="p5">0</div>
+						    <div class="Pend" id="p6">15</div>
+						    <div class="Pend" id="p7">0</div>
+						    <div class="Pend" id="p8">0</div>
+						    <div class="Pend" id="p9">21</div>
+						    <div class="Pend" id="p10">9</div>
+						    <div class="Pend" id="p11">0</div>
+						    <div class="Pend" id="p12">0</div>
+					    </div>
+					    
+					    
+					    <div class="areaTrabajo">
+
+							<div class= "col">
+								<div class="slot" id="b1">vacío</div>
+								<div class="suma"><strong id="sum1">55</strong> pdfs.</div>
+								<div id="play" class="plai">
+								        <ul id="list1" class="yui3-dd-drop">
+								        </ul>
+								</div>
+							</div>
+							
+							<div class="col">
+								<div class="slot" id="b2">vacío</div>
+								<div class="suma"><strong id="sum2">55</strong> pdfs.</div>
+								<div id="play1" class="plai">
+								        <ul id="list2" class="yui3-dd-drop">
+										</ul>
+								</div>
+							</div>
+	
