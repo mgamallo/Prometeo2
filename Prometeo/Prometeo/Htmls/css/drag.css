@@ -20,7 +20,7 @@ body{
     top: 150px; 
     z-index: 0;
     padding: 16px 0 0 0;
-
+	float: left;
 }
 
 
@@ -67,41 +67,41 @@ body{
     top: 50px;
 }
 
-#ana{
+#u1{
 	background-color: #16A086;
 }
 
-#asun{
+#u2{
 	background-color: #1BBC9B;
 }
-#conchi{
+#u3{
 	background-color: #2DCC70;
 }
-#esther{
+#u4{
 	background-color: #27AE61;
 }
-#iago{
+#u5{
 	background-color: #9A59B5;
 }
-#irene{
+#u6{
 	background-color: #8D44AD;
 }
-#isa{
+#u7{
 	background-color: #34495E;
 }
-#juanma{
+#u8{
 	background-color: #2D3E50;
 }
-#oscar{
+#u9{
 	background-color: #E67F22;
 }
-#salva{
+#u10{
 	background-color: #D25400;
 }
-#ruben{
+#u11{
 	background-color: #E84C3D;
 }
-#man{
+#u12{
 	background-color: #C1392B;
 }
 
@@ -133,10 +133,10 @@ body{
     
 }
 #workarea .yui3-dd-drop-active-valid {
-    border: 2px solid green;
+    border: 2px solid #d5ffd5;
 }
 #workarea .yui3-dd-drop-over {
-    background-color: green;
+    background-color: #d5ffd5;
 }
 #workarea .yui3-dd-drop-active-invalid {
     border: 2px solid red;
@@ -165,8 +165,18 @@ body{
 	/* border: 1px solid black;  */
 }
 
+.suma{
+	float: left;
+	margin-top: 40px;
+	margin-left: 10px;
+}
 
-#play ul {
+.plai{
+	float: left;
+	clear: both;
+}
+
+.plai ul {
     /* Snipped */
     overflow: auto;
 }
@@ -174,13 +184,14 @@ body{
     .yui3-dd-proxy {
         text-align: left;
     }
-    #play {
+    .plai {
       /*   padding: 10px;
         margin: 10px; 
         zoom: 1;  */
+        border-top: 2px solid #dad7d6;
     }
-    #play:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
-    #play ul {
+    .plai:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
+    .plai ul {
       /*  border: 1px solid black; */
         width: 210px;
         height: 800px;
@@ -190,7 +201,7 @@ body{
         position: relative;
         overflow: auto;
     }
-    #play ul li {
+    .plai ul li {
         background-image: none;
         list-style-type: none;
         padding-left: 20px;
@@ -200,17 +211,17 @@ body{
         zoom: 1;
         position: relative;
     }
-    #play ul li.list1 {
+    .plai ul li.list1 {
         background-color: #00b9b9;
         border:1px solid #004C6D; 
         width: 200px;
     }
-    #play ul li.list2 {
+    .plai ul li.list2 {
         background-color: #00b9b9;
         border:1px solid #004C6D;
         width: 150px;
     }
-    #play ul li.list3 {
+    .plai ul li.list3 {
         background-color: #00b9b9;
         border:1px solid #004C6D;
         width: 175px;

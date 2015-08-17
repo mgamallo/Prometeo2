@@ -16,14 +16,25 @@
 <script src="js/yui-min.js"></script>
 
 <script>function hola(){document.all.ins.click()};</script>
-
+<script type="text/javascript">
+	function inicializa(){
+		var subido = [0,0,20,0,15,0,0,0,30,0,2,0];
+		
+		for(var i=1;i<13;i++){
+			var nid = "p" + i;
+			var nodo = document.getElementById(nid);
+			nodo.innerHTML = subido[i-1];
+		}
+		
+	}
+	</script>
 </head>
-<body class="metro" >  <!-- onload="hola()" -->
+<body class="metro" onload="inicializa()">  <!-- onload="hola()" -->
 
 				<div class="row" style="margin: 20px auto 40px 10px">	
 					<div class="row" style="float: right; margin-right: 20px;">
 
-							<a class="tile half bg-emerald" title="Menu abrir" href="command://abrir">
+							<a class="tile half bg-emerald" title="Enviar a Xedoc" href="command://enviarXedoc">
 								<div class="tile-content icon">
 									<i class="icon-upload"></i>
 								</div>
@@ -67,52 +78,63 @@
 
 				</div>
 				
+				
+				
 				<div id="Xedoc">
+				
+					<span id="mensajes" style="color: white; display: block;">Aparecen los mensajes</span>
+					
+					<span id="listaA" style="color: white; display: block;">Vacio</span>
+					<span id="listaB" style="color: white; display: block;">Vacio</span>
+					<span id="listaC" style="color: white; display: block;">Vacio</span>
+									
 					<div id="workarea">
 						<div class="usuarios">
-						    <div class="player" id="ana"><h3 style="color: white;">Ana</h3></div>
-						    <div class="player" id="asun"><h3 style="color: white;">Asun</h3></div>
-						    <div class="player" id="conchi"><h3 style="color: white;">Conchi</h3></div>
-						    <div class="player" id="esther"><h3 style="color: white;">Esther</h3></div>
-						    <div class="player" id="iago"><h3 style="color: white;">Iago</h3></div>
-						    <div class="player" id="irene"><h3 style="color: white;">Irene</h3></div>
-						    <div class="player" id="isa"><h3 style="color: white;">Isa</h3></div>
-						    <div class="player" id="juanma"><h3 style="color: white;">Juanma</h3></div>
-						    <div class="player" id="man"><h3 style="color: white;">Man</h3></div>
-						    <div class="player" id="oscar"><h3 style="color: white;">Oscar</h3></div>
-						    <div class="player" id="salva"><h3 style="color: white;">Salva</h3></div>
-						    <div class="player" id="ruben"><h3 style="color: white;">Ruben</h3></div>
+						    <div class="player" id="u1"><h3 id="Ana" style="color: white;">Ana</h3></div>
+						    <div class="player" id="u2"><h3 id="Asun" style="color: white;">Asun</h3></div>
+						    <div class="player" id="u3"><h3 id="Conchi" style="color: white;">Conchi</h3></div>
+						    <div class="player" id="u4"><h3 id="Esther" style="color: white;">Esther</h3></div>
+						    <div class="player" id="u5"><h3 id="Iago" style="color: white;">Iago</h3></div>
+						    <div class="player" id="u6"><h3 id="Irene" style="color: white;">Irene</h3></div>
+						    <div class="player" id="u7"><h3 id="Isa" style="color: white;">Isa</h3></div>
+						    <div class="player" id="u8"><h3 id="Juanma" style="color: white;">Juanma</h3></div>
+						    <div class="player" id="u9"><h3 id="Man" style="color: white;">Man</h3></div>
+						    <div class="player" id="u10"><h3 id="Oscar" style="color: white;">Oscar</h3></div>
+						    <div class="player" id="u11"><h3 id="Salva" style="color: white;">Salva</h3></div>
+						    <div class="player" id="u12"><h3 id="Ruben" style="color: white;">Ruben</h3></div>
 					    </div>
 					    
 					    <div class="pendiente">
-						    <div class="Pend" id="anaP">0</div>
-						    <div class="Pend" id="asunP">1</div>
-						    <div class="Pend" id="conchiP">2</div>
-						    <div class="Pend" id="estherP">3</div>
-						    <div class="Pend" id="iagoP">4</div>
-						    <div class="Pend" id="ireneP">5</div>
-						    <div class="Pend" id="isaP">6</div>
-						    <div class="Pend" id="juanmaP">7</div>
-						    <div class="Pend" id="manP">8</div>
-						    <div class="Pend" id="oscarP">9</div>
-						    <div class="Pend" id="salvaP">10</div>
-						    <div class="Pend" id="rubenP">11</div>
+						    <div class="Pend" id="p1">0</div>
+						    <div class="Pend" id="p2">10</div>
+						    <div class="Pend" id="p3">0</div>
+						    <div class="Pend" id="p4">30</div>
+						    <div class="Pend" id="p5">0</div>
+						    <div class="Pend" id="p6">15</div>
+						    <div class="Pend" id="p7">0</div>
+						    <div class="Pend" id="p8">0</div>
+						    <div class="Pend" id="p9">21</div>
+						    <div class="Pend" id="p10">9</div>
+						    <div class="Pend" id="p11">0</div>
+						    <div class="Pend" id="p12">0</div>
 					    </div>
 					    
 					    
 					    <div class="areaTrabajo">
 
 							<div class= "col">
-								<div class="slot" id="b1">usario 1</div>
-								<div id="play">
+								<div class="slot" id="b1">vacío</div>
+								<div class="suma"><strong id="sum1">55</strong> pdfs.</div>
+								<div id="play" class="plai">
 								        <ul id="list1" class="yui3-dd-drop">
 								        </ul>
 								</div>
 							</div>
 							
 							<div class="col">
-								<div class="slot" id="b2">usario 2</div>
-								<div id="play">
+								<div class="slot" id="b2">vacío</div>
+								<div class="suma"><strong id="sum2">55</strong> pdfs.</div>
+								<div id="play1" class="plai">
 								        <ul id="list2" class="yui3-dd-drop">
 										</ul>
 								</div>
@@ -120,28 +142,30 @@
 	
 	
 							<div class="carpetas">
-								<div id="play">
+								<div class="slot" id="b3">vacío</div>
+								<div class="suma"><strong id="sum3">5</strong> pdfs.</div>
+								<div id="play2" class="plai">
 								        <ul id="list3" class="yui3-dd-drop">
-								        	<li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_19">#453 <span class="pdfs">Ingresos <strong>50</strong></span></li>
-								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_95">#447 <span class="pdfs"><strong>48</strong></span></li>
-								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_155">Item #3</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_213">Item #4</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_271">Item #5</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_329">Item #6</li>
-								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_387">Item #7</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_445">Item #8</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_503">Item #9</li>
-								            <li class="list3 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_561">#465 <span class="pdfs">Ingresos <strong>78</strong></span></li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_619">Item #11</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_677">Item #12</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_735">Item #13</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_793">Item #14</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_851">Item #15</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_909">Item #16</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_967">Item #17</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1025">Item #18</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1083">Item #19</li>
-								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="yui_3_18_1_1_1439545718854_1141">Item #20</li>
+								        	<li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf01">#453 <span class="pdfs">Ingresos <strong>50</strong></span></li>
+								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="pdf02">#447 <span class="pdfs"><strong>48</strong></span></li>
+								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="pdf03">Item #3</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf04">Item #4</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf05">Item #5</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf06">Item #6</li>
+								            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="pdf07">Item #7</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf08">Item #8</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf09">Item #9</li>
+								            <li class="list3 yui3-dd-drop yui3-dd-draggable" id="pdf10">#465 <span class="pdfs">Ingresos <strong>78</strong></span></li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf11">Item #11</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf12">Item #12</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf13">Item #13</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf14">Item #14</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf15">Item #15</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf16">Item #16</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf17">Item #17</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf18">Item #18</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf19">Item #19</li>
+								            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf20">Item #20</li>
 								        </ul>
 								</div>
 							</div>
@@ -171,6 +195,20 @@
 		YUI().use('dd-drop', 'dd-proxy', 'dd-constrain', function(Y) {
 	
 			var coordOrigen;
+			var quitarUsuarioLista;
+			
+			
+			var listaA = { usuario: ""};
+			var listaB = { usuario: ""};
+			var listaC = { usuario: ""};
+			
+			
+			var mensajes = document.getElementById('mensajes');
+			var submensajes1 = document.getElementById('listaA');
+			var submensajes2 = document.getElementById('listaB');
+			var submensajes3 = document.getElementById('listaC');
+			
+			var usuario = "";
 			
 		    var slots = Y.one('#workarea').all('.slot');
 		    
@@ -182,6 +220,7 @@
 		            node: v,
 		            groups: groups
 		        });
+
 		    });
 			
 			
@@ -205,7 +244,12 @@
 		                if (!this._playerStart) {
 		                    this._playerStart = this.nodeXY;
 		                }
-		            p.set('innerHTML', n.get('innerHTML'));
+		            
+		            var aux = n.get('id');
+		            var aux2 = document.getElementById(aux);
+		            var aux3 = aux2.getElementsByTagName('h3');
+		                
+		            p.set('innerHTML',  n.get('innerHTML') );
 		            p.setStyles({
 		                backgroundColor: n.getStyle('backgroundColor'),
 		                color: n.getStyle('color'),
@@ -214,25 +258,138 @@
 		            
 		            var xy = this.get('node').getXY();
 		            coordOrigen = xy;
+		            
+		            mensajes.innerHTML = "Empezó el arrastre";
+		            usuario = aux3[0].id;
 		        });
+		        
 		        drag.on('drag:end', function() {
 		            var n = this.get('node');
 		            n.setStyle('opacity', '1');
-		        });
-		        drag.on('drag:drophit', function(e) {
-		            var xy = e.drop.get('node').getXY();
+		            var sss = n.get('id');
+		            var clave = sss[1];
+		            clave = 'p' + clave;
+		            document.getElementById('sum1').innerHTML = document.getElementById(clave).innerHTML;
 		            
-		            this.get('node').setXY(xy);
+		          //  mensajes.innerHTML = "Terminó el arrastre";
+		            
 		        });
+		        
+		        drag.on('drag:drophit', function(e) {
+		        	
+		        	
+		        	var nodus = e.drop.get('node');
+		        	var nodoId = nodus.get('id');
+		        	
+		            
+		            
+		            
+		            
+
+	
+		            
+			            
+		            if(nodoId.indexOf('b1') != -1){
+		            	
+		            	var aux = document.getElementById('b1');
+		            	var auxInner= aux.innerHTML;
+		            	
+		            	if(auxInner.indexOf('vacío') != -1){
+			            	submensajes1.innerHTML = usuario;
+			            	listaA.usuario = usuario;
+			            	aux.innerHTML = usuario;
+			            	
+				            var xy = nodus.getXY();
+				            this.get('node').setXY(xy);
+		            	}
+		            }else if(nodoId.indexOf('b2') != -1){
+		            	var aux = document.getElementById('b2');
+		            	var auxInner= aux.innerHTML;
+		            	
+		            	if(auxInner.indexOf('vacío') != -1){
+			            	submensajes2.innerHTML = usuario;
+			            	listaB.usuario = usuario;
+			            	aux.innerHTML = usuario;
+			            	
+				            var xy = nodus.getXY();
+				            this.get('node').setXY(xy);
+		            	}
+		            }else if(nodoId.indexOf('b3') != -1){
+		            	var aux = document.getElementById('b3');
+		            	var auxInner= aux.innerHTML;
+		            	
+		            	if(auxInner.indexOf('vacío') != -1){
+			            	submensajes3.innerHTML = usuario;
+			            	listaC.usuario = usuario;
+			            	aux.innerHTML = usuario;
+			            	
+				            var xy = nodus.getXY();
+				            this.get('node').setXY(xy);
+		            	}
+		            }
+		            
+
+		            
+		            mensajes.innerHTML = "Arrastre terminado con éxito.";
+		            
+		            
+		         //  	submensajes1.innerHTML = this.get('node').get('innerHTML');
+		         //	submensajes1.innerHTML = nodus.get('innerHTML');
+		        });
+		        
+		        
 		        drag.on('drag:dropmiss', function(e) {
 		            if (this._playerStart) {
+		            	
+		            	
+			            var nodoId = this.get('node').get('id');
+
+			            
+			            var aux2 = document.getElementById(nodoId);
+			            var aux3 = aux2.getElementsByTagName('h3');
+			            
+			            var aux4 = document.getElementById('b1');
+			            
+			            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+			            	aux4.innerHTML = 'vacío';
+			            }
+		            	
+			            var aux4 = document.getElementById('b2');
+			            
+			            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+			            	aux4.innerHTML = 'vacío';
+			            }
+			            
+			            var aux4 = document.getElementById('b3');
+			            
+			            if(aux4.innerHTML.indexOf(aux3[0].id) != -1){
+			            	aux4.innerHTML = 'vacío';
+			            }
+			            
+		            	/*
+		            	var aux0 = this.get('node');
+		            	var pos = aux0.getStyle('position');
+		            	var top = aux0.getStyle('top');
+		            	var left = aux0.getStyle('left');
+		            
+		            	
+		            	alert(pos + ' ' + top + ' ' + left);
+		            	
+						*/
+		            	
 		                this.get('node').setXY(this._playerStart, Y.UA.ie);
 		                var con = this.get('node').getXY();
 		                this._playerStart = null;
-		                if(con[0] - coordOrigen[0] == 13){
-		                	this.get('node').setXY(coordOrigen);
-		                }
 		                
+		                this.get('node').setStyles(
+								{
+									position : 'relative',
+									left: '0px',
+									top: '0px'
+								});
+		                
+		                mensajes.innerHTML = "Arrastre terminado con fracaso.";
+						
 		            }
 		        });
 		    });
@@ -334,7 +491,7 @@
 					var goingUp = false, lastY = 0;
 
 					//Get the list of li's in the lists and make them draggable
-					var lis = Y.all('#play ul li');
+					var lis = Y.all('.plai ul li');
 					lis.each(function(v, k) {
 						var dd = new Y.DD.Drag({
 							node : v,
@@ -343,15 +500,15 @@
 							}
 						}).plug(Y.Plugin.DDProxy, {
 							moveOnEnd : false
-						}).plug(Y.Plugin.DDConstrained, {
-							constrain2node : '#play'
+					/*	}).plug(Y.Plugin.DDConstrained, {
+							constrain2node : '.plai'  */
 						}).plug(Y.Plugin.DDNodeScroll, {
 							node : v.get('parentNode')
 						});
 					});
 
 					//Create simple targets for the 2 lists.
-					var uls = Y.all('#play ul');
+					var uls = Y.all('.plai ul');
 					uls.each(function(v, k) {
 						var tar = new Y.DD.Drop({
 							node : v
