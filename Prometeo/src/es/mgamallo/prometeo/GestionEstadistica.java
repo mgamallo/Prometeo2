@@ -304,6 +304,7 @@ public class GestionEstadistica {
 		FechaGraficos f = new FechaGraficos(cadenaFecha);
 		cadenaFecha = f.dia + " de " + f.mes + " de " + f.año; 
 		
+		System.out.println(cadenaFecha);
 		
 		String cadena01 = ""
 				+ ""
@@ -1449,6 +1450,8 @@ class FechaGraficos{
 	}
 	
 	private String getNombreMes(int mes){
+		
+		mes--;
 		
 		String nombre = "";
 		

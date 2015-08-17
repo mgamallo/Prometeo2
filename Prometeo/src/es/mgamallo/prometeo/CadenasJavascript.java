@@ -270,6 +270,64 @@ public class CadenasJavascript {
 		
 		return cadena;
 	}
+	
+	
+	static public String getCarpetasXedoc(boolean firmado, boolean libres, ArrayList<Directorio> carpetas, int numeroPdfsTotales){
+	
+		String cadena = ""
+				+ "<div class='carpetas'>"
+				+ "<div class='slot' id='b3'>vacío</div>"
+				+ "<div class='suma'><strong id='sum3'>" +  numeroPdfsTotales + "</strong> pdfs.</div>"
+				+ "<div id='play2' class='plai'>"
+				+ "<ul id='list3' class='yui3-dd-drop'>"
+				+ "";
+		
+		System.out.println(cadena);
+		System.out.println(carpetas.size());
+		
+		for(int i=0;i<carpetas.size();i++){
+			
+			int numPdfs = carpetas.get(i).numeroPdfs;
+			String tipoLista = "";
+			String servicioRecortado = "";
+			if(numPdfs < 10){
+				tipoLista = "list2";
+				int tam = carpetas.get(i).servicio.length();
+				if(tam > 10){
+					tam = 11;
+				}
+				servicioRecortado = carpetas.get(i).servicio.substring(0,tam);
+			}else if(numPdfs <20){
+				tipoLista = "list3";
+				int tam = carpetas.get(i).servicio.length();
+				if(tam > 15){
+					tam = 16;
+				}
+				servicioRecortado = carpetas.get(i).servicio.substring(0,tam);
+			}else{
+				tipoLista = "list3";
+				int tam = carpetas.get(i).servicio.length();
+				if(tam > 20){
+					tam = 21;
+				}
+				servicioRecortado = carpetas.get(i).servicio.substring(0,tam);
+			}
+			
+			String lista = ""
+					+ "<li class='" + tipoLista + " yi3-dd-drop yui3-dd-draggable' id='pdf" + i + "'>"
+							+ carpetas.get(i).numCarpeta + "<span class='pdfs'> " + servicioRecortado
+							+ "<strong> " + carpetas.get(i).numeroPdfs + "</strong></span></li>"
+					+ "";
+			
+			System.out.println(lista);
+			
+			cadena = cadena + lista;
+		}
+		
+		
+		return cadena;
+	}
+	
 
 	static public final String introducirUsuario(Usuario usuario){
 		

@@ -107,13 +107,14 @@ public class InterfazPrincipal implements MouseListener{
 	public boolean abracadabra = false;
 	
 	final String CUADRANTE_ARCHIVO = "http://cuadrantearchivo.appspot.com/";
+	final String ERROR_CUADRANTE = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/errorXedoc.html";
 	
 	final String DIR_CONTROL = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/control/control.html";
 	final String DIR_OPERACIONES = Inicio.unidadHDDejecutable + ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html";
 
 //	final String DIR_ABRIR = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir/abrir.html";
 	final String DIR_ABRIR = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrir.html";
-	final String DIR_ABRIR_X = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrirXedoc2.html";
+	final String DIR_ABRIR_X = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrirXedoc.html";
 
 	
 	
@@ -347,7 +348,7 @@ public class InterfazPrincipal implements MouseListener{
 						Inicio.carpetaXedocFirmado = true;
 						
 						webBrowserOperaciones.setVisible(true);
-						webBrowserOperaciones.navigate(DIR_ABRIR);
+						webBrowserOperaciones.navigate(DIR_ABRIR_X);
 						panelActivo = ABRIR;
 						
 				//		InicioXedoc xedoc = new InicioXedoc();
@@ -407,9 +408,14 @@ public class InterfazPrincipal implements MouseListener{
 */						
 					}
 					else if(command.equals("cuadrantearchivo")){
-						// webBrowserOperaciones.navigate(CUADRANTE_ARCHIVO);
-						webBrowserOperaciones.navigate(DIR_ABRIR_X);
-						maximizada = Pantalla.maximizar(frame);
+						if(!Inicio.usuarioLogeadoWindows.equals("cahcpon")){
+							webBrowserOperaciones.navigate(CUADRANTE_ARCHIVO);
+							maximizada = Pantalla.maximizar(frame);
+						}
+						else{
+							
+						}
+						
 					}
 			/*		else if(command.equals("cargarEstadisticas")){
 				*/		
@@ -688,7 +694,14 @@ public class InterfazPrincipal implements MouseListener{
 						
 						carpeta = new Carpetas(true);
 						
-						String codigoCarpetasmetro = carpeta.getCodigoJavascript();
+						String codigoCarpetasmetro;
+						
+						if(!Inicio.carpetaXedocFirmado){
+							codigoCarpetasmetro = carpeta.getCodigoJavascript();
+						}
+						else{
+							codigoCarpetasmetro = carpeta.getCodigoJavascriptXedoc();
+						}
 						
 						String tipoCarpeta = "Firmado";
 						if(Inicio.carpetaDudas){
@@ -699,21 +712,42 @@ public class InterfazPrincipal implements MouseListener{
 							 tipoCarpeta = "Xedoc";
 						}
 						
-						codigoCarpetasmetro = 	""
-								+ "document.getElementById('firmado').innerHTML = '" + tipoCarpeta + "';" + LS +
-								 "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
-								 "document.getElementById('pdfspendientes').innerHTML='" + carpeta.numeroPdfsPendientes + "';" + LS +
-								 "var oldNodo = document.getElementById('nuevo');" + LS +
-								 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
-								 "var nodo = document.createElement('div');" + LS +
-												"nodo.id='nuevo';" + LS + 
-												"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
-												"var contenedor = document.getElementById('insertar');" + LS +
-												"contenedor.appendChild(nodo);" + 
-												"";// <a href='#' >holaaaa</a>";
+						if(!Inicio.carpetaXedocFirmado){
+							codigoCarpetasmetro = 	""
+									
+									+ "document.getElementById('firmado').innerHTML = '" + tipoCarpeta + "';" + LS +
+									 "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
+									 "document.getElementById('pdfspendientes').innerHTML='" + carpeta.numeroPdfsPendientes + "';" + LS +
+									 "var oldNodo = document.getElementById('nuevo');" + LS +
+									 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+									 "var nodo = document.createElement('div');" + LS +
+													"nodo.id='nuevo';" + LS + 
+													"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
+													"var contenedor = document.getElementById('insertar');" + LS +
+													"contenedor.appendChild(nodo);" + 
+													"";// <a href='#' >holaaaa</a>";
+						}
+						else{
+							codigoCarpetasmetro = ""
+
+									+ "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
+									"var oldNodo = document.getElementById('nuevo');" + LS +
+									"if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+									"var nodo = document.createElement('div');" + LS +
+													"nodo.id='nuevo';" + LS + 
+													"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
+													"var contenedor = document.getElementById('insertar');" + LS +
+													"contenedor.appendChild(nodo);" + LS +
+													"";// <a href='#' >holaaaa</a>";
+									
+						}
 					
+						System.out.println(codigoCarpetasmetro);
 						
 						webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
+						
+						
+						
 					}
 					if(command.contains("carpeta_")){
 						if(!Inicio.carpetaXedocFirmado){

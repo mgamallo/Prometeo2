@@ -96,15 +96,23 @@ public class Carpetas {
 			if(conjuntoCarpetas[i].usuario.length() == 0){
 				numeroPdfsPendientes += conjuntoCarpetas[i].numeroPdfs;
 			}
-			System.out.println(conjuntoCarpetas[i].directorio.getName());
-			System.out.println(conjuntoCarpetas[i].numeroPdfs);
+			System.out.println("A      " + conjuntoCarpetas[i].directorio.getName());
+			System.out.println("B      " + conjuntoCarpetas[i].numeroPdfs);
 		}
 		
 		System.out.println();
 
-		ordenaCarpetas();
+		if(!Inicio.carpetaXedocFirmado){
+			ordenaCarpetas();
+			getCodigoJavascript();
+		}
+		else{
+			ordenaCarpetas();
+			getCodigoJavascriptXedoc();
+		}
 		
-		getCodigoJavascript();
+		
+		
 		
 	//	System.out.println("Html creado...");
 		
@@ -115,6 +123,12 @@ public class Carpetas {
 	public String getCodigoJavascript(){
 		return CadenasJavascript.getCarpetas(true, false, arrayCarpetas);
 	}
+	
+	public String getCodigoJavascriptXedoc(){
+		System.out.println("Entramos en el metodo de javascript");
+		return CadenasJavascript.getCarpetasXedoc(true, false, arrayCarpetas, numeroPdfsTotales);
+	}
+	
 	
 	private void ordenaCarpetas(){
 		
@@ -476,9 +490,10 @@ class Directorio{
 			// servicio = "ANRC";
 			color = "bg-lightRed";
 		}
-		else if(cadena.contains("car")){
+		else if(cadena.toLowerCase().contains("car") || cadena.toLowerCase().contains("ekg") 
+				|| cadena.toLowerCase().contains("ecg") ){
 			// servicio = "CARC";
-			color = "bg-red";
+			color = "bg-lightRed";
 		}
 		else if(cadena.contains("cons")){
 			// servicio = "Consentimientos";
@@ -492,7 +507,7 @@ class Directorio{
 			// servicio = cadena.toUpperCase();
 			color = colorFinal;
 		}
-		if(cadena.toLowerCase().contains("urg")){
+		if(cadena.toLowerCase().contains("urg") || cadena.toLowerCase().contains("urx")){
 			// servicio = " urg.";
 			color = "bg-lightRed";
 		}

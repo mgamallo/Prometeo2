@@ -231,8 +231,13 @@ ul li{
 }
 
 .pdfs{
-	float: right;
+	
 	font-size: small;
 	color: white;
+}
+
+.pdfs strong{
+	float: right; 
+	color: black;
 }
 
