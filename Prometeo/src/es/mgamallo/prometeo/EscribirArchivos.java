@@ -9,6 +9,8 @@ public class EscribirArchivos {
 		FileWriter fichero = null;
 		PrintWriter pw = null;
 		
+		System.out.println(ruta);
+		
 		try {
 			// fichero = new FileWriter("d:/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/usuariosSesion.html");
 			fichero = new FileWriter(Inicio.unidadHDDejecutable + ruta );

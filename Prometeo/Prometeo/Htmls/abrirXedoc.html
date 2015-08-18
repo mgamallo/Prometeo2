@@ -17,7 +17,8 @@
 
 <script>
 	function hola(){
-		document.all.ins.click()
+		//document.all.ins.click()
+		document.all.ocultar.click()
 		};
 </script>
 <script type="text/javascript">
@@ -32,8 +33,9 @@
 		
 	}
 	</script>
+	
 </head>
-<body class="metro" onload="hola()">  <!--  onload="inicializa()" -->
+<body class="metro" onload="hola()" >  <!--  onload="inicializa()" -->
 
 				<div class="row" style="margin: 20px auto 40px 10px">	
 					<div class="row" style="float: right; margin-right: 20px;">
@@ -51,7 +53,7 @@
 
 							<h1 class="tile-area-title fg-white" style="float: left; margin: 0 100px 10px 10px; font-size: 40px;">Xedoc</h1>
 				
-							<a class="tile half bg-crimson"  title="actualizar" id="ins" name="prueba" href="command://firmado">
+							<a class="tile half bg-crimson"  title="actualizar" id="ins" name="prueba" href="javascript:location.reload();">
 								<div class="tile-content icon">
 									<i class="icon-cycle"></i>
 								</div>
@@ -75,9 +77,11 @@
 					</div>
 					
 					<br>
+					<a id='ocultar' href="command://firmado"></a>
+					<br>
 					<span class="fg-white">Documentos totales: <strong class="fg-crimson" id="pdfstotales"> 589</strong></span>
 					<br>
-					<span class="fg-white">Documentos pendientes: <strong class="fg-crimson" id="pdfspendientes"> 209</strong></span>
+				<!--  	<span class="fg-white">Documentos pendientes: <strong class="fg-crimson" id="pdfspendientes"> 209</strong></span> -->
 					
 
 				</div>
@@ -85,12 +89,13 @@
 				
 				
 				<div id="Xedoc">
-				
+					<!--  
 					<span id="mensajes" style="color: white; display: block;">Aparecen los mensajes</span>
 					
 					<span id="listaA" style="color: white; display: block;">Vacio</span>
 					<span id="listaB" style="color: white; display: block;">Vacio</span>
 					<span id="listaC" style="color: white; display: block;">Vacio</span>
+					-->
 									
 					<div id="workarea">
 						<div class="usuarios">
@@ -128,7 +133,7 @@
 
 							<div class= "col">
 								<div class="slot" id="b1">vacío</div>
-								<div class="suma"><strong id="sum1">55</strong> pdfs.</div>
+								<div class="suma"><strong id="sum1">0</strong> pdfs.</div>
 								<div id="play" class="plai">
 								        <ul id="list1" class="yui3-dd-drop">
 								        </ul>
@@ -137,48 +142,64 @@
 							
 							<div class="col">
 								<div class="slot" id="b2">vacío</div>
-								<div class="suma"><strong id="sum2">55</strong> pdfs.</div>
+								<div class="suma"><strong id="sum2">0</strong> pdfs.</div>
 								<div id="play1" class="plai">
 								        <ul id="list2" class="yui3-dd-drop">
 										</ul>
 								</div>
 							</div>
-	
-							<div id="insertar">
 							
-								<!--  
+								 
 								<div class="carpetas">
 									
 									<div class="slot" id="b3">vacío</div>
-									<div class="suma"><strong id="sum3">5</strong> pdfs.</div>
+									<div class="suma"><strong id="sum3">0</strong> pdfs.</div>
 									<div id="play2" class="plai">
 									        <ul id="list3" class="yui3-dd-drop">
-									        	<li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf01">#453 <span class="pdfs">Ingresos <strong>50</strong></span></li>
-									            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="pdf02">#447 <span class="pdfs"><strong>48</strong></span></li>
-									            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="pdf03">Item #3</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf04">Item #4</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf05">Item #5</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf06">Item #6</li>
-									            <li class="list2 yui3-dd-drop yui3-dd-draggable" id="pdf07">Item #7</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf08">Item #8</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf09">Item #9</li>
-									            <li class="list3 yui3-dd-drop yui3-dd-draggable" id="pdf10">#465 <span class="pdfs">Ingresos <strong>78</strong></span></li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf11">Item #11</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf12">Item #12</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf13">Item #13</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf14">Item #14</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf15">Item #15</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf16">Item #16</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf17">Item #17</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf18">Item #18</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf19">Item #19</li>
-									            <li class="list1 yui3-dd-drop yui3-dd-draggable" id="pdf20">Item #20</li>
+									        	<li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf1"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf2"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf3"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf4"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf5"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf6"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf7"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf8"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf9"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf10"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf11"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf12"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf13"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf14"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf15"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf16"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf17"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf18"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf19"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf20"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf21"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf22"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf23"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf24"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf25"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf26"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf27"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf28"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf29"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf30"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf31"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf32"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf33"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf34"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf35"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf36"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf37"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf38"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf39"></li>
+									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf40"></li>
 									        </ul>
 									</div>
 								</div>
-								-->
-								
-							</div>
+
 						<div>
 							
 						</div>
@@ -208,15 +229,6 @@
 			var quitarUsuarioLista;
 			
 			
-			var listaA = { usuario: ""};
-			var listaB = { usuario: ""};
-			var listaC = { usuario: ""};
-			
-			
-			var mensajes = document.getElementById('mensajes');
-			var submensajes1 = document.getElementById('listaA');
-			var submensajes2 = document.getElementById('listaB');
-			var submensajes3 = document.getElementById('listaC');
 			
 			var usuario = "";
 			
@@ -268,8 +280,7 @@
 		            
 		            var xy = this.get('node').getXY();
 		            coordOrigen = xy;
-		            
-		            mensajes.innerHTML = "Empezó el arrastre";
+
 		            usuario = aux3[0].id;
 		        });
 		        
@@ -321,8 +332,6 @@
 		            	var auxInner= aux.innerHTML;
 		            	
 		            	if(auxInner.indexOf('vacío') != -1){
-			            	submensajes1.innerHTML = usuario;
-			            	listaA.usuario = usuario;
 			            	aux.innerHTML = usuario;
 			            	
 				            var xy = nodus.getXY();
@@ -333,8 +342,6 @@
 		            	var auxInner= aux.innerHTML;
 		            	
 		            	if(auxInner.indexOf('vacío') != -1){
-			            	submensajes2.innerHTML = usuario;
-			            	listaB.usuario = usuario;
 			            	aux.innerHTML = usuario;
 			            	
 				            var xy = nodus.getXY();
@@ -345,18 +352,12 @@
 		            	var auxInner= aux.innerHTML;
 		            	
 		            	if(auxInner.indexOf('vacío') != -1){
-			            	submensajes3.innerHTML = usuario;
-			            	listaC.usuario = usuario;
 			            	aux.innerHTML = usuario;
 			            	
 				            var xy = nodus.getXY();
 				            this.get('node').setXY(xy);
 		            	}
 		            }
-		            
-
-		            
-		            mensajes.innerHTML = "Arrastre terminado con éxito.";
 		            
 		            
 		         //  	submensajes1.innerHTML = this.get('node').get('innerHTML');
@@ -403,8 +404,6 @@
 									left: '0px',
 									top: '0px'
 								});
-		                
-		                mensajes.innerHTML = "Arrastre terminado con fracaso.";
 						
 		            }
 		        });

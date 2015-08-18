@@ -230,6 +230,10 @@ ul li{
 	text-align: left;
 }
 
+#list3 li{
+	display: none;
+}
+
 .pdfs{
 	
 	font-size: small;
@@ -241,3 +245,6 @@ ul li{
 	color: black;
 }
 
+#ocultar{
+	visibility: hidden;
+}

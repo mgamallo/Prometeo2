@@ -126,7 +126,9 @@ public class Carpetas {
 	
 	public String getCodigoJavascriptXedoc(){
 		System.out.println("Entramos en el metodo de javascript");
-		return CadenasJavascript.getCarpetasXedoc(true, false, arrayCarpetas, numeroPdfsTotales);
+		
+		// return CadenasJavascript.getCarpetasXedoc(true, false, arrayCarpetas, numeroPdfsTotales);
+		return CadenasJavascript.editCarpetasXedoc(true, false, arrayCarpetas, numeroPdfsTotales);
 	}
 	
 	
@@ -333,13 +335,15 @@ class Directorio{
 	String pregunta = "";
 	String contestacion = "";
 	
+	String nombreCarpeta = "";
+	
 	Directorio(){
 		
 	}
 	
 	Directorio(File carpeta){
 		directorio = carpeta;
-
+		nombreCarpeta = directorio.getName();
 		
 		numeroPdfs = directorio.listFiles(new FilenameFilter(){
 			public boolean accept(File directorio, String name){
@@ -352,7 +356,7 @@ class Directorio{
 	
 	Directorio(File carpeta, boolean subidos){
 		directorio = carpeta;
-
+		nombreCarpeta = directorio.getName();
 		
 		numeroPdfs = directorio.listFiles(new FilenameFilter(){
 			public boolean accept(File directorio, String name){

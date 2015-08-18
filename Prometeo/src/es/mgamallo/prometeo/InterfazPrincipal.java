@@ -352,10 +352,11 @@ public class InterfazPrincipal implements MouseListener{
 						Inicio.xedoc = true;
 						Inicio.carpetaXedocFirmado = true;
 						
-						getHTMLXedoc();
+						// getHTMLXedoc();
 						
 						webBrowserOperaciones.setVisible(true);
-						webBrowserOperaciones.navigate(Inicio.unidadHDDejecutable + DIR_ABRIR_XFINAL);
+						// webBrowserOperaciones.navigate(Inicio.unidadHDDejecutable + DIR_ABRIR_XFINAL);
+						webBrowserOperaciones.navigate(DIR_ABRIR_X);
 						panelActivo = ABRIR;
 						
 				//		InicioXedoc xedoc = new InicioXedoc();
@@ -734,7 +735,10 @@ public class InterfazPrincipal implements MouseListener{
 													"contenedor.appendChild(nodo);" + 
 													"";// <a href='#' >holaaaa</a>";
 						}
+						
+						/*
 						else{
+							
 							codigoCarpetasmetro = ""
 
 									+ "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
@@ -746,10 +750,12 @@ public class InterfazPrincipal implements MouseListener{
 													"var contenedor = document.getElementById('insertar');" + LS +
 													"contenedor.appendChild(nodo);" + LS +
 													"";// <a href='#' >holaaaa</a>";
-									
+								
+							
 						}
-					
-						System.out.println(codigoCarpetasmetro);
+						*/
+						// System.out.println(codigoCarpetasmetro);
+						System.out.println("Ejecutamos el codigo");
 						
 						webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
 						
@@ -830,6 +836,10 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.navigate(DIR_ABRIR);
 						panelActivo = ABRIR;
 					}
+					if(command.equals("enviarXedoc")){
+						new GestionCarpetasXedoc();
+					}
+					
 					if(command.equals("iniciarXedoc")){
 						
 				//		if(Inicio.carpetaXedocFirmado){

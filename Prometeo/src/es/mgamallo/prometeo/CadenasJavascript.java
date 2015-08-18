@@ -271,12 +271,78 @@ public class CadenasJavascript {
 		return cadena;
 	}
 	
+	static public String editCarpetasXedoc(boolean firmado, boolean libres, ArrayList<Directorio> carpetas, int numeroPdfsTotales){
+		
+		String cadena = ""
+				+ "document.getElementById('sum3').innerHTML = '" + numeroPdfsTotales + "';" + LS
+				+ "document.getElementById('pdfstotales').innerHTML = '" + numeroPdfsTotales + "';" + LS
+				
+				+ "";
+		
+		System.out.println("Tamaño del array de carpetas " + carpetas.size());
+		
+		for(int i=0;i<carpetas.size();i++){
+			
+			int numPdfs = carpetas.get(i).numeroPdfs;
+			String tipoLista = "";
+			String servicioRecortado = "";
+			if(numPdfs < 10){
+				tipoLista = "list2";
+				int tam = carpetas.get(i).servicio.length();
+				if(tam > 10){
+					tam = 11;
+				}
+				servicioRecortado = carpetas.get(i).servicio.substring(0,tam);
+			}else if(numPdfs <20){
+				tipoLista = "list3";
+				int tam = carpetas.get(i).servicio.length();
+				if(tam > 15){
+					tam = 16;
+				}
+				servicioRecortado = carpetas.get(i).servicio.substring(0,tam);
+			}else{
+				tipoLista = "list3";
+				int tam = carpetas.get(i).servicio.length();
+				if(tam > 20){
+					tam = 21;
+				}
+				servicioRecortado = carpetas.get(i).servicio.substring(0,tam);
+			}
+		
+			String id = "pdf" + (i+1);
+			System.out.println(id);
+						
+			String nombreCarpeta = carpetas.get(i).nombreCarpeta;
+			
+			String lista = ""
+					+ "var nodoLista = document.getElementById('" + id + "');" + LS
+					+ "nodoLista.setAttribute('class','" + tipoLista + " yui3-dd-drop yui3-dd-draggable');" + LS
+					+ "nodoLista.setAttribute('title','" + nombreCarpeta + "');" + LS
+					+ "nodoLista.style.display='block';" + LS
+					
+			//		+ "nodoLista.innerHTML = '" + carpetas.get(i).numCarpeta + " <span class='pdfs'> hola </span>" + "';" + LS
+					
+					+ "nodoLista.innerHTML = '" + carpetas.get(i).numCarpeta + "<span class=\"pdfs\"> " 
+						+ servicioRecortado + "<strong>" + carpetas.get(i).numeroPdfs + "</strong> </span>';" + LS
+					
+					/*
+					 "<span class='pdfs'> " + servicioRecortado 
+						+ "<strong> " + carpetas.get(i).numeroPdfs + "</strong></span></li> ';" + LS; */
+					;
+			
+			cadena = cadena + lista;
+			
+		}
+		
+		System.out.println(cadena);
+		
+		return cadena;
+	}
+
 	
 	static public String getCarpetasXedoc(boolean firmado, boolean libres, ArrayList<Directorio> carpetas, int numeroPdfsTotales){
 	
 		String cadena = ""
-				+ "<div class='carpetas'>"
-				+ "<div class='slot' id='b3'>vacío</div>"
 				+ "<div class='suma'><strong id='sum3'>" +  numeroPdfsTotales + "</strong> pdfs.</div>"
 				+ "<div id='play2' class='plai'>"
 				+ "<ul id='list3' class='yui3-dd-drop'>"
