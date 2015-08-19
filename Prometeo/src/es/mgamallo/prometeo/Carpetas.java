@@ -31,6 +31,8 @@ public class Carpetas {
 			path = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 		}
 		
+		System.out.println(path);
+		
 		File caminito = new File(path);
 		
 		if(Inicio.carpetaDudas){

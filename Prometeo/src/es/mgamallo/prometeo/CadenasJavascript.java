@@ -273,6 +273,8 @@ public class CadenasJavascript {
 	
 	static public String editCarpetasXedoc(boolean firmado, boolean libres, ArrayList<Directorio> carpetas, int numeroPdfsTotales){
 		
+		
+			
 		String cadena = ""
 				+ "document.getElementById('sum3').innerHTML = '" + numeroPdfsTotales + "';" + LS
 				+ "document.getElementById('pdfstotales').innerHTML = '" + numeroPdfsTotales + "';" + LS

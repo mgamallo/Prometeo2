@@ -46,9 +46,12 @@ public class GestionCarpetasXedoc {
 			listasXedoc.add(new ListaXedoc(usuario3, getCarpetas(3)));
 		}
 		
+				
 		for(int i=0;i<listasXedoc.size();i++){
 			crearCarpetaContainer(listasXedoc.get(i));
 		}
+		
+		Inicio.panelPrincipal.webBrowserOperaciones.reloadPage();
 	}
 
 	private String getCarpetas(int numLista){
@@ -81,10 +84,6 @@ public class GestionCarpetasXedoc {
 			}
 		}
 		
-		ArrayList<File> listaPdfs = new ArrayList<File>();
-		
-		
-		
 		File carpetas[] = new File[lista.rutasCarpetas.length];
 		
 		
@@ -94,15 +93,24 @@ public class GestionCarpetasXedoc {
 		rut.mkdirs();
 		
 		System.out.println(rutaCopiaCarpetaDestino);
+		
+		String rutaBaseInicial = Inicio.rutaFirmadosXedoc;
+		if(Inicio.usuario.urgencias){
+			rutaBaseInicial = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc";
+		}
+		
+		System.out.println(rutaBaseInicial);
 				
 		for(int i=0;i<carpetas.length;i++){
-			carpetas[i] = new File(Inicio.rutaFirmadosXedoc + "/" + lista.rutasCarpetas[i]);
-			rutaCopiaCarpetaDestino = rutaCopiaCarpetaDestino + "\\" + carpetas[i].getName() + " " + lista.usuario;
-			System.out.println("Ruta de la copia de xedoc... \n" + rutaCopiaCarpetaDestino);
+			carpetas[i] = new File(rutaBaseInicial + "/" + lista.rutasCarpetas[i]);
+			String rutaCopiaCarpetaDestinoCompleta = rutaCopiaCarpetaDestino + "\\" + carpetas[i].getName() + " " + lista.usuario;
+			System.out.println("Ruta de la copia de xedoc... \n" + rutaCopiaCarpetaDestinoCompleta);
 			
-			File ficheroAux = new File(rutaCopiaCarpetaDestino);
+			File ficheroAux = new File(rutaCopiaCarpetaDestinoCompleta);
 			
-			carpetas[i].renameTo(ficheroAux);
+			System.out.println("Existe fichero? " + ficheroAux.exists());
+			
+			System.out.println("Renombrando... " + carpetas[i].renameTo(ficheroAux));
 			System.out.println(carpetas[i].getAbsolutePath());
 			carpetas[i] = ficheroAux;
 			System.out.println(carpetas[i].getAbsolutePath());
@@ -112,9 +120,12 @@ public class GestionCarpetasXedoc {
 			*/
 		}
 		
-		/*
+		
+		
+		ArrayList<File> listaPdfs = new ArrayList<File>();
+		
 		for(int i=0;i<carpetas.length;i++){
-			carpetas[i] = new File(Inicio.rutaFirmadosXedoc + "/" + lista.rutasCarpetas[i]);
+			// carpetas[i] = new File(Inicio.rutaFirmadosXedoc + "/" + lista.rutasCarpetas[i]);
 			File pdfsCarpeta[] = carpetas[i].listFiles(new FileFilter() {
 				
 				@Override
@@ -132,17 +143,18 @@ public class GestionCarpetasXedoc {
 		}
 		
 		
-		
+		/*  borrar
+		 * 
 		for(int i=0;i<carpetas.length;i++){
 			System.out.println(carpetas[i].getAbsolutePath());
 			System.out.println(carpetas[i].exists());
 		}
+		*/
 		
-		
-		Calendar calendario = Calendar.getInstance();
-		int hora = calendario.get(Calendar.HOUR_OF_DAY);
-		int min = calendario.get(Calendar.MINUTE);
-		int sec = calendario.get(Calendar.MILLISECOND);
+		Calendar calend = Calendar.getInstance();
+		int hora = calend.get(Calendar.HOUR_OF_DAY);
+		int min = calend.get(Calendar.MINUTE);
+		int sec = calend.get(Calendar.MILLISECOND);
 		
 		String id = hora + "" + min + "" + sec;
 		
@@ -171,10 +183,12 @@ public class GestionCarpetasXedoc {
 			String nuevoDestino = rutaDestino + "/" + index + "_" + listaPdfs.get(i).getName();
 			System.out.println(listaPdfs.get(i));
 			System.out.println(nuevoDestino);
-			if(!listaPdfs.get(i).renameTo(new File(nuevoDestino))){
+			
+			if(!CopiarFichero.copiar(listaPdfs.get(i).getAbsolutePath(),nuevoDestino)){
 				correcto = false;
 				break;
 			}
+			
 		}
 		
 		System.out.println("Resultado " + correcto);
@@ -183,16 +197,11 @@ public class GestionCarpetasXedoc {
 			JOptionPane.showMessageDialog(null, "Error al enviar a Xedoc");
 		}
 		else{
-			for(int i=0;i<carpetas.length;i++){
-				carpetas[i].delete();
-			}
+			JOptionPane.showMessageDialog(null, "Copia finalizada de " + lista.usuario);
 		}
 		
 		return correcto;
-		
-		*/
-		
-		return true;
+
 	}
 }
 

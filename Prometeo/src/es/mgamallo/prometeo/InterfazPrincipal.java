@@ -68,6 +68,8 @@ import javax.swing.event.ChangeListener;
 
 
 
+
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -700,7 +702,11 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					if(command.equals("firmado")){
 						
+						System.out.println("Firmado... entrando");
+						
 						carpeta = new Carpetas(true);
+						
+						System.out.println("inicializado carpetas");
 						
 						String codigoCarpetasmetro;
 						
@@ -759,6 +765,50 @@ public class InterfazPrincipal implements MouseListener{
 						
 						webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
 						
+						/******   Bandejas ************************/
+						/*
+						if(Inicio.carpetaXedocFirmado){
+							
+							BandejasXedoc bandejas = new BandejasXedoc();
+							
+							String cadenaUsuarios = "";
+							
+							for(int i=0;i<bandejas.listaBandejas.size();i++){
+								
+								String cadenaAux = "";
+								
+								if(bandejas.listaBandejas.get(i).usuario.equals("Ana")){
+									cadenaAux = "document.getElementById('p1').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Asun")){
+									cadenaAux = "document.getElementById('p2').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Conchi")){
+									cadenaAux = "document.getElementById('p3').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Esther")){
+									cadenaAux = "document.getElementById('p4').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Iago")){
+									cadenaAux = "document.getElementById('p5').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Irene")){
+									cadenaAux = "document.getElementById('p6').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Isa")){
+									cadenaAux = "document.getElementById('p7').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Juanma")){
+									cadenaAux = "document.getElementById('p8').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Man")){
+									cadenaAux = "document.getElementById('p9').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Oscar")){
+									cadenaAux = "document.getElementById('p10').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Salva")){
+									cadenaAux = "document.getElementById('p11').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}else if(bandejas.listaBandejas.get(i).usuario.equals("Ruben")){
+									cadenaAux = "document.getElementById('p12').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+								}
+								cadenaUsuarios = cadenaUsuarios + cadenaAux;
+							}
+							
+							System.out.println("Ejecutando bandejas....");
+							webBrowserOperaciones.executeJavascript(cadenaUsuarios);
+						}
+							*/
 						
 						
 					}

@@ -15,6 +15,10 @@ public class CopiarFichero {
 			File fOrigen = new File(origen);
 			File fDestino = new File(destino);
 			
+			System.out.println("-----------");
+			System.out.println(fOrigen.getAbsolutePath());
+			System.out.println(fDestino.getAbsolutePath());
+			System.out.println("-----------");
 			
 			FileInputStream in = new FileInputStream(fOrigen);
 			FileOutputStream out = new FileOutputStream(fDestino);
