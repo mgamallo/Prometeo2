@@ -40,10 +40,13 @@ public class CargaEstadisticasInicio {
 		File fichero = new File(ruta);
 		
 		
-		if(!fichero.exists()){
+		if(!fichero.exists() || fichero.listFiles().length == 0){
 			contabiliza3DiasAnteriores(Inicio.rutaEstadisticaIanus, fecha);
 			fichero.mkdirs();
 			recontabilizar = true;
+		}
+		else{
+			recontabilizar = false;
 		}
 		
 		
@@ -56,10 +59,13 @@ public class CargaEstadisticasInicio {
 		
 		fichero = new File(ruta);
 		
-		if(!fichero.exists()){
+		if(!fichero.exists() || fichero.listFiles().length == 0){
 			contabiliza3DiasAnteriores(Inicio.rutaEstadisticaUrg, fecha);
 			fichero.mkdirs();
 			recontabilizar = true;
+		}
+		else{
+			recontabilizar = false;
 		}
 		
 		
@@ -73,10 +79,13 @@ public class CargaEstadisticasInicio {
 		fichero = new File(ruta);
 		
 		
-		if(!fichero.exists()){
+		if(!fichero.exists() || fichero.listFiles().length == 0){
 			contabiliza3DiasAnteriores(Inicio.rutaEstadisticaXedoc, fecha);
 			fichero.mkdirs();
 			recontabilizar = true;
+		}
+		else{
+			recontabilizar = false;
 		}
 
 		if(recontabilizar){

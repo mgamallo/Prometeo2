@@ -70,7 +70,7 @@ public class LeerArchivos {
 
 			while((linea=br.readLine()) != null){
 				//System.out.println(linea);
-				texto += linea;
+				texto += (linea + "\n");
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -88,6 +88,9 @@ public class LeerArchivos {
 			}
 		}
 		//System.out.println(texto);
+		
+		System.out.println(texto);
+		
 		return texto;
 	}
 	

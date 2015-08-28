@@ -123,9 +123,13 @@ public class InterfazPrincipal implements MouseListener{
 	final String DIR_ABRIR_X2 = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/xedoc/abrirXedoc2Final.html";
 	final String DIR_ABRIR_XFINAL = ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrirXedocFinal.html";
 
+	final String DIR_AYUDA_X1 = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda_1.html";
+	final String DIR_AYUDA_X2 = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda_2.html";
+	final String DIR_AYUDA_F = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda_f.html";
+
 	
+	final String DIR_AYUDA = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda4.html";
 	
-	final String DIR_AYUDA = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda.html";
 	final String DIR_NORMAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas.html";
 	final String DIR_AVISOS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
 	// final String DIR_USUARIO = Inicio.unidadHDD +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/prometeo/Htmls/Usuario/usuario.html";
@@ -209,6 +213,8 @@ public class InterfazPrincipal implements MouseListener{
 					webBrowserOperaciones.navigate(DIR_AYUDA);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = AYUDA;
+					
+					maximizada = Pantalla.maximizar(frame);
 					
 					if(Inicio.esWin64){
 						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
@@ -921,6 +927,67 @@ public class InterfazPrincipal implements MouseListener{
 					
 					maximizada = Pantalla.restaurar(frame);
 				} 
+				
+		//   AYUDA *****************************************************************	
+				else if(panelActivo.equals(AYUDA)){
+					
+					if(command.contains("buscar_")){
+						String busqueda = command.substring(7);
+						
+						getHTMLayuda(busqueda);
+						
+						/*
+						String resultado = CadenasJavascript.getCodigoAyuda(busqueda);
+						
+						System.out.println("    \n\n" + resultado + "\n\n");
+						
+						resultado = "<div id='thumbs' class='navigation'>Borrar esta parte.</div>"
+								+ "<ul class='thumbs noscript'>"
+								+ "</ul>"
+								+ "</div>"
+								+ "<div style='clear: both;'></div>"
+								+ ""
+								+ ""; 
+						
+						String insertarCodigo = 	"" +
+								
+									 "var oldNodo = document.getElementById('nuevo');" + LS +
+									 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+									 "var nodo = document.createElement('div');" + LS +
+													"nodo.id='nuevo';" + LS + 
+													"nodo.innerHTML = \"" + resultado +"\";" + LS +
+													"var contenedor = document.getElementById('hor');" + LS +
+													"contenedor.appendChild(nodo);" + 
+													"";// <a href='#' >holaaaa</a>";
+						
+						 resultado = "alert('" + resultado + "');"; 
+						
+					//	webBrowserOperaciones.executeJavascript(insertarCodigo);
+						
+						webBrowserOperaciones.executeJavascript(insertarCodigo);
+						
+						String insertarJavascript = ""
+								+ ""
+								+ "function loadJs(fichero){" + LS
+									+ "var fileref = document.createElement('script');" + LS
+									+ "fileref.setAttribute('type','text/javascript');" + LS
+									+ "fileref.setAttribute('src','fichero');" + LS
+									+ "document.getElementsByTagName('head')[0].appendChild(fileref);" + LS
+								+ "}" + LS
+								+ ""
+								+ "loadJs('C:/ianus/ayuda.js');" + LS
+								+ "alert(retornarFecha(););" + LS
+								;
+						
+						*/
+						
+						
+						webBrowserOperaciones.navigate(DIR_AYUDA_F);
+
+						
+					}
+					maximizada = Pantalla.maximizar(frame);
+				}
 		
 		//   NORMAS *****************************************************************				
 				else if(panelActivo.equals(NORMAS)){
@@ -1295,20 +1362,18 @@ public class InterfazPrincipal implements MouseListener{
 
 	}
 	
-	public void getHTMLXedoc(){
+	public void getHTMLayuda(String busqueda){
 		
-		String textoInicial = LeerArchivos.obtenerHtml(DIR_ABRIR_X1);
-		String textoFinal = LeerArchivos.obtenerHtml(DIR_ABRIR_X2);
-		
-		carpeta = new Carpetas(true);
-		
+		String textoInicial = LeerArchivos.obtenerHtml(DIR_AYUDA_X1);
+		String textoFinal = LeerArchivos.obtenerHtml(DIR_AYUDA_X2);
+
 		String textoCentral;
 		
-		textoCentral = carpeta.getCodigoJavascriptXedoc();
+		textoCentral = CadenasJavascript.getCodigoAyuda(busqueda);
 
 		String htmlCompleto = textoInicial + textoCentral + textoFinal;
 		
-		EscribirArchivos.escribeHtml(htmlCompleto, DIR_ABRIR_XFINAL);
+		EscribirArchivos.escribeHtmlUtf(htmlCompleto, DIR_AYUDA_F);
 	}
 	
 

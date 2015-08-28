@@ -1,18 +1,75 @@
 package es.mgamallo.prometeo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.TreeMap;
 
 
 public class Txt {
 	static public String[] obtenerUsuarios(String ruta){
 		return LeerArchivos.obtenerUsuarios(ruta);
+	}
+	
+	
+	static public void escribirIndiceTxt(TreeMap<String, Indices>  indiceGeneral){
+		
+		String cadena = "";
+		
+		Iterator<String> it = indiceGeneral.keySet().iterator();
+		while(it.hasNext()){
+		  String key = (String) it.next();
+		  
+		  cadena = cadena + key + ";";
+		  for(int i=0;i<indiceGeneral.get(key).indices.size();i++){
+			  cadena = cadena + indiceGeneral.get(key).indices.get(i);
+			  if (i!=indiceGeneral.get(key).indices.size()-1){
+				  cadena = cadena + ";";
+			  }else{
+				  cadena = cadena + System.getProperty("line.separator");
+			  }
+		  }
+		}
+		
+		Writer out = null;
+		
+		try {
+			FileOutputStream fos = new FileOutputStream("j" + Inicio.rutaHermes_TXT);
+			OutputStreamWriter osw = new OutputStreamWriter(fos,"UTF-8");
+					
+			out = new BufferedWriter(osw);
+			out.write(cadena);
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

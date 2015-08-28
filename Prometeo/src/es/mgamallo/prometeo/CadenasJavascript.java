@@ -122,6 +122,59 @@ public class CadenasJavascript {
 		
 	}
 	
+	
+	static public String getCodigoAyuda(String busqueda){
+		
+		String cadena = ""
+				+ ""
+				+ "<div id='thumbs' class='navigation'>"
+					+ "<ul class='thumbs'>"
+				+ "";
+		
+		
+		/* funcion de busqueda */
+		
+		ArrayList<AyudaPdfs> documentos = new ArrayList<AyudaPdfs>();
+		documentos.add(new AyudaPdfs("Index_00008", "Probas urticaria", "ALGC", ""));
+		documentos.add(new AyudaPdfs("Index_00018", "Tratamento", "UDOC", ""));
+		documentos.add(new AyudaPdfs("Index_00032", "Campimetría", "OFTC", ""));
+		documentos.add(new AyudaPdfs("Index_00002", "Citometría", "HELM", "Meter en laboratorio de hematología."));
+		documentos.add(new AyudaPdfs("Index_00003", "Tratamento", "GINC", ""));
+		
+		
+		int tam = documentos.size();
+		for(int i=0;i<tam;i++){
+			cadena = cadena 
+					+ ""
+					+ "<li>"
+						+ "<a class='thumb' href='" + Inicio.rutaHermes + "/" 
+								+ documentos.get(i).imagen + ".jpg' title='" + documentos.get(i).nombre + "'>"
+							 + "<img src='" + Inicio.rutaHermes + "/"
+								+ documentos.get(i).imagen + ".jpg' alt='" + documentos.get(i).nombre + "'/>"
+						+ "</a>"
+						+ "<div class='caption'>"
+							+ "<div class='image-title'>" + documentos.get(i).nombre + "</div>"
+							+ "<div class='image-des'>Documento de: <strong>" + documentos.get(i).servicios + "</strong></div>"
+							+ "<div class='image-obs'>" + documentos.get(i).observaciones + "</div>"
+						+ "</div>"
+					+ "</li>"
+					+ "";
+		}
+		
+		
+		cadena = cadena + ""
+				+ ""
+				+ "</ul>"
+				+ "</div>"
+				+ "<div style='clear: both;'></div>"
+				+ "";
+		
+		
+		return cadena;
+	}
+	
+	
+	
 	static public String getCarpetasSubidas(ArrayList<Directorio> carpetas){
 		
 		String cadena = "";

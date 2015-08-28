@@ -52,6 +52,9 @@ public class Inicio {
 	static public String rutaFirmadosXedoc = ":\\digitalización\\00 documentacion\\03 Firmado Xedoc";
 	static public String rutaXedoc = ":\\digitalización\\00 documentacion\\03 Xedoc";
 	
+	static public String rutaHermes = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Hermes\\ImagenesPdfs";
+	static public String rutaHermes_TXT = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Hermes.txt";
+	
 	static public String rutaFirmadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)";
 	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
 	static public String rutaAsociadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 Asociado";
@@ -218,6 +221,9 @@ public class Inicio {
 		rutaEstadisticaXedoc = unidadHDDvirtual + rutaEstadisticaXedoc;
 		rutaEstadisticaIanus = unidadHDDvirtual + rutaEstadisticaIanus;
 		rutaEstadisticaUrg = unidadHDDvirtual + rutaEstadisticaUrg;
+		
+		rutaHermes = unidadHDDvirtual + rutaHermes;
+		rutaHermes_TXT = unidadHDDvirtual + rutaHermes_TXT;
 		
 		System.out.println(rutaEstadisticaIanus);
 		

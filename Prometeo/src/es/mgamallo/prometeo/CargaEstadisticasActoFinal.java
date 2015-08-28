@@ -35,9 +35,9 @@ public class CargaEstadisticasActoFinal {
 	public CargaEstadisticasActoFinal() {
 		// TODO Auto-generated constructor stub
 		
-		rutaUrgencias = "j" + rutaUrgencias;
-		rutaDoc = "j" + rutaDoc;
-		rutaXedoc = "j" + rutaXedoc;
+		rutaUrgencias = Inicio.unidadHDDvirtual + rutaUrgencias;
+		rutaDoc = Inicio.unidadHDDvirtual + rutaDoc;
+		rutaXedoc = Inicio.unidadHDDvirtual + rutaXedoc;
 		
 		directoriosAnualesUrgencias = getDirectoriosAnuales(rutaUrgencias);
 		directoriosAnualesDoc = getDirectoriosAnuales(rutaDoc);
@@ -131,6 +131,10 @@ public class CargaEstadisticasActoFinal {
 			}
 		});
 		int numAños = 0;
+		
+		System.out.println("Tamaño de las carpetas en: ");
+		System.out.println(ruta);
+		System.out.println(carpetas.length);
 		
 		for(int i=0;i<carpetas.length;i++){
 			if(carpetas[i].getName().length() == 4 && 
