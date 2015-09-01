@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -54,6 +55,7 @@ public class Inicio {
 	
 	static public String rutaHermes = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Hermes\\ImagenesPdfs";
 	static public String rutaHermes_TXT = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Hermes.txt";
+	static public String rutaHermes_XLS = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\99 Nombres Normalizados\\Hermes.xls";
 	
 	static public String rutaFirmadosUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)";
 	static public String rutaAsociados = ":\\digitalización\\00 documentacion\\04 Asociado";
@@ -75,6 +77,7 @@ public class Inicio {
 	static public InicioIanus inicioIanus;
 	
 	static public LeerExcel leerExcel;
+	static public LeerExcelHermes leerExcelHermes;
 	static public ArrayList<Norma> listaNormasIanus = new ArrayList<Norma>();
 	static public String[] listaServicios;
 	
@@ -120,6 +123,7 @@ public class Inicio {
 	static public String contestacionDudas = "";
 	
 	static public Estadistica estadistica;
+	static public TreeMap<String, Indices> indiceGeneralAyuda = new TreeMap<String, Indices>();
 	
 	static public VentanaControlXedoc ventanaControlXedoc; 
 	static public boolean xedoc1activo = true;
@@ -224,12 +228,13 @@ public class Inicio {
 		
 		rutaHermes = unidadHDDvirtual + rutaHermes;
 		rutaHermes_TXT = unidadHDDvirtual + rutaHermes_TXT;
+		rutaHermes_XLS = unidadHDDvirtual + rutaHermes_XLS;
 		
 		System.out.println(rutaEstadisticaIanus);
 		
 		
 	    // Cargamos las estadisticas
-	    
+		
 	   HiloEstadisticas hiloEstadisticas = new HiloEstadisticas();
 	   hiloEstadisticas.start();
 		
@@ -256,6 +261,14 @@ public class Inicio {
 		panelPrincipal = new InterfazPrincipal("Prometeo 1.0.0", new Color(255,222,173), false);
 	
 		CapturaRatonYTeclado capturaTeclado = new CapturaRatonYTeclado();
+		
+		
+		// Carga el indice de la ayuda
+		indiceGeneralAyuda = Txt.leerIndiceTxt(rutaHermes_TXT);
+		getHTMLayuda(null);
+		
+		leerExcelHermes = new LeerExcelHermes();
+		leerExcelHermes.leer(rutaHermes_XLS);
 		
 		// Carga estadisticas. De momento del día anterior.
 		estadistica = new Estadistica();
@@ -287,6 +300,24 @@ public class Inicio {
 		listaServicios = leerExcel.getServicios();
 		
 		NativeInterface.runEventPump(); 
+	}
+	
+	public static void getHTMLayuda(String busqueda[]){
+		
+		String textoInicial = LeerArchivos.obtenerHtml(InterfazPrincipal.DIR_AYUDA_X1);
+		String textoFinal = LeerArchivos.obtenerHtml(InterfazPrincipal.DIR_AYUDA_X2);
+
+		String textoCentral1, textoCentral2;
+		
+		textoCentral1 = CadenasJavascript.getCodigoAyuda1();
+		
+		System.out.println("Imprime codigo 1 \n" + textoCentral1);
+		
+		textoCentral2 = CadenasJavascript.getCodigoAyuda2(busqueda);
+
+		String htmlCompleto = textoInicial + textoCentral1 + textoCentral2 + textoFinal;
+		
+		EscribirArchivos.escribeHtmlUtf(htmlCompleto, InterfazPrincipal.DIR_AYUDA);
 	}
 
 	static private void cargarUsuarios(){

@@ -19,11 +19,17 @@ public class EstadisticaDia {
 	public EstadisticaDia(String cadena) {
 		// TODO Auto-generated constructor stub
 		
+		System.out.println(cadena);
+		
 		String[] cadenaArray = cadena.split(";");
 		
-		this.fecha = cadenaArray[0];
-		this.numeroFicheros = cadenaArray[1];
-		this.diaSemana = cadenaArray[2];
+	//	if(cadenaArray.length>2){
+			this.fecha = cadenaArray[0];
+			this.numeroFicheros = cadenaArray[1];
+			this.diaSemana = cadenaArray[2];
+	//	}
+		
+
 		
 	}
 	

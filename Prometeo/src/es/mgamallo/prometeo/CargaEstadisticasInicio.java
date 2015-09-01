@@ -21,7 +21,6 @@ public class CargaEstadisticasInicio {
 		// TODO Auto-generated constructor stub
 		
 		Fecha fecha = new Fecha();
-		
 		encontrarCarpeta(fecha);
 		
 	}
@@ -40,7 +39,7 @@ public class CargaEstadisticasInicio {
 		File fichero = new File(ruta);
 		
 		
-		if(!fichero.exists() || fichero.listFiles().length == 0){
+		if(!fichero.exists() /* || fichero.listFiles().length == 0 */){
 			contabiliza3DiasAnteriores(Inicio.rutaEstadisticaIanus, fecha);
 			fichero.mkdirs();
 			recontabilizar = true;
@@ -59,7 +58,7 @@ public class CargaEstadisticasInicio {
 		
 		fichero = new File(ruta);
 		
-		if(!fichero.exists() || fichero.listFiles().length == 0){
+		if(!fichero.exists() /* || fichero.listFiles().length == 0 */){
 			contabiliza3DiasAnteriores(Inicio.rutaEstadisticaUrg, fecha);
 			fichero.mkdirs();
 			recontabilizar = true;
@@ -79,7 +78,7 @@ public class CargaEstadisticasInicio {
 		fichero = new File(ruta);
 		
 		
-		if(!fichero.exists() || fichero.listFiles().length == 0){
+		if(!fichero.exists() /* || fichero.listFiles().length == 0 */){
 			contabiliza3DiasAnteriores(Inicio.rutaEstadisticaXedoc, fecha);
 			fichero.mkdirs();
 			recontabilizar = true;
@@ -105,9 +104,30 @@ public class CargaEstadisticasInicio {
 		String rutaInicio =  ruta + año + "\\" + fecha.nombreMesYnumero;
 		String rutaInicioAño =  ruta + año;
 				
-		System.out.println(rutaInicio);
+		System.out.println("Ruta inicio.... " + rutaInicio);
 		
 		File directorio = new File(rutaInicio);
+		
+		
+		if(!directorio.exists()){
+			
+			System.out.println("El directorio no existe...");
+			
+			fecha = new Fecha(1);
+			
+			dia = fecha.dia;
+			mes = fecha.mes;
+			año = fecha.año;
+			
+			rutaInicio =  ruta + año + "\\" + fecha.nombreMesYnumero;
+			rutaInicioAño =  ruta + año;
+			
+			System.out.println("Nueva ruta..." + rutaInicio);
+			
+			directorio = new File(rutaInicio);
+		}
+		
+		
 		int diaAbuscar = dia;
 		
 		rutasMes.add(rutaInicio);
@@ -344,7 +364,11 @@ public class CargaEstadisticasInicio {
 
 		}
 		
-		registros = registros.substring(0,registros.length()-2);
+		if(registros.length() - 2 > 0){
+			registros = registros.substring(0,registros.length()-2);
+		}
+		
+		
 		
 		return registros;
 	}

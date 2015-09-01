@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -5,11 +6,15 @@
 		<link rel="stylesheet" href="css/css/basic.css" type="text/css" />
 		<link rel="stylesheet" href="css/css/galleriffic-2.css" type="text/css" />
 		
-		<script type="text/javascript" src="js/jquery-1.3.2.js"></script>
-		<script type="text/javascript" src="js/jquery.galleriffic.js"></script>
-		<script type="text/javascript" src="js/jquery.opacityrollover.js"></script>
+
+
+
+		
+		<link rel="stylesheet" href="css/docsupport/style.css" />
+		<link rel="stylesheet" href="css/chosen.css" type="text/css"/>
 		
 		<!-- We only want the thunbnails to display when javascript is disabled -->
+		
 		<script type="text/javascript">
 			document.write('<style>.noscript { display: none; }</style>');
 		</script>
@@ -17,46 +22,243 @@
 		<script type="text/javascript">
 			function buscar(){
 				var palabra = document.getElementById('busqueda');
-				var cadena = "buscar_" + palabra.value;
-				// alert(cadena);
-				sendNSCommand(cadena);
+				
+				var resultado = getValue(palabra);
+				
+				if(resultado.length > 0){
+					var cadena = "buscar" +  resultado;
+
+					sendNSCommand(cadena);
+				}
+
+			}
+			
+			function getValue(palabras){
+				
+			 var cadena = '';	
+			  	
+			  for (var i = 0; i < palabras.options.length; i++) {
+			     if(palabras.options[i].selected){
+			          cadena = cadena + "_" + palabras.options[i].value;
+			      }
+			  }
+			  
+			  return cadena;
+			}
+			
+			function mostrarBusqueda(){
+				var mostrar = document.getElementById('contenedor');
+				mostrar.style.visibility = 'visible';
 			}
 		</script>
+		
 	</head>
-	<body>
+	<body onload='mostrarBusqueda()'>
 		<div id="page">
 			<div id="container">
 				<h1>Ayuda</h1>
 					<h2>
-						<input type="text" id="busqueda" size="40">
-						<a class="button" id="botonBusqueda" href="javascript:buscar();">Buscar</a>
-					</h2>
-				
-				<!-- Start Advanced Gallery Html Containers -->
-				<div id="gallery" class="content">
-					<div id="controls" class="controls"></div>
-					<div class="slideshow-container">
-						<div id="loading" class="loader"></div>
-						<div id="slideshow" class="slideshow"></div>
-					</div>
-					<div id="caption" class="caption-container"></div>
-				</div>
-				
-				<div id="hor" >
-<div id='thumbs' class='navigation'><ul class='thumbs'><li><a class='thumb' href='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00008.jpg' title='Probas urticaria'><img src='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00008.jpg' alt='Probas urticaria'/></a><div class='caption'><div class='image-title'>Probas urticaria</div><div class='image-des'>Documento de: <strong>ALGC</strong></div><div class='image-obs'></div></div></li><li><a class='thumb' href='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00018.jpg' title='Tratamento'><img src='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00018.jpg' alt='Tratamento'/></a><div class='caption'><div class='image-title'>Tratamento</div><div class='image-des'>Documento de: <strong>UDOC</strong></div><div class='image-obs'></div></div></li><li><a class='thumb' href='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00032.jpg' title='Campimetría'><img src='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00032.jpg' alt='Campimetría'/></a><div class='caption'><div class='image-title'>Campimetría</div><div class='image-des'>Documento de: <strong>OFTC</strong></div><div class='image-obs'></div></div></li><li><a class='thumb' href='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00002.jpg' title='Citometría'><img src='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00002.jpg' alt='Citometría'/></a><div class='caption'><div class='image-title'>Citometría</div><div class='image-des'>Documento de: <strong>HELM</strong></div><div class='image-obs'>Meter en laboratorio de hematología.</div></div></li><li><a class='thumb' href='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00003.jpg' title='Tratamento'><img src='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00003.jpg' alt='Tratamento'/></a><div class='caption'><div class='image-title'>Tratamento</div><div class='image-des'>Documento de: <strong>GINC</strong></div><div class='image-obs'></div></div></li></ul></div><div style='clear: both;'></div>				</div>
+					<!--   	<input type="text" id="busqueda" size="40">  -->
+					<div id='contenedor' style='visibility: hidden'>
+						          <select id='busqueda' data-placeholder="Busca..." class="chosen-select" multiple style="width:350px;" tabindex="4">
+            <option value=""></option>
+<option value='#'>#</option>
+<option value='42.00'>42.00</option>
+<option value='61.01'>61.01</option>
+<option value='ALGC'>ALGC</option>
+<option value='DERC'>DERC</option>
+<option value='GINC'>GINC</option>
+<option value='HAD'>HAD</option>
+<option value='HELM'>HELM</option>
+<option value='HEMC'>HEMC</option>
+<option value='HEMH'>HEMH</option>
+<option value='HOSP'>HOSP</option>
+<option value='NMLC'>NMLC</option>
+<option value='OFTC'>OFTC</option>
+<option value='REHC'>REHC</option>
+<option value='REUC'>REUC</option>
+<option value='Todos'>Todos</option>
+<option value='UDOC'>UDOC</option>
+<option value='UROC'>UROC</option>
+<option value='a4'>a4</option>
+<option value='a5'>a5</option>
+<option value='acostar'>acostar</option>
+<option value='adrenalina'>adrenalina</option>
+<option value='alcon'>alcon</option>
+<option value='alergoloxia'>alergoloxia</option>
+<option value='amarillo'>amarillo</option>
+<option value='analisis'>analisis</option>
+<option value='anexo 1'>anexo 1</option>
+<option value='antes'>antes</option>
+<option value='análisis'>análisis</option>
+<option value='autoset'>autoset</option>
+<option value='azul'>azul</option>
+<option value='bateria'>bateria</option>
+<option value='bateria urticaria'>bateria urticaria</option>
+<option value='bcg'>bcg</option>
+<option value='betula'>betula</option>
+<option value='biometría óptica'>biometría óptica</option>
+<option value='caja'>caja</option>
+<option value='campimetría'>campimetría</option>
+<option value='campo'>campo</option>
+<option value='campo unico'>campo unico</option>
+<option value='cd117'>cd117</option>
+<option value='cd19'>cd19</option>
+<option value='cd56'>cd56</option>
+<option value='citometría'>citometría</option>
+<option value='citostaticos'>citostaticos</option>
+<option value='citostáticos'>citostáticos</option>
+<option value='coidados en uci'>coidados en uci</option>
+<option value='continuidade'>continuidade</option>
+<option value='cuadro'>cuadro</option>
+<option value='cuadrícula'>cuadrícula</option>
+<option value='cynodon'>cynodon</option>
+<option value='cystistat'>cystistat</option>
+<option value='depot'>depot</option>
+<option value='diagnostico'>diagnostico</option>
+<option value='diagnóstico'>diagnóstico</option>
+<option value='documentación'>documentación</option>
+<option value='domicilio'>domicilio</option>
+<option value='educacion'>educacion</option>
+<option value='educacionsanitaria'>educacionsanitaria</option>
+<option value='electrodos'>electrodos</option>
+<option value='endovesical'>endovesical</option>
+<option value='estudo sono (enquisa)'>estudo sono (enquisa)</option>
+<option value='farmacia'>farmacia</option>
+<option value='fecha transf'>fecha transf</option>
+<option value='fellow european'>fellow european</option>
+<option value='ficha'>ficha</option>
+<option value='fisium'>fisium</option>
+<option value='gráfico'>gráfico</option>
+<option value='hado'>hado</option>
+<option value='hematies'>hematies</option>
+<option value='hoja de seguimiento'>hoja de seguimiento</option>
+<option value='hoja tratamiento'>hoja tratamiento</option>
+<option value='horizontal'>horizontal</option>
+<option value='humira'>humira</option>
+<option value='induccion'>induccion</option>
+<option value='inducción'>inducción</option>
+<option value='infliximab'>infliximab</option>
+<option value='informe enfermaría'>informe enfermaría</option>
+<option value='informe fisioterapia centro externo'>informe fisioterapia centro externo</option>
+<option value='informe médico centro externo'>informe médico centro externo</option>
+<option value='instilaciones'>instilaciones</option>
+<option value='intravesical'>intravesical</option>
+<option value='iontoforesis'>iontoforesis</option>
+<option value='lavado'>lavado</option>
+<option value='lente'>lente</option>
+<option value='leuc'>leuc</option>
+<option value='marrón'>marrón</option>
+<option value='medicacion'>medicacion</option>
+<option value='mediciones'>mediciones</option>
+<option value='medico prescritor'>medico prescritor</option>
+<option value='nasal'>nasal</option>
+<option value='ninguno'>ninguno</option>
+<option value='novasource'>novasource</option>
+<option value='num ropa'>num ropa</option>
+<option value='nutricion'>nutricion</option>
+<option value='nutrición'>nutrición</option>
+<option value='ojo'>ojo</option>
+<option value='ovulacion'>ovulacion</option>
+<option value='ovulación'>ovulación</option>
+<option value='pauta'>pauta</option>
+<option value='pauta semanal'>pauta semanal</option>
+<option value='polisomnografia'>polisomnografia</option>
+<option value='posologia'>posologia</option>
+<option value='prescripcion'>prescripcion</option>
+<option value='prescripción'>prescripción</option>
+<option value='prescriptor'>prescriptor</option>
+<option value='prick'>prick</option>
+<option value='prick test'>prick test</option>
+<option value='probas urticaria'>probas urticaria</option>
+<option value='reaccion'>reaccion</option>
+<option value='residencia'>residencia</option>
+<option value='rexistro enfermaría'>rexistro enfermaría</option>
+<option value='rnfl'>rnfl</option>
+<option value='robleda'>robleda</option>
+<option value='sanatorio'>sanatorio</option>
+<option value='sanitaria'>sanitaria</option>
+<option value='seguimiento'>seguimiento</option>
+<option value='seijo martinez'>seijo martinez</option>
+<option value='solicitud'>solicitud</option>
+<option value='soremay'>soremay</option>
+<option value='ss int'>ss int</option>
+<option value='thickness'>thickness</option>
+<option value='tomas 1 a 3'>tomas 1 a 3</option>
+<option value='tomografía coherencia óptica'>tomografía coherencia óptica</option>
+<option value='transfusión'>transfusión</option>
+<option value='tratamento'>tratamento</option>
+<option value='tratamento (citostáticos)'>tratamento (citostáticos)</option>
+<option value='tratamento centro externo'>tratamento centro externo</option>
+<option value='tratamiento'>tratamiento</option>
+<option value='tratamiento endovesical'>tratamiento endovesical</option>
+<option value='tratamientos'>tratamientos</option>
+<option value='tratamientos utilizados'>tratamientos utilizados</option>
+<option value='tres en uno'>tres en uno</option>
+<option value='uci'>uci</option>
+<option value='unidad'>unidad</option>
+<option value='unidad de sueño'>unidad de sueño</option>
+<option value='urticaria'>urticaria</option>
+<option value='uv'>uv</option>
+<option value='uv-doses'>uv-doses</option>
+<option value='varios'>varios</option>
+<option value='vertical'>vertical</option>
+<option value='vithas'>vithas</option>
+<option value='xunta'>xunta</option>
+<option value='zeiss'>zeiss</option>
+</select>
+
+<a class='button' id='botonBusqueda' href='javascript:buscar();'>Buscar</a>
+</h2>
+<div id='gallery' class='content'>
+<div id='controls' class='controls'></div>
+<div class='slideshow-container'>
+<div id='loading' class='loader'></div>
+<div id='slideshow' class='slideshow'></div>
+</div>
+<div id='caption' class='caption-container'></div>
+</div>
+<div id='hor' >
+<div id='thumbs' class='navigation'><ul class='thumbs'><li><a class='thumb' href='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00028.jpg' title='Tratamento (Citostáticos)'><img src='j:\DIGITALIZACIÓN\00 DOCUMENTACION\99 Nombres Normalizados\Hermes\ImagenesPdfs/Index_00028.jpg' alt='Tratamento (Citostáticos)'/></a><div class='caption'><div class='image-title'>Tratamento (Citostáticos)</div><div class='image-des'>Documento de: <strong>HELM,HEMC</strong></div><div class='image-obs'>Subir en la consulta o en hospital de día.</div></div></li></ul></div><div style='clear: both;'></div>				</div>
 			</div>
 		</div>
 		<div id="footer"> 2015 Archivo Montecelo</div>
+ 
+ 		  <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+		  
+		  <script src="js/chosen.jquery.js" type="text/javascript"></script>
+		  <script src="docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+		  <script type="text/javascript">
+
+		    var config = {
+		      '.chosen-select'           : {}
+		    }
+		
+		    for (var selector in config) {
+		    	$(selector).chosen(config[selector]);
+		    }
+		</script>
+		
+		<script type="text/javascript" src="js/jquery-1.3.2.js"></script>
 		<script type="text/javascript">
-			jQuery(document).ready(function($) {
+			var jQuery132 = $.noConflict(true);
+		</script>
+		
+		
+		<script type="text/javascript" src="js/jquery.galleriffic.js"></script>
+		<script type="text/javascript" src="js/jquery.opacityrollover.js"></script>
+  
+		
+		<script type="text/javascript">
+			jQuery(document).ready(function(jQuery132) {
 				// We only want these styles applied when javascript is enabled
-				$('div.navigation').css({'width' : '450px', 'float' : 'left', 'margin-bottom' : '20px'});
-				$('div.content').css('display', 'block');
+				jQuery132('div.navigation').css({'width' : '450px', 'float' : 'left', 'margin-bottom' : '20px'});
+				jQuery132('div.content').css('display', 'block');
 
 				// Initially set opacity on thumbs and add
 				// additional styling for hover effect on thumbs
 				var onMouseOutOpacity = 0.67;
-				$('#thumbs ul.thumbs li').opacityrollover({
+				jQuery132('#thumbs ul.thumbs li').opacityrollover({
 					mouseOutOpacity:   onMouseOutOpacity,
 					mouseOverOpacity:  1.0,
 					fadeSpeed:         'fast',
@@ -64,7 +266,7 @@
 				});
 				
 				// Initialize Advanced Galleriffic Gallery
-				var gallery = $('#thumbs').galleriffic({
+				var gallery = jQuery132('#thumbs').galleriffic({
 					delay:                     2500,
 					numThumbs:                 6,
 					preloadAhead:              10,
@@ -88,7 +290,7 @@
 					syncTransitions:           true,
 					defaultTransitionDuration: 900,
 					onSlideChange:             function(prevIndex, nextIndex) {
-						// 'this' refers to the gallery, which is an extension of $('#thumbs')
+						// 'this' refers to the gallery, which is an extension of jQuery132('#thumbs')
 						this.find('ul.thumbs').children()
 							.eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
 							.eq(nextIndex).fadeTo('fast', 1.0);

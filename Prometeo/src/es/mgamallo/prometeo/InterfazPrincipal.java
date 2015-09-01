@@ -123,12 +123,12 @@ public class InterfazPrincipal implements MouseListener{
 	final String DIR_ABRIR_X2 = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/xedoc/abrirXedoc2Final.html";
 	final String DIR_ABRIR_XFINAL = ":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/abrirXedocFinal.html";
 
-	final String DIR_AYUDA_X1 = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda_1.html";
-	final String DIR_AYUDA_X2 = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda_2.html";
-	final String DIR_AYUDA_F = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda_f.html";
+	public static final String DIR_AYUDA_X1 = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda_1.html";
+	public static final String DIR_AYUDA_X2 = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda/ayuda_2.html";
+	public static final String DIR_AYUDA_F = Inicio.unidadHDDejecutable +":/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda_f.html";
 
 	
-	final String DIR_AYUDA = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda4.html";
+	public static final String DIR_AYUDA = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/ayuda4.html";
 	
 	final String DIR_NORMAS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/normas.html";
 	final String DIR_AVISOS = Inicio.unidadHDDejecutable +":/Desarrollo/git/Prometeo/Prometeo/Prometeo/Prometeo/Htmls/avisos/avisos.html";
@@ -932,9 +932,17 @@ public class InterfazPrincipal implements MouseListener{
 				else if(panelActivo.equals(AYUDA)){
 					
 					if(command.contains("buscar_")){
+						
+						String campos[] = command.split("_");
+						
+						System.out.println("Número de campos... " + campos.length);
+						for(int i=0;i<campos.length;i++){
+							System.out.println(campos[i]);
+						}
+						
 						String busqueda = command.substring(7);
 						
-						getHTMLayuda(busqueda);
+						getHTMLayuda(campos);
 						
 						/*
 						String resultado = CadenasJavascript.getCodigoAyuda(busqueda);
@@ -1362,16 +1370,20 @@ public class InterfazPrincipal implements MouseListener{
 
 	}
 	
-	public void getHTMLayuda(String busqueda){
+	public void getHTMLayuda(String busqueda[]){
 		
 		String textoInicial = LeerArchivos.obtenerHtml(DIR_AYUDA_X1);
 		String textoFinal = LeerArchivos.obtenerHtml(DIR_AYUDA_X2);
 
-		String textoCentral;
+		String textoCentral1, textoCentral2;
 		
-		textoCentral = CadenasJavascript.getCodigoAyuda(busqueda);
+		textoCentral1 = CadenasJavascript.getCodigoAyuda1();
+		
+		System.out.println("Imprime codigo 1 \n" + textoCentral1);
+		
+		textoCentral2 = CadenasJavascript.getCodigoAyuda2(busqueda);
 
-		String htmlCompleto = textoInicial + textoCentral + textoFinal;
+		String htmlCompleto = textoInicial + textoCentral1 + textoCentral2 + textoFinal;
 		
 		EscribirArchivos.escribeHtmlUtf(htmlCompleto, DIR_AYUDA_F);
 	}

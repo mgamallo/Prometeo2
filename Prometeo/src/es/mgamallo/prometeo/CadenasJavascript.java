@@ -1,6 +1,9 @@
 package es.mgamallo.prometeo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.jacob.activeX.ActiveXComponent;
 
@@ -122,8 +125,35 @@ public class CadenasJavascript {
 		
 	}
 	
+	static public String getCodigoAyuda1(){
+		String cadena = "";
+		
+		Iterator<String> it = Inicio.indiceGeneralAyuda.keySet().iterator();
+		while(it.hasNext()){
+		  String key = (String) it.next();
+		  cadena = cadena + "<option value='" + key + "'>" + key + "</option>" + LS;
+		}
+		
+		cadena = cadena 
+				+ "</select>" + LS
+				+ "" + LS
+				+ "<a class='button' id='botonBusqueda' href='javascript:buscar();'>Buscar</a>" + LS
+				+ "</h2>" + LS
+				+ "<div id='gallery' class='content'>" + LS
+					+ "<div id='controls' class='controls'></div>" + LS
+					+ "<div class='slideshow-container'>" + LS
+						+ "<div id='loading' class='loader'></div>" + LS
+						+ "<div id='slideshow' class='slideshow'></div>" + LS
+					+ "</div>" + LS
+					+ "<div id='caption' class='caption-container'></div>" + LS
+				+ "</div>" + LS
+				+ "<div id='hor' >" + LS; 
+		
+		return cadena;
+	}
 	
-	static public String getCodigoAyuda(String busqueda){
+	
+	static public String getCodigoAyuda2(String busqueda[]){
 		
 		String cadena = ""
 				+ ""
@@ -131,15 +161,56 @@ public class CadenasJavascript {
 					+ "<ul class='thumbs'>"
 				+ "";
 		
-		
-		/* funcion de busqueda */
-		
 		ArrayList<AyudaPdfs> documentos = new ArrayList<AyudaPdfs>();
-		documentos.add(new AyudaPdfs("Index_00008", "Probas urticaria", "ALGC", ""));
-		documentos.add(new AyudaPdfs("Index_00018", "Tratamento", "UDOC", ""));
-		documentos.add(new AyudaPdfs("Index_00032", "Campimetría", "OFTC", ""));
-		documentos.add(new AyudaPdfs("Index_00002", "Citometría", "HELM", "Meter en laboratorio de hematología."));
-		documentos.add(new AyudaPdfs("Index_00003", "Tratamento", "GINC", ""));
+
+		
+		if(busqueda != null){
+			
+			String campos[] = busqueda;
+			
+			System.out.println("Número de metadatos..." + campos.length);
+			
+			Set<Integer> fotos = new TreeSet<Integer>();
+			
+			for(int i=1;i<campos.length;i++){
+				Indices ind = Inicio.indiceGeneralAyuda.get(campos[i]);
+				
+				
+				
+				for(int j=0;j< ind.indices.size();j++){
+					int fotoNum = Integer.valueOf(ind.indices.get(j));
+					System.out.println("El metadato tiene esta foto " + fotoNum);
+					fotos.add((Integer) fotoNum);
+				}
+			}
+			
+			System.out.println("El conjunto fotos tiene... " + fotos.size());
+			
+			Iterator<Integer> it = fotos.iterator();
+			while(it.hasNext()){
+				int numero = it.next();
+
+				String imagen = Inicio.leerExcelHermes.tablaHermes1[numero-1][0];
+				String nombre = Inicio.leerExcelHermes.tablaHermes1[numero-1][1];
+				String servicios = Inicio.leerExcelHermes.tablaHermes1[numero-1][9];
+				String obs = Inicio.leerExcelHermes.tablaHermes1[numero-1][10];
+				
+				documentos.add(new AyudaPdfs(imagen, nombre, servicios, obs));
+				
+				System.out.println("Foto número... " + numero);
+			}
+			
+			/*
+			documentos.add(new AyudaPdfs("Index_00008", "Probas urticaria", "ALGC", ""));
+			documentos.add(new AyudaPdfs("Index_00018", "Tratamento", "UDOC", ""));
+			documentos.add(new AyudaPdfs("Index_00032", "Campimetría", "OFTC", ""));
+			documentos.add(new AyudaPdfs("Index_00002", "Citometría", "HELM", "Meter en laboratorio de hematología."));
+			documentos.add(new AyudaPdfs("Index_00003", "Tratamento", "GINC", ""));
+			*/
+		}
+
+		
+
 		
 		
 		int tam = documentos.size();

@@ -14,9 +14,16 @@ public class Fecha {
 	String numeroMes = "";
 	String nombreDia = "";
 
+	int diasAtras = 0;
 	
 	public Fecha() {
 		// TODO Auto-generated constructor stub
+		System.out.println("Entro en fecha...");
+		getFecha();
+	}
+	
+	public Fecha(int i){
+		diasAtras = i;
 		getFecha();
 	}
 	
@@ -26,6 +33,10 @@ public class Fecha {
 		// JUEVES, 18 DE SEPTIEMBRE DE 2014
 
 		Calendar hoy = Calendar.getInstance();
+		
+		if(diasAtras != 0){
+			hoy.set(Calendar.DAY_OF_MONTH, -1);
+		}
 		
 		dia = hoy.get(Calendar.DAY_OF_MONTH);
 		diaSemana = hoy.get(Calendar.DAY_OF_WEEK);

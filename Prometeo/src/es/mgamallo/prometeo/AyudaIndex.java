@@ -26,12 +26,15 @@ public class AyudaIndex {
 		System.out.println("Columnas... " + columnas);
 		
 		for(int fil = 0;fil<filas;fil++){
-			for(int col = 2;col<columnas;col++){
+			for(int col = 1;col<columnas;col++){
 				
 				String valor = tablaHermes1[fil][col].toLowerCase();
 				
 				if(col == 9){
-					
+					String[] servicios = tablaHermes1[fil][col].split(",");
+					for(int z = 0 ;z <servicios.length;z++){
+						incluirClave(servicios[z],fil,tablaHermes1);
+					}
 				}
 				else if(col == 10){
 					if(valor.length() > 0){
