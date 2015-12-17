@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 
 public class RobotIanusXedoc {
 
+	public final String TRATAMENTO = "Tratamento";
+	public final String TRATAMENTO_CEXTERNO = "Tratamento centro externo";
 	public final String DOC_ANULADO = "Documento cancelado";
 	public final String RUTA_DOC_ANULADO = Inicio.unidadHDDvirtual
 			+ ":\\DIGITALIZACIÓN\\DOC. ANULADO.pdf";
@@ -19,17 +21,24 @@ public class RobotIanusXedoc {
 	public Point coordTitulo = new Point(0, 0);
 	public Point coordAceptar = new Point(0, 0);
 	public Point coordTipoDoc = new Point(0, 0);
+	
+	public String colorFondoExaminar = "ffd4d0c8";
+	public String colorFondoLupa = "ffe5eff4";
+	public String colorFondoExaminar35p = "ffd4d0c8";
+	public String colorFondoLupa35p = "ffe5eff4";
 
 	public String titulo = "";
 
 	private int aceptarManualX = 1627, aceptarManualY = 710;
 
-	private void setCoordenadas(String tipoSubida) {
+	private boolean setCoordenadas(String tipoSubida) {
 
-		int columna = 0;
+		System.out.println(tipoSubida);
+		
+		int columna = 0; 
 
-		if (tipoSubida.equals("HOSP") || tipoSubida.equals("URG")
-				|| tipoSubida.equals("EPI")) {
+		if (tipoSubida.equals("HOSP") || tipoSubida.equals("HOS") ||
+				tipoSubida.equals("URG") || tipoSubida.equals("EPI")) {
 			columna = 0;
 		} else if (tipoSubida.equals("CEX")) {
 			columna = 1;
@@ -37,6 +46,8 @@ public class RobotIanusXedoc {
 			columna = 2;
 		} else if (tipoSubida.equals("QUI")) {
 			columna = 3;
+		} else{
+			return false;
 		}
 
 		coordExaminar.x = Inicio.inicioIanus.coordenadasAsociar[0][columna];
@@ -65,9 +76,14 @@ public class RobotIanusXedoc {
 			coordTitulo.y = coordTitulo.y + 60;
 			coordAceptar.y = coordAceptar.y + 60;
 			coordTipoDoc.y = coordTipoDoc.y + 60;
+			
+			colorFondoExaminar = colorFondoExaminar35p;
+			colorFondoLupa = colorFondoLupa35p;
 		}
 
 		System.out.println(coordExaminar.y + ", " + coordAceptar.y);
+		
+		return true;
 	}
 
 	public void asocia(String tituloCDU) {
@@ -76,175 +92,323 @@ public class RobotIanusXedoc {
 
 		// String alias = titulo.substring(0,5);
 
-
-		setCoordenadas(InicioIanus.tipoSubida);
-
-		boolean tieneTipo = false;
-
-//		if (!InicioIanus.versionar) {
-			tieneTipo = compruebaAsociar(tituloCDU);
+		int iteraciones = 0;
+		boolean error;
+		
+		while(error = !setCoordenadas(InicioIanus.tipoSubida) && iteraciones < 40){
 			
-			tieneTipo = true;
-			
-			if (tieneTipo) {
-				Robot robot;
-				try {
-					robot = new Robot();
-
-					// 01 Pulsa boton examinar
-
-					if(!InicioIanus.versionar){
-						robot.delay(100);
-					}
-
-					robot.mouseMove(coordExaminar.x, coordExaminar.y);
-					
-					System.out.println("Color boton: " + Integer.toHexString(robot.getPixelColor(coordExaminar.x,coordExaminar.y).getRGB()));
-					
-					robot.delay(25);
-					robot.mousePress(InputEvent.BUTTON1_MASK);
-					robot.mouseRelease(InputEvent.BUTTON1_MASK);
-
-					Portapapeles copiar = new Portapapeles();
-
-					if (tituloCDU.toLowerCase().contains(InicioIanus.DOC_ANULADO.toLowerCase())) {
-							copiar.copiarAlPortapapeles(RUTA_DOC_ANULADO);
-					} else {
-							copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
-					}
-
-					robot.delay(Retardos.retardoTrasPulsarExaminar  /* + Retardos.S_lento */);
-						
-						//	Pega Ruta archivo
-						
-						robot.keyPress(KeyEvent.VK_CONTROL);
-						robot.keyPress(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_CONTROL);
-
-						robot.delay(Retardos.retardoTrasPegarRuta/* + Retardos.S_lento */);
-
-						// 10 Enter
-						robot.keyPress(KeyEvent.VK_ENTER);
-						robot.keyRelease(KeyEvent.VK_ENTER);
-						robot.delay(250);
-
-						
-					// 02 Comprueba si tiene un subtitulo
-						int indexParentesis = tituloCDU.indexOf("(");
-						if (indexParentesis != -1) {
-							
-							titulo = tituloCDU.substring(indexParentesis + 1,tituloCDU.length() - 1);
-							tituloCDU = tituloCDU.substring(0,indexParentesis-1);
-							System.out.println(tituloCDU);
-							System.out.println(titulo);
-						}
-						
-						
-						if(tituloCDU.equals(InicioIanus.MAPA_A)){
-							tituloCDU = InicioIanus.MAPA_B;
-						}
-						
-						copiar.copiarAlPortapapeles(tituloCDU);
-						
-						
-					//	03 Pulsa lupa
-						
-					if (!InicioIanus.versionar) {
-						robot.mouseMove(coordLupa.x, coordLupa.y);
-						robot.delay(50);
-						robot.mousePress(InputEvent.BUTTON1_MASK);
-						robot.mouseRelease(InputEvent.BUTTON1_MASK);
-						robot.delay(Retardos.retardoTrasLupa);
-					} 
-
-					// 3 Pega tipo documento
-					
-					robot.mouseMove(coordTipoDoc.x, coordTipoDoc.y);
-					robot.delay(50);
-					robot.mousePress(InputEvent.BUTTON1_MASK);
-					robot.mouseRelease(InputEvent.BUTTON1_MASK);
-					robot.delay(250);		
-					
-					
-					robot.keyPress(KeyEvent.VK_CONTROL);
-					robot.keyPress(KeyEvent.VK_V);
-					robot.keyRelease(KeyEvent.VK_V);
-					robot.keyRelease(KeyEvent.VK_CONTROL);
-
-					robot.delay(Retardos.retardoTrasPegarTipo);
-					robot.keyPress(KeyEvent.VK_ENTER);
-					robot.keyRelease(KeyEvent.VK_ENTER);
-					robot.delay(250);
-					
-					robot.delay(100);
-					robot.keyPress(KeyEvent.VK_ENTER);
-					robot.keyRelease(KeyEvent.VK_ENTER);
-					robot.delay(250);
-					
-
-					// 04 Pega titulo si procede
-					if(indexParentesis != -1){
-						robot.mouseMove(coordTitulo.x, coordTitulo.y);
-						robot.mousePress(InputEvent.BUTTON1_MASK);
-						robot.mouseRelease(InputEvent.BUTTON1_MASK);
-						robot.delay(50);
-						
-						copiar.copiarAlPortapapeles(titulo);
-						
-						robot.delay(150);
-						
-						robot.keyPress(KeyEvent.VK_CONTROL);
-						robot.keyPress(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_V);
-						robot.keyRelease(KeyEvent.VK_CONTROL);
-						robot.delay(100);
-					}
-
-
-					// 05 Aceptar
-
-					if (!InicioIanus.versionar) {
-						
-						robot.mouseMove(coordAceptar.x, coordAceptar.y);
-						robot.delay(100);
-						robot.mousePress(InputEvent.BUTTON1_MASK);
-						robot.mouseRelease(InputEvent.BUTTON1_MASK);
-						robot.delay(200);
-						robot.keyPress(KeyEvent.VK_ENTER);
-						robot.keyRelease(KeyEvent.VK_ENTER);
-						robot.delay(200);  
-					}
-
-					System.out.println("pegado");
-
-					// 13 Aceptar definitivo
-					/*
-					 * robot.keyPress(KeyEvent.VK_ENTER);
-					 * robot.keyRelease(KeyEvent.VK_ENTER);
-					 */
-					if (!InicioIanus.versionar) {
-						robot.mouseMove(aceptarManualX, aceptarManualY);
-					}
-
-					// CapturaRatonYTeclado.barraEspaciadoraOn = true;
-
-					// Inicio.panelPrincipal.webBrowserOperaciones.setVisible(false);
-
-				} catch (AWTException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					InicioIanus.versionar = false;
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "En principio no se puede subir este documento. \n" + 
-							Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado + "\n" + 
-							Inicio.documento[Inicio.indiceArchivoSelecc].servicio +
-							 "\nPrueba a actualizar el ianus, y espera a que se dibujen los botones de asociar");
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-//		}
+			
+			iteraciones++;
+			
+			Portapapeles cbTemporal = new Portapapeles();
+			String tipoSubida = cbTemporal.getTipoDeSubida();
+			InicioIanus.tipoSubida = tipoSubida;
+			
+		}
+		
+		// setCoordenadas(InicioIanus.tipoSubida);
 
-		InicioIanus.versionar = false;
+		if(!error){
+			boolean tieneTipo = false;
+			
+
+//			if (!InicioIanus.versionar) {
+				tieneTipo = compruebaAsociar(tituloCDU);
+				
+				tieneTipo = true;
+				
+				if (tieneTipo) {
+					Robot robot;
+					try {
+						robot = new Robot();
+
+						// 01 Pulsa boton examinar
+
+						if(!InicioIanus.versionar){
+							robot.delay(100);
+						}
+
+						robot.mouseMove(coordExaminar.x, coordExaminar.y);
+						
+						System.out.println(coordExaminar.x + ", " + coordExaminar.y);
+						System.out.println("Color boton: " + Integer.toHexString(robot.getPixelColor(coordExaminar.x,coordExaminar.y).getRGB()));
+						System.out.println((coordExaminar.x - 300) + ", " + coordExaminar.y);
+						System.out.println("Color boton: " + Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB()));
+						
+						String colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x,coordExaminar.y).getRGB());
+						int contador = 0;
+						
+						System.out.println("Empieza primer bucle.");
+						while(!colorFondoExaminar.equals(colorFondo) && contador < Retardos.retardoAutomatico){
+							robot.delay(10);
+							contador++;
+							System.out.println(contador + "   ---   " + colorFondo);
+							
+							colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x,coordExaminar.y).getRGB());
+						}
+						
+						
+						if(contador < Retardos.retardoAutomatico){
+							//	robot.delay(25);
+							robot.mousePress(InputEvent.BUTTON1_MASK);
+							robot.mouseRelease(InputEvent.BUTTON1_MASK);
+
+							Portapapeles copiar = new Portapapeles();
+
+							if (tituloCDU.toLowerCase().contains(InicioIanus.DOC_ANULADO.toLowerCase())) {
+									copiar.copiarAlPortapapeles(RUTA_DOC_ANULADO);
+							} else {
+									copiar.copiarAlPortapapeles(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+							}
+							
+							colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+							contador = 0;
+							System.out.println("Empieza el segundo bucle.");
+							while(colorFondoExaminar.equals(colorFondo) && contador < Retardos.retardoAutomatico){
+								robot.delay(10);
+								contador++;
+								System.out.println(contador + "   ---   " + colorFondo);
+
+								colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+								
+							}
+							
+
+							if(contador < Retardos.retardoAutomatico){
+							
+					//		robot.delay(Retardos.retardoTrasPulsarExaminar  /* + Retardos.S_lento */);
+								
+								//	Pega Ruta archivo
+								
+								robot.keyPress(KeyEvent.VK_CONTROL);
+								robot.keyPress(KeyEvent.VK_V);
+								robot.keyRelease(KeyEvent.VK_V);
+								robot.keyRelease(KeyEvent.VK_CONTROL);
+
+								robot.delay(Retardos.retardoTrasPegarRuta/* + Retardos.S_lento */);
+
+								// 10 Enter
+								robot.keyPress(KeyEvent.VK_ENTER);
+								robot.keyRelease(KeyEvent.VK_ENTER);
+								robot.delay(250);
+
+								
+							// 02 Comprueba si tiene un subtitulo
+								int indexParentesis = tituloCDU.indexOf("(");
+								if (indexParentesis != -1) {
+									
+									titulo = tituloCDU.substring(indexParentesis + 1,tituloCDU.length() - 1);
+									tituloCDU = tituloCDU.substring(0,indexParentesis-1);
+									System.out.println(tituloCDU);
+									System.out.println(titulo);
+								}
+								
+								
+								if(tituloCDU.equals(InicioIanus.MAPA_A)){
+									tituloCDU = InicioIanus.MAPA_B;
+								}
+								
+								copiar.copiarAlPortapapeles(tituloCDU);
+								
+								
+							//	03 Pulsa lupa
+								
+								colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+								contador = 0;
+								System.out.println("Empieza el tercer bucle.");
+								System.out.println(contador + "   ---   " + colorFondo);
+								while(!colorFondoExaminar.equals(colorFondo) && contador < Retardos.retardoAutomatico){
+									robot.delay(10);
+									contador++;
+									System.out.println(contador + "   ---   " + colorFondo);
+
+									colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+									
+								}
+
+								
+								if(contador < Retardos.retardoAutomatico){
+									
+									if (!InicioIanus.versionar) {
+										robot.mouseMove(coordLupa.x, coordLupa.y);
+									//	robot.delay(50);
+										robot.mousePress(InputEvent.BUTTON1_MASK);
+										robot.mouseRelease(InputEvent.BUTTON1_MASK);
+									//	robot.delay(Retardos.retardoTrasLupa);
+									} 
+
+									// 3 Pega tipo documento
+									
+									colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+									contador = 0;
+									System.out.println("Empieza el cuarto bucle.");
+									while(colorFondoExaminar.equals(colorFondo) && contador < Retardos.retardoAutomatico){
+										robot.delay(10);
+										contador++;
+										System.out.println(contador + "   ---   " + colorFondo);
+
+										colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+										
+									}
+
+									if(contador < Retardos.retardoAutomatico){
+									
+										robot.mouseMove(coordTipoDoc.x, coordTipoDoc.y);
+										//	robot.delay(50);
+											
+											
+											colorFondo = Integer.toHexString(robot.getPixelColor(coordTipoDoc.x + 200 ,coordTipoDoc.y - 75).getRGB());
+											contador = 0;
+											System.out.println("Empieza el quinto bucle.");
+											System.out.println(contador + "   ---   " + colorFondo);
+											while(!colorFondoLupa.equals(colorFondo) && contador < Retardos.retardoAutomatico){
+												robot.delay(10);
+												contador++;
+												System.out.println(contador + "   ---   " + colorFondo);
+
+												colorFondo = Integer.toHexString(robot.getPixelColor(coordTipoDoc.x + 200 ,coordTipoDoc.y - 75).getRGB());
+												
+											}
+											
+											if(contador < Retardos.retardoAutomatico){
+											
+												robot.mouseMove(coordTipoDoc.x, coordTipoDoc.y);
+												robot.delay(50);
+												
+												robot.mousePress(InputEvent.BUTTON1_MASK);
+												robot.mouseRelease(InputEvent.BUTTON1_MASK);
+												robot.delay(150);		
+												
+												
+												robot.keyPress(KeyEvent.VK_CONTROL);
+												robot.keyPress(KeyEvent.VK_V);
+												robot.keyRelease(KeyEvent.VK_V);
+												robot.keyRelease(KeyEvent.VK_CONTROL);
+
+												robot.delay(Retardos.retardoTrasPegarTipo);
+												robot.keyPress(KeyEvent.VK_ENTER);
+												robot.keyRelease(KeyEvent.VK_ENTER);
+												robot.delay(250);
+												
+												if(tituloCDU.equals(TRATAMENTO)){
+													robot.delay(200);
+													robot.keyPress(KeyEvent.VK_DOWN);
+													robot.keyRelease(KeyEvent.VK_DOWN);
+													robot.delay(250);
+												}
+												else if(tituloCDU.equals(TRATAMENTO_CEXTERNO)){
+													robot.delay(200);
+													robot.keyPress(KeyEvent.VK_DOWN);
+													robot.keyRelease(KeyEvent.VK_DOWN);
+													robot.delay(150);
+													robot.keyPress(KeyEvent.VK_DOWN);
+													robot.keyRelease(KeyEvent.VK_DOWN);
+													robot.delay(250);
+												}
+												
+											//	robot.delay(100);
+												robot.keyPress(KeyEvent.VK_ENTER);
+												robot.keyRelease(KeyEvent.VK_ENTER);
+											//	robot.delay(250);
+												
+
+												// 04 Pega titulo si procede
+												if(indexParentesis != -1){
+													
+													colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+													contador = 0;
+													System.out.println("Empieza el sexto bucle.");
+													System.out.println(contador + "   ---   " + colorFondo);
+													while(!colorFondoExaminar.equals(colorFondo) && contador < Retardos.retardoAutomatico){
+														robot.delay(10);
+														contador++;
+														System.out.println(contador + "   ---   " + colorFondo);
+
+														colorFondo = Integer.toHexString(robot.getPixelColor(coordExaminar.x - 300,coordExaminar.y).getRGB());
+														
+													}
+													
+													
+													
+													robot.mouseMove(coordTitulo.x, coordTitulo.y);
+													robot.mousePress(InputEvent.BUTTON1_MASK);
+													robot.mouseRelease(InputEvent.BUTTON1_MASK);
+													robot.delay(50);
+													
+													copiar.copiarAlPortapapeles(titulo);
+													
+													robot.delay(150);
+													
+													robot.keyPress(KeyEvent.VK_CONTROL);
+													robot.keyPress(KeyEvent.VK_V);
+													robot.keyRelease(KeyEvent.VK_V);
+													robot.keyRelease(KeyEvent.VK_CONTROL);
+													robot.delay(100);
+												}
+
+
+												// 05 Aceptar
+
+												if (!InicioIanus.versionar) {
+													
+													robot.mouseMove(coordAceptar.x, coordAceptar.y);
+													robot.delay(100);
+													robot.mousePress(InputEvent.BUTTON1_MASK);
+													robot.mouseRelease(InputEvent.BUTTON1_MASK);
+													robot.delay(200);
+													robot.keyPress(KeyEvent.VK_ENTER);
+													robot.keyRelease(KeyEvent.VK_ENTER);
+													robot.delay(200);  
+												}
+
+												System.out.println("pegado");
+
+												// 13 Aceptar definitivo
+												/*
+												 * robot.keyPress(KeyEvent.VK_ENTER);
+												 * robot.keyRelease(KeyEvent.VK_ENTER);
+												 */
+												if (!InicioIanus.versionar) {
+													robot.mouseMove(aceptarManualX, aceptarManualY);
+												}
+
+												// CapturaRatonYTeclado.barraEspaciadoraOn = true;
+
+												// Inicio.panelPrincipal.webBrowserOperaciones.setVisible(false);
+											}
+													
+												}
+											
+											}	
+										}	
+											}	
+						
+
+
+					} catch (AWTException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						InicioIanus.versionar = false;
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "En principio no se puede subir este documento. \n" + 
+								Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado + "\n" + 
+								Inicio.documento[Inicio.indiceArchivoSelecc].servicio +
+								 "\nPrueba a actualizar el ianus, y espera a que se dibujen los botones de asociar");
+				}
+//			}
+
+			InicioIanus.versionar = false;
+
+		}
+		
+		
 
 	}
 

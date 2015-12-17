@@ -443,12 +443,31 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 			
 			break;
 	*/
-				/*
+				
 			case 67: // c
 				System.out.println("Pulsado c");
-				GestionJacob.pulsaBotonAsociar();
+				try {
+					Robot robot = new Robot();
+					
+					robot.mouseMove(300, 400);
+					robot.delay(50);
+					robot.mousePress(InputEvent.BUTTON1_MASK);
+					robot.mouseRelease(InputEvent.BUTTON1_MASK);
+					robot.delay(100);
+					robot.keyPress(KeyEvent.VK_CONTROL);
+					robot.keyPress(KeyEvent.VK_0);
+					robot.delay(50);
+					robot.keyRelease(KeyEvent.VK_0);
+					robot.keyRelease(KeyEvent.VK_CONTROL);
+					robot.delay(50);
+
+				} catch (AWTException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
 				break;	
-			*/
+			
 
 			default:
 				//  V, cuando no utilizamos ctrl + v
@@ -459,14 +478,20 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 						
 						GestionJacob.pulsaBotonAsociar();
 						
+						
 						if(true){
 							try {
-								Thread.sleep(Retardos.retardoDibujarVentana);
+								
+								// Thread.sleep(Retardos.retardoDibujarVentana);
+								Thread.sleep(100);
+
 							} catch (InterruptedException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
+						
+						
 						
 						Portapapeles cbTemporal = new Portapapeles();
 						String tipoSubida = cbTemporal.getTipoDeSubida();

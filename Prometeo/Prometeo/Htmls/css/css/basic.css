@@ -33,21 +33,26 @@ h1 {
 	color: #f70;
 	/* float: left; */
 }
+
+
+
 h2 {
 	padding-top: 10px;
 	/* font-size:2em; */
 	color: #ccc;
-   float: right;  
+    float: left; 
 	margin-right: 40px;
 }
 
 #botonBusqueda{
 	margin-left: 15px;
 	padding: 2px auto 2px auto;
-	background-color: #d30e13;
-	color: white;
+	/* background-color: #d30e13;
+	color: white; */
 	font-size:1em;
 }
+
+
 
 pre {
 	font-size: 1.2em;
@@ -68,7 +73,7 @@ div#page {
 }
 div#container {
 	padding-left: 5px; 
-	height: 1050px;
+	/* height: 1050px; */
 	
 	/* color: #f70; */
 }
@@ -89,3 +94,17 @@ strong{
 	color: #f70;
 }
 
+#hor{
+	/* height: 1250px; */
+	float: left;
+}
+
+#central{
+	float: left;
+}
+
+
+#gallery{
+	margin-left: 150px; 
+	/* float: right; */
+}

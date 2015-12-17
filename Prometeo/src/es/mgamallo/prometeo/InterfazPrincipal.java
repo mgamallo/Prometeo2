@@ -70,6 +70,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -167,11 +168,14 @@ public class InterfazPrincipal implements MouseListener{
 	public JLabel labelMinimizar;
 	public JLabel labelMaximizar;
 	private boolean maximizada = false;
+	private boolean maximizadaAyuda = false;
 	public JLabel labelFecha;
 
 	public boolean barraPanelControlVisible;
 
 	public JFrame frame;
+	public Dimension dimensionOriginalMenu = new Dimension(850, 1000);
+	
 	
 	public Carpetas carpeta;
 	
@@ -197,6 +201,9 @@ public class InterfazPrincipal implements MouseListener{
 						+ (parameters.length > 0 ? " "
 								+ Arrays.toString(parameters) : ""));
 				if ("abrir".equals(command)) {
+					
+					frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					
 					webBrowserOperaciones.setVisible(true);
 					webBrowserOperaciones.navigate(DIR_ABRIR);
 					
@@ -210,17 +217,26 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					
 				} else if ("ayuda".equals(command)) {
+					
+					
+					
 					webBrowserOperaciones.navigate(DIR_AYUDA);
+					
+					Inicio.indiceGeneralAyuda = Txt.leerIndiceTxt(Inicio.rutaHermes_TXT);
+					
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = AYUDA;
 					
-					maximizada = Pantalla.maximizar(frame);
-					
+					maximizadaAyuda = Pantalla.maximizarAyuda(frame);
+					/*
 					if(Inicio.esWin64){
 						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
 					}
+					*/
 					
 				} else if ("normas".equals(command)) {
+					
+										
 					webBrowserOperaciones.navigate(DIR_NORMAS);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = NORMAS;
@@ -231,6 +247,8 @@ public class InterfazPrincipal implements MouseListener{
 					
 					Inicio.listaNormasIanus = Txt.leerNormasTxt(Inicio.rutaNormas);
 				} else if ("avisos".equals(command)) {
+					
+					
 					webBrowserOperaciones.navigate(DIR_AVISOS);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = AVISOS;
@@ -240,6 +258,9 @@ public class InterfazPrincipal implements MouseListener{
 					}
 				}
 				if ("usuario".equals(command)) {
+					
+					frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					
 					maximizada = Pantalla.restaurar(frame);
 					webBrowserOperaciones.navigate(DIR_USUARIO);
 					webBrowserOperaciones.setVisible(true);
@@ -254,6 +275,9 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					
 				} else if ("salir".equals(command)) {
+					
+					frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
+					
 					webBrowserOperaciones.navigate(DIR_SALIR);
 					webBrowserOperaciones.setVisible(true);
 					panelActivo = SALIR;
@@ -380,10 +404,25 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					else if(command.equals("dudas")){
 						
-						Inicio.carpetaDudas = true;
-						webBrowserOperaciones.setVisible(true);
-						webBrowserOperaciones.navigate(DIR_ABRIR);
-						panelActivo = ABRIR;
+						if(!Inicio.usuario.alias.toLowerCase().equals("javier")){
+							Inicio.carpetaDudas = true;
+							webBrowserOperaciones.setVisible(true);
+							webBrowserOperaciones.navigate(DIR_ABRIR);
+							panelActivo = ABRIR;
+						}
+						else{
+							
+							// Borrar esta asignacion
+						//	rutaCarpetaFirmados = "j:\\digitalización\\00 documentacion\\03 Firmado";
+							
+					    	String cadena1 = "explorer.exe " + Inicio.rutaDudas;
+							try {
+								Runtime.getRuntime().exec(cadena1);
+							} catch (IOException ev) {
+								// TODO Auto-generated catch block
+								ev.printStackTrace();
+							}
+						}
 					}
 					else if(command.equals("tiempo")){
 						maximizada = Pantalla.maximizar(frame);
@@ -501,9 +540,28 @@ public class InterfazPrincipal implements MouseListener{
 							String codigo = "";
 							boolean nada = true;
 							
-							if(numeroDudasContestadas>0){
-								codigo += "document.getElementById('numDudasContestadas').innerHTML='Tienes " + numeroDudasContestadas + " dudas contestadas.';" + LS;
-								nada = false;
+							if(numeroDudasContestadas>0 || (Inicio.usuariosCondudas.size() > 0 && Inicio.usuario.alias.toLowerCase().equals("javier"))){
+								if(Inicio.usuario.alias.toLowerCase().equals("javier")){
+									
+									String texto = "";
+									for(int i=0;i < Inicio.usuariosCondudas.size();i++){
+										texto += Inicio.usuariosCondudas.get(i);
+										if(i != Inicio.usuariosCondudas.size()-1){
+											texto += ",";
+										}
+										texto += " ";
+									}
+									
+									System.out.println(texto);
+									
+									codigo += "document.getElementById('numDudasContestadas').innerHTML='" + texto + "tienen dudas pendientes de contestar.';" + LS;
+									nada = false;
+								}
+								else{
+									codigo += "document.getElementById('numDudasContestadas').innerHTML='Tienes " + numeroDudasContestadas + " dudas contestadas.';" + LS;
+									nada = false;
+								}
+		
 							}
 							else{
 								codigo += "var nodillo = document.getElementById('pantallaDudas');" + LS;
@@ -886,11 +944,26 @@ public class InterfazPrincipal implements MouseListener{
 						Dudas.abrirCarpetaApartadoFirmado();
 					}
 					if(command.equals("dudas")){
-
-						Inicio.carpetaDudas = true;
-						webBrowserOperaciones.setVisible(true);
-						webBrowserOperaciones.navigate(DIR_ABRIR);
-						panelActivo = ABRIR;
+						
+						if(!Inicio.usuario.alias.toLowerCase().equals("javier")){
+							Inicio.carpetaDudas = true;
+							webBrowserOperaciones.setVisible(true);
+							webBrowserOperaciones.navigate(DIR_ABRIR);
+							panelActivo = ABRIR;
+						}
+						else{
+							
+							// Borrar esta asignacion
+						//	rutaCarpetaFirmados = "j:\\digitalización\\00 documentacion\\03 Firmado";
+							
+					    	String cadena = "explorer.exe " + Inicio.rutaDudas;
+							try {
+								Runtime.getRuntime().exec(cadena);
+							} catch (IOException ev) {
+								// TODO Auto-generated catch block
+								ev.printStackTrace();
+							}
+						}
 					}
 					if(command.equals("enviarXedoc")){
 						new GestionCarpetasXedoc();
@@ -991,10 +1064,10 @@ public class InterfazPrincipal implements MouseListener{
 						
 						
 						webBrowserOperaciones.navigate(DIR_AYUDA_F);
-
+						
 						
 					}
-					maximizada = Pantalla.maximizar(frame);
+					maximizadaAyuda = Pantalla.maximizarAyuda(frame);
 				}
 		
 		//   NORMAS *****************************************************************				
@@ -1377,11 +1450,11 @@ public class InterfazPrincipal implements MouseListener{
 
 		String textoCentral1, textoCentral2;
 		
-		textoCentral1 = CadenasJavascript.getCodigoAyuda1();
+		textoCentral1 = CadenasJavascript.getCodigoAyuda01(busqueda);
 		
 		System.out.println("Imprime codigo 1 \n" + textoCentral1);
 		
-		textoCentral2 = CadenasJavascript.getCodigoAyuda2(busqueda);
+		textoCentral2 = CadenasJavascript.getCodigoAyuda02();
 
 		String htmlCompleto = textoInicial + textoCentral1 + textoCentral2 + textoFinal;
 		
@@ -1429,7 +1502,7 @@ public class InterfazPrincipal implements MouseListener{
 				barraPanelControlVisible = barraControl;
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(createContent());
-				frame.setSize(850, 1000);
+				frame.setSize(dimensionOriginalMenu);
 				frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 				
 				frame.setMinimumSize(new Dimension(800, 120));

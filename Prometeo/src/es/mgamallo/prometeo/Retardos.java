@@ -2,6 +2,8 @@ package es.mgamallo.prometeo;
 
 public class Retardos {
 	
+	static public int retardoAutomatico = 300;  // ciclos
+	
 	static public int retPulsarVauto = 900;
 	static public int retIntroNHC = 800;
 	

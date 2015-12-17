@@ -56,8 +56,13 @@ public class CargaEstadisticasActoFinal {
 			for(int j=0;j<listaRegistros.length;j++){
 				
 				EstadisticaDia estadistica = new EstadisticaDia(listaRegistros[j]);
-				listaEstadisticaAnual.add(estadistica);
-				listaEstadisticaTotalDoc.add(estadistica);
+				if(estadistica.fecha != null){
+					listaEstadisticaAnual.add(estadistica);
+					listaEstadisticaTotalDoc.add(estadistica);
+				}
+				else{
+					System.out.println("Lista de registros " + j + " vale: " + listaRegistros[j]);
+				}
 			}
 			
 			System.out.println("Doc: " + listaEstadisticaAnual.size());
@@ -79,8 +84,11 @@ public class CargaEstadisticasActoFinal {
 			for(int j=0;j<lista.length;j++){
 				
 				EstadisticaDia estadistica = new EstadisticaDia(lista[j]);
-				listaEstadisticaAnual.add(estadistica);
-				listaEstadisticaTotalUrg.add(estadistica);
+				if(estadistica.fecha != null){
+					listaEstadisticaAnual.add(estadistica);
+					listaEstadisticaTotalUrg.add(estadistica);
+				}
+
 			}
 			
 			System.out.println("Urgencias: " + listaEstadisticaAnual.size());
@@ -100,8 +108,10 @@ public class CargaEstadisticasActoFinal {
 			for(int j=0;j<lista.length;j++){
 				
 				EstadisticaDia estadistica = new EstadisticaDia(lista[j]);
-				listaEstadisticaAnual.add(estadistica);
-				listaEstadisticaTotalXed.add(estadistica);
+				if(estadistica.fecha != null){
+					listaEstadisticaAnual.add(estadistica);
+					listaEstadisticaTotalXed.add(estadistica);
+				}
 			}
 			
 			System.out.println("Xedoc: " + listaEstadisticaAnual.size());

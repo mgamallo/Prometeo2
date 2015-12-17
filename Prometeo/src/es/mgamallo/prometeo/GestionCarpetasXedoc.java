@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -20,7 +21,8 @@ public class GestionCarpetasXedoc {
 	public GestionCarpetasXedoc() {
 		// TODO Auto-generated constructor stub
 		
-		
+		Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("document.getElementById('enlaceEnviar').style.visibility='hidden';");
+		Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("mostrarVentana();");
 		
 		String cadena = "return document.getElementById('b1').innerHTML";
 		Object respuesta = Inicio.panelPrincipal.webBrowserOperaciones.executeJavascriptWithResult(cadena);
@@ -48,7 +50,8 @@ public class GestionCarpetasXedoc {
 		
 				
 		for(int i=0;i<listasXedoc.size();i++){
-			crearCarpetaContainer(listasXedoc.get(i));
+			boolean resultado = crearCarpetaContainer(listasXedoc.get(i));
+			// Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("alert('hola');");
 		}
 		
 		Inicio.panelPrincipal.webBrowserOperaciones.reloadPage();
@@ -74,6 +77,7 @@ public class GestionCarpetasXedoc {
 	
 	
 	private boolean crearCarpetaContainer(ListaXedoc lista){
+		
 		
 		String user = "";
 		
@@ -106,11 +110,26 @@ public class GestionCarpetasXedoc {
 			String rutaCopiaCarpetaDestinoCompleta = rutaCopiaCarpetaDestino + "\\" + carpetas[i].getName() + " " + lista.usuario;
 			System.out.println("Ruta de la copia de xedoc... \n" + rutaCopiaCarpetaDestinoCompleta);
 			
+			
+			
+			if(carpetas[i].getName().toLowerCase().contains("666 rebotado")){
+				Calendar calend = Calendar.getInstance();
+				int hora = calend.get(Calendar.HOUR_OF_DAY);
+				int min = calend.get(Calendar.MINUTE);
+				int sec = calend.get(Calendar.MILLISECOND);
+				
+				String id = hora + "" + min + "" + sec;
+				
+				rutaCopiaCarpetaDestinoCompleta += " " + id;
+			}
+			
 			File ficheroAux = new File(rutaCopiaCarpetaDestinoCompleta);
 			
 			System.out.println("Existe fichero? " + ficheroAux.exists());
-			
+
 			System.out.println("Renombrando... " + carpetas[i].renameTo(ficheroAux));
+		
+			
 			System.out.println(carpetas[i].getAbsolutePath());
 			carpetas[i] = ficheroAux;
 			System.out.println(carpetas[i].getAbsolutePath());
@@ -168,6 +187,15 @@ public class GestionCarpetasXedoc {
 		
 		carpetaDestino.mkdirs();
 		
+		
+		String gif = gifAleatorio();
+		String cadena = ""
+				+ "var gf = document.getElementById('gif');"
+				+ "gf.src = '" + gif + "';"
+				+ "";
+		
+		Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript(cadena);
+		
 		boolean correcto = true;
 		for(int i=0;i<listaPdfs.size();i++){
 			
@@ -184,6 +212,17 @@ public class GestionCarpetasXedoc {
 			System.out.println(listaPdfs.get(i));
 			System.out.println(nuevoDestino);
 			
+						
+			cadena = ""
+						+ "var sub = document.getElementById('subiendoUsuario');"
+						+ "sub.innerHTML='Subiendo los documentos de " + lista.usuario + ".';"
+						+ "var subDoc = document.getElementById('subiendoDoc');"
+						+ "subDoc.innerHTML='" + (i + 1) + " de " + listaPdfs.size() + "';"
+						+ "";
+			Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript(cadena);
+
+			
+			
 			if(!CopiarFichero.copiar(listaPdfs.get(i).getAbsolutePath(),nuevoDestino)){
 				correcto = false;
 				break;
@@ -196,6 +235,7 @@ public class GestionCarpetasXedoc {
 		if(!correcto){
 			JOptionPane.showMessageDialog(null, "Error al enviar a Xedoc");
 		}
+		
 		else{
 			JOptionPane.showMessageDialog(null, "Copia finalizada de " + lista.usuario);
 		}
@@ -203,6 +243,18 @@ public class GestionCarpetasXedoc {
 		return correcto;
 
 	}
+	
+	private String gifAleatorio(){
+		
+		String cadena = "imagenes/preloaders/0";
+		
+		Random rnd = new Random();
+		int num = rnd.nextInt(6);
+		cadena += ("" + (num+1) + ".gif");
+		
+		return cadena;
+	}
+	
 }
 
 

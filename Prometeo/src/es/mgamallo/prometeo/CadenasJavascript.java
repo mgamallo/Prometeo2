@@ -2,6 +2,7 @@ package es.mgamallo.prometeo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -105,8 +106,26 @@ public class CadenasJavascript {
 				"</a></li>" + LS;
 			*/
 			
+			String fotoAleatoria = "";
+			if(numUsuario.equals("04") || numUsuario.equals("03") || numUsuario.equals("02")
+					|| numUsuario.equals("05")){
+				Random r = new Random();
+				fotoAleatoria = String.valueOf((int) (r.nextDouble() * 8));
+				if(fotoAleatoria.equals("4") && numUsuario.equals("04")){
+					fotoAleatoria = fotoAleatoria + ".gif";
+				}
+				else{
+					fotoAleatoria = fotoAleatoria + ".jpg";
+				}
+			}
+			else{
+				fotoAleatoria = fotoAleatoria + ".jpg";
+			}
+
+
+			
 			String ca = "<li><a id='" + numUsuario + "' onclick=\"modalOn('" + numUsuario + "','" + Inicio.usuarios[i].alias + "','" + Inicio.usuarios[i].usuario + "');\" class='login-window' href='#'>" +
-					"<img src=\'images/" + Inicio.usuarios[i].imagen + ".jpg\' width=\'200px\'/ height=\'155px\'>" +
+					"<img src=\'images/" + Inicio.usuarios[i].imagen + fotoAleatoria + "\' width=\'200px\'/ height=\'155px\'>" +
 						"<div><span>" + Inicio.usuarios[i].alias + "</span></div>" +
 				"</a></li>" + LS;
 			
@@ -125,8 +144,15 @@ public class CadenasJavascript {
 		
 	}
 	
-	static public String getCodigoAyuda1(){
-		String cadena = "";
+	static public String getCodigoAyuda02(){
+		String cadena = ""
+				+ ""
+				+ "<div id='central'>" + LS
+					+ "<h2>" + LS
+						+ "<div id='contenedor'>" + LS
+							+ "<select id='busqueda' data-placeholder='Busca...' class='chosen-select' multiple style='width:350px;' tabindex='4'>" + LS
+								+"<option value=''></option>" + LS
+				+ "";
 		
 		Iterator<String> it = Inicio.indiceGeneralAyuda.keySet().iterator();
 		while(it.hasNext()){
@@ -135,31 +161,35 @@ public class CadenasJavascript {
 		}
 		
 		cadena = cadena 
-				+ "</select>" + LS
-				+ "" + LS
-				+ "<a class='button' id='botonBusqueda' href='javascript:buscar();'>Buscar</a>" + LS
-				+ "</h2>" + LS
+						+ "</select>" + LS
+						+ "" + LS
+						+ "<a class='button' id='botonBusqueda' href='javascript:buscar();'>Buscar</a>" + LS
+					+ "</div>" + LS
+					+ "</h2>" + LS
+					+ "<div id='caption' class='caption-container'></div>" + LS
+				+"</div>" + LS
+				+"</div>" + LS
 				+ "<div id='gallery' class='content'>" + LS
 					+ "<div id='controls' class='controls'></div>" + LS
 					+ "<div class='slideshow-container'>" + LS
 						+ "<div id='loading' class='loader'></div>" + LS
 						+ "<div id='slideshow' class='slideshow'></div>" + LS
 					+ "</div>" + LS
-					+ "<div id='caption' class='caption-container'></div>" + LS
+					
 				+ "</div>" + LS
-				+ "<div id='hor' >" + LS; 
+				; 
 		
 		return cadena;
 	}
 	
 	
-	static public String getCodigoAyuda2(String busqueda[]){
+	static public String getCodigoAyuda01(String busqueda[]){
 		
 		String cadena = ""
-				+ ""
-				+ "<div id='thumbs' class='navigation'>"
-					+ "<ul class='thumbs'>"
-				+ "";
+				+ "<div id='hor' >" + LS
+					+ "<div id='thumbs' class='navigation'>"
+						+ "<ul class='thumbs'>"
+					+ "";
 		
 		ArrayList<AyudaPdfs> documentos = new ArrayList<AyudaPdfs>();
 
@@ -238,7 +268,7 @@ public class CadenasJavascript {
 				+ "</ul>"
 				+ "</div>"
 				+ "<div style='clear: both;'></div>"
-				+ "";
+				+ "</div>";
 		
 		
 		return cadena;
@@ -1167,6 +1197,14 @@ public class CadenasJavascript {
 						+ "if(ultimaLetra == 'M' || ultimaLetra == 'H' || ultimaLetra == 'P'){"
 							+ "numeroAncla = i;"
 							+ "break;"
+						+ "}"
+						+ "else{"
+							+ "var longt = noSergas.length-4;"
+							+ "var siglas = noSergas.substring(longt);"
+							+ "if(siglas.localeCompare('NEOS') == 0){"
+								+ "numeroAncla = i;"
+								+ "break;"
+							+ "}"
 						+ "}"
 					+ "}"
 				+ "}"

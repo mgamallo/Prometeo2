@@ -8,6 +8,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,6 +24,10 @@ import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 public class Inicio {
 
 	protected static final String LS = System.getProperty("line.separator");
+	
+	public static String versionPrometeo = "Ver.005.t.txt";
+	public static String rutaRepositorioInstalacion = ":\\00_Prometeo";
+	
 	
 	public static InterfazPrincipal panelPrincipal;
 	
@@ -47,6 +52,7 @@ public class Inicio {
 	static Rectangle rVentanaExploradorMax = new Rectangle(851, 0, 175, 1250);
 	static Rectangle rVentanaNombres = new Rectangle(0, 1001, 1024, 250);
 	static Rectangle rVentanaControlIanus = new Rectangle();
+	static Rectangle rectanguloAyuda = new Rectangle();
 	
 	static public String rutaRevisados = ":\\digitalización\\00 documentacion\\02 Revisado";
 	static public String rutaFirmados = ":\\digitalización\\00 documentacion\\03 Firmado";
@@ -121,6 +127,7 @@ public class Inicio {
 	static public boolean carpetaDudas = false;
 	static public boolean carpetaXedocFirmado = false;
 	static public String contestacionDudas = "";
+	static public ArrayList<String> usuariosCondudas = new ArrayList<String>();
 	
 	static public Estadistica estadistica;
 	static public TreeMap<String, Indices> indiceGeneralAyuda = new TreeMap<String, Indices>();
@@ -137,6 +144,60 @@ public class Inicio {
 		
 		
 		NativeInterface.open(); 
+		
+		
+		// Lio con la unidad de acceso. Parche.
+				unidadHDDvirtual = detectaUnidadHDD();
+				System.out.println("Letra de la unidad... " + unidadHDDvirtual);
+				
+				rutaRepositorioInstalacion = unidadHDDvirtual + rutaRepositorioInstalacion;
+				
+				rutaFirmados = unidadHDDvirtual + rutaFirmados;
+				rutaFirmadosXedoc = unidadHDDvirtual + rutaFirmadosXedoc;
+				rutaXedocOriginales = unidadHDDvirtual + rutaXedocOriginales;
+				rutaXedoc = unidadHDDvirtual + rutaXedoc;
+				rutaRevisados = unidadHDDvirtual + rutaRevisados;
+				rutaFirmadosUrgencias = unidadHDDvirtual + rutaFirmadosUrgencias;
+				rutaAsociados = unidadHDDvirtual + rutaAsociados;
+				rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
+				rutaDudas = unidadHDDvirtual + rutaDudas;
+				
+				rutaEstadisticaXedoc = unidadHDDvirtual + rutaEstadisticaXedoc;
+				rutaEstadisticaIanus = unidadHDDvirtual + rutaEstadisticaIanus;
+				rutaEstadisticaUrg = unidadHDDvirtual + rutaEstadisticaUrg;
+				
+				rutaHermes = unidadHDDvirtual + rutaHermes;
+				rutaHermes_TXT = unidadHDDvirtual + rutaHermes_TXT;
+				rutaHermes_XLS = unidadHDDvirtual + rutaHermes_XLS;
+				
+				System.out.println(rutaEstadisticaIanus);
+		
+				nombrePc = new IdentificarPc().getIdentificacion(RUTAPC);
+				
+				String actualizaciones = detectaActualizaciones();
+				
+				if(!nombrePc.toLowerCase().contains("mahc35p") && !actualizaciones.equals("Error")){
+					
+					int reply = JOptionPane.showConfirmDialog(null, "Hay actualizaciones. ¿Instalar?", "Actualizaciones", JOptionPane.YES_NO_OPTION);
+		            if (reply == JOptionPane.YES_OPTION){
+		               
+		            	try {
+							
+							String comando = "java -jar " + rutaRepositorioInstalacion + "\\Actualizador.jar " + actualizaciones;
+							
+							Runtime.getRuntime().exec(comando);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+		    		System.exit(0);
+		            }
+					
+				}
+				else{
+					// JOptionPane.showMessageDialog(null, "No hay Actualizaciones");
+				}
 		
 		
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -158,9 +219,7 @@ public class Inicio {
 	    System.out.println("El numero de pantallas es " + numeroPantallas);
 	    System.out.println("Resolución: " + anchoP + ", " + altoP);
 		
-	    
-		nombrePc = new IdentificarPc().getIdentificacion(RUTAPC);
-		
+	    		
 		if(  nombrePc.toLowerCase().contains("mahc03p") ||
 					nombrePc.toLowerCase().contains("mahc04p") ||
 					nombrePc.toLowerCase().contains("mahc21p") 
@@ -181,6 +240,11 @@ public class Inicio {
 		}
 	    System.out.println("Es Win64... " + esWin64);
 	    
+	    
+	    if(nombrePc.toLowerCase().contains("mahc33p")){
+				Retardos.retardoAutomatico = 400;
+		}
+
 	    
 	    usuarioLogeadoWindows = System.getProperty("user.name");
 	    System.out.println("Usuario logeado: " + usuarioLogeadoWindows);
@@ -208,29 +272,7 @@ public class Inicio {
 			e.printStackTrace();
 		}
 
-// Lio con la unidad de acceso. Parche.
-		unidadHDDvirtual = detectaUnidadHDD();
-		System.out.println("Letra de la unidad... " + unidadHDDvirtual);
-		
-		rutaFirmados = unidadHDDvirtual + rutaFirmados;
-		rutaFirmadosXedoc = unidadHDDvirtual + rutaFirmadosXedoc;
-		rutaXedocOriginales = unidadHDDvirtual + rutaXedocOriginales;
-		rutaXedoc = unidadHDDvirtual + rutaXedoc;
-		rutaRevisados = unidadHDDvirtual + rutaRevisados;
-		rutaFirmadosUrgencias = unidadHDDvirtual + rutaFirmadosUrgencias;
-		rutaAsociados = unidadHDDvirtual + rutaAsociados;
-		rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
-		rutaDudas = unidadHDDvirtual + rutaDudas;
-		
-		rutaEstadisticaXedoc = unidadHDDvirtual + rutaEstadisticaXedoc;
-		rutaEstadisticaIanus = unidadHDDvirtual + rutaEstadisticaIanus;
-		rutaEstadisticaUrg = unidadHDDvirtual + rutaEstadisticaUrg;
-		
-		rutaHermes = unidadHDDvirtual + rutaHermes;
-		rutaHermes_TXT = unidadHDDvirtual + rutaHermes_TXT;
-		rutaHermes_XLS = unidadHDDvirtual + rutaHermes_XLS;
-		
-		System.out.println(rutaEstadisticaIanus);
+
 		
 		
 	    // Cargamos las estadisticas
@@ -273,8 +315,8 @@ public class Inicio {
 		// Carga estadisticas. De momento del día anterior.
 		estadistica = new Estadistica();
 		
-		// Borrar
-		Detecta.detectaDudasJavier();
+		
+		usuariosCondudas = Detecta.detectaDudasJavier();
 		
 		/******  Cargamos Normas
 		***************************************/
@@ -309,11 +351,11 @@ public class Inicio {
 
 		String textoCentral1, textoCentral2;
 		
-		textoCentral1 = CadenasJavascript.getCodigoAyuda1();
+		textoCentral1 = CadenasJavascript.getCodigoAyuda01(busqueda);
 		
 		System.out.println("Imprime codigo 1 \n" + textoCentral1);
 		
-		textoCentral2 = CadenasJavascript.getCodigoAyuda2(busqueda);
+		textoCentral2 = CadenasJavascript.getCodigoAyuda02();
 
 		String htmlCompleto = textoInicial + textoCentral1 + textoCentral2 + textoFinal;
 		
@@ -348,6 +390,14 @@ public class Inicio {
 	
 	private static String detectaUnidadHDD(){
 		
+		ArrayList<String> unidades = new ArrayList<String>();
+		
+		File[] hdds = File.listRoots();
+		for(int i=0;i<hdds.length;i++){
+			unidades.add(hdds[i].getAbsolutePath().substring(0,1));
+		}
+		
+		
 		String posibleRuta = "h" + rutaFirmados;
 		File ruta = new File(posibleRuta);
 		if(ruta.exists()){
@@ -358,13 +408,55 @@ public class Inicio {
 			ruta = new File(posibleRuta);
 			if(ruta.exists())
 				return "j";
+			
 		}
-
+	
+		for(int i=0;i<unidades.size();i++){
+			posibleRuta = unidades.get(i) + rutaFirmados;
+			ruta = new File(posibleRuta);
+			if(ruta.exists()){
+				return unidades.get(i);
+			}
+			
+		}
+		
+		
+		
+		
 		JOptionPane.showMessageDialog(null, "Problemas con la unidad de disco");
 		
 		return null;
 	}
 	
+	
+	private static String detectaActualizaciones(){
+		
+		File f = new File(rutaRepositorioInstalacion);
+		File[] ficheros = f.listFiles(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().endsWith(".txt");
+			}
+		});
+		
+		for(int i=0;i<ficheros.length;i++){
+			if(ficheros[i].getName().contains("Ver.")){
+				String version = ficheros[i].getName();
+				if(!version.equals(versionPrometeo)){
+					if(version.contains(".t.")){
+						return "Todo";							// Actualizar todo
+					}
+					else{
+						return "Ejecutable";							// Sólo actualiza el ejecutable
+					}
+				}
+			}
+		}
+		
+		return "Error";
+	}
 }
 
 class IdentificarPc {
@@ -388,6 +480,8 @@ class IdentificarPc {
 		return pc;
 	}
 }	
+
+
 
 
 class HiloEstadisticas extends Thread {

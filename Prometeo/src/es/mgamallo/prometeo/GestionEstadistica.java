@@ -71,6 +71,14 @@ public class GestionEstadistica {
 		
 		getFusionListas();
 		
+		/*
+		System.out.println("Listado de estadisticatotal");
+		for(int i=0;i<estadisticaTotal.size();i++){
+			System.out.println(estadisticaTotal.get(i).fecha);
+		}
+		System.out.println("Fin.");
+		*/
+		
 		maximoTotal = getMaximaSubida(estadisticaTotal);
 		maximoIanus = getMaximaSubida(estadisticaIanus);
 		maximoUrg = getMaximaSubida(estadisticaUrg);
@@ -765,6 +773,7 @@ public class GestionEstadistica {
 				break;
 		}
 
+		
 		String mascaraFecha = año;
 		ArrayList<ParMesDocs> pares = new ArrayList<ParMesDocs>();
 		
@@ -773,6 +782,9 @@ public class GestionEstadistica {
 		int media = 0;
 			
 		for(int i=0;i<lista.size();i++){
+			
+			System.out.println(lista.get(i).fecha);
+			
 			if(lista.get(i).fecha.substring(0,4).equals(mascaraFecha)){
 				
 				String mes = lista.get(i).fecha.substring(4,6);
@@ -780,10 +792,22 @@ public class GestionEstadistica {
 				int sum = 0;
 				int numDias = 0;
 				
+				System.out.println();
+				
+				boolean control = false;
+				
 				while(i < lista.size()  && lista.get(i).fecha.substring(4,6).equals(mes)){
+					control = true;
+					System.out.println(lista.get(i).fecha + "....   " + Integer.valueOf(lista.get(i).numeroFicheros));
+					
 					sum = sum + Integer.valueOf(lista.get(i).numeroFicheros);
 					numDias++;
+					
 					i++;
+				}
+				
+				if(control){
+					i--;
 				}
 				
 				if(sum > maximo){
@@ -800,6 +824,12 @@ public class GestionEstadistica {
 		}
 	
 		int numPares = pares.size();
+		
+		for(int i=0;i<numPares;i++){
+			System.out.println(pares.get(i).mes + " -- " + pares.get(i).numDocs);
+		}
+		
+		
 		if(numPares == 0)
 			media = 0;
 		else
@@ -883,7 +913,7 @@ public class GestionEstadistica {
 											+ "startvalue : '" + media + "',"
 										 	+ "color : '#c40000',"
 										 	+ "valueOnRight : '1',"
-										 	+ "tooltext : 'Media anual de $startvalue',"
+										 	+ "tooltext : 'Media mensual de $startvalue',"
 										 	+ "displayvalue : 'Media'"
 										 + "}"
 										+ "]"

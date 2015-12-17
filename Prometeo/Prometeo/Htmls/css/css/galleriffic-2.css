@@ -1,8 +1,8 @@
 div.content {
 	/* The display of content is enabled using jQuery so that the slideshow content won't display unless javascript is enabled. */
 	display: none;
-	float: right;
-	width: 550px; 
+	float: left; 
+	width: 700px;
 }
 div.content a, div.navigation a {
 	text-decoration: none;
@@ -40,22 +40,20 @@ div.loader {
 	width: 550px;
 	height: 502px; /* This should be set to be at least the height of the largest image in the slideshow */
 }
-div.slideshow {
 
-}
 div.slideshow span.image-wrapper {
 	display: block;
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 900px;
+	height: 1000px;
 }
 div.slideshow a.advance-link {
 	display: block;
-	width: 570px;
+	width: 700px;
 	/* height: 502px; /* This should be set to be at least the height of the largest image in the slideshow */
 	line-height: 502px; /* This should be set to be at least the height of the largest image in the slideshow */
-	text-align: center;
+	/* text-align: center; */
 }
 div.slideshow a.advance-link:hover, div.slideshow a.advance-link:active, div.slideshow a.advance-link:visited {
 	text-decoration: none;
@@ -65,8 +63,8 @@ div.slideshow img {
 	vertical-align: middle;
 	border: 1px solid #ccc;
 	
-	width: 560px;
-	/* height: 900px; */
+	width: 690px;
+	height: auto;
 }
 div.download {
 	float: right;
@@ -75,13 +73,13 @@ div.caption-container {
 	position: relative;
 	clear: left;
 	height: 75px;
-	
-	margin-top: -40px;
+	/* float: right; */
+	margin-top: 40px;
 }
 span.image-caption {
 	display: block;
 	position: absolute;
-	width: 550px;
+	/* width: 700px; */
 	top: 0;
 	left: 0;
 }
@@ -92,7 +90,7 @@ div.image-title {
 	font-weight: bold;
 	font-size: 2em;
 	border-bottom: 1px solid #f70;
-	
+	width: 400px;
 	color: #f70;
 }
 
@@ -120,17 +118,21 @@ ul.thumbs li {
 	margin: 5px 10px 5px 0;
 	list-style: none;
 	
+	background-color: black;
 	width: 200px;
 	height: 300px;
-	background: #fff;
+	background: #000;
 }
+
+
+
 a.thumb {
 	padding: 2px;
 	display: block;
 	border: 1px solid #ccc;
 }
 ul.thumbs li.selected a.thumb {
-	background: #fff;
+	background: #000;
 	border: 1px solid #f70;
 }
 a.thumb:focus {
@@ -141,7 +143,8 @@ ul.thumbs img {
 	display: block;
 	
 	width: 200px;
-	height: 300px;
+	/* height: 300px; */
+	vertical-align: center;
 }
 div.pagination {
 	clear: both;

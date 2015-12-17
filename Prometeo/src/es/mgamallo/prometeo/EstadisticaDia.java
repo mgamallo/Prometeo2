@@ -21,12 +21,21 @@ public class EstadisticaDia {
 		
 		System.out.println(cadena);
 		
-		String[] cadenaArray = cadena.split(";");
-		
-	//	if(cadenaArray.length>2){
+		if(cadena.length()>0){
+			String[] cadenaArray = cadena.split(";");
+			
 			this.fecha = cadenaArray[0];
 			this.numeroFicheros = cadenaArray[1];
 			this.diaSemana = cadenaArray[2];
+		}
+		else{
+			fecha = null;
+		}
+		
+		
+		
+	//	if(cadenaArray.length>2){
+
 	//	}
 		
 

@@ -24,7 +24,7 @@ public class VentanaRetardos extends JFrame{
 	JPanel panelPrincipal = new JPanel();
 	
 	JLabel labelCargarPaciente = new JLabel("Retardo para cargar paciente      " + String.valueOf(Retardos.retardoCargarPaciente));
-	JLabel labelIntroNHC = new JLabel("Retardo introducir NHC. NO TOCAR.    " + String.valueOf(Retardos.retardoIntroducirNHC));
+	JLabel labelAutomatico = new JLabel("Retardo automático    " + String.valueOf(Retardos.retardoAutomatico));
 	
 //	JLabel labelAsociar = new JLabel("Retardo para pulsar el botón asociar      " + String.valueOf(InicioIanus.retardoAsociar));
 //	JLabel labelVentana = new JLabel("RETARDO ESPERAR A QUE SE DIBUJE LA VENTANA DE ASOCIAR   " + String.valueOf(InicioIanus.retardoAbrirVentanaPropiaAsociar));
@@ -52,7 +52,7 @@ public class VentanaRetardos extends JFrame{
 	
 	JSlider sliderCargarPaciente = new JSlider(JSlider.HORIZONTAL,5000,12500,Retardos.retardoCargarPaciente);
 	JSlider sliderDibujarVentana = new JSlider(JSlider.HORIZONTAL,500,2000,Retardos.retardoDibujarVentana);
-	JSlider sliderIntroNHC = new JSlider(JSlider.HORIZONTAL,0,1000,Retardos.retardoIntroducirNHC);
+	JSlider sliderAutomatico = new JSlider(JSlider.HORIZONTAL,250,600,Retardos.retardoAutomatico);
 //	JSlider sliderAsociar = new JSlider(JSlider.HORIZONTAL,0,3000,InicioIanus.retardoAsociar);
 //	JSlider sliderDibujarVentana = new JSlider(JSlider.HORIZONTAL,0,3000,InicioIanus.retardoAsociar);
 //	JSlider sliderTitulo = new JSlider(JSlider.HORIZONTAL,0,1000,InicioIanus.retardoPegarTitulo);
@@ -85,8 +85,8 @@ public class VentanaRetardos extends JFrame{
 		labelTrasPegarRuta.setForeground(Color.RED);
 		labelTrasPegarTipo.setFont(new Font("Arial", Font.BOLD, 16));
 		labelTrasPegarTipo.setForeground(Color.RED);
-		labelIntroNHC.setFont(new Font("Arial", Font.BOLD, 16));
-		labelIntroNHC.setForeground(Color.RED);
+		labelAutomatico.setFont(new Font("Arial", Font.BOLD, 16));
+		labelAutomatico.setForeground(Color.RED);
 	    
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -94,6 +94,10 @@ public class VentanaRetardos extends JFrame{
 //		panel.add(labelVentana);
 		panel.add(labelCargarPaciente);
 	    panel.add(sliderCargarPaciente);
+	    
+		panel.add(labelAutomatico);
+		panel.add(sliderAutomatico);
+	    
 		panel.add(labelDibujarVentana);
 		panel.add(sliderDibujarVentana);
 //		panel.add(labelAsociar);
@@ -110,8 +114,7 @@ public class VentanaRetardos extends JFrame{
 		panel.add(labelTrasPegarTipo);
 		panel.add(slidertrasPegarTipo);
 //		panel.add(labelVacio4);
-		panel.add(labelIntroNHC);
-		panel.add(sliderIntroNHC);
+
 		
 //		panel.add(sliderAceptar);
 		
@@ -306,19 +309,19 @@ public class VentanaRetardos extends JFrame{
 			}
 		});
 	    
-	    sliderIntroNHC.setMinorTickSpacing(50);
-	    sliderIntroNHC.setMajorTickSpacing(250);
-	    sliderIntroNHC.setPaintLabels(true);
-	    sliderIntroNHC.setForeground(Color.gray);
-	    sliderIntroNHC.setPaintTicks(true);
-	    sliderIntroNHC.setBackground(Color.white);
+	    sliderAutomatico.setMinorTickSpacing(10);
+	    sliderAutomatico.setMajorTickSpacing(50);
+	    sliderAutomatico.setPaintLabels(true);
+	    sliderAutomatico.setForeground(Color.gray);
+	    sliderAutomatico.setPaintTicks(true);
+	    sliderAutomatico.setBackground(Color.white);
 	    
-	    sliderIntroNHC.addChangeListener(new ChangeListener() {
+	    sliderAutomatico.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				Retardos.retardoIntroducirNHC = (int) sliderIntroNHC.getValue();
-				labelIntroNHC.setText("Retardo introducir NHC. NO TOCAR.    " + String.valueOf(Retardos.retardoIntroducirNHC));
+				Retardos.retardoAutomatico = (int) sliderAutomatico.getValue();
+				labelAutomatico.setText("Retardo automático    " + String.valueOf(Retardos.retardoAutomatico));
 				//System.out.println(InicioIanus.retardoAsociar);
 			}
 		});

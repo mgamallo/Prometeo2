@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/metro-bootstrap.css">
 <link rel="stylesheet" href="css/iconFont.css">
 <link rel="stylesheet" href="css/drag.css">
+<link rel="stylesheet" href="css/modalX.css">
 <script src="js/jquery/jquery.min.js"></script>
 <script src="js/jquery/jquery.widget.min.js"></script>
 <script src="js/metro/metro-button-set.js"></script>
@@ -33,6 +34,15 @@
 		}
 		
 	}
+	
+	function mostrarVentana()
+	{
+		document.getElementById('fondooscuro').style.display='block';
+		var v = document.getElementById('vmodal');
+	    v.style.marginTop = '100px';
+	    v.style.display = 'block';
+	    v.style.left = ((document.body.clientWidth-350) / 2) +  'px';
+	}
 	</script>
 	
 </head>
@@ -41,7 +51,7 @@
 				<div class="row" style="margin: 20px auto 40px 10px">	
 					<div class="row" style="float: right; margin-right: 20px;">
 
-							<a class="tile half bg-emerald" title="Subir a Xedoc" href="command://enviarXedoc">
+							<a class="tile half bg-emerald" id='enlaceEnviar' title="Subir a Xedoc" href="command://enviarXedoc">  <!-- onclick="javascript:mostrarVentana();"  -->
 								<div class="tile-content icon">
 									<i class="icon-upload"></i>
 								</div>
@@ -106,10 +116,8 @@
 						    <div class="player" id="u4"><h3 id="Esther" style="color: white;">Esther</h3></div>
 						    <div class="player" id="u5"><h3 id="Iago" style="color: white;">Iago</h3></div>
 						    <div class="player" id="u6"><h3 id="Irene" style="color: white;">Irene</h3></div>
-						    <div class="player" id="u7"><h3 id="Isa" style="color: white;">Isa</h3></div>
 						    <div class="player" id="u8"><h3 id="Juanma" style="color: white;">Juanma</h3></div>
 						    <div class="player" id="u9"><h3 id="Man" style="color: white;">Man</h3></div>
-						    <div class="player" id="u10"><h3 id="Oscar" style="color: white;">Oscar</h3></div>
 						    <div class="player" id="u11"><h3 id="Salva" style="color: white;">Salva</h3></div>
 						    <div class="player" id="u12"><h3 id="Ruben" style="color: white;">Ruben</h3></div>
 					    </div>
@@ -121,10 +129,8 @@
 						    <div class="Pend" id="p4">0</div>
 						    <div class="Pend" id="p5">0</div>
 						    <div class="Pend" id="p6">0</div>
-						    <div class="Pend" id="p7">0</div>
 						    <div class="Pend" id="p8">0</div>
 						    <div class="Pend" id="p9">0</div>
-						    <div class="Pend" id="p10">0</div>
 						    <div class="Pend" id="p11">0</div>
 						    <div class="Pend" id="p12">0</div>
 					    </div>
@@ -139,6 +145,7 @@
 								        <ul id="list1" class="yui3-dd-drop">
 								        </ul>
 								</div>
+
 							</div>
 							
 							<div class="col">
@@ -148,6 +155,7 @@
 								        <ul id="list2" class="yui3-dd-drop">
 										</ul>
 								</div>
+
 							</div>
 							
 								 
@@ -199,6 +207,7 @@
 									            <li class="list1 yui3-dd-drop yui3-dd-draggable" title="" id="pdf40"></li>
 									        </ul>
 									</div>
+									
 								</div>
 
 						<div>
@@ -219,6 +228,24 @@
 				
 
 				</div>
+
+	<div id='fondooscuro'></div>
+	<div id='vmodal'>
+		<div id='vcentrada'>
+			<div>
+				<img id="gif" src="imagenes/preloaders/01.gif" />
+				<div>
+					<h3><span id="subiendoUsuario">Subiendo los documentos de </span></h3>
+				</div>
+				<div>
+					<h4><span id="subiendoDoc">1 de </span></h4>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
 
 
 

@@ -222,9 +222,20 @@ public class GestionJacob {
 				System.out.println("El servicio en GEstionJacob.buscaNodo es: " + servicio);
 				if(servicio.equals(InicioIanus.HOSP_JACOB)){
 					
+					String aux = "";
+					
 					if(inicializar){
 						try {
-
+							
+							
+							
+							if(Inicio.ianus1onTop){
+								aux = "Ianus 1";
+							}
+							else{
+								aux = "Ianus 2";
+							}
+							
 							Dispatch.call(ianus,"Navigate","javascript:" + CadenasJavascript.inicializacionPacienteNodoHosp(servicio));
 							Thread.sleep(2000);
 					//		Dispatch.call(ianus, "Navigate","javascript:" + CadenasJavascript.inicializacionPacienteSetFichaHosp());
@@ -266,6 +277,7 @@ public class GestionJacob {
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							rescateJacob(aux);
 						}
 						System.out.println("Tipo nodo en ingresos inicial es: " + tipoNodo + " en ianus1: " + Inicio.ianus1onTop);
 						if(!tipoNodo.equals("x")){
@@ -282,6 +294,7 @@ public class GestionJacob {
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
+								rescateJacob(aux);
 							}
 						}
 					}
@@ -637,11 +650,14 @@ public class GestionJacob {
 			public void run() {
 				
 				
-				ActiveXComponent ianusActivo = new ActiveXComponent("InternetExplorer.Application");
+
 				String aux = "";
 				
-				
 				try {
+					
+					ActiveXComponent ianusActivo = new ActiveXComponent("InternetExplorer.Application");
+					
+					
 					if(Inicio.ianus1onTop){
 						aux = "Ianus 1";
 						ianusActivo = Inicio.paciente1.ianus;

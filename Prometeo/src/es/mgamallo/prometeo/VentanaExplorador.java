@@ -178,10 +178,10 @@ public class VentanaExplorador extends javax.swing.JFrame {
 				
 				habilita();
 
-						String ruta = Inicio.rutaFirmadosXedoc + "\\0000 #666 Rebotado de Ianus.";
+						String ruta = Inicio.rutaFirmadosXedoc + "\\0000 666 Rebotado de Ianus.";
 						
 						if(Inicio.usuario.urgencias){
-							ruta = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc\\0000 #666 Rebotado de Ianus. ";
+							ruta = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc\\0000 666 Rebotado de Ianus. ";
 						}
 						
 						ruta += "\\";
