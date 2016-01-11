@@ -52,16 +52,13 @@ public class Cerrar {
 
 		String cmd2 = "taskkill.exe /F /IM iexplore.exe /T";
 		
-		Process hijo2;
-		
 		try {
 
 			System.out.println("Empieza la matanza");
-			hijo2 = Runtime.getRuntime().exec(cmd2);
+			Runtime.getRuntime().exec(cmd2);
 
 			//			hijo2.waitFor();
-			System.out.println("sleep");
-			Thread.sleep(500);
+			Thread.sleep(200);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

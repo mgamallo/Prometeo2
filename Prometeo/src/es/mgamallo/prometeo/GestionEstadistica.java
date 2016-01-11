@@ -36,9 +36,12 @@ public class GestionEstadistica {
 	String mediaIanus = "";
 	String mediaUrg = "";
 	
+	ArrayList<String> años = new ArrayList<String>();
+	
 	static String añoActual = "";
 	static String mesActual = "";
 	static Fecha fecha;
+	
 	
 	static public void main(String args[]){
 		new GestionEstadistica();
@@ -83,6 +86,8 @@ public class GestionEstadistica {
 		maximoIanus = getMaximaSubida(estadisticaIanus);
 		maximoUrg = getMaximaSubida(estadisticaUrg);
 		maximoXedoc = getMaximaSubida(estadisticaXedoc);
+		
+		años = getAños(estadisticaTotal);
 		
 		fecha = new Fecha();
 		añoActual = String.valueOf(fecha.año);
@@ -1300,6 +1305,22 @@ public class GestionEstadistica {
 		return cadena1 + cadena2 + cadena3;
 	}
 
+	private ArrayList<String> getAños(ArrayList<EstadisticaDia> estadistica){
+		
+		ArrayList<String> años = new ArrayList<String>();
+		String aux = "";
+		
+		for(int i=0;i<estadistica.size();i++){
+			String an = estadistica.get(i).fecha.substring(0, 4);
+			if(!aux.equals(an)){
+				aux = an;
+				años.add(aux);
+			}
+		}
+		
+		return años;
+	}
+	
 	private String getMaximaSubida(ArrayList<EstadisticaDia> estadistica){
 		
 		int maximo = 0;
@@ -1366,6 +1387,31 @@ public class GestionEstadistica {
 		*/
 	}
 	
+	
+	public String inicializaAños(){
+		
+		String aux = "var años = [";
+		
+		for(int i=años.size()-1;i>=0;i--){
+			
+			aux += "'" + años.get(i) + "'";
+			if(i == 0){
+				aux += "];";
+			}
+			else{
+				aux += ",";
+			}
+		}
+		
+		aux += "putAños('Mes_año',años);";
+		aux += "putAños('Año_año',años);";
+		/*
+		+ "var años = ['2014','2015','2016','2017'];"
+		+ "putAños('Mes_año',años);"
+		*/
+		
+		return aux;
+	}
 	
 	private String getMes(String mes){
 		

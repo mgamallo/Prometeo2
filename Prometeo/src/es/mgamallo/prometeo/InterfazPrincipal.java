@@ -641,7 +641,8 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(ges.cadenaAñoMes);
 						webBrowserOperaciones.executeJavascript(ges.cadenaAños);
 						
-												
+						webBrowserOperaciones.executeJavascript(ges.inicializaAños());
+						
 					}
 					
 					if(command.equals("5diasTotal")){

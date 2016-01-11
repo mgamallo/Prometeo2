@@ -107,8 +107,7 @@ public class CadenasJavascript {
 			*/
 			
 			String fotoAleatoria = "";
-			if(numUsuario.equals("04") || numUsuario.equals("03") || numUsuario.equals("02")
-					|| numUsuario.equals("05")){
+			if(numUsuario.equals("04") || numUsuario.equals("03") || numUsuario.equals("05")){
 				Random r = new Random();
 				fotoAleatoria = String.valueOf((int) (r.nextDouble() * 8));
 				if(fotoAleatoria.equals("4") && numUsuario.equals("04")){
@@ -1202,6 +1201,10 @@ public class CadenasJavascript {
 							+ "var longt = noSergas.length-4;"
 							+ "var siglas = noSergas.substring(longt);"
 							+ "if(siglas.localeCompare('NEOS') == 0){"
+								+ "numeroAncla = i;"
+								+ "break;"
+							+ "}"
+							+ "else if(siglas.localeCompare('PSQC') == 0){"
 								+ "numeroAncla = i;"
 								+ "break;"
 							+ "}"

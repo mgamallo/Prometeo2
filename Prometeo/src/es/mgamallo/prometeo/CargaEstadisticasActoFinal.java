@@ -211,6 +211,7 @@ public class CargaEstadisticasActoFinal {
 		return cadenaSinOrdenar;
 	}
 
+	
 	private void crearTxt(ArrayList<EstadisticaDia> lista, String nombreCarpeta, String ruta){
 		
 		FileWriter fichero = null;

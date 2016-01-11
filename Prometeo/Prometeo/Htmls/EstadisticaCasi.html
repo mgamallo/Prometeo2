@@ -19,6 +19,20 @@
 <script type="text/javascript" src="fusioncharts/themes/fusioncharts.theme.ocean.js"></script>
 
 <script type="text/javascript">
+	function putAños(id, años){
+		var sel = document.getElementById(id);
+		var opcion;
+		for(var i=0;i<años.length;i++){
+			opcion = document.createElement('option');
+			opcion.value = opcion.text = años[i];
+			sel.add(opcion);
+		}
+
+	}
+
+</script>
+
+<script type="text/javascript">
 
 	FusionCharts.ready(function() {
 		var seleccion,
@@ -463,8 +477,7 @@ FusionCharts.ready(function() {
 			</div>
 			<div class = "año">
 				<select name='años' id='Mes_año' onchange='seleccionadoGraf("Mes",value);'>
-					<option value='2015'> 2015</option>
-					<option value='2014'> 2014 </option>
+
 				</select>
 			</div>
 
@@ -487,8 +500,7 @@ FusionCharts.ready(function() {
 			</div>
 			<div class = "año">
 				<select name='años' id='Año_año' onchange='seleccionadoGraf("Año",value);'>
-					<option value='2015'> 2015</option>
-					<option value='2014'> 2014 </option>
+
 				</select>
 			</div>
 			<div id="chart5DiasC">FusionCharts XT will load here!</div>

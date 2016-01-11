@@ -308,7 +308,10 @@ public class VentanaExplorador extends javax.swing.JFrame {
         botonReiniciarNavegadores.setBackground(Color.red);
         botonReiniciarNavegadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	Cerrar.cerrarIexplorer();
+            	for(int i=0;i<6;i++){
+            		Cerrar.cerrarIexplorer();
+            	}
+            	
             	GestionJacob.capturaWebs();
             	botonResetearSubida.setEnabled(true);
             }

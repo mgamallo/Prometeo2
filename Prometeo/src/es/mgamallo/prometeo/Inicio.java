@@ -25,7 +25,7 @@ public class Inicio {
 
 	protected static final String LS = System.getProperty("line.separator");
 	
-	public static String versionPrometeo = "Ver.005.t.txt";
+	public static String versionPrometeo = "Ver.006.t.txt";
 	public static String rutaRepositorioInstalacion = ":\\00_Prometeo";
 	
 	
