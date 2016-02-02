@@ -13,7 +13,10 @@ import com.jacob.com.Variant;
 
 public class GestionJacob {
 	
-	public static String direccionIanus = "http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp";
+	public static final String DIRECCIONIANUS_CHOP = "http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp";
+	public static final String DIRECCIONIANUS_SALNES = "http://ianussal.sergas.local/ianus_sal_pro/inicio.jsp;";
+	
+	public static String direccionIanus = DIRECCIONIANUS_CHOP;
 
 	public static void capturaWebs(){
 		
@@ -21,7 +24,12 @@ public class GestionJacob {
 		
 		// String direccionIanus = "http://assccihspre/ianus_hosp2_pre/inicio.do";
 		
-
+		if(Inicio.usuario.tipoDocumentacion == 2){
+			direccionIanus = DIRECCIONIANUS_SALNES;
+		}
+		else{
+			direccionIanus = DIRECCIONIANUS_CHOP;
+		}
 		
 	    InicioIanus.oShell = new ActiveXComponent("Shell.Application"); 
 	    InicioIanus.oWindows = InicioIanus.oShell.invokeGetComponent("Windows");

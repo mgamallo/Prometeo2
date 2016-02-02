@@ -138,7 +138,7 @@ label {
     behavior: url(css/pie.htc);
 }
 
-.buttonI, .buttonX, .buttonR{
+.buttonI, .buttonX, .buttonR, .buttonS{
 	float: right;
 	margin-right: 10px;
 	width: 100px;
@@ -165,7 +165,13 @@ label {
 	color: #fff;
 }
 
-.buttonX:hover, .buttonI:hover, .buttonR:hover{
+.buttonS{
+	background: none repeat scroll 0% 0% #3F9D4A;
+	color: #fff;
+}
+
+
+.buttonX:hover, .buttonI:hover, .buttonR:hover, .buttonS:hover{
 	background-color: #F0B641;
 }
 

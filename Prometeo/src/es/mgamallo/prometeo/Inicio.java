@@ -25,7 +25,7 @@ public class Inicio {
 
 	protected static final String LS = System.getProperty("line.separator");
 	
-	public static String versionPrometeo = "Ver.006.t.txt";
+	public static String versionPrometeo = "Ver.009.t.txt";
 	public static String rutaRepositorioInstalacion = ":\\00_Prometeo";
 	
 	
@@ -69,9 +69,18 @@ public class Inicio {
 	static public String rutaDudas = ":\\digitalización\\00 documentacion\\99 Dudas";
 	static public String rutaXedocOriginales = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\05 XEDOC ORIGINALES";
 	
+	// Salnes
+	
+	static public String rutaRevisadosSalnes = ":\\digitalización\\02 SALNÉS\\02 Revisado";
+	static public String rutaFirmadosSalnes = ":\\digitalización\\02 SALNÉS\\03 Firmado";
+	static public String rutaAsociadosSalnes = ":\\digitalización\\02 SALNÉS\\04 Asociado";
+	static public String rutaFirmadosXedocSalnes = ":\\digitalización\\00 documentacion\\03 Firmado Xedoc";
+
+	
 	static public String rutaEstadisticaXedoc = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\05 XEDOC ORIGINALES\\";
 	static public String rutaEstadisticaIanus = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\04 Asociado\\";
 	static public String rutaEstadisticaUrg = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 ASOCIADO\\";
+	static public String rutaEstadisticaSalnes = ":\\DIGITALIZACIÓN\\02 SALNÉS\\04 Asociado\\";
 	
 	// Revisar estas rutas
 	static public String rutaNormas = "c:\\Desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\txt\\Normas\\";
@@ -162,9 +171,19 @@ public class Inicio {
 				rutaAsociadosUrgencias = unidadHDDvirtual + rutaAsociadosUrgencias;
 				rutaDudas = unidadHDDvirtual + rutaDudas;
 				
+				// SALNES *******************************************************************************
+				// **************************************************************************************
+				rutaFirmadosSalnes = unidadHDDvirtual + rutaFirmadosSalnes;
+				rutaFirmadosXedocSalnes = unidadHDDvirtual + rutaFirmadosXedocSalnes;
+			//	rutaXedocOriginales = unidadHDDvirtual + rutaXedocOriginales;
+			//	rutaXedoc = unidadHDDvirtual + rutaXedoc;
+				rutaRevisadosSalnes = unidadHDDvirtual + rutaRevisadosSalnes;
+				rutaAsociadosSalnes = unidadHDDvirtual + rutaAsociadosSalnes;
+				
 				rutaEstadisticaXedoc = unidadHDDvirtual + rutaEstadisticaXedoc;
 				rutaEstadisticaIanus = unidadHDDvirtual + rutaEstadisticaIanus;
 				rutaEstadisticaUrg = unidadHDDvirtual + rutaEstadisticaUrg;
+				rutaEstadisticaSalnes = unidadHDDvirtual + rutaEstadisticaSalnes;
 				
 				rutaHermes = unidadHDDvirtual + rutaHermes;
 				rutaHermes_TXT = unidadHDDvirtual + rutaHermes_TXT;
@@ -375,10 +394,10 @@ public class Inicio {
 			user.alias= us[0];
 			user.imagen= us[1];
 			if(us[2].equals("urg")){
-				user.urgencias = true;
+				user.tipoDocumentacion = 0;
 			}
-			else{
-				user.urgencias = false;
+			else if(us[2].equals("doc")){
+				user.tipoDocumentacion = 1;
 			}
 			user.usuario = us[3];
 			if(user.usuario.equals(" ")){

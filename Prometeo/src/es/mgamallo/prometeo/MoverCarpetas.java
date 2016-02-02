@@ -92,71 +92,84 @@ public class MoverCarpetas {
 
 	static public ArrayList<Directorio> getCarpetasSubidas(){
 		
-		String ruta = InicioIanus.RUTA;
-		String rutab = InicioIanus.RUTAB;
+		String rutas[] = {InicioIanus.RUTA,InicioIanus.RUTAB, InicioIanus.rutaSalnes, InicioIanus.rutaSalnesB};
 		
-		if(Inicio.usuario.urgencias){
-			ruta = InicioIanus.RUTAURG + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
-			rutab = InicioIanus.RUTAURGB + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
+		
+		if(Inicio.usuario.tipoDocumentacion == 0){
+			rutas[0] = InicioIanus.RUTAURG + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
+			rutas[1] = InicioIanus.RUTAURGB + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 		}
 		
-		File directorioFirmados = new File(ruta);
-		if(!directorioFirmados.exists()){
-			ruta = rutab;
-			directorioFirmados = new File(ruta);
-		}
+		ArrayList<Directorio> carpetas = new ArrayList<Directorio>();
 		
-		String dudas = Inicio.rutaDudas + "\\" + Inicio.usuario.alias;
-		File fDudas = new File(dudas);
-		boolean tieneCarpetaDudas = false;
-		if(fDudas.exists()){
-			tieneCarpetaDudas = true;
-		}
 		
-		if(directorioFirmados.exists()){
+		for(int z=0;z<4;z= z+2){
+			
+			
+			
+			File directorioFirmados = new File(rutas[z]);
+			if(!directorioFirmados.exists()){
+				directorioFirmados = new File(rutas[z+1]);
+			}
+			
+			String dudas = Inicio.rutaDudas + "\\" + Inicio.usuario.alias;
+			File fDudas = new File(dudas);
+			boolean tieneCarpetaDudas = false;
+			if(fDudas.exists()){
+				tieneCarpetaDudas = true;
+			}
+			
+			if(directorioFirmados.exists()){
 
-			FileFilter filtro = new FileFilter(){
-	
-				@Override
-				public boolean accept(File fichero) {
-					// TODO Auto-generated method stub
-					
-					if(fichero.isDirectory()){
-						if(fichero.getName().endsWith("@" + Inicio.usuario.alias)){
-							return true;
+				FileFilter filtro = new FileFilter(){
+		
+					@Override
+					public boolean accept(File fichero) {
+						// TODO Auto-generated method stub
+						
+						if(fichero.isDirectory()){
+							if(fichero.getName().endsWith("@" + Inicio.usuario.alias)){
+								return true;
+							}
 						}
+						return false;
 					}
-					return false;
+					
+				};
+				
+				File[] directoriosUsuario = directorioFirmados.listFiles(filtro);
+				
+				boolean salnes = false;
+				if(z > 1){
+					salnes = true;
 				}
 				
-			};
-			
-			File[] directoriosUsuario = directorioFirmados.listFiles(filtro);
-			
-			ArrayList<Directorio> carpetas = new ArrayList<Directorio>();
-			for(int i=0;i<directoriosUsuario.length;i++){
-				carpetas.add(new Directorio(directoriosUsuario[i],true));
-				System.out.println(carpetas.get(i).servicio + "   " + carpetas.get(i).numeroPdfs);
-			}
-			
-			if(tieneCarpetaDudas){
-				directoriosUsuario = fDudas.listFiles(filtro);
 				for(int i=0;i<directoriosUsuario.length;i++){
-					carpetas.add(new Directorio(directoriosUsuario[i],true));
+					carpetas.add(new Directorio(directoriosUsuario[i],true, salnes));
 					System.out.println(carpetas.get(i).servicio + "   " + carpetas.get(i).numeroPdfs);
 				}
+				
+				if(tieneCarpetaDudas){
+					directoriosUsuario = fDudas.listFiles(filtro);
+					for(int i=0;i<directoriosUsuario.length;i++){
+						carpetas.add(new Directorio(directoriosUsuario[i],true, false));
+						System.out.println(carpetas.get(i).servicio + "   " + carpetas.get(i).numeroPdfs);
+					}
+				}
+
 			}
-			
-			return carpetas;
 		}
+
 		
-		return null;
+		return carpetas;
 	}
 	
 	static public void enviarAasociados(ArrayList<Directorio> carpetas){
-		String rutaAsociados = Inicio.rutaAsociados;
-		if(Inicio.usuario.urgencias){
-			rutaAsociados = Inicio.rutaAsociadosUrgencias;
+		
+		String rutaAsociadosCHOP = Inicio.rutaAsociados;
+		String rutaAsociadosSALNES = Inicio.rutaAsociadosSalnes;
+		if(Inicio.usuario.tipoDocumentacion == 0){
+			rutaAsociadosCHOP = Inicio.rutaAsociadosUrgencias;
 		}
 		
 		// Borrar
@@ -168,14 +181,32 @@ public class MoverCarpetas {
 		// Obsoleto. Cambiado para que se separe por dias
 		// rutaAsociados = devuelveFecha(rutaAsociados);
 		Calendario calendario = new Calendario();
-		rutaAsociados = calendario.getCarpetaFinal(true, Inicio.usuario.urgencias);
-		System.out.println("Ruta asociados: " + rutaAsociados);
 		
-		File directorio = new File(rutaAsociados);
-		boolean creaDirectorio = directorio.mkdirs();
+		int urgDoc = 1;
+		if(Inicio.usuario.tipoDocumentacion == 0){
+			urgDoc = 0;
+		}
+		rutaAsociadosCHOP = calendario.getCarpetaFinal(true, urgDoc);
+		rutaAsociadosSALNES = calendario.getCarpetaFinal(true, 2);
+		System.out.println("Ruta asociados: " + rutaAsociadosCHOP);
+		System.out.println("Ruta asociados: " + rutaAsociadosSALNES);
+		
+				
+		File directorioCHOP = new File(rutaAsociadosCHOP);
+		boolean creaDirectorioCHOP = directorioCHOP.mkdirs();
+		File directorioSALNES = new File(rutaAsociadosSALNES);
+		boolean creaDirectorioSALNES = directorioSALNES.mkdirs();
 		
 		for(int i=0;i<carpetas.size();i++){
 			if(carpetas.get(i).asociado){
+				String rutaAsociados = "";
+				if(carpetas.get(i).salnes){
+					rutaAsociados = rutaAsociadosSALNES;
+				}
+				else{
+					rutaAsociados = rutaAsociadosCHOP;
+				}
+				
 				String rutaNueva = rutaAsociados + "\\" + carpetas.get(i).directorio.getName();
 				
 				System.out.println("Ruta asociados completa " + rutaNueva);

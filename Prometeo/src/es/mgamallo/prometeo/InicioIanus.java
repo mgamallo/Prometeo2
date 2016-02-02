@@ -25,6 +25,9 @@ public class InicioIanus {
 	static final String RUTAB = "H:/DIGITALIZACIÓN/00 DOCUMENTACION/03 Firmado";
 	static final String RUTAURG = "j:/DIGITALIZACIÓN/01 INFORMES URG (Colectiva)";
 	static final String RUTAURGB = "H:/DIGITALIZACIÓN/01 INFORMES URG (Colectiva)";
+	static final String rutaSalnes = "j:/digitalización/02 salnés/03 Firmado";
+	static final String rutaSalnesB = "h:/digitalización/02 salnés/03 Firmado";
+	
 static final String RUTAPC = "c:/ianus/ianus.txt";
 
 	static final String CONSENTIMIENTO = "Consentimento informado";
@@ -154,7 +157,7 @@ static final String RUTAPC = "c:/ianus/ianus.txt";
 	
 	private void setDefaultsModels() {
 
-		listaNodos = Inicio.leerExcel.getNodos();
+		listaNodos = Inicio.leerExcel.getNodos(Inicio.usuario.tipoDocumentacion);
 		coordenadasAsociar = Inicio.leerExcel.getCoordenadasAsociar();
 		
 		listaServicios = Inicio.leerExcel.getServicios();

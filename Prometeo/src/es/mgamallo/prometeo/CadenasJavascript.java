@@ -18,14 +18,19 @@ public class CadenasJavascript {
 		String clase = "";
 		String tipoDocumentacion = "";
 		
-		if(usuario.urgencias){
+		if(usuario.tipoDocumentacion == 0){
 			seleccionado = "urg";
 			clase = "tile bg-cobalt bg-hover-lightGreen bd-yellow selected";
 			tipoDocumentacion = "Urgencias".toUpperCase();
-		}else{
+		}else if(usuario.tipoDocumentacion == 1){
 			seleccionado = "doc";
 			clase = "tile bg-green bg-hover-lightGreen bd-yellow selected";
 			tipoDocumentacion = "Documentación".toUpperCase();
+		}
+		else if(usuario.tipoDocumentacion == 2){
+			seleccionado = "sal";
+			clase = "tile bg-darkCobalt bg-hover-lightGreen bd-yellow selected";
+			tipoDocumentacion = "Salnés".toUpperCase();
 		}
 		
 		String cadena = "document.getElementById('usuario').innerHTML = '" + usuario.alias + "';" + LS
@@ -286,9 +291,14 @@ public class CadenasJavascript {
 			
 			String cadenaId = "carpeta_" + numero;
 			
+			String color = "red";
+			if(carpetas.get(i).salnes){
+				color = "orange";
+			}
+			
 			cadena += ""
 					+ "<a class='list' href='command://carpeta_" + numero + "' style='float:left; margin-right:20px; width:380px;'>"
-				+ "<div class='list-content data' name='hola' style='background: red;' id='" + cadenaId + "'>" 
+				+ "<div class='list-content data' name='hola' style='background: " + color + ";' id='" + cadenaId + "'>" 
 					+ "<span class='icon icon-file-pdf fg-white'></span>" 
 					+ "<div class='fg-white'>" 
 							+ "<span class='list-title'><strong>" + carpetas.get(i).servicio + "</strong></span>" 
@@ -322,7 +332,7 @@ public class CadenasJavascript {
 				numero = String.valueOf(i);
 			}
 			
-			if(carpetas.get(i).usuario.length() == 0){
+			if(carpetas.get(i).usuario.length() == 0 && !carpetas.get(i).nombreCarpeta.contains("ç")){
 				cadena += ""
 						+ "<a href='command://carpeta_" + numero + "' class='tile ";
 			}

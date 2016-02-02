@@ -71,6 +71,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -321,26 +322,73 @@ public class InterfazPrincipal implements MouseListener{
 					Inicio.usuario.usuario = parameters[0].toString();
 					Inicio.usuario.password = parameters[1].toString();
 					
+					boolean directo = false;
+					String destino = "";
+					switch (parameters[2].toString().charAt(0)) {
+					case 'd':
+						
+						break;
+					case 'x':
+						Inicio.usuario.xedoc = true;
+						directo = true;
+						destino = DIR_ABRIR_X;
+						break;
+					case 'i':
+						directo = true;
+						destino = DIR_ABRIR;
+						break;
+					case 's':
+						Inicio.usuario.tipoDocumentacion = 2;
+						directo = true;
+						destino = DIR_ABRIR;
+						break;
+					case 'r':
+						break;
+					default:
+						break;
+					}
+					
 			//		new VentanaPassword(Inicio.usuario.alias, Inicio.usuario.usuario).setVisible(true);;
 					
 					abracadabra = true;
 					if(abracadabra){
 						barraPanelControlVisible = true;
+						
+						if (!directo) {
+							webBrowserOperaciones.navigate(DIR_USUARIO);
+						} else if(destino.equals(DIR_ABRIR)) {
+							
+							String codigo = ""
+									+ "var abrir = document.getElementById('abrir');"
+									+ "abrir.click();"
+									+ "";
+							
+							webBrowserControl.executeJavascript(codigo);
+							
+						}
+						else if(destino.equals(DIR_ABRIR_X)){
+							Inicio.xedoc = true;
+							Inicio.carpetaXedocFirmado = true;
+							webBrowserOperaciones.navigate(DIR_ABRIR_X);
+							panelActivo = ABRIR;
+						}
 
-						webBrowserOperaciones.navigate(DIR_USUARIO);
-						
 						numeroDudasContestadas = Detecta.dudasResueltas();
-						System.out.println("Numero de dudas resueltas " + numeroDudasContestadas);
-						numeroApartadoFirmados = Detecta.apartadoPendiente(true);
-						numeroApartadoRevisados = Detecta.apartadoPendiente(false);
-						
-						
-						MiHilo miHilo = new MiHilo(Inicio.usuario,500);
+						System.out.println("Numero de dudas resueltas "
+								+ numeroDudasContestadas);
+						numeroApartadoFirmados = Detecta
+								.apartadoPendiente(true);
+						numeroApartadoRevisados = Detecta
+								.apartadoPendiente(false);
+
+						MiHilo miHilo = new MiHilo(Inicio.usuario, 500);
 						miHilo.start();
 
 						frame.setBounds(Inicio.rVentanaInterfazPrincipalMax);
 						Inicio.panelPrincipal.panelControl.setVisible(true);
+
 					}
+					
 
 		
 					
@@ -352,30 +400,47 @@ public class InterfazPrincipal implements MouseListener{
 					Inicio.carpetaDudas = false;
 					Inicio.carpetaXedocFirmado = false;
 					
+					String claseUrg = "tile bg-cobalt bg-hover-lightGreen bd-yellow";
+					String claseDoc = "tile bg-green bg-hover-lightGreen bd-yellow";
+					String claseSal = "tile bg-darkCobalt bg-hover-lightGreen bd-yellow";
+					
 					String cadena = "";
 					
 					if (command.equals("urg")) {
-						String claseOn = "tile bg-cobalt bg-hover-lightGreen bd-yellow selected";
-						String claseOff = "tile bg-green bg-hover-lightGreen bd-yellow";
+						String claseOn = claseUrg + " selected";
 						cadena = ""
 								+ "document.getElementById('urg').className='" + claseOn + "';" + LS
-								+ "document.getElementById('doc').className='" + claseOff + "';" + LS
+								+ "document.getElementById('doc').className='" + claseDoc + "';" + LS
+								+ "document.getElementById('sal').className='" + claseSal + "';" + LS
 								+ "document.getElementById('tipoDocumentacion').innerHTML = 'URGENCIAS';";
 						
-						Inicio.usuario.urgencias = true;
+						Inicio.usuario.tipoDocumentacion = 0;
 						Inicio.xedoc = false;
 						
 						webBrowserOperaciones.executeJavascript(cadena);
 					}
 					else if(command.equals("doc")){
-						String claseOff = "tile bg-cobalt bg-hover-lightGreen bd-yellow";
-						String claseOn = "tile bg-green bg-hover-lightGreen bd-yellow selected";
+						String claseOn = claseDoc + " selected";
 						cadena = ""
 								+ "document.getElementById('doc').className='" + claseOn + "';" + LS
-								+ "document.getElementById('urg').className='" + claseOff + "';" + LS
+								+ "document.getElementById('urg').className='" + claseUrg + "';" + LS
+								+ "document.getElementById('sal').className='" + claseSal + "';" + LS
 								+ "document.getElementById('tipoDocumentacion').innerHTML = 'DOCUMENTACIÓN';";
 						
-						Inicio.usuario.urgencias = false;
+						Inicio.usuario.tipoDocumentacion = 1;
+						Inicio.xedoc = false;
+						
+						webBrowserOperaciones.executeJavascript(cadena);
+					}
+					else if(command.equals("sal")){
+						String claseOn = claseSal + " selected";
+						cadena = ""
+								+ "document.getElementById('sal').className='" + claseOn + "';" + LS
+								+ "document.getElementById('doc').className='" + claseDoc + "';" + LS
+								+ "document.getElementById('urg').className='" + claseUrg + "';" + LS
+								+ "document.getElementById('tipoDocumentacion').innerHTML = 'SALNÉS';";
+						
+						Inicio.usuario.tipoDocumentacion = 2;
 						Inicio.xedoc = false;
 						
 						webBrowserOperaciones.executeJavascript(cadena);
@@ -653,6 +718,9 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[2]);
 					}else if(command.equals("5diasXedoc")){
 						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[3]);
+					}else if(command.equals("5diasSalnés")){
+						// JOptionPane.showMessageDialog(null, ges.cadena5Dias[4]);
+						webBrowserOperaciones.executeJavascript(ges.cadena5Dias[4]);
 					}
 					else if(command.contains("Todos")){
 						String tipo = command.substring(5);
@@ -684,6 +752,9 @@ public class InterfazPrincipal implements MouseListener{
 						else if(tipo.equals("Xedoc")){
 							tip = 4;
 						}
+						else if(tipo.equals("Salnés")){
+							tip = 5;
+						}
 						
 						webBrowserOperaciones.executeJavascript(ges.getJSONMesDias(tip, año, mes));
 					}
@@ -709,6 +780,9 @@ public class InterfazPrincipal implements MouseListener{
 						else if(tipo.equals("Xedoc")){
 							tip = 4;
 						}
+						else if(tipo.equals("Salnés")){
+							tip = 5;
+						}
 						
 						webBrowserOperaciones.executeJavascript(ges.getJSONAnualMes(tip, año));
 					}
@@ -721,6 +795,7 @@ public class InterfazPrincipal implements MouseListener{
 						// 2 Ianus
 						// 3 Urg
 						// 4 Xedoc
+						// 4 Salnés
 						
 						String tipo = partes[1];
 						
@@ -736,6 +811,9 @@ public class InterfazPrincipal implements MouseListener{
 						}
 						else if(tipo.equals("Xedoc")){
 							tip = 4;
+						}
+						else if(tipo.equals("Salnés")){
+							tip = 5;
 						}
 						
 						webBrowserOperaciones.executeJavascript(ges.getJSONTipoGrafico(tip,partes[0] ));
@@ -765,6 +843,80 @@ public class InterfazPrincipal implements MouseListener{
 						}
 
 					}
+					
+					
+					String claseUrg = "tile half bg-cobalt bg-hover-lightGreen bd-yellow";
+					String claseDoc = "tile half bg-green bg-hover-lightGreen bd-yellow";
+					String claseSal = "tile half bg-orange bg-hover-lightGreen bd-yellow";
+					String claseXed = "tile half bg-teal bg-hover-lightGreen bd-yellow";
+					
+					if (command.equals("urg")) {
+						String claseOn = claseUrg + " selected";
+						String cadena = ""
+								+ "document.getElementById('urg').className='" + claseOn + "';" + LS
+								+ "document.getElementById('doc').className='" + claseDoc + "';" + LS
+								+ "document.getElementById('sal').className='" + claseSal + "';" + LS
+								+ "document.getElementById('xed').className='" + claseXed + "';" + LS
+								+ "document.getElementById('tipoDocumentacion').innerHTML = 'URGENCIAS';";
+						
+						Inicio.usuario.tipoDocumentacion = 0;
+						Inicio.xedoc = false;
+						
+						webBrowserOperaciones.executeJavascript(cadena);
+						webBrowserOperaciones.executeJavascript("hola()");
+					}
+					else if(command.equals("doc")){
+						String claseOn = claseDoc + " selected";
+						String cadena = ""
+								+ "document.getElementById('doc').className='" + claseOn + "';" + LS
+								+ "document.getElementById('urg').className='" + claseUrg + "';" + LS
+								+ "document.getElementById('sal').className='" + claseSal + "';" + LS
+								+ "document.getElementById('xed').className='" + claseXed + "';" + LS
+								+ "document.getElementById('tipoDocumentacion').innerHTML = 'DOCUMENTACIÓN';";
+						
+						Inicio.usuario.tipoDocumentacion = 1;
+						Inicio.xedoc = false;
+						
+						webBrowserOperaciones.executeJavascript(cadena);
+						webBrowserOperaciones.executeJavascript("hola()");
+					}
+					else if(command.equals("sal")){
+						String claseOn = claseSal + " selected";
+						String cadena = ""
+								+ "document.getElementById('sal').className='" + claseOn + "';" + LS
+								+ "document.getElementById('urg').className='" + claseUrg + "';" + LS
+								+ "document.getElementById('doc').className='" + claseDoc + "';" + LS
+								+ "document.getElementById('xed').className='" + claseXed + "';" + LS
+								+ "document.getElementById('tipoDocumentacion').innerHTML = 'SALNÉS';";
+						
+						Inicio.usuario.tipoDocumentacion = 2;
+						Inicio.xedoc = false;
+						
+						webBrowserOperaciones.executeJavascript(cadena);
+						webBrowserOperaciones.executeJavascript("hola()");
+					}
+					else if(command.equals("xed")){
+						
+						Inicio.xedoc = true;
+						Inicio.carpetaXedocFirmado = true;
+						webBrowserOperaciones.navigate(DIR_ABRIR_X);
+						panelActivo = ABRIR;
+						
+						/*
+						String claseOn = claseXed + " selected";
+						String cadena = ""
+								+ "document.getElementById('xed').className='" + claseOn + "';" + LS
+								+ "document.getElementById('sal').className='" + claseSal + "';" + LS
+								+ "document.getElementById('urg').className='" + claseUrg + "';" + LS
+								+ "document.getElementById('doc').className='" + claseDoc + "';" + LS
+								+ "document.getElementById('tipoDocumentacion').innerHTML = 'SALNÉS';";
+						
+						Inicio.xedoc = true;
+						
+						webBrowserOperaciones.executeJavascript(cadena);
+						*/
+					}
+					
 					if(command.equals("firmado")){
 						
 						System.out.println("Firmado... entrando");
@@ -792,10 +944,38 @@ public class InterfazPrincipal implements MouseListener{
 						}
 						
 						if(!Inicio.carpetaXedocFirmado){
+							
+							String centro = "";
+							
+							String clase = "";
+							String alias = "";
+							
+							switch (Inicio.usuario.tipoDocumentacion) {
+							case 0:
+								centro = "URGENCIAS";
+								alias = "urg";
+								clase = claseUrg + " selected";
+								break;
+							case 1:
+								centro = "CHOP";
+								alias = "doc";
+								clase = claseDoc + " selected";
+								break;
+							case 2:
+								centro = "SALNÉS";
+								alias = "sal";
+								clase = claseSal + " selected";
+								break;
+							default:
+								break;
+							}
+							
 							codigoCarpetasmetro = 	""
 									
 									+ "document.getElementById('firmado').innerHTML = '" + tipoCarpeta + "';" + LS +
-									 "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
+									  "document.getElementById('tipoDocumentacion').innerHTML = '" + centro + "';" + LS +
+									  "document.getElementById('" + alias + "').className='" + clase + "';" + LS +
+									  "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
 									 "document.getElementById('pdfspendientes').innerHTML='" + carpeta.numeroPdfsPendientes + "';" + LS +
 									 "var oldNodo = document.getElementById('nuevo');" + LS +
 									 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
@@ -927,7 +1107,7 @@ public class InterfazPrincipal implements MouseListener{
 							webBrowserOperaciones.executeJavascript("document.all.ins.click()");
 							
 							Calendario calendario = new Calendario();
-							String rutaCopiaCarpetaDestino = calendario.getCarpetaFinal(false,Inicio.usuario.urgencias);
+							String rutaCopiaCarpetaDestino = calendario.getCarpetaFinal(false,Inicio.usuario.tipoDocumentacion);
 							
 							rutaCopiaCarpetaDestino = rutaCopiaCarpetaDestino + "\\" + carpetaDestino.getName() + " " + Inicio.usuario.alias;
 							System.out.println("Ruta de la copia de xedoc... \n" + rutaCopiaCarpetaDestino);
@@ -996,7 +1176,7 @@ public class InterfazPrincipal implements MouseListener{
 				//		}
 					}
 					if(command.equals("carpetaXedocO")){
-						Dudas.abrirCarpetaXedocOriginales();
+						Dudas.abrirCarpetaXedocOriginales(Inicio.usuario.tipoDocumentacion);
 					}
 					
 					maximizada = Pantalla.restaurar(frame);
@@ -1201,7 +1381,12 @@ public class InterfazPrincipal implements MouseListener{
 						
 						maximizada = Pantalla.maximizar(frame);
 					}
-				} else if (panelActivo.equals(SALIR)) {
+				} 
+				
+				//	SALIR
+				
+				
+				else if (panelActivo.equals(SALIR)) {
 					if (command.contains("salir")) {
 						Cerrar.cerrarTodo();
 						frame.dispose();
@@ -1246,8 +1431,11 @@ public class InterfazPrincipal implements MouseListener{
 						}
 						else{
 							String rutaCarpetaFirmados = Inicio.rutaFirmados;
-							if(Inicio.usuario.urgencias){
+							if(Inicio.usuario.tipoDocumentacion == 0){
 								rutaCarpetaFirmados = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado" ;
+							}
+							else if(command.contains("carpetasSALNES")){
+								rutaCarpetaFirmados = Inicio.rutaFirmadosSalnes ;
 							}
 							
 							// Borrar esta asignacion

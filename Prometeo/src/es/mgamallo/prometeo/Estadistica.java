@@ -47,17 +47,17 @@ class EstadisticaDiaHabil{
 		this.calendario = calendario;
 		diaHabil = this.calendario.getUltimoDiaHabil();
 		
-		numeroArchivosSubidosIanus = getNumeroDeDocumentosSubidosDia(true, false);
-		numeroArchivosSubidosIanusUrg = getNumeroDeDocumentosSubidosDia(true, true);
-		numeroArchivosSubidosXedoc = getNumeroDeDocumentosSubidosDia(false, true);
+		numeroArchivosSubidosIanus = getNumeroDeDocumentosSubidosDia(true, 1);
+		numeroArchivosSubidosIanusUrg = getNumeroDeDocumentosSubidosDia(true, 0);
+		numeroArchivosSubidosXedoc = getNumeroDeDocumentosSubidosDia(false, 0);  //  ATENCIONNNNNNN  !!!
 	
 	} 
 	
-	private int getNumeroDeDocumentosSubidosDia(boolean ianus, boolean urgencias){
+	private int getNumeroDeDocumentosSubidosDia(boolean ianus, int tipoDocumentacion){
 		
 		int numeroArchivos = 0;
 		
-		String ruta = calendario.getCarpetaFinal(ianus, urgencias); 
+		String ruta = calendario.getCarpetaFinal(ianus, tipoDocumentacion);
 		
 		File rutaHoy = new File(ruta);
 		File rutaMes = rutaHoy.getParentFile();

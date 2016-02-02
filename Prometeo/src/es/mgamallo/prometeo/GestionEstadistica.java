@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.omg.CORBA.portable.ValueOutputStream;
 
 public class GestionEstadistica {
@@ -13,15 +15,17 @@ public class GestionEstadistica {
 	ArrayList<String> listaIanus = new ArrayList<String>();
 	ArrayList<String> listaUrg = new ArrayList<String>();
 	ArrayList<String> listaXedoc = new ArrayList<String>();
+	ArrayList<String> listaSalnes = new ArrayList<String>();
 	
 	ArrayList<EstadisticaDia> estadisticaIanus = new ArrayList<EstadisticaDia>();
 	ArrayList<EstadisticaDia> estadisticaUrg = new ArrayList<EstadisticaDia>();
 	ArrayList<EstadisticaDia> estadisticaXedoc = new ArrayList<EstadisticaDia>();
+	ArrayList<EstadisticaDia> estadisticaSalnes = new ArrayList<EstadisticaDia>();
 	
 	ArrayList<EstadisticaDia> estadisticaTotal = new ArrayList<EstadisticaDia>();
 	
 	String graficoTarta = "";
-	String cadena5Dias[] = new String[4];
+	String cadena5Dias[] = new String[5];
 	String cadenaMes = "";
 	String cadenaAñoMes = "";
 	String cadenaAños = "";
@@ -30,11 +34,13 @@ public class GestionEstadistica {
 	String maximoXedoc = "";
 	String maximoIanus = "";
 	String maximoUrg = "";
+	String maximoSalnes = "";
 	
 	String mediaTotal = "";
 	String mediaXedoc = "";
 	String mediaIanus = "";
 	String mediaUrg = "";
+	String mediaSalnes = "";
 	
 	ArrayList<String> años = new ArrayList<String>();
 	
@@ -42,6 +48,8 @@ public class GestionEstadistica {
 	static String mesActual = "";
 	static Fecha fecha;
 	
+	static ArrayList<DatosEstimados> correcionesAnualesUrgencias = new ArrayList<DatosEstimados>();
+	static ArrayList<DatosEstimados> correcionesAnualesIanus = new ArrayList<DatosEstimados>();
 	
 	static public void main(String args[]){
 		new GestionEstadistica();
@@ -50,6 +58,19 @@ public class GestionEstadistica {
 	
 	public GestionEstadistica() {
 		// TODO Auto-generated constructor stub
+		
+		// Datos estimados
+		correcionesAnualesUrgencias.add(new DatosEstimados("2009", 6431, 6, 6));
+		correcionesAnualesUrgencias.add(new DatosEstimados("2010", 7116, 0, 12));
+		correcionesAnualesUrgencias.add(new DatosEstimados("2011", 7420, 0, 12));
+		correcionesAnualesUrgencias.add(new DatosEstimados("2012", 7673, 0, 12));
+		correcionesAnualesUrgencias.add(new DatosEstimados("2013", 6780, 0, 12));
+		correcionesAnualesUrgencias.add(new DatosEstimados("2014", 14530, 0, 2));
+		
+		correcionesAnualesIanus.add(new DatosEstimados("2011", 7947, 6, 6));
+		correcionesAnualesIanus.add(new DatosEstimados("2012", 16504, 0, 12));
+		correcionesAnualesIanus.add(new DatosEstimados("2013", 21765, 0, 12));
+		correcionesAnualesIanus.add(new DatosEstimados("2014", 25105, 0, 9));
 		
 		/*
 		listaXedoc = leerFicheroEstadistica("C:\\desarrollo\\git\\prometeo\\prometeo\\Prometeo\\Prometeo\\Estadisticas\\Xedoc.txt");
@@ -60,18 +81,19 @@ public class GestionEstadistica {
 		listaXedoc = leerFicheroEstadistica(Inicio.rutaEstadisticaXedoc + "Xedoc.txt");
 		listaUrg = leerFicheroEstadistica(Inicio.rutaEstadisticaUrg + "Urgencias.txt");
 		listaIanus = leerFicheroEstadistica(Inicio.rutaEstadisticaIanus + "Documentacion.txt");
+		listaSalnes = leerFicheroEstadistica(Inicio.rutaEstadisticaSalnes + "Salnes.txt");
 		
 	//	System.out.println(Inicio.rutaEstadisticaIanus + "Documentacion.txt");
 
 		estadisticaXedoc = convertirEstadisticaDia(listaXedoc);
 		estadisticaUrg = convertirEstadisticaDia(listaUrg);
 		estadisticaIanus = convertirEstadisticaDia(listaIanus);
-		
+		estadisticaSalnes = convertirEstadisticaDia(listaSalnes);
 		
 		recolocaSabados(estadisticaXedoc);
 		recolocaSabados(estadisticaUrg);
 		recolocaSabados(estadisticaIanus);
-		
+		recolocaSabados(estadisticaSalnes);
 		getFusionListas();
 		
 		/*
@@ -86,6 +108,7 @@ public class GestionEstadistica {
 		maximoIanus = getMaximaSubida(estadisticaIanus);
 		maximoUrg = getMaximaSubida(estadisticaUrg);
 		maximoXedoc = getMaximaSubida(estadisticaXedoc);
+		maximoSalnes = getMaximaSubida(estadisticaSalnes);
 		
 		años = getAños(estadisticaTotal);
 		
@@ -97,6 +120,7 @@ public class GestionEstadistica {
 		mediaIanus = getMediaSubidaAnual(estadisticaIanus,añoActual);
 		mediaUrg = getMediaSubidaAnual(estadisticaUrg,añoActual);
 		mediaXedoc = getMediaSubidaAnual(estadisticaXedoc,añoActual);
+		mediaSalnes = getMediaSubidaAnual(estadisticaSalnes, añoActual);
 		
 		/*
 		System.out.println(maximoTotal);
@@ -119,7 +143,7 @@ public class GestionEstadistica {
 		*/
 		
 		
-		for(int i=1;i<5;i++){
+		for(int i=1;i<6;i++){
 			cadena5Dias[i-1] = getJSON5Dias(i);
 		}
 		
@@ -149,6 +173,7 @@ public class GestionEstadistica {
 		
 		int empiezaDoc = 0;
 		int empiezaXed = 0;
+		int empiezaSal = 0;
 		
 		for(int i=0;i<estadisticaTotal.size();i++){
 			if(estadisticaTotal.get(i).fecha.equals(estadisticaIanus.get(0).fecha)){
@@ -222,6 +247,45 @@ public class GestionEstadistica {
 			}
 		}
 
+		
+		//	Salnés
+		
+		for(int i=0;i<estadisticaTotal.size();i++){
+
+			if(Integer.valueOf(estadisticaTotal.get(i).fecha) >= Integer.valueOf(estadisticaSalnes.get(0).fecha)){
+	//			System.out.println("encontrado en " + i);
+				empiezaSal = i;
+				break;
+			}
+		}
+		
+		for(int i= empiezaSal, j=0;i<estadisticaTotal.size();i++,j++){
+
+	//		System.out.println(i + "  " + j + "  " + estadisticaTotal.get(i).fecha + "  " + estadisticaXedoc.get(j).fecha);
+			if(estadisticaTotal.get(i).fecha.equals(estadisticaSalnes.get(j).fecha)){
+				int num1 = Integer.valueOf(estadisticaTotal.get(i).numeroFicheros);
+				int num2 = Integer.valueOf(estadisticaSalnes.get(j).numeroFicheros);
+				
+				estadisticaTotal.get(i).numeroFicheros = String.valueOf(num1 + num2);
+			}
+			else{
+				if(Integer.valueOf(estadisticaTotal.get(i).fecha) > Integer.valueOf(estadisticaSalnes.get(j).fecha)){
+	//				System.out.println("Fecha mayor");
+					
+	//				System.out.println(estadisticaTotal.size());
+					
+					estadisticaTotal.add(i,estadisticaSalnes.get(j));
+	//				System.out.println(estadisticaTotal.size());
+				}
+				else{
+	//				System.out.println("Fecha menor");
+					j--;
+				}
+			}
+		}
+		
+		
+		
 	}
 	
 	
@@ -369,6 +433,12 @@ public class GestionEstadistica {
 					    				+ "value : '" + estadisticaUrg.get(estadisticaUrg.size()-1).numeroFicheros + "',"
 						    			+ "issliced : '1',"
 					    				+ "color : '#750303'"
+					    			+ "},"
+						    		+ "{"
+					    				+ "label : 'Salnés',"
+					    				+ "value : '" + estadisticaSalnes.get(estadisticaSalnes.size()-1).numeroFicheros + "',"
+						    			+ "issliced : '1',"
+					    				+ "color : '#f8bd19'"
 					    			+ "}"					    				
 					    		+ "]"
 					    	+ "}"
@@ -391,6 +461,7 @@ public class GestionEstadistica {
 		// 2 Ianus
 		// 3 Urg
 		// 4 Xedoc
+		// 5 Salnes
 		
 		ArrayList<EstadisticaDia> lista = new ArrayList<EstadisticaDia>();
 		String titulo = "";
@@ -398,6 +469,7 @@ public class GestionEstadistica {
 		String med = "";
 		
 		String limiteVertical = "";
+
 		
 		switch (tipo) {
 		case 1:
@@ -424,44 +496,18 @@ public class GestionEstadistica {
 				max = maximoXedoc;
 				med = mediaXedoc;
 				break;
+		case 5:
+				lista = estadisticaSalnes;
+				titulo = "Salnés";
+				max = maximoSalnes;
+				med = mediaSalnes;
+				break;
 		}
 		
 		int num = (int) (Integer.valueOf(max) * 1.1);
 		
 		limiteVertical = String.valueOf(num);
 		
-		/*
-		String enteraDeEjemplo = ""
-				+ ""
-				+ "FusionCharts.ready(function() {"
-					+ "var seleccion, inputs, selElem, "
-				    	+ "chart5Dias = new FusionCharts({"
-					    	+ "type : 'column2d',"
-					    	+ "renderAt : 'chart5DiasA',"
-					    	+ "width : '360',"
-					    	+ "height : '240',"
-					    	+ "dataFormat : 'json',"
-					    	+ "dataSource : {"
-					    		+ "chart : {"
-					    			+ "theme : 'fint',"
-					    			+ "rotateValues : '0',"
-					    			+ "bgcolor : 'ffffff',"
-					    			+ "useroundedges : '1',"
-					    			+ "showborder : '0',"
-					    			+ "palettecolors : '#008ee4,#6baa01,#f8bd19,#e44a00,#33bdda',"
-					    			+ "},"
-					    			
-					    		+ "data : ["
-					    			+ "{ label: 'Pera', value: '13773'},"
-					    			+ "{ label: 'limon', value: '3773'}"
-					    			+ "]"
-					    	+ "}"
-				+ "});"
-				+ ""
-				+ "chart5Dias.render('chart5DiasA');"
-				+ "})"
-				+ "";
-		*/
 		
 		String cadena01 = ""
 				+ ""
@@ -494,17 +540,19 @@ public class GestionEstadistica {
 		String cadena02 = ""
 				+ "[";
 		
-		for(int i=5;i>0;i--){
-			cadena02 += (
-							"{ label: '" + lista.get(lista.size() - i).diaSemana 
-					     + "', value: '" + lista.get(lista.size() - i).numeroFicheros + "'}"
-						);
-			if(i != 1){
-				cadena02 += ",";
+		
+		for (int i = 5; i > 0; i--) {
+			if (lista.size() > 4) {
+				cadena02 += ("{ label: '"
+						+ lista.get(lista.size() - i).diaSemana + "', value: '"
+						+ lista.get(lista.size() - i).numeroFicheros + "'}");
+				if (i != 1) {
+					cadena02 += ",";
+				} else {
+					cadena02 += "],";
+				}
 			}
-			else{
-				cadena02 += "],";
-			}
+
 		}
 		
 		
@@ -558,6 +606,7 @@ public class GestionEstadistica {
 		// 2 Ianus
 		// 3 Urg
 		// 4 Xedoc
+		// 5 Salnés
 		
 		class ParDiaDocs{
 			String dia = "";
@@ -582,7 +631,7 @@ public class GestionEstadistica {
 			mediaIanus = getMediaSubidaAnual(estadisticaIanus,año);
 			mediaUrg = getMediaSubidaAnual(estadisticaUrg,año);
 			mediaXedoc = getMediaSubidaAnual(estadisticaXedoc,año);
-
+			mediaSalnes = getMediaSubidaAnual(estadisticaSalnes,año);
 		
 		
 		switch (tipo) {
@@ -610,7 +659,16 @@ public class GestionEstadistica {
 				max = maximoXedoc;
 				med = mediaXedoc;
 				break;
+				
+		case 5:
+				lista = estadisticaSalnes;
+				titulo = "Salnés";
+				max = maximoSalnes;
+				med = mediaSalnes;
+				break;
+
 		}
+		
 
 		String mascaraFecha = año + mes;
 		ArrayList<ParDiaDocs> pares = new ArrayList<ParDiaDocs>();
@@ -742,6 +800,7 @@ public class GestionEstadistica {
 		// 2 Ianus
 		// 3 Urg
 		// 4 Xedoc
+		// 5 Salnés
 		
 		class ParMesDocs{
 			String mes = "";
@@ -775,6 +834,10 @@ public class GestionEstadistica {
 		case 4:
 				lista = estadisticaXedoc;
 				titulo = "Xedoc";
+				break;
+		case 5:
+				lista = estadisticaSalnes;
+				titulo = "Salnés";
 				break;
 		}
 
@@ -997,6 +1060,10 @@ public class GestionEstadistica {
 				lista = estadisticaXedoc;
 				titulo = "Xedoc";
 				break;
+		case 5:
+				lista = estadisticaSalnes;
+				titulo = "Salnés";
+				break;
 		}
 
 		String mascaraFecha[] = {"2014", "2015"};
@@ -1010,7 +1077,15 @@ public class GestionEstadistica {
 		int media = 0;
 		
 		String añoActual = lista.get(0).fecha.substring(0,4);
-		
+/*		
+		System.out.println("**********************************************************************");
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).fecha.substring(0,4).equals("2016")){
+				System.out.println(lista.get(i).fecha + " " + lista.get(i).diaSemana + " " + lista.get(i).numeroFicheros);
+			}
+		}
+		System.out.println("**********************************************************************");
+*/		
 		for(int i=0;i<lista.size();i++){
 			
 			ArrayList<ParMesDocs> pares = new ArrayList<ParMesDocs>();
@@ -1020,15 +1095,20 @@ public class GestionEstadistica {
 				
 				String mes = lista.get(i).fecha.substring(4,6);
 				
+				
+				
 				int sum = 0;
 				
+
 				while(i<lista.size() 
 						&& lista.get(i).fecha.substring(0,4).equals(añoActual) 
 						&& lista.get(i).fecha.substring(4,6).equals(mes)){
-					
+
+				
 					sum = sum + Integer.valueOf(lista.get(i).numeroFicheros);
 					i++;
 				}
+				
 				
 				if(sum > maximo){
 					maximo = sum;
@@ -1047,11 +1127,239 @@ public class GestionEstadistica {
 			if(i<lista.size()){
 				añoActual = lista.get(i).fecha.substring(0,4);
 			}
-			
+			i--;
 		}
 		
 		
-		System.out.println("Tamaño del array... " + datosGraficosAnuales.size());
+		/*   Codigo para inferir estadisticas anteriores
+		     Urgencias empieza 01/06/2009 hasta 01/03/2014
+		     Docum. empieza 01/06/2011 hasta 01/09/2014
+		     Xedoc  empieza 01/02/2015
+		 */
+		
+		/* Urgencias*/
+		
+		ArrayList<DatosGraficoAnual> datosInferidos = new ArrayList<DatosGraficoAnual>();
+		
+		for(int i=2014;i<2016;i++){
+			
+			// Xedoc
+			if(tipo == 4){
+				ArrayList<ParMesDocs> parMesXedoc = new ArrayList<ParMesDocs>();
+				for(int j=0;j<12;j++){
+					if(i==2014){
+						parMesXedoc.add(new ParMesDocs(this.getMes(j+1), "0"));
+					}
+					if(i== 2015){
+						if(j== 0){
+							parMesXedoc.add(new ParMesDocs(this.getMes(j+1), "0"));
+						}
+						else{
+							parMesXedoc.add(datosGraficosAnuales.get(0).pares.get(j-1));
+						}
+					}
+
+					
+				}
+				datosInferidos.add(new DatosGraficoAnual(String.valueOf(i), parMesXedoc));
+			}
+			
+			// Urgencias
+			if(tipo == 3){
+				ArrayList<ParMesDocs> parMesUrgencias = new ArrayList<ParMesDocs>();
+				for(int j=0;j<12;j++){
+					if(i== 2014){
+						if(j < 2){
+							parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "14530"));
+						}
+						else{
+							parMesUrgencias.add(datosGraficosAnuales.get(0).pares.get(j));
+						}
+					}
+
+					
+				}
+				if(i == 2014)
+					datosInferidos.add(new DatosGraficoAnual(String.valueOf(i), parMesUrgencias));
+			}
+			
+			
+			// Ianus
+			if(tipo == 2){
+				ArrayList<ParMesDocs> parMesIanus = new ArrayList<ParMesDocs>();
+				for(int j=0;j<12;j++){
+
+					if(i== 2014){
+						if(j < 9){
+							parMesIanus.add(new ParMesDocs(this.getMes(j+1), "25105"));
+						}
+						else{
+							parMesIanus.add(datosGraficosAnuales.get(0).pares.get(j-9));
+						}
+					}
+					
+				}
+				if(i == 2014)
+					datosInferidos.add(new DatosGraficoAnual(String.valueOf(i), parMesIanus));
+			}
+			
+			// Total
+			if(tipo == 1){
+				ArrayList<ParMesDocs> parMesTotal = new ArrayList<ParMesDocs>();
+				for(int j=0;j<12;j++){
+					if(i== 2014){
+						if(j < 2){
+							int totalN = (14530 + 25105);
+							String total = "" + totalN;
+							parMesTotal.add(new ParMesDocs(this.getMes(j+1), total));
+						}
+						else if(j < 9){
+							int totalN = (25105 + Integer.valueOf(datosGraficosAnuales.get(0).pares.get(j).numDocs));
+							String total = "" + totalN;
+							parMesTotal.add(new ParMesDocs(this.getMes(j+1), total));
+						}
+						else{
+							parMesTotal.add(datosGraficosAnuales.get(0).pares.get(j));
+						}
+					}
+				}
+				if(i == 2014)
+					datosInferidos.add(new DatosGraficoAnual(String.valueOf(i), parMesTotal));
+			}
+		}
+		
+		
+		if(tipo == 4){
+			for(int i=0;i<datosGraficosAnuales.size();i++){
+				if(!datosGraficosAnuales.get(i).año.equals("2015"))
+				datosInferidos.add(datosGraficosAnuales.get(i));
+			}
+			
+			datosGraficosAnuales = datosInferidos;
+		}
+		
+		if(tipo == 2 || tipo == 3 || tipo == 1){
+			
+			for(int i=0;i<datosGraficosAnuales.size();i++){
+				if(!datosGraficosAnuales.get(i).año.equals("2014"))
+				datosInferidos.add(datosGraficosAnuales.get(i));
+			}
+			
+			datosGraficosAnuales = datosInferidos;
+		}
+
+		
+		
+		/*
+		System.out.println("------------------------- Datos reales totales");
+		
+		for(int i=0;i<datosGraficosAnuales.size();i++){
+			for(int j=0;j<datosGraficosAnuales.get(i).pares.size();j++){
+				System.out.println(datosGraficosAnuales.get(i).año + "    " + datosGraficosAnuales.get(i).pares.get(j).mes 
+						+ datosGraficosAnuales.get(i).pares.get(j).numDocs );
+			}
+			System.out.println("-------------------------");
+		}
+		*/
+		
+		/*
+		for(int i=2009;i<2014;i++){
+			
+		//	DatosGraficoAnual datosUrgencias = new DatosGraficoAnual(i, pares)
+			ArrayList<ParMesDocs> parMesUrgencias = new ArrayList<ParMesDocs>();
+			ArrayList<ParMesDocs> parMesIanus = new ArrayList<ParMesDocs>();
+			
+			for(int j=0;j<12;j++){
+				
+				if(i==2009){
+					if(j<6){
+						parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "0"));
+					}
+					else{
+						parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "6431"));
+					}
+					parMesIanus.add(new ParMesDocs(this.getMes(j+1), "0"));
+				}
+				
+				if(i==2010){
+					parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "7116"));
+					parMesIanus.add(new ParMesDocs(this.getMes(j+1), "0"));
+				}
+				
+				if(i==2011){
+					if(j<6){
+						parMesIanus.add(new ParMesDocs(this.getMes(j+1), "0"));
+					}
+					else{
+						parMesIanus.add(new ParMesDocs(this.getMes(j+1), "7947"));
+					}
+					parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "7420"));
+				}
+				
+				if(i == 2012){
+					parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "7673"));
+					parMesIanus.add(new ParMesDocs(this.getMes(j+1), "16504"));
+				}
+				
+				if(i == 2013){
+					parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "6780"));
+					parMesIanus.add(new ParMesDocs(this.getMes(j+1), "21765"));
+				}
+				
+				if(i == 2014){
+					if(j<2){
+						parMesUrgencias.add(new ParMesDocs(this.getMes(j+1), "14530"));
+						parMesIanus.add(new ParMesDocs(this.getMes(j+1), "25105"));
+					}
+					else if(j < 9){
+						parMesIanus.add(new ParMesDocs(this.getMes(j+1), "25105"));
+					}
+				}
+			}
+			
+			datosInferidos.add(new DatosGraficoAnual(String.valueOf(i), parMesUrgencias));
+		}
+		
+		
+		
+		
+		JOptionPane.showMessageDialog(null, "Pausa. Mirar consola");
+		
+		
+		System.out.println("------------------------- Datos inferidos de urgencias");
+		
+		for(int i=0;i<datosInferidos.size();i++){
+			for(int j=0;j<datosInferidos.get(i).pares.size();j++){
+				System.out.println(datosInferidos.get(i).año + "    " + datosInferidos.get(i).pares.get(j).mes 
+						+ datosInferidos.get(i).pares.get(j).numDocs );
+			}
+			System.out.println("-------------------------");
+		}
+		
+		
+		System.out.println("------------------------- Datos reales totales");
+		
+		for(int i=0;i<datosGraficosAnuales.size();i++){
+			for(int j=0;j<datosGraficosAnuales.get(i).pares.size();j++){
+				System.out.println(datosGraficosAnuales.get(i).año + "    " + datosGraficosAnuales.get(i).pares.get(j).mes 
+						+ datosGraficosAnuales.get(i).pares.get(j).numDocs );
+			}
+			System.out.println("-------------------------");
+		}
+		
+		// Fusion Ingresos
+		if(tipo == 2){
+			for(int i=0;i<datosGraficosAnuales.size();i++){
+				datosInferidos.add(datosGraficosAnuales.get(i));
+			}
+			
+			datosGraficosAnuales = datosInferidos;
+		}
+		
+		*/
+		
+		
+	//	System.out.println("Tamaño del array... " + datosGraficosAnuales.size());
 		
 	/*	System.out.println(datosGraficosAnuales.get(0).pares.get(0).mes);
 	/*	System.out.println(datosGraficosAnuales.get(1).pares.get(0).mes);
@@ -1148,6 +1456,11 @@ public class GestionEstadistica {
 					    		
 					    		+ "dataset : ["
 					    			+ "";
+		/*
+		String cadena02b = ""
+				+ "";
+		*/
+		
 		
 		String cadena02 = ""
 				+ "";
@@ -1165,7 +1478,7 @@ public class GestionEstadistica {
 				if(z<datosGraficosAnuales.get(i).pares.size()){
 					if(!datosGraficosAnuales.get(i).pares.get(z).mes.equals(getMes(j+1))){
 						cadena02 += (
-								"{ value : '0' }"
+								"{ value : '40000' }"
 								
 								);
 						if(j != 11){
@@ -1273,7 +1586,7 @@ public class GestionEstadistica {
 
 		
 		
-		System.out.println(cadena01 + cadena02 + cadena03);
+	//	System.out.println(cadena01 + cadena02 + cadena03);
 		
 		return (cadena01 + cadena02 + cadena03);
 	}
@@ -1337,7 +1650,6 @@ public class GestionEstadistica {
 	
 	private String getMediaSubidaAnual(ArrayList<EstadisticaDia> estadistica, String año){
 		
-		System.out.println(año);
 		
 		int suma = 0;
 		int media = 0;
@@ -1364,7 +1676,6 @@ public class GestionEstadistica {
 	
 	private void recolocaSabados(ArrayList<EstadisticaDia> lista){
 		
-	//	System.out.println("Tamaño... " + lista.size());
 		
 		for(int i=0;i<lista.size();i++){
 			if(lista.get(i).diaSemana.equals("Sábado")){
@@ -1548,4 +1859,54 @@ class FechaGraficos{
 		
 		return nombre;
 	}
+}
+
+class DatosEstimados{
+	
+	private String año;
+	private int multiplicador;
+	private int mesInicio;
+	private int numeroMeses;
+	
+	public DatosEstimados(String año, int multiplicador, int mesInicio,
+			int numeroMeses) {
+		super();
+		this.año = año;
+		this.multiplicador = multiplicador;
+		this.mesInicio = mesInicio;
+		this.numeroMeses = numeroMeses;
+	}
+
+	public String getAño() {
+		return año;
+	}
+
+	public void setAño(String año) {
+		this.año = año;
+	}
+
+	public int getMultiplicador() {
+		return multiplicador;
+	}
+
+	public void setMultiplicador(int multiplicador) {
+		this.multiplicador = multiplicador;
+	}
+
+	public int getMesInicio() {
+		return mesInicio;
+	}
+
+	public void setMesInicio(int mesInicio) {
+		this.mesInicio = mesInicio;
+	}
+
+	public int getNumeroMeses() {
+		return numeroMeses;
+	}
+
+	public void setNumeroMeses(int numeroMeses) {
+		this.numeroMeses = numeroMeses;
+	}
+
 }

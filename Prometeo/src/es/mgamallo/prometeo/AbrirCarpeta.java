@@ -19,9 +19,13 @@ public class AbrirCarpeta {
 	boolean directorioSeleccionado;
 		
 	AbrirCarpeta(boolean renombrar){
-		if(Inicio.usuario.urgencias){
+		if(Inicio.usuario.tipoDocumentacion == 0){
 			ruta = InicioIanus.RUTAURG + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 			rutab = InicioIanus.RUTAURGB + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
+		}
+		else if(Inicio.usuario.tipoDocumentacion == 2){
+			ruta = InicioIanus.rutaSalnes;
+			rutab = InicioIanus.rutaSalnesB;
 		}
 		
 
@@ -31,11 +35,14 @@ public class AbrirCarpeta {
 	}
 
 	AbrirCarpeta(boolean renombrar, boolean metro){
-		if(Inicio.usuario.urgencias){
+		if(Inicio.usuario.tipoDocumentacion == 0){
 			ruta = InicioIanus.RUTAURG + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 			rutab = InicioIanus.RUTAURGB + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 		}	
-
+		else if(Inicio.usuario.tipoDocumentacion == 2){
+			ruta = InicioIanus.rutaSalnes;
+			rutab = InicioIanus.rutaSalnesB;
+		}
 	}
 	
 	boolean listaPdfs(){
@@ -43,6 +50,9 @@ public class AbrirCarpeta {
 		explorador.setDialogTitle("Abrir carpeta...");
 		if(!(new File(ruta).exists()))
 			ruta = rutab;
+		
+		System.out.println("Ruta carpeta... " + ruta);
+		
 		explorador.setCurrentDirectory(new File(ruta));
 		explorador.setFileFilter(new FileNameExtensionFilter("Documentos PDF","pdf"));
 		explorador.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

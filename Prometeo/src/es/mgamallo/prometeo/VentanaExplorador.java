@@ -180,8 +180,11 @@ public class VentanaExplorador extends javax.swing.JFrame {
 
 						String ruta = Inicio.rutaFirmadosXedoc + "\\0000 666 Rebotado de Ianus.";
 						
-						if(Inicio.usuario.urgencias){
+						if(Inicio.usuario.tipoDocumentacion == 0){
 							ruta = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc\\0000 666 Rebotado de Ianus. ";
+						}
+						else if(Inicio.usuario.tipoDocumentacion == 2){
+							ruta = Inicio.rutaFirmadosXedocSalnes + "\\0000 666 Rebotado de Ianus.";
 						}
 						
 						ruta += "\\";
@@ -217,9 +220,11 @@ public class VentanaExplorador extends javax.swing.JFrame {
 				if(comentario.toString() != null){
 						String ruta = Inicio.rutaFirmados + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
 						
-						if(Inicio.usuario.urgencias){
+						if(Inicio.usuario.tipoDocumentacion == 0){
 							ruta = Inicio.rutaFirmadosUrgencias+ "\\01 " + Inicio.usuario.alias  + "\\03 Firmado\\Apartado por " + Inicio.usuario.alias + ". Pendiente";
 						}
+						else if(Inicio.usuario.tipoDocumentacion == 2){
+							ruta = Inicio.rutaFirmadosSalnes + "\\Apartado por " + Inicio.usuario.alias + ". Pendiente";						}
 						
 						ruta += "\\" + comentario.toString() + "\\";
 						File directorio = new File(ruta);

@@ -25,16 +25,19 @@ public class Calendario {
 		nombreMes = getNombreMes(mes);
 	}
 
-	public String getCarpetaFinal(boolean ianus, boolean urgencias){
+	public String getCarpetaFinal(boolean ianus, int tipoDocumentacion){
 		
 		String ruta = "";
 		
 		if(ianus){
-			if(urgencias){
+			if(tipoDocumentacion == 0){
 				 ruta = Inicio.rutaAsociadosUrgencias;
 			}
-			else{
+			else if(tipoDocumentacion == 1){
 				ruta = Inicio.rutaAsociados;
+			}
+			else if(tipoDocumentacion == 2){
+				ruta = Inicio.rutaAsociadosSalnes;
 			}
 		}
 		else{
@@ -152,7 +155,7 @@ public class Calendario {
 		// TODO Auto-generated method stub
 		
 		Calendario calendario = new Calendario();
-		System.out.println(calendario.getCarpetaFinal(false,true));
+		System.out.println(calendario.getCarpetaFinal(false,1));
 		calendario.getUltimoDiaHabil();
 	}
 

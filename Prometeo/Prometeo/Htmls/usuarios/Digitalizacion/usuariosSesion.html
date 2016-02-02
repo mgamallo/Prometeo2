@@ -46,11 +46,11 @@
 			
 			    <p>
 			      <label for="password">Password:</label>
-			      <input type="password" name="password" id="password" onkeyup='if(validarEnter(event) == true){enviar();}'>
+			    <input type="password" name="password" id="password" onkeyup="if(validarEnter(event) == true){enviar('d');}">
 			    </p>
 			
 			    <p class="login-submit">
-			      <button type="button" class="login-button" onclick='enviar();'>
+			      <button type="button" class="login-button" onclick="enviar('d');">
 			      	Login
 			      </button>
 			    </p>
@@ -59,6 +59,7 @@
 			    <p>
 			    	<button class="buttonX" id='xedoc' onclick="programa('x');" type="button">Xedoc</button>
 		           	<button class="buttonI" id='ianus' onclick="programa('i');" type="button">Ianus</button>
+			   		<button class="buttonS" id='salnes' onclick="programa('s');" type="button">Salnés</button>
 			       	<button class="buttonR" id='revisar' onclick="programa('r');" type="button">Revisar</button>
 			    </p>
 			  </form>
@@ -100,32 +101,45 @@
 				var x = document.getElementById('xedoc');
 				var i = document.getElementById('ianus');
 				var r = document.getElementById('revisar');
+				var s = document.getElementById('salnes');
 				
 				if(tipo.localeCompare('x') == 0){
 					x.style.background = 'rgb(239,63,57)';
 					i.style.background = '#3f9d4a';
 					r.style.background = '#3f9d4a';
+					s.style.background = '#3f9d4a';
 				}
 				else if(tipo.localeCompare('i') == 0){
 					i.style.background = 'rgb(239,63,57)';
 					x.style.background = '#3f9d4a';
 					r.style.background = '#3f9d4a';
+					s.style.background = '#3f9d4a';
 				}
 				else if(tipo.localeCompare('r') == 0){
 					r.style.background = 'rgb(239,63,57)';
 					i.style.background = '#3f9d4a';
 					x.style.background = '#3f9d4a';
+					s.style.background = '#3f9d4a';
 				}
+				else if(tipo.localeCompare('s') == 0){
+					s.style.background = 'rgb(239,63,57)';
+					i.style.background = '#3f9d4a';
+					x.style.background = '#3f9d4a';
+					r.style.background = '#3f9d4a';
+				}
+				
+				enviar(tipo);
 			}
 
-			function enviar(){
+			function enviar(tipo){
 				var us = document.getElementById('login');
 				var pas = document.getElementById('password');
 				
 				var cadena = 'user_' + identificador + "";
-				
+								
 				if(us.value.length >0){
-					sendNSCommand(cadena,us.value,pas.value);
+					alert(cadena + '@' + us.value + '@' + pas.value + "@" + tipo);
+					sendNSCommand(cadena,us.value,pas.value,tipo);
 				}
 				
 			}
@@ -147,9 +161,9 @@
 <li><a id='00' onclick="modalOn('00','Man','mgamgul1');" class='login-window' href='#'><img src='images/02.jpg' width='200px'/ height='155px'><div><span>Man</span></div></a></li>
 <li><a id='01' onclick="modalOn('01','Asun','asanagu1');" class='login-window' href='#'><img src='images/01.jpg' width='200px'/ height='155px'><div><span>Asun</span></div></a></li>
 <li><a id='02' onclick="modalOn('02','Irene','mvazvaz3');" class='login-window' href='#'><img src='images/03.jpg' width='200px'/ height='155px'><div><span>Irene</span></div></a></li>
-<li><a id='03' onclick="modalOn('03','Ruben','rvinote1');" class='login-window' href='#'><img src='images/063.jpg' width='200px'/ height='155px'><div><span>Ruben</span></div></a></li>
-<li><a id='04' onclick="modalOn('04','Ana','aberfer1');" class='login-window' href='#'><img src='images/084.gif' width='200px'/ height='155px'><div><span>Ana</span></div></a></li>
-<li><a id='05' onclick="modalOn('05','Esther','eantmun1');" class='login-window' href='#'><img src='images/137.jpg' width='200px'/ height='155px'><div><span>Esther</span></div></a></li>
+<li><a id='03' onclick="modalOn('03','Ruben','rvinote1');" class='login-window' href='#'><img src='images/061.jpg' width='200px'/ height='155px'><div><span>Ruben</span></div></a></li>
+<li><a id='04' onclick="modalOn('04','Ana','aberfer1');" class='login-window' href='#'><img src='images/083.jpg' width='200px'/ height='155px'><div><span>Ana</span></div></a></li>
+<li><a id='05' onclick="modalOn('05','Esther','eantmun1');" class='login-window' href='#'><img src='images/133.jpg' width='200px'/ height='155px'><div><span>Esther</span></div></a></li>
 <li><a id='06' onclick="modalOn('06','Salva','ssanloz1');" class='login-window' href='#'><img src='images/11.jpg' width='200px'/ height='155px'><div><span>Salva</span></div></a></li>
 <li><a id='07' onclick="modalOn('07','Conchi','credsue1');" class='login-window' href='#'><img src='images/04.jpg' width='200px'/ height='155px'><div><span>Conchi</span></div></a></li>
 <li><a id='08' onclick="modalOn('08','Juanma','jcaldua1');" class='login-window' href='#'><img src='images/07.jpg' width='200px'/ height='155px'><div><span>Juanma</span></div></a></li>

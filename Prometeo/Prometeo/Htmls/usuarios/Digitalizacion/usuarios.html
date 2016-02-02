@@ -46,11 +46,11 @@
 			
 			    <p>
 			      <label for="password">Password:</label>
-			      <input type="password" name="password" id="password" onkeyup='if(validarEnter(event) == true){enviar();}'>
+			    <input type="password" name="password" id="password" onkeyup="if(validarEnter(event) == true){enviar('d');}">
 			    </p>
 			
 			    <p class="login-submit">
-			      <button type="button" class="login-button" onclick='enviar();'>
+			      <button type="button" class="login-button" onclick="enviar('d');">
 			      	Login
 			      </button>
 			    </p>
@@ -59,6 +59,7 @@
 			    <p>
 			    	<button class="buttonX" id='xedoc' onclick="programa('x');" type="button">Xedoc</button>
 		           	<button class="buttonI" id='ianus' onclick="programa('i');" type="button">Ianus</button>
+			   		<button class="buttonS" id='salnes' onclick="programa('s');" type="button">Salnés</button>
 			       	<button class="buttonR" id='revisar' onclick="programa('r');" type="button">Revisar</button>
 			    </p>
 			  </form>
@@ -100,32 +101,45 @@
 				var x = document.getElementById('xedoc');
 				var i = document.getElementById('ianus');
 				var r = document.getElementById('revisar');
+				var s = document.getElementById('salnes');
 				
 				if(tipo.localeCompare('x') == 0){
 					x.style.background = 'rgb(239,63,57)';
 					i.style.background = '#3f9d4a';
 					r.style.background = '#3f9d4a';
+					s.style.background = '#3f9d4a';
 				}
 				else if(tipo.localeCompare('i') == 0){
 					i.style.background = 'rgb(239,63,57)';
 					x.style.background = '#3f9d4a';
 					r.style.background = '#3f9d4a';
+					s.style.background = '#3f9d4a';
 				}
 				else if(tipo.localeCompare('r') == 0){
 					r.style.background = 'rgb(239,63,57)';
 					i.style.background = '#3f9d4a';
 					x.style.background = '#3f9d4a';
+					s.style.background = '#3f9d4a';
 				}
+				else if(tipo.localeCompare('s') == 0){
+					s.style.background = 'rgb(239,63,57)';
+					i.style.background = '#3f9d4a';
+					x.style.background = '#3f9d4a';
+					r.style.background = '#3f9d4a';
+				}
+				
+				enviar(tipo);
 			}
 
-			function enviar(){
+			function enviar(tipo){
 				var us = document.getElementById('login');
 				var pas = document.getElementById('password');
 				
 				var cadena = 'user_' + identificador + "";
-				
+								
 				if(us.value.length >0){
-					sendNSCommand(cadena,us.value,pas.value);
+					alert(cadena + '@' + us.value + '@' + pas.value + "@" + tipo);
+					sendNSCommand(cadena,us.value,pas.value,tipo);
 				}
 				
 			}

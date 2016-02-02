@@ -80,19 +80,25 @@ public class Detecta {
 	//	System.out.println("Ruta firmadosUrgencias: " + Inicio.rutaFirmadosUrgencias);
 		
 		if(firmado){  // Carpeta firmado
-			if(Inicio.usuario.urgencias){
+			if(Inicio.usuario.tipoDocumentacion == 0){
 				ruta = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado\\";
 			}
-			else{
+			else if(Inicio.usuario.tipoDocumentacion == 1){
 				ruta = Inicio.rutaFirmados + "\\";
+			}
+			else if(Inicio.usuario.tipoDocumentacion == 2){
+				ruta = Inicio.rutaFirmadosSalnes + "\\";
 			}
 			ruta += ("Apartado por " + Inicio.usuario.alias + ". Pendiente");
 		}
 		else{  // Carpeta revisado
-			if(Inicio.usuario.urgencias){
+			if(Inicio.usuario.tipoDocumentacion == 0){
 				ruta = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\02 Revisado\\";
 			}
-			else{
+			else if(Inicio.usuario.tipoDocumentacion == 1){
+				ruta = Inicio.rutaRevisados + "\\";
+			}
+			else if(Inicio.usuario.tipoDocumentacion == 2){
 				ruta = Inicio.rutaRevisados + "\\";
 			}
 			ruta += ("Apartado por " + Inicio.usuario.alias);

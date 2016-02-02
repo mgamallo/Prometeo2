@@ -27,9 +27,13 @@ public class Carpetas {
 		
 		path = Inicio.rutaFirmados;
 		
-		if(Inicio.usuario.urgencias){
+		if(Inicio.usuario.tipoDocumentacion == 0){
 			path = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado";
 		}
+		else if(Inicio.usuario.tipoDocumentacion == 2){
+			path = Inicio.rutaFirmadosSalnes;
+		}
+
 		
 		System.out.println(path);
 		
@@ -50,8 +54,11 @@ public class Carpetas {
 		}
 		else if(Inicio.carpetaXedocFirmado){
 			path = Inicio.rutaFirmadosXedoc;
-			if(Inicio.usuario.urgencias){
+			if(Inicio.usuario.tipoDocumentacion == 0){
 				path = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc";
+			}
+			else if(Inicio.usuario.tipoDocumentacion == 2){
+				path = Inicio.rutaFirmadosXedocSalnes;
 			}
 		}
 			
@@ -322,222 +329,3 @@ public class Carpetas {
 	
 }
 
-class Directorio{
-	File directorio;
-	int numeroPdfs = 0;
-	boolean urgente = false;
-	boolean asociado = false;
-	boolean duda = false;
-	
-	String usuario = "";
-	String servicio = "";
-	String color = "";
-	String dia = "";
-	String numCarpeta = "";
-	String pregunta = "";
-	String contestacion = "";
-	
-	String nombreCarpeta = "";
-	
-	Directorio(){
-		
-	}
-	
-	Directorio(File carpeta){
-		directorio = carpeta;
-		nombreCarpeta = directorio.getName();
-		
-		numeroPdfs = directorio.listFiles(new FilenameFilter(){
-			public boolean accept(File directorio, String name){
-				return name.toLowerCase().endsWith(".pdf");
-			}
-		}).length;
-		
-		getDatos(carpeta.getName());
-	}
-	
-	Directorio(File carpeta, boolean subidos){
-		directorio = carpeta;
-		nombreCarpeta = directorio.getName();
-		
-		numeroPdfs = directorio.listFiles(new FilenameFilter(){
-			public boolean accept(File directorio, String name){
-				return name.toLowerCase().endsWith(".pdf");
-			}
-		}).length;
-
-		servicio = directorio.getName();
-		
-		int index = servicio.lastIndexOf("@");
-		if(index != -1){
-			usuario = Inicio.usuario.alias;
-			servicio = servicio.substring(0,index);
-		}
-	}
-	
-	
-	private void getDatos(String nombreCarpeta){
-		
-		
-		String arrayColores[] = { "yellow","brown", "lime", "green", 
-								  "emerald", "mauve", "teal", "cyan", "cobalt", "indigo",
-								  "lightBlue", "violet", "lightTeal", "pink", "lightOlive",
-								  "magenta", "crimson", "lightPink", "orange", 
-								  "lightGreen", "amber", "darkCobalt"
-								  };
-		
-		int numColores = arrayColores.length;
-		
-		String cadena = nombreCarpeta;
-		System.out.println("Número de colores " + arrayColores.length);
-		
-		
-		int index = 0;
-		int[] posicionArroba = new int[2];
-		int numArrobas = 0;
-		
-		index = nombreCarpeta.indexOf("@");
-		while(index != -1 && numArrobas <2){
-			posicionArroba[numArrobas] = index;
-			numArrobas++; 
-			index = nombreCarpeta.indexOf("@",index + 1);
-		}
-		
-		System.out.println("Numero de arrobas " + numArrobas);
-		
-		if(numArrobas == 2){
-			if(Inicio.carpetaDudas){
-				duda = true;
-				pregunta = nombreCarpeta.substring(0,posicionArroba[0]);
-				Inicio.contestacionDudas = nombreCarpeta.substring(posicionArroba[0] + 1,posicionArroba[1]);
-				contestacion = Inicio.contestacionDudas;
-				usuario = nombreCarpeta.substring(posicionArroba[1] + 1);
-			}
-		}
-		else if(numArrobas == 1){
-			if(Inicio.carpetaDudas){
-				duda = true;
-				pregunta = nombreCarpeta.substring(0,posicionArroba[0]);
-				Inicio.contestacionDudas = nombreCarpeta.substring(posicionArroba[0] + 1);
-				contestacion = Inicio.contestacionDudas; 
-			}
-			else{
-				usuario = nombreCarpeta.substring(posicionArroba[0] + 1);
-				cadena= cadena.substring(0,posicionArroba[0]);
-			}
-		}
-		else if(numArrobas == 0){
-			if(Inicio.carpetaDudas){
-				duda = true;
-				pregunta = nombreCarpeta;
-				contestacion = "";
-			}
-			else if(Inicio.carpetaXedocFirmado){
-				
-				
-				System.out.println("Tenemos que abrir xedocfirmado.");
-			
-			
-			
-			}
-		}
-		
-		if(!Inicio.carpetaDudas){
-			int indexDia = nombreCarpeta.indexOf("#");
-			if(indexDia != -1){
-				cadena = cadena.substring(indexDia + 1);
-				int primerEspacioBlanco = cadena.indexOf(" ");
-				if(primerEspacioBlanco != -1){
-					numCarpeta = cadena.substring(0,primerEspacioBlanco);
-				}
-				else{
-					numCarpeta = cadena;
-				}
-				
-				System.out.println(numCarpeta);
-				
-				cadena = cadena.substring(primerEspacioBlanco + 1);
-				if(cadena.length() > 2 && cadena.charAt(2) == ' '){
-						dia = cadena.substring(0,2);
-						cadena = cadena.substring(3);
-						//System.out.println(dia);
-				}
-			}
-
-			
-			servicio = cadena;
-		}
-		
-
-		
-		cadena = cadena.toLowerCase();
-		
-		int claveColor = (int) (Math.random()*((numColores-1) - 0)) + 0;
-		
-		String colorDia[] = {"bg-yellow", "bg-teal","bg-amber","bg-lightBlue","bg-emerald"};
-		String colorFinal = "";
-
-		dia = dia.toLowerCase();
-		if(dia.equals("lu")){
-			colorFinal = colorDia[0];
-		}else if(dia.equals("ma")){
-			colorFinal = colorDia[1];
-		}else if(dia.equals("mi")){
-			colorFinal = colorDia[2];
-		}else if(dia.equals("ju")){
-			colorFinal = colorDia[3];
-		}else if(dia.equals("vi")){
-			colorFinal = colorDia[4];
-		}else{
-			colorFinal = "bg-" + arrayColores[claveColor];
-		}
-		
-		if(cadena.contains("anr")){
-			// servicio = "ANRC";
-			color = "bg-lightRed";
-		}
-		else if(cadena.toLowerCase().contains("car") || cadena.toLowerCase().contains("ekg") 
-				|| cadena.toLowerCase().contains("ecg") ){
-			// servicio = "CARC";
-			color = "bg-lightRed";
-		}
-		else if(cadena.contains("cons")){
-			// servicio = "Consentimientos";
-			color = "bg-crimson";
-		}
-		else if(cadena.contains("ingr")){
-			// servicio = "Ingresos";
-			color = colorFinal;
-		}
-		else{
-			// servicio = cadena.toUpperCase();
-			color = colorFinal;
-		}
-		if(cadena.toLowerCase().contains("urg") || cadena.toLowerCase().contains("urx")){
-			// servicio = " urg.";
-			color = "bg-lightRed";
-		}
-		if(!usuario.equals("")){
-			color = "bg-steel";
-		}
-		
-		if(duda){
-			if(contestacion.length() == 0){
-				color = "bg-cobalt";
-			}
-			else{
-				color = "bg-teal";
-			}
-			if(!usuario.equals("")){
-				color = "bg-steel";
-			}
-			
-		}
-		
-		System.out.println("Usuario: " + usuario);
-		System.out.println("Servicio: " + servicio);
-		System.out.println("Color: " + color);
-		System.out.println("Dia: " + dia);
-		System.out.println("Pdfs: " + numeroPdfs);
-	}
-}

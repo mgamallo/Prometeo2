@@ -26,7 +26,8 @@ public class LeerExcel {
 	
 	public String[][] tablaNormas;
 	
-	private Nodo[] nodos;
+	private Nodo[] nodosCHOP;
+	private Nodo[] nodosSALNES;
 	
 	public TreeMap<String, String> nombreServicios = new TreeMap<String, String>();
 	public TreeMap<String, String> nombreDocumentos = new TreeMap<String, String>();
@@ -141,7 +142,7 @@ public class LeerExcel {
 	        }
 	        */
 	        
-	        //	Obtiene los nombres de los nodos
+	        //	Obtiene los nombres de los nodos CHOP
 	        
 	        hoja = archivoExcel.getSheet(1);
 	        numFilas = 0;
@@ -151,14 +152,35 @@ public class LeerExcel {
 	        
 	        System.out.println("numero de filas es... " + numFilas);
 	        
-	        nodos = new Nodo[numFilas];
+	        nodosCHOP = new Nodo[numFilas];
 	        
 	        //	Array con los nombres de los nodos
-	        for(int fila=0;fila<nodos.length;fila++){
-	        		nodos[fila] = new Nodo();
-	        		nodos[fila].alias = hoja.getCell(0,fila).getContents().toString();
-	        		nodos[fila].nombre = hoja.getCell(1,fila).getContents().toString();
+	        for(int fila=0;fila<nodosCHOP.length;fila++){
+	        		nodosCHOP[fila] = new Nodo();
+	        		nodosCHOP[fila].alias = hoja.getCell(0,fila).getContents().toString();
+	        		nodosCHOP[fila].nombre = hoja.getCell(1,fila).getContents().toString();
 	        }
+	        
+	        
+	        //	Obtiene los nombres de los nodos SALNES
+	        
+	        hoja = archivoExcel.getSheet(9);
+	        numFilas = 0;
+	        while(!hoja.getCell(0,numFilas).getContents().toString().equals("@finV")){
+	        	numFilas++;
+	        }
+	        
+	        System.out.println("numero de filas es... " + numFilas);
+	        
+	        nodosSALNES = new Nodo[numFilas];
+	        
+	        //	Array con los nombres de los nodos
+	        for(int fila=0;fila<nodosSALNES.length;fila++){
+	        		nodosSALNES[fila] = new Nodo();
+	        		nodosSALNES[fila].alias = hoja.getCell(0,fila).getContents().toString();
+	        		nodosSALNES[fila].nombre = hoja.getCell(1,fila).getContents().toString();
+	        }
+	        
 	        
 	        
 	        //	Obtiene las coordenadas
@@ -278,13 +300,17 @@ public class LeerExcel {
 		return asociacionesDocumentos;
 	}
 	
-	public Nodo[] getNodos(){
+	public Nodo[] getNodos(int tipoDocumentacion){
 		/*
-		for(int i=0;i<nodos.length;i++){
-			System.out.println(nodos[i].alias);
-		}
+			2	Salnes
+			1	Montecelo
+			0	Urgencias
 		*/
-		return nodos;
+		
+		if(tipoDocumentacion == 2)
+			return nodosSALNES;
+		else	
+			return nodosCHOP;
 	}
 	
 	public int[][] getCoordenadasAsociar(){

@@ -7,7 +7,7 @@ public class Usuario {
 	
 	String imagen = null;
 	
-	boolean urgencias = false;
+	int tipoDocumentacion = 1;  // 0 urgencias, 1 document, 2 salnes
 	boolean xedoc = false;
 	
 	boolean tieneAvisos = false;

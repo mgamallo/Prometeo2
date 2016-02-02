@@ -92,15 +92,18 @@ public class GestionCarpetasXedoc {
 		
 		
 		Calendario calendario = new Calendario();
-		String rutaCopiaCarpetaDestino = calendario.getCarpetaFinal(false,Inicio.usuario.urgencias);
+		String rutaCopiaCarpetaDestino = calendario.getCarpetaFinal(false,Inicio.usuario.tipoDocumentacion);
 		File rut = new File(rutaCopiaCarpetaDestino);
 		rut.mkdirs();
 		
 		System.out.println(rutaCopiaCarpetaDestino);
 		
 		String rutaBaseInicial = Inicio.rutaFirmadosXedoc;
-		if(Inicio.usuario.urgencias){
+		if(Inicio.usuario.tipoDocumentacion == 0){
 			rutaBaseInicial = Inicio.rutaFirmadosUrgencias + "\\01 " + Inicio.usuario.alias + "\\03 Firmado Xedoc";
+		}
+		else if(Inicio.usuario.tipoDocumentacion == 2){
+			rutaBaseInicial = Inicio.rutaFirmadosXedocSalnes;
 		}
 		
 		System.out.println(rutaBaseInicial);
@@ -125,6 +128,10 @@ public class GestionCarpetasXedoc {
 			
 			File ficheroAux = new File(rutaCopiaCarpetaDestinoCompleta);
 			
+			while(ficheroAux.exists()){
+				String nuevoNombre = ficheroAux.getAbsolutePath() + " bis";
+				ficheroAux = new File(nuevoNombre);
+			}
 			System.out.println("Existe fichero? " + ficheroAux.exists());
 
 			System.out.println("Renombrando... " + carpetas[i].renameTo(ficheroAux));

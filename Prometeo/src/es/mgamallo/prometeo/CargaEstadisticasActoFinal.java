@@ -15,10 +15,12 @@ public class CargaEstadisticasActoFinal {
 
 	static String rutaUrgencias = ":\\DIGITALIZACIÓN\\01 INFORMES URG (Colectiva)\\04 ASOCIADO";
 	static String rutaDoc = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\04 Asociado";
+	static String rutaSal = ":\\DIGITALIZACIÓN\\02 SALNÉS\\04 Asociado";
 	static String rutaXedoc = ":\\DIGITALIZACIÓN\\00 DOCUMENTACION\\05 XEDOC ORIGINALES";
 	
 	File[] directoriosAnualesUrgencias;
 	File[] directoriosAnualesDoc;
+	File[] directoriosAnualesSal;
 	File[] directoriosAnualesXedoc;
 
 	
@@ -35,17 +37,29 @@ public class CargaEstadisticasActoFinal {
 	public CargaEstadisticasActoFinal() {
 		// TODO Auto-generated constructor stub
 		
+		/*
 		rutaUrgencias = Inicio.unidadHDDvirtual + rutaUrgencias;
 		rutaDoc = Inicio.unidadHDDvirtual + rutaDoc;
 		rutaXedoc = Inicio.unidadHDDvirtual + rutaXedoc;
+		rutaSal = Inicio.unidadHDDvirtual + rutaSal;
+		*/
 		
-		directoriosAnualesUrgencias = getDirectoriosAnuales(rutaUrgencias);
-		directoriosAnualesDoc = getDirectoriosAnuales(rutaDoc);
-		directoriosAnualesXedoc = getDirectoriosAnuales(rutaXedoc);
+		System.out.println(rutaUrgencias);
+		System.out.println(rutaDoc);
+		System.out.println(rutaXedoc);
+		System.out.println(rutaSal);
+		
+		System.out.println(Inicio.unidadHDDvirtual);
+		
+		directoriosAnualesUrgencias = getDirectoriosAnuales(Inicio.unidadHDDvirtual + rutaUrgencias);
+		directoriosAnualesDoc = getDirectoriosAnuales(Inicio.unidadHDDvirtual + rutaDoc);
+		directoriosAnualesXedoc = getDirectoriosAnuales(Inicio.unidadHDDvirtual + rutaXedoc);
+		directoriosAnualesSal = getDirectoriosAnuales(Inicio.unidadHDDvirtual + rutaSal);
 		
 		ArrayList<EstadisticaDia> listaEstadisticaTotalDoc = new ArrayList<EstadisticaDia>();
 		ArrayList<EstadisticaDia> listaEstadisticaTotalUrg = new ArrayList<EstadisticaDia>();
 		ArrayList<EstadisticaDia> listaEstadisticaTotalXed = new ArrayList<EstadisticaDia>();
+		ArrayList<EstadisticaDia> listaEstadisticaTotalSal = new ArrayList<EstadisticaDia>();
 		
 		for(int i=0;i<directoriosAnualesDoc.length;i++){
 			String ruta = directoriosAnualesDoc[i].getAbsolutePath() + "\\estadistica.txt";
@@ -73,7 +87,36 @@ public class CargaEstadisticasActoFinal {
 			
 		}
 		
-		crearTxt(listaEstadisticaTotalDoc, "Documentacion", rutaDoc);
+		crearTxt(listaEstadisticaTotalDoc, "Documentación", Inicio.unidadHDDvirtual + rutaDoc);
+		
+		
+		for(int i=0;i<directoriosAnualesSal.length;i++){
+			String ruta = directoriosAnualesSal[i].getAbsolutePath() + "\\estadistica.txt";
+			
+			String[] listaRegistros = leerTxt(ruta);
+			
+			ArrayList<EstadisticaDia> listaEstadisticaAnual = new ArrayList<EstadisticaDia>();
+			for(int j=0;j<listaRegistros.length;j++){
+				
+				EstadisticaDia estadistica = new EstadisticaDia(listaRegistros[j]);
+				if(estadistica.fecha != null){
+					listaEstadisticaAnual.add(estadistica);
+					listaEstadisticaTotalSal.add(estadistica);
+				}
+				else{
+					System.out.println("Lista de registros " + j + " vale: " + listaRegistros[j]);
+				}
+			}
+			
+			System.out.println("Sal: " + listaEstadisticaAnual.size());
+			for(int j=0;j<listaEstadisticaAnual.size();j++){
+				System.out.println(listaEstadisticaAnual.get(j).fecha);
+			}
+			
+			
+		}
+		
+		crearTxt(listaEstadisticaTotalSal, "Salnes", Inicio.unidadHDDvirtual + rutaSal);
 		
 		for(int i=0;i<directoriosAnualesUrgencias.length;i++){
 			String ruta = directoriosAnualesUrgencias[i].getAbsolutePath() + "\\estadistica.txt";
@@ -97,7 +140,7 @@ public class CargaEstadisticasActoFinal {
 			}
 		}
 		
-		crearTxt(listaEstadisticaTotalUrg, "Urgencias", rutaUrgencias);
+		crearTxt(listaEstadisticaTotalUrg, "Urgencias", Inicio.unidadHDDvirtual + rutaUrgencias);
 		
 		for(int i=0;i<directoriosAnualesXedoc.length;i++){
 			String ruta = directoriosAnualesXedoc[i].getAbsolutePath() + "\\estadistica.txt";
@@ -120,7 +163,7 @@ public class CargaEstadisticasActoFinal {
 			}
 		}
 		
-		crearTxt(listaEstadisticaTotalXed, "Xedoc", rutaXedoc);
+		crearTxt(listaEstadisticaTotalXed, "Xedoc", Inicio.unidadHDDvirtual + rutaXedoc);
 		
 
 	}
@@ -211,6 +254,7 @@ public class CargaEstadisticasActoFinal {
 		return cadenaSinOrdenar;
 	}
 
+	
 	
 	private void crearTxt(ArrayList<EstadisticaDia> lista, String nombreCarpeta, String ruta){
 		

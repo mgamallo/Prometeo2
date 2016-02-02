@@ -21,14 +21,40 @@
 </head>
 <body class="metro" onload="hola()"> 
 
+
 	<div class="tile-area tile-area-dark" style="width: 600px; height: 1200px">
 		<!-- tile-area-dark -->
 
-		<h1 class="tile-area-title fg-white">
-			Abrir <span id="firmado">Firmado</span>
+		<h1 class="tile-area-title fg-white" style="float: left;">
+			Abrir <span id="firmado">Firmado</span> <span id="tipoDocumentacion" style="color: red;"></span>
 		</h1>
 
+		<div class="row">
+			<div class="span12" style="float:left; margin-bottom: 20px; ">
+				<a href= "command://urg" class="tile half bg-cobalt bg-hover-lightGreen" title="Carpetas Urgencias" id="urg">
+					<div class="tile-content icon">
+						<i class="icon-accessibility-2"></i>
+					</div>
+				</a> 
+				<a href= "command://doc" class="tile half bg-green bg-hover-lightGreen" title="Carpeta CHOP" id="doc">
+					<div class="tile-content icon">
+						<i class="icon-accessibility"></i>
+					</div>
+				</a> 
 
+				<a href="command://sal" class="tile half bg-orange bg-hover-lightGreen" title="Carpeta Salnés" id="sal" > 
+					<div class="tile-content icon">
+						<i class="icon-target"></i>
+					</div>
+				</a>
+				<a href="command://xed" class="tile half bg-teal bg-hover-lightGreen" title="Carpeta Xedoc" id="xed" > 
+					<div class="tile-content icon">
+						<i class="icon-lightning"></i>
+					</div>
+				</a>
+			</div>
+		</div>
+	
 		<div class="grid fluid">
 			<div class="row">
 				<div class="span2">
@@ -99,6 +125,7 @@
 					<br>
 					<span class="fg-white">Documentos pendientes: <strong class="fg-crimson" id="pdfspendientes"> 209</strong></span>
 				</div>
+				
 				<div class="span8" id="insertar" name="hola">
 
 

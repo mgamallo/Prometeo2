@@ -91,7 +91,29 @@ public class CargaEstadisticasInicio {
 			new CargaEstadisticasActoFinal();
 		}
 			
-			
+		
+		// Carpeta Salnes
+		
+		ruta =  Inicio.rutaEstadisticaSalnes + fecha.año + "\\" + fecha.nombreMesYnumero 
+				+ "\\" + fecha.dia;
+		
+		System.out.println(ruta);
+		
+		fichero = new File(ruta);
+		
+		
+		if(!fichero.exists() /* || fichero.listFiles().length == 0 */){
+			contabiliza3DiasAnteriores(Inicio.rutaEstadisticaSalnes, fecha);
+			fichero.mkdirs();
+			recontabilizar = true;
+		}
+		else{
+			recontabilizar = false;
+		}
+
+		if(recontabilizar){
+			new CargaEstadisticasActoFinal();
+		}	
 	}
 
 	
