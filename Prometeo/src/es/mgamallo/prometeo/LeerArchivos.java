@@ -89,7 +89,7 @@ public class LeerArchivos {
 		}
 		//System.out.println(texto);
 		
-		System.out.println(texto);
+		//System.out.println(texto);
 		
 		return texto;
 	}

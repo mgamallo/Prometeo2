@@ -1,5 +1,6 @@
 package es.mgamallo.prometeo;
 
+import java.awt.Color;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import com.jacob.com.Variant;
 public class GestionJacob {
 	
 	public static final String DIRECCIONIANUS_CHOP = "http://ianuschop.sergas.local/ianus_chp_pro/inicio.jsp";
-	public static final String DIRECCIONIANUS_SALNES = "http://ianussal.sergas.local/ianus_sal_pro/inicio.jsp;";
+	public static final String DIRECCIONIANUS_SALNES = "http://ianussal.sergas.local/ianus_sal_pro/inicio.jsp";
 	
 	public static String direccionIanus = DIRECCIONIANUS_CHOP;
 
@@ -545,6 +546,9 @@ public class GestionJacob {
 						}
 	
 					}
+					
+
+					
 					/*
 					else if(!Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.HOSP) && 
 							!Inicio.vControlIanus.botonServicio.getText().equals(InicioIanus.CIA) &&

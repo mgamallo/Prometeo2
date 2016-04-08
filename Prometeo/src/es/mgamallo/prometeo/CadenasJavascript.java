@@ -34,10 +34,12 @@ public class CadenasJavascript {
 		}
 		
 		String cadena = "document.getElementById('usuario').innerHTML = '" + usuario.alias + "';" + LS
-				+ "document.getElementById('imagenAvatar').src='images/" + usuario.imagen + ".jpg';" + LS
-				+ "document.getElementById('avatarS').src='images/" + usuario.imagen + ".jpg';" + LS
+				+ "document.getElementById('imagenAvatar').src='" + Inicio.rutaImagenes + "/"+ usuario.fotoFinal + "';" + LS
+				+ "document.getElementById('avatarS').src='" + Inicio.rutaImagenes + "/" + usuario.fotoFinal + "';" + LS
 				+ "document.getElementById('" + seleccionado + "').className='" + clase + "';" + LS
 				+ "document.getElementById('tipoDocumentacion').innerHTML = '" + tipoDocumentacion + "';";
+		
+		System.out.println(cadena);
 		
 		return cadena;
 	}
@@ -126,7 +128,7 @@ public class CadenasJavascript {
 				fotoAleatoria = fotoAleatoria + ".jpg";
 			}
 
-
+			Inicio.usuarios[i].fotoFinal = Inicio.usuarios[i].imagen + fotoAleatoria;
 			
 			String ca = "<li><a id='" + numUsuario + "' onclick=\"modalOn('" + numUsuario + "','" + Inicio.usuarios[i].alias + "','" + Inicio.usuarios[i].usuario + "');\" class='login-window' href='#'>" +
 					"<img src=\'images/" + Inicio.usuarios[i].imagen + fotoAleatoria + "\' width=\'200px\'/ height=\'155px\'>" +

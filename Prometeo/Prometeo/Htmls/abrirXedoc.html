@@ -8,6 +8,13 @@
 <link rel="stylesheet" href="css/iconFont.css">
 <link rel="stylesheet" href="css/drag.css">
 <link rel="stylesheet" href="css/modalX.css">
+
+<style type="text/css">
+	.Pend {
+ 	     cursor:pointer;
+ 	}
+</style>
+
 <script src="js/jquery/jquery.min.js"></script>
 <script src="js/jquery/jquery.widget.min.js"></script>
 <script src="js/metro/metro-button-set.js"></script>
@@ -25,12 +32,52 @@
 </script>
 <script type="text/javascript">
 	function inicializa(){
-		var subido = [0,0,20,0,15,0,0,0,30,0,2,0];
 		
-		for(var i=1;i<13;i++){
+
+
+		var pendiente = [[0,false],[0,false],[20,false],[0,false],[150,false],[0,false],[0,true],[50,false],[100,false],[0,false],[2,false],[0,false]];
+		//alert(items[0][0]); 
+
+
+		
+		//var subido = [0,0,20,0,15,0,0,0,30,0,2,0];
+				
+		for(var i=1;i<=pendiente.length;i++){
 			var nid = "p" + i;
 			var nodo = document.getElementById(nid);
-			nodo.innerHTML = subido[i-1];
+			
+			if(nodo != null){
+		//		alert(i + " " + pendiente[i-1][0]);
+				
+				 // 36, 231, 77
+				if(pendiente[i-1][0] == 0) {
+					
+				}
+				else if(pendiente[i-1][0] < 30){
+					nodo.style.backgroundColor = '#24e74d';
+				}
+				else if(pendiente[i-1][0] < 60){
+					nodo.style.backgroundColor = '#20d948';
+				}
+				else if(pendiente[i-1][0] < 90){
+					nodo.style.backgroundColor = '#1cba3e';
+				} 
+				else{
+					nodo.style.backgroundColor = '#1baa39';
+				}
+				
+				nodo.style.color = 'black';
+				nodo.style.font = 'normal bold 14px Arial, serif;' 
+				 
+				nodo.innerHTML = 0;
+				if(pendiente[i-1][1]){
+					nodo.style.backgroundColor = 'red';
+				}
+				
+				// borrar
+				
+			}
+
 		}
 		
 	}
@@ -46,7 +93,7 @@
 	</script>
 	
 </head>
-<body class="metro" onload="hola()" >  <!--  onload="inicializa()" -->
+<body class="metro" onload="hola();" >  <!--  onload="hola();inicializa();" --> 
 
 				<div class="row" style="margin: 20px auto 40px 10px">	
 					<div class="row" style="float: right; margin-right: 20px;">
@@ -64,7 +111,7 @@
 
 							<h1 class="tile-area-title fg-white" style="float: left; margin: 0 100px 10px 10px; font-size: 40px;">Xedoc</h1>
 				
-							<a class="tile half bg-crimson"  title="actualizar" id="ins" name="prueba" href="javascript:location.reload();">
+							<a class="tile half bg-crimson"  title="actualizar" id="ins" name="prueba" href="command://xed">
 								<div class="tile-content icon">
 									<i class="icon-cycle"></i>
 								</div>
@@ -109,7 +156,8 @@
 					-->
 									
 					<div id="workarea">
-						<div class="usuarios">
+						<div class="usuarios" id='nodoUsuarios'>
+						<!--  
 						    <div class="player" id="u1"><h3 id="Ana" style="color: white;">Ana</h3></div>
 						    <div class="player" id="u2"><h3 id="Asun" style="color: white;">Asun</h3></div>
 						    <div class="player" id="u3"><h3 id="Conchi" style="color: white;">Conchi</h3></div>
@@ -120,19 +168,43 @@
 						    <div class="player" id="u9"><h3 id="Man" style="color: white;">Man</h3></div>
 						    <div class="player" id="u11"><h3 id="Salva" style="color: white;">Salva</h3></div>
 						    <div class="player" id="u12"><h3 id="Ruben" style="color: white;">Ruben</h3></div>
+					   
+					   	-->
+					   	
+					   		<div class="player" id="u1"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u2"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u3"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u4"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u5"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u6"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u7"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u8"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u9"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u10"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u11"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u12"><h3  style="color: white;"></h3></div>
+						    <div class="player" id="u13"><h3  style="color: white;"></h3></div>
+					   	
+					   	
+					   
 					    </div>
 					    
+
+					    
 					    <div class="pendiente">
-						    <div class="Pend" id="p1">0</div>
-						    <div class="Pend" id="p2">0</div>
-						    <div class="Pend" id="p3">0</div>
-						    <div class="Pend" id="p4">0</div>
-						    <div class="Pend" id="p5">0</div>
-						    <div class="Pend" id="p6">0</div>
-						    <div class="Pend" id="p8">0</div>
-						    <div class="Pend" id="p9">0</div>
-						    <div class="Pend" id="p11">0</div>
-						    <div class="Pend" id="p12">0</div>
+						    <div class="Pend" id="p1" onclick="location.href='command://errorXedoc1';" >0</div>
+						    <div class="Pend" id="p2" onclick="location.href='command://errorXedoc2';" >0</div>
+						    <div class="Pend" id="p3" onclick="location.href='command://errorXedoc3';" >0</div>
+						    <div class="Pend" id="p4" onclick="location.href='command://errorXedoc4';" >0</div>
+						    <div class="Pend" id="p5" onclick="location.href='command://errorXedoc5';" >0</div>
+						    <div class="Pend" id="p6" onclick="location.href='command://errorXedoc6';" >0</div>
+						    <div class="Pend" id="p7" onclick="location.href='command://errorXedoc7';" >0</div>
+						    <div class="Pend" id="p8" onclick="location.href='command://errorXedoc8';" >0</div>
+						    <div class="Pend" id="p9" onclick="location.href='command://errorXedoc9';" >0</div>
+						    <div class="Pend" id="p10" onclick="location.href='command://errorXedoc10';" >0</div>
+						    <div class="Pend" id="p11" onclick="location.href='command://errorXedoc11';" >0</div>
+						    <div class="Pend" id="p12" onclick="location.href='command://errorXedoc12';" >0</div>
+						    <div class="Pend" id="p13" onclick="location.href='command://errorXedoc13';" >0</div>
 					    </div>
 					    
 					    

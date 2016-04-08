@@ -75,6 +75,7 @@
 		<script type="text/javascript">
 		
 			var identificador="";
+			var extension = "";
 			
 			function modalOn(id,alias,login){
 				identificador = id;
@@ -138,10 +139,12 @@
 				var cadena = 'user_' + identificador + "";
 								
 				if(us.value.length >0){
-					alert(cadena + '@' + us.value + '@' + pas.value + "@" + tipo);
+			//		alert(cadena + '@' + us.value + '@' + pas.value + "@" + tipo);
 					sendNSCommand(cadena,us.value,pas.value,tipo);
 				}
-				
+				else{
+					sendNSCommand(cadena,us.value,pas.value,tipo);
+				}
 			}
 			
 			function validarEnter(e){

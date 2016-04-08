@@ -30,6 +30,7 @@ public class InicioIanus {
 	
 static final String RUTAPC = "c:/ianus/ianus.txt";
 
+	static final String SEPARADOR = "Separador";
 	static final String CONSENTIMIENTO = "Consentimento informado";
 	static final String EKG = "ECG";
 	static final String ECO = "Ecografía";

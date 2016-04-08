@@ -4,7 +4,7 @@ public class Retardos {
 	
 	static public int retardoAutomatico = 300;  // ciclos
 	
-	static public int retPulsarVauto = 900;
+	static public int retPulsarVauto = 200;   // Con 900 funcionaba, lento, pero funcionaba
 	static public int retIntroNHC = 800;
 	
 	public static int retardoAntesExaminar = /* 250 */ 50;

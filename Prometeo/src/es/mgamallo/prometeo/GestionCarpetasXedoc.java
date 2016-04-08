@@ -54,7 +54,16 @@ public class GestionCarpetasXedoc {
 			// Inicio.panelPrincipal.webBrowserOperaciones.executeJavascript("alert('hola');");
 		}
 		
-		Inicio.panelPrincipal.webBrowserOperaciones.reloadPage();
+		// Inicio.panelPrincipal.webBrowserOperaciones.reloadPage();
+		Inicio.panelPrincipal.webBrowserOperaciones.navigate(Inicio.panelPrincipal.DIR_ABRIR_X);
+		Inicio.panelPrincipal.webBrowserOperaciones.setBarsVisible(true);
+		Inicio.panelPrincipal.webBrowserOperaciones.setBarsVisible(false);
+		
+		
+		Inicio.panelPrincipal.inicializaUsuarios();
+		Inicio.panelPrincipal.getCarpetasFormato(null, null, null);
+		
+		Inicio.panelPrincipal.panelActivo = Inicio.panelPrincipal.ABRIR;
 	}
 
 	private String getCarpetas(int numLista){

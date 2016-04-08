@@ -84,16 +84,17 @@
 }
 
 
-
+/*
 #chart5DiasD{
 	height: 240px;
 	text-align: left;
 }
+*/
 
 .tipoSubida, .mes, .año, .grafico, .tipo{
 	 float: right; 
 	 margin-right: 10px;
-	 background-color: red;
+	/* background-color: yellow; */
 }
 
 .titulo{
@@ -108,11 +109,8 @@
 	margin-right: 15px;
 }
 
-.tarta{
-	
-	border: 2px solid #c8c8c8; 
-	padding: 3px;
-}
+
+
 
 .ancho{
 	border: 2px solid #c8c8c8; 
@@ -158,3 +156,15 @@
  #ultimo{
  	margin-top: 20px;
  }
+ 
+ .tarta{
+	
+	border: 2px solid #c8c8c8; 
+	padding: 3px;
+}
+ 
+ #tartaInput{
+	margin-right: 15px;
+	margin-left: 10px;
+	margin-top: 35px; 
+}

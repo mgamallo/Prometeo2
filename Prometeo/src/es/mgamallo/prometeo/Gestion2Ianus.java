@@ -153,9 +153,10 @@ public class Gestion2Ianus {
 	
 	private static String buscaNombreNodoServicio(String servicio){
 		
-		System.out.println("Empieza a buscar el nombre del servicio");
+		System.out.println("Empieza a buscar el nombre del servicio: " + servicio);
 		
 		for(int i=0;i< InicioIanus.listaNodos.length;i++){
+			// System.out.println(InicioIanus.listaNodos[i].alias);
 			if(InicioIanus.listaNodos[i].alias.contains(servicio)){
 				System.out.println("Encontró el nombre del servicio y es :" + InicioIanus.listaNodos[i].nombre);
 				return InicioIanus.listaNodos[i].nombre;

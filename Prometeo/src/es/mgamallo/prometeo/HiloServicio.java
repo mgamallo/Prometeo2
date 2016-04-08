@@ -11,7 +11,7 @@ import com.jacob.com.Dispatch;
 
 public class HiloServicio extends Thread{
 
-	final int RET = 500;
+	final int RET = 200;
 	
 	final String servicio;
 	String tipoNodo;
@@ -48,7 +48,7 @@ public class HiloServicio extends Thread{
 		GestionJacob.buscaNodo(ianus, servicio, tipoNodo, inicializar);
 		
 		if(subirAuto){
-			int ret = Inicio.inicioIanus.retardo.retPulsarVauto;;
+			int ret = Retardos.retPulsarVauto;;
 			
 			if(!buscaOtroNodo){
 				ret = RET;

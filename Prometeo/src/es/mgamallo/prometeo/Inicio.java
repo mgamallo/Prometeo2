@@ -25,8 +25,11 @@ public class Inicio {
 
 	protected static final String LS = System.getProperty("line.separator");
 	
-	public static String versionPrometeo = "Ver.009.t.txt";
+	public static String versionPrometeo = "Ver.011.t.txt";
 	public static String rutaRepositorioInstalacion = ":\\00_Prometeo";
+	
+	public static String rutaImagenes = "C:/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/images";
+	
 	
 	
 	public static InterfazPrincipal panelPrincipal;
@@ -145,6 +148,10 @@ public class Inicio {
 	static public boolean xedoc1activo = true;
 	static public boolean xedoc2activo = true;
 	static public boolean saltarXedoc = false;
+	
+	static public ArrayList<CarpetaXedoc> carpetasXedoc = new ArrayList<CarpetaXedoc>();
+	static public boolean hiloCarpetasXedocTerminado = false;  // Para saber cuando acaba el escaneo de xedoc pendientes
+	
 	/**
 	 * @param args
 	 */
@@ -189,7 +196,7 @@ public class Inicio {
 				rutaHermes_TXT = unidadHDDvirtual + rutaHermes_TXT;
 				rutaHermes_XLS = unidadHDDvirtual + rutaHermes_XLS;
 				
-				System.out.println(rutaEstadisticaIanus);
+			//	System.out.println(rutaEstadisticaIanus);
 		
 				nombrePc = new IdentificarPc().getIdentificacion(RUTAPC);
 				
@@ -218,7 +225,10 @@ public class Inicio {
 					// JOptionPane.showMessageDialog(null, "No hay Actualizaciones");
 				}
 		
-		
+				
+		HiloCarpetasXedoc h = new HiloCarpetasXedoc();
+		h.start();
+				
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gs = ge.getScreenDevices();
 				
@@ -372,7 +382,7 @@ public class Inicio {
 		
 		textoCentral1 = CadenasJavascript.getCodigoAyuda01(busqueda);
 		
-		System.out.println("Imprime codigo 1 \n" + textoCentral1);
+	//	System.out.println("Imprime codigo 1 \n" + textoCentral1);
 		
 		textoCentral2 = CadenasJavascript.getCodigoAyuda02();
 

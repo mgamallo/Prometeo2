@@ -504,7 +504,89 @@ public class CapturaRatonYTeclado implements NativeKeyListener,
 				}
 				//	space, cuando no utilizamos tab - space
 				else if(teclaAnterior != 9 && teclaActual == 32){
+					
+					
+					// System.out.println("Comparamos si es un separador...");
+					// Comparamos si es un separador. Si lo es visualizamos el siguiente pdf
+					
+					if(Inicio.vControlIanus.botonNHC.getText().equals(InicioIanus.SEPARADOR)){
+						
+						System.out.println("Es un separador");
+						
+				        int tamañoLista = Inicio.vExplorador.listaPdfs.getModel().getSize();
+
+			        	if(Inicio.indiceArchivoSelecc + 1< tamañoLista){
+			        		
+			        		Inicio.indiceArchivoSelecc++;
+			        		Inicio.documentoActivo = Inicio.documento[Inicio.indiceArchivoSelecc];
+			        		
+
+			        		
+			        		Inicio.vExplorador.listaPdfs.setSelectedIndex(Inicio.indiceArchivoSelecc);
+			        	//	jScrollPane1.getVerticalScrollBar().setValue(Inicio.indiceArchivoSelecc*15 -15);
+			          		
+
+			        		try{
+			        			
+			        			Inicio.panelPrincipal.webBrowserOperaciones.setVisible(true);
+			         			
+			        			if(Inicio.esWin64){
+			        				// new VisualizaPdfWeb(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+			        				new VisualizaPdfReader(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+
+			        			}
+			        			else{
+			        				SwingUtilities.invokeLater(new Runnable() {
+			            				public void run() {  
+			            					Inicio.panelPrincipal.webBrowserOperaciones.navigate(Inicio.documento[Inicio.indiceArchivoSelecc].rutaArchivo);
+			            				}
+			            			});  
+			        			}
+			        			
+			        	
+			        			
+			        			Inicio.vControlIanus.panelBotones.setBackground(new Color(80,200,120));
+			 
+			        			
+			            		if(!Inicio.vNombres.comboServicio.getSelectedItem().toString().equals(Inicio.documento[Inicio.indiceArchivoSelecc])){
+			            			Inicio.vControlIanus.botonServicio.setBackground(Color.red);
+			            			Inicio.vControlIanus.panelBotones.setBackground(Color.yellow);
+			            			Inicio.vControlIanus.botonServicio.setText(Inicio.documento[Inicio.indiceArchivoSelecc].servicio);
+			            		}
+			            		else{
+			            			Inicio.vControlIanus.botonServicio.setBackground(Color.green);
+			            			Inicio.vControlIanus.panelBotones.setBackground(new Color(143, 188, 143));
+			            		}
+			            		if(!Inicio.documento[Inicio.indiceArchivoSelecc].nhc.equals(Inicio.documento[Inicio.indiceArchivoSelecc-1].nhc)){
+			            			Inicio.vControlIanus.panelBotones.setBackground(Color.red);
+			            			Inicio.vControlIanus.botonNHC.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nhc);
+
+			            		}
+			            		else{
+			            			Inicio.vControlIanus.panelBotones.setBackground(new Color(143, 188, 143));
+			            			Inicio.vControlIanus.botonNHC.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nhc);
+			            		}
+			        			
+			            		Inicio.vControlIanus.botonNombreDocumento.setText(Inicio.documento[Inicio.indiceArchivoSelecc].nombreNormalizado);
+			        			
+			         			Inicio.vNombres.comboServicio.setSelectedItem(Inicio.documento[Inicio.indiceArchivoSelecc].servicio);
+			         			
+			       			    
+			        		}catch (Exception ev) {
+			        			System.out.println(ev);
+			        		}
+						
+						
+			        	}
+					}
+					
+					
+					
+					
+					
 					Inicio.gestion.gestion();
+					
+
 
 				}
 		}

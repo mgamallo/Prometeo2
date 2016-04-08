@@ -72,6 +72,8 @@ import javax.swing.event.ChangeListener;
 
 
 
+
+
 import chrriis.common.UIUtils;
 import chrriis.common.WebServer;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -100,7 +102,7 @@ public class InterfazPrincipal implements MouseListener{
 
 	private Point coordenadasRaton = new Point();
 
-	private final String ABRIR = "Abrir";
+	public final String ABRIR = "Abrir";
 	private final String AYUDA = "Ayuda";
 	private final String NORMAS = "Normas";
 	private final String AVISOS = "Avisos";
@@ -320,7 +322,15 @@ public class InterfazPrincipal implements MouseListener{
 					
 					Inicio.usuario = Inicio.usuarios[numUsuario];
 					Inicio.usuario.usuario = parameters[0].toString();
-					Inicio.usuario.password = parameters[1].toString();
+	
+					try {
+						Inicio.usuario.password = parameters[1].toString();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						Inicio.usuario.password = "";
+					}
+
 					
 					boolean directo = false;
 					String destino = "";
@@ -454,12 +464,23 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.setVisible(true);
 						// webBrowserOperaciones.navigate(Inicio.unidadHDDejecutable + DIR_ABRIR_XFINAL);
 						webBrowserOperaciones.navigate(DIR_ABRIR_X);
+						webBrowserOperaciones.setBarsVisible(true);
+						webBrowserOperaciones.setBarsVisible(false);
+						
+						
+						inicializaUsuarios();
+						//getCarpetasFormato(claseUrg, claseDoc, claseSal);
+						getCarpetasFormato(null, null, null);
+						
 						panelActivo = ABRIR;
 						
-				//		InicioXedoc xedoc = new InicioXedoc();
-						
-					//	webBrowserOperaciones.navigate("http://xedocidx.sergas.local/xedoc_idx/login");
-						
+						inicializaUsuarios();
+						// webBrowserOperaciones.executeJavascript("document.all.ocultar.click();alert('hola');");
+
+					}
+					else if(command.equals("inicio")){
+						panelControl.setVisible(false);
+						webBrowserOperaciones.navigate(DIR_OPERACIONES);
 					}
 					else if(command.equals("aptdoRevis")){
 						Dudas.abrirCarpetaApartadoRevisado();
@@ -705,6 +726,7 @@ public class InterfazPrincipal implements MouseListener{
 						webBrowserOperaciones.executeJavascript(ges.cadenaMes);
 						webBrowserOperaciones.executeJavascript(ges.cadenaAñoMes);
 						webBrowserOperaciones.executeJavascript(ges.cadenaAños);
+						webBrowserOperaciones.executeJavascript(ges.cadenaHistorico);
 						
 						webBrowserOperaciones.executeJavascript(ges.inicializaAños());
 						
@@ -820,6 +842,43 @@ public class InterfazPrincipal implements MouseListener{
 						
 						
 					}
+					else if(command.contains("His")){
+						
+						int au = command.indexOf("_");
+						
+						String tipo = command.substring(3, au);
+						String media = command.substring(au+1);
+						// 1 Todos
+						// 2 Ianus
+						// 3 Urg
+						// 4 Xedoc
+						
+						int tip = 0;
+						if(tipo.equals("Total")){
+							tip = 1;
+						}
+						else if(tipo.equals("Ianus")){
+							tip = 2;
+						}
+						else if(tipo.equals("Urgencias")){
+							tip = 3;
+						}
+						else if(tipo.equals("Xedoc")){
+							tip = 4;
+						}
+						else if(tipo.equals("Salnés")){
+							tip = 5;
+						}
+						
+						
+						webBrowserOperaciones.executeJavascript(ges.getJSONHistorico(tip, media));
+					}
+					else if(command.contains("tarta")){
+						String año = command.substring(5,9);
+						String ayer = command.substring(9);
+						
+						webBrowserOperaciones.executeJavascript(ges.getJSONTarta(año, ayer));
+					}
 
 					
 				}
@@ -900,160 +959,19 @@ public class InterfazPrincipal implements MouseListener{
 						Inicio.xedoc = true;
 						Inicio.carpetaXedocFirmado = true;
 						webBrowserOperaciones.navigate(DIR_ABRIR_X);
+						
+						webBrowserOperaciones.setBarsVisible(true);
+						webBrowserOperaciones.setBarsVisible(false);
+						
 						panelActivo = ABRIR;
 						
-						/*
-						String claseOn = claseXed + " selected";
-						String cadena = ""
-								+ "document.getElementById('xed').className='" + claseOn + "';" + LS
-								+ "document.getElementById('sal').className='" + claseSal + "';" + LS
-								+ "document.getElementById('urg').className='" + claseUrg + "';" + LS
-								+ "document.getElementById('doc').className='" + claseDoc + "';" + LS
-								+ "document.getElementById('tipoDocumentacion').innerHTML = 'SALNÉS';";
+						inicializaUsuarios();
 						
-						Inicio.xedoc = true;
-						
-						webBrowserOperaciones.executeJavascript(cadena);
-						*/
 					}
 					
 					if(command.equals("firmado")){
 						
-						System.out.println("Firmado... entrando");
-						
-						carpeta = new Carpetas(true);
-						
-						System.out.println("inicializado carpetas");
-						
-						String codigoCarpetasmetro;
-						
-						if(!Inicio.carpetaXedocFirmado){
-							codigoCarpetasmetro = carpeta.getCodigoJavascript();
-						}
-						else{
-							codigoCarpetasmetro = carpeta.getCodigoJavascriptXedoc();
-						}
-						
-						String tipoCarpeta = "Firmado";
-						if(Inicio.carpetaDudas){
-							tipoCarpeta = "Dudas " + Inicio.usuario.alias;
-						}
-						
-						if(Inicio.carpetaXedocFirmado){
-							 tipoCarpeta = "Xedoc";
-						}
-						
-						if(!Inicio.carpetaXedocFirmado){
-							
-							String centro = "";
-							
-							String clase = "";
-							String alias = "";
-							
-							switch (Inicio.usuario.tipoDocumentacion) {
-							case 0:
-								centro = "URGENCIAS";
-								alias = "urg";
-								clase = claseUrg + " selected";
-								break;
-							case 1:
-								centro = "CHOP";
-								alias = "doc";
-								clase = claseDoc + " selected";
-								break;
-							case 2:
-								centro = "SALNÉS";
-								alias = "sal";
-								clase = claseSal + " selected";
-								break;
-							default:
-								break;
-							}
-							
-							codigoCarpetasmetro = 	""
-									
-									+ "document.getElementById('firmado').innerHTML = '" + tipoCarpeta + "';" + LS +
-									  "document.getElementById('tipoDocumentacion').innerHTML = '" + centro + "';" + LS +
-									  "document.getElementById('" + alias + "').className='" + clase + "';" + LS +
-									  "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
-									 "document.getElementById('pdfspendientes').innerHTML='" + carpeta.numeroPdfsPendientes + "';" + LS +
-									 "var oldNodo = document.getElementById('nuevo');" + LS +
-									 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
-									 "var nodo = document.createElement('div');" + LS +
-													"nodo.id='nuevo';" + LS + 
-													"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
-													"var contenedor = document.getElementById('insertar');" + LS +
-													"contenedor.appendChild(nodo);" + 
-													"";// <a href='#' >holaaaa</a>";
-						}
-						
-						/*
-						else{
-							
-							codigoCarpetasmetro = ""
-
-									+ "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
-									"var oldNodo = document.getElementById('nuevo');" + LS +
-									"if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
-									"var nodo = document.createElement('div');" + LS +
-													"nodo.id='nuevo';" + LS + 
-													"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
-													"var contenedor = document.getElementById('insertar');" + LS +
-													"contenedor.appendChild(nodo);" + LS +
-													"";// <a href='#' >holaaaa</a>";
-								
-							
-						}
-						*/
-						// System.out.println(codigoCarpetasmetro);
-						System.out.println("Ejecutamos el codigo");
-						
-						webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
-						
-						/******   Bandejas ************************/
-						/*
-						if(Inicio.carpetaXedocFirmado){
-							
-							BandejasXedoc bandejas = new BandejasXedoc();
-							
-							String cadenaUsuarios = "";
-							
-							for(int i=0;i<bandejas.listaBandejas.size();i++){
-								
-								String cadenaAux = "";
-								
-								if(bandejas.listaBandejas.get(i).usuario.equals("Ana")){
-									cadenaAux = "document.getElementById('p1').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Asun")){
-									cadenaAux = "document.getElementById('p2').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Conchi")){
-									cadenaAux = "document.getElementById('p3').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Esther")){
-									cadenaAux = "document.getElementById('p4').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Iago")){
-									cadenaAux = "document.getElementById('p5').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Irene")){
-									cadenaAux = "document.getElementById('p6').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Isa")){
-									cadenaAux = "document.getElementById('p7').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Juanma")){
-									cadenaAux = "document.getElementById('p8').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Man")){
-									cadenaAux = "document.getElementById('p9').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Oscar")){
-									cadenaAux = "document.getElementById('p10').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Salva")){
-									cadenaAux = "document.getElementById('p11').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}else if(bandejas.listaBandejas.get(i).usuario.equals("Ruben")){
-									cadenaAux = "document.getElementById('p12').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
-								}
-								cadenaUsuarios = cadenaUsuarios + cadenaAux;
-							}
-							
-							System.out.println("Ejecutando bandejas....");
-							webBrowserOperaciones.executeJavascript(cadenaUsuarios);
-						}
-							*/
+						getCarpetasFormato(claseUrg, claseDoc, claseSal);
 						
 						
 					}
@@ -1177,6 +1095,32 @@ public class InterfazPrincipal implements MouseListener{
 					}
 					if(command.equals("carpetaXedocO")){
 						Dudas.abrirCarpetaXedocOriginales(Inicio.usuario.tipoDocumentacion);
+					}
+					
+					
+					if(command.contains("errorXedoc")){
+						
+						/*
+						for(int i=0;i<Inicio.usuarios.length;i++){
+							System.out.println(Inicio.usuarios[i].alias + "   " + Inicio.usuarios[i].tieneAvisos);
+						}
+						*/
+						
+						int numUsuario = Integer.valueOf(command.substring(10)) - 1;
+						if(Inicio.usuarios[numUsuario].tieneAvisos){
+							
+							int opcion = JOptionPane.showConfirmDialog(null, "Tienes " 
+							     + Inicio.usuarios[numUsuario].avisosXedoc.getArchivosCorruptos().size() + " pdfs corruptos en Xedoc."
+							     + "\n ¿Quieres recuperarlos ahora?", "Errores Xedoc",JOptionPane.YES_NO_OPTION);
+							
+							if(opcion == JOptionPane.OK_OPTION){
+								RecuperaErroresXedoc r = new RecuperaErroresXedoc(Inicio.usuarios[numUsuario].avisosXedoc.getArchivosCorruptos());
+							}
+							
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Usuario... " + numUsuario + "No tiene avisos.");
+						}
 					}
 					
 					maximizada = Pantalla.restaurar(frame);
@@ -1478,6 +1422,9 @@ public class InterfazPrincipal implements MouseListener{
 					}
 				} 
 			}
+
+
+
 		});
 
 		// Inicializando paneles
@@ -1649,6 +1596,216 @@ public class InterfazPrincipal implements MouseListener{
 		
 		EscribirArchivos.escribeHtmlUtf(htmlCompleto, DIR_AYUDA_F);
 	}
+	
+	
+	public void inicializaUsuarios() {
+		String nodosUsuario = "";
+		
+		for(int i=0;i<Inicio.usuarios.length;i++){
+			
+			nodosUsuario += ""
+					+ "var player = document.getElementById('u" + (i+1) + "');" + LS
+					+ "var h3 = player.getElementsByTagName('h3');" + LS
+					+ "h3 = h3[0];" + LS
+					+ "h3.setAttribute('id','" + Inicio.usuarios[i].alias + "');" + LS
+					+ "h3.innerHTML = '" + Inicio.usuarios[i].alias + "';" + LS
+					+ "";
+			
+			if(Inicio.usuarios[i].avisosXedoc != null){
+				nodosUsuario += ""
+						+ "var pend= document.getElementById('p" + (i+1) + "');"
+						+ "pend.innerHTML = '" 
+							+ Inicio.usuarios[i].avisosXedoc.getPdfsPendientes() + "';" + LS
+							+ "pend.setAttribute('style','font-size: 20px;');"
+						+ "";
+				
+				if(Inicio.usuarios[i].avisosXedoc.isTieneErrores()){
+					nodosUsuario += ""
+							+ "pend.setAttribute('style','background-color: red; font-size: 20px;');"
+							+ "";
+				}
+			}
+			else{
+				nodosUsuario += ""
+						+ "var pend= document.getElementById('p" + (i+1) + "');"
+						+ "pend.setAttribute('style','font-size: 20px');"
+						+ "";
+			}
+			
+		}
+		
+		if(Inicio.usuarios.length < 13){
+			for(int i= Inicio.usuarios.length; i < 13; i++){
+				nodosUsuario += ""
+						+ "var player = document.getElementById('u" + (i+1) + "');" + LS
+						+ "player.setAttribute('style','display','none');" + LS
+						+ "var pendiente = document.getElementById('p" + (i+1) + "');" + LS
+						+ "player.setAttribute('style','display','none');" + LS
+						+ "";
+						;
+			}
+		}
+		
+		System.out.println(Inicio.hiloCarpetasXedocTerminado);
+		
+		if(Inicio.hiloCarpetasXedocTerminado == false){
+			nodosUsuario += ""
+					+ "var fon = document.getElementById('workarea');" + LS
+					+ "fon.setAttribute('style','background-color: orange');" + LS
+					+ "";
+		}
+		
+		webBrowserOperaciones.executeJavascript(nodosUsuario);
+		
+	}
+	
+	/**
+	 * @param claseUrg
+	 * @param claseDoc
+	 * @param claseSal
+	 */
+	public void getCarpetasFormato(String claseUrg, String claseDoc,
+			String claseSal) {
+		System.out.println("Firmado... entrando");
+		
+		carpeta = new Carpetas(true);
+		
+		System.out.println("inicializado carpetas");
+		
+		String codigoCarpetasmetro;
+		
+		if(!Inicio.carpetaXedocFirmado){
+			codigoCarpetasmetro = carpeta.getCodigoJavascript();
+		}
+		else{
+			codigoCarpetasmetro = carpeta.getCodigoJavascriptXedoc();
+		}
+		
+		String tipoCarpeta = "Firmado";
+		if(Inicio.carpetaDudas){
+			tipoCarpeta = "Dudas " + Inicio.usuario.alias;
+		}
+		
+		if(Inicio.carpetaXedocFirmado){
+			 tipoCarpeta = "Xedoc";
+		}
+		
+		if(!Inicio.carpetaXedocFirmado){
+			
+			String centro = "";
+			
+			String clase = "";
+			String alias = "";
+			
+			switch (Inicio.usuario.tipoDocumentacion) {
+			case 0:
+				centro = "URGENCIAS";
+				alias = "urg";
+				clase = claseUrg + " selected";
+				break;
+			case 1:
+				centro = "CHOP";
+				alias = "doc";
+				clase = claseDoc + " selected";
+				break;
+			case 2:
+				centro = "SALNÉS";
+				alias = "sal";
+				clase = claseSal + " selected";
+				break;
+			default:
+				break;
+			}
+			
+			codigoCarpetasmetro = 	""
+					
+					+ "document.getElementById('firmado').innerHTML = '" + tipoCarpeta + "';" + LS +
+					  "document.getElementById('tipoDocumentacion').innerHTML = '" + centro + "';" + LS +
+					  "document.getElementById('" + alias + "').className='" + clase + "';" + LS +
+					  "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
+					 "document.getElementById('pdfspendientes').innerHTML='" + carpeta.numeroPdfsPendientes + "';" + LS +
+					 "var oldNodo = document.getElementById('nuevo');" + LS +
+					 "if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+					 "var nodo = document.createElement('div');" + LS +
+									"nodo.id='nuevo';" + LS + 
+									"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
+									"var contenedor = document.getElementById('insertar');" + LS +
+									"contenedor.appendChild(nodo);" + 
+									"";// <a href='#' >holaaaa</a>";
+		}
+		
+		/*
+		else{
+			
+			codigoCarpetasmetro = ""
+
+					+ "document.getElementById('pdfstotales').innerHTML='" + carpeta.numeroPdfsTotales + "';" + LS +
+					"var oldNodo = document.getElementById('nuevo');" + LS +
+					"if(oldNodo != null){oldNodo.parentNode.removeChild(oldNodo);}" + LS +
+					"var nodo = document.createElement('div');" + LS +
+									"nodo.id='nuevo';" + LS + 
+									"nodo.innerHTML = \"" + codigoCarpetasmetro +"\";" + LS +
+									"var contenedor = document.getElementById('insertar');" + LS +
+									"contenedor.appendChild(nodo);" + LS +
+									"";// <a href='#' >holaaaa</a>";
+				
+			
+		}
+		*/
+		// System.out.println(codigoCarpetasmetro);
+		System.out.println("Ejecutamos el codigo");
+		
+		webBrowserOperaciones.executeJavascript(codigoCarpetasmetro);
+		
+		/******   Bandejas ************************/
+		/*
+		if(Inicio.carpetaXedocFirmado){
+			
+			BandejasXedoc bandejas = new BandejasXedoc();
+			
+			String cadenaUsuarios = "";
+			
+			for(int i=0;i<bandejas.listaBandejas.size();i++){
+				
+				String cadenaAux = "";
+				
+				if(bandejas.listaBandejas.get(i).usuario.equals("Ana")){
+					cadenaAux = "document.getElementById('p1').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Asun")){
+					cadenaAux = "document.getElementById('p2').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Conchi")){
+					cadenaAux = "document.getElementById('p3').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Esther")){
+					cadenaAux = "document.getElementById('p4').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Iago")){
+					cadenaAux = "document.getElementById('p5').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Irene")){
+					cadenaAux = "document.getElementById('p6').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Isa")){
+					cadenaAux = "document.getElementById('p7').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Juanma")){
+					cadenaAux = "document.getElementById('p8').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Man")){
+					cadenaAux = "document.getElementById('p9').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Oscar")){
+					cadenaAux = "document.getElementById('p10').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Salva")){
+					cadenaAux = "document.getElementById('p11').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}else if(bandejas.listaBandejas.get(i).usuario.equals("Ruben")){
+					cadenaAux = "document.getElementById('p12').innerHTML = '" + bandejas.listaBandejas.get(i).numPdfs + "';" + LS;
+				}
+				cadenaUsuarios = cadenaUsuarios + cadenaAux;
+			}
+			
+			System.out.println("Ejecutando bandejas....");
+			webBrowserOperaciones.executeJavascript(cadenaUsuarios);
+		}
+			*/
+	}
+
+	/**
+	 * 
+	 */	
 	
 
 	/* Standard main method to try that test as a standalone application. */

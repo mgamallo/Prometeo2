@@ -22,17 +22,23 @@
 	function putAños(id, años){
 		var sel = document.getElementById(id);
 		var opcion;
+
 		for(var i=0;i<años.length;i++){
 			opcion = document.createElement('option');
 			opcion.value = opcion.text = años[i];
 			sel.add(opcion);
 		}
 
+		if(id == 'tarta_año'){
+			opcion = document.createElement('option');
+			opcion.value = opcion.text = 'Total';
+			sel.add(opcion);
+		}
 	}
 
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript">    // Grafico 5 días
 
 	FusionCharts.ready(function() {
 		var seleccion,
@@ -65,7 +71,7 @@
 </script>
 
 
-<script type="text/javascript">
+<script type="text/javascript">       // Gráfico mes
 
 	FusionCharts.ready(function() {
 		var seleccionAño,
@@ -143,7 +149,7 @@
 	});
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript">  // Gráfico anual/meses
 
 	FusionCharts.ready(function() {
 		var seleccionAño,
@@ -198,7 +204,44 @@
 </script>
 
 
-<script type="text/javascript">
+<script type="text/javascript">  // Gráfico historico
+
+	FusionCharts.ready(function() {
+		var seleccionTipo,
+			selElemT,
+			revenueChart0 = new FusionCharts({
+			type : "column2d",
+			renderAt : "chart5DiasD",
+			width : "360",
+			height : "240",
+			dataFormat : "xml",
+			dataSource : 
+			//	"<chart caption='Gráfica Anual 1' theme='fint'><set label='Jueves' value='282'/><set label='Viernes' value='441'/><set label='Lunes' value='135'/><set label='Martes' value='232'/><set label='Miércoles' value='264'/></chart>"
+
+		});
+		revenueChart0.render("chart5DiasD");
+	    
+		seleccionTipo = document.getElementById('Hist_tipo');
+		inputs = seleccionTipo.getElementsByTagName('option');
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemT = inputs[i];
+	        selElemT.onclick = function(){
+
+	        	var tip = this.value
+	        	
+	        	var cadena = tip;
+	        	
+	        	sendNSCommand('His' + cadena);
+	        	
+	        };
+	    }
+	});
+</script>
+
+
+
+
+<script type="text/javascript">           // Gráfico años/meses
 
 	FusionCharts.ready(function() {
 		var val,
@@ -253,9 +296,13 @@
 </script>
 
 
-<script type="text/javascript">
+<script type="text/javascript">    // Gráfico tarta
 FusionCharts.ready(function() {
-	var revenueChart1 = new FusionCharts({
+	var seleccionAño,
+		inputs,
+		selElemA,
+		checkeado,
+		revenueChart1 = new FusionCharts({
 		type : "pie3d",
 		renderAt : "chartTarta",
 		width : "760",
@@ -307,6 +354,25 @@ FusionCharts.ready(function() {
 
 		});	
 		revenueChart1.render("chartTarta");
+		
+		seleccionAño = document.getElementById('tarta_año');
+		inputs = seleccionAño.getElementsByTagName('option');
+		
+		checkDia = document.getElementById('ayerCh');
+		checkeado = checkDia.checked;
+		
+	    for (var i = 0; i < inputs.length; i++) {
+	        selElemA = inputs[i];
+	        selElemA.onclick = function(){
+	        	
+	        	var año = this.value;
+       			
+	        	sendNSCommand('tarta' + año + checkeado);
+	        	
+	        };
+	    }
+		
+		
 	});
 
 </script>
@@ -358,6 +424,11 @@ FusionCharts.ready(function() {
 		var h = tip.getElementsByTagName('option');
 		h[valor].selected = 'selected';
 		h[valor].click();
+		
+		var tip = document.getElementById('Hist_tipo');
+		var h = tip.getElementsByTagName('option');
+		h[valor].selected = 'selected';
+		h[valor].click();
 
 	}
 </script>
@@ -394,9 +465,30 @@ FusionCharts.ready(function() {
 	        	sendNSCommand('Añs' + cadena);
 		 }
 		 
+		 if(grafico == "His"){
+			 
+			    var media = document.getElementById('Hist_media').value
+	        	var tip = document.getElementById('Hist_tipo').value;
+	        	
+	        	var cadena = tip + "_" + media;
+
+	        	sendNSCommand('His' + cadena);
+		 }
+		 
 		 if(grafico == "5dias"){
 			 
 			    sendNSCommand('5dias' + tipoDoc);
+		 }
+		 
+		 
+		 if(grafico == "tarta"){
+			 
+			 var año = document.getElementById('tarta_año').value;
+			 var dia = document.getElementById('ayerCh').checked;
+		//	 alert(grafico + año + dia);
+			 
+			 sendNSCommand(grafico + año + dia);
+
 		 }
 	}
 </script>
@@ -428,9 +520,24 @@ FusionCharts.ready(function() {
 
 </div>
 <div id = "cargando">
-<div class="centrar">
-	<div class="tarta" id="chartTarta">FusionCharts XT will load here!</div>
-</div>
+
+	<div class="centrar">
+
+		<div class="gTarta">
+			<div class="año">
+			
+				<select name='años' id='tarta_año' onchange='seleccionadoGraf("tarta",value);'>
+				</select>
+				<span id='tartaInput'>
+					<input id='ayerCh' type="checkbox" name="ayer" value="ayer" 
+					          onclick='seleccionadoGraf("tarta",value);'> Ayer
+				</span>
+
+			</div>
+		</div>
+			<div class="tarta" id="chartTarta">FusionCharts XT will load here!</div>
+		
+	</div>
 
 
 	<div class="centrar">
@@ -452,6 +559,7 @@ FusionCharts.ready(function() {
 		</div> 
 		
 	</div>
+	
 	<div class = "centrar">
 		<div class="pequeñoD">
 			<div class = 'titulo'>
@@ -518,20 +626,37 @@ FusionCharts.ready(function() {
 	
 	<div class="centrar">
 		<div class="pequeñoD">
+			<div class = 'titulo'>
+				Histórico
+			</div>
 			<div class="tipoSubida"> 
-				<select name='secciones'>
+				<select name='secciones' id='Hist_tipo' onchange='seleccionadoGraf("His",value);'>
 					<option value='Ianus'> Ianus</option>
 					<option value='Urgencias'> Urgencias </option>
 					<option value='Xedoc'> Xedoc </option>
+					<option value='Salnés'> Salnés </option>
 					<option value = 'Total' selected> Total </option>
 				</select>
 			</div>
+			
+			<div class="año"> 
+				<select name='media' id='Hist_media' onchange='seleccionadoGraf("His",value);'>
+					<option value='Media'> Media diaria</option>
+					<option value = 'Total' selected> Total </option>
+				</select>
+			</div>
+			
+			<!--  
 			<div id="chart5DiasD">
 				<div>Pdfs de documentación asociados con IANUS: <span id='ianusDoc'></span></div>
 				<div>Pdfs de urgencias asociados con IANUS: <span id='ianusUrg'></span></div>
 				<div>Pdfs asociados con XEDOC: <span id='xedoc'></span></div>
 				<div> Pdfs totales: <span id='total'></span></div>
 			</div>
+			
+			-->
+			<div id="chart5DiasD">FusionCharts XT will load here!</div>
+			
 		</div> 
 	</div>	
 	

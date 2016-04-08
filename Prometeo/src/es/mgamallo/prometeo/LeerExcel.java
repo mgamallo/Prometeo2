@@ -59,7 +59,7 @@ public class LeerExcel {
 	        	numFilas++;
 	        }
 	        
-	        System.out.println("Num filas = " + numFilas + ". Num columnas = " + numColumnas);
+	       // System.out.println("Num filas = " + numFilas + ". Num columnas = " + numColumnas);
 	        
 	        servicios = new String[numColumnas - 14];
 	        nombres = new String[numFilas - 1];
@@ -73,14 +73,14 @@ public class LeerExcel {
 	        	}
 	        }
 	        
-	        
+	        /*
 	        for(int fila=0;fila<nombres.length;fila++){
 	        	for(int columna=0;columna<servicios.length;columna++){
 	        		System.out.print(tablaDocumentos[fila][columna]);
 	        	}
 	        	System.out.println();
 	        }
-	        
+	        */
 	        
 	        // Lista de todos los servicios
 	        for(int columna = 0;columna<servicios.length;columna++){
@@ -150,7 +150,7 @@ public class LeerExcel {
 	        	numFilas++;
 	        }
 	        
-	        System.out.println("numero de filas es... " + numFilas);
+	       // System.out.println("numero de filas es... " + numFilas);
 	        
 	        nodosCHOP = new Nodo[numFilas];
 	        
@@ -170,7 +170,7 @@ public class LeerExcel {
 	        	numFilas++;
 	        }
 	        
-	        System.out.println("numero de filas es... " + numFilas);
+	        // System.out.println("numero de filas es... " + numFilas);
 	        
 	        nodosSALNES = new Nodo[numFilas];
 	        
@@ -205,7 +205,7 @@ public class LeerExcel {
 	        	iniciofila = 11;
 	        }
 	        
-	        System.out.println("Numero de pantallas... " + Inicio.numeroPantallas);
+	        // System.out.println("Numero de pantallas... " + Inicio.numeroPantallas);
 	        
 	        coordenadasAsociar = new int[10][4];
 	        for(int fila=iniciofila, fil = 0;fila<10 + iniciofila;fila++,fil++){

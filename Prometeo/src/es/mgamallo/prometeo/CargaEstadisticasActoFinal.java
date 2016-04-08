@@ -87,7 +87,7 @@ public class CargaEstadisticasActoFinal {
 			
 		}
 		
-		crearTxt(listaEstadisticaTotalDoc, "Documentación", Inicio.unidadHDDvirtual + rutaDoc);
+		crearTxt(listaEstadisticaTotalDoc, "Documentacion", Inicio.unidadHDDvirtual + rutaDoc);
 		
 		
 		for(int i=0;i<directoriosAnualesSal.length;i++){
