@@ -224,6 +224,8 @@ public class GestionJacob {
 	public static void buscaNodo(final ActiveXComponent ianus, String servicio, final String tipoNodo, boolean inicializar){
 	//	SwingUtilities.invokeLater(new Runnable() {
 	//		public void run() {
+		
+				
 				if(servicio == null){
 					servicio = InicioIanus.DESCONOCIDO;
 				}

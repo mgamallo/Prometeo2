@@ -898,7 +898,8 @@ public class CadenasJavascript {
 	static public final String buscarNodoConsultasInicial(String servicio){
 		
 		
-		final String cadena = 
+		String cadena = 
+		
 				  	"var nodo = principal.datos.arbol.despliegue.document.anchors;"
 					+ "var anclaPadre = 0;"
 					+ "var anclaHijo = 0;"
@@ -1194,18 +1195,24 @@ public class CadenasJavascript {
 		
 		String arbolCargado = "while(principal.datos.arbol.despliegue.document.readyState < 3){}";
 		
+		int salnes = 0;
+		if(Inicio.usuario.tipoDocumentacion == 2){
+			salnes = 2;
+		}
+		
 		String nodoHosp = ""
 		//	+ "alert(principal.datos.arbol.despliegue.document.readyState);"	
 			+ "var nodo = principal.datos.arbol.despliegue.document.anchors;"
 		    + "var anclaPadre = 0;"
 			+ "var anclaHijo = 0;"
 			+ "var numeroAncla = 0;"
+			+ "var salnes = 2;"
 			+ "for(var i=0;i<nodo.length;i++){"
 				+ "if(nodo[i].innerHTML.indexOf('" + servicio + "') != -1){"
 					+ "if(nodo[i].innerHTML.indexOf('Ingresado') == -1){"
 						+ "var noSergas = nodo[i].innerHTML;"
 						+ "var ultimaLetra = noSergas.charAt(noSergas.length-1);"
-						+ "if(ultimaLetra == 'M' || ultimaLetra == 'H' || ultimaLetra == 'P'){"
+						+ "if(ultimaLetra == 'M' || ultimaLetra == 'H' || ultimaLetra == 'P' || salnes == " + salnes +  "){"
 							+ "numeroAncla = i;"
 							+ "break;"
 						+ "}"
@@ -1452,6 +1459,8 @@ public class CadenasJavascript {
 		
 		
 	}
+	
+
 }
 
 

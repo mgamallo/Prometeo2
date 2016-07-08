@@ -4,9 +4,5 @@ No
 @0@
 Todos
 @0@
-A partir de mañana miercoles utilizaremos tres nuevos nombres normalizados:
-- Enfermería cardio. Es la hoja de enfermería que utilizan para las pruebas de Cardio
-- Enfermería endosc. Para las hojas de enfermería de endoscopias, tanto las de Digestivo como las de Neumo (broncoscopias)
-- Enfermería quir. Para la hoja de enfermería de quirófano
-- El nombre "enfermería" queda para los demás casos.
+<p>A partir de ma&ntilde;ana utilizaremos tres nuevos nombres normalizados:- Enfermer&iacute;a cardio. Es la hoja de enfermer&iacute;a que utilizan para las pruebas de Cardio- Enfermer&iacute;a endosc. Para las hojas de enfermer&iacute;a de endoscopias, tanto las de Digestivo como las de Neumo (broncoscopias)- Enfermer&iacute;a quir. Para la hoja de enfermer&iacute;a de quir&oacute;fano- El nombre &quot;enfermer&iacute;a&quot; queda para los dem&aacute;s casos.</p>
 @0@

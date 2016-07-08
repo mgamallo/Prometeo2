@@ -431,22 +431,24 @@ public class VentanaExplorador extends javax.swing.JFrame {
 		});
 
         jButton10.setFocusable(false);
-        jButton10.setText("Ianus visibles");
+        jButton10.setText("Automático A");
         jButton10.setBackground(Color.pink);
         jButton10.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				GestionJacob.setVisible(Inicio.paciente1.ianus,true);
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
+				if(Inicio.modoAutomatico == 0){
+					Inicio.modoAutomatico = 1;
+					jButton10.setBackground(Color.yellow);
 				}
-				GestionJacob.setVisible(Inicio.paciente2.ianus,true);
-				botonResetearSubida.setEnabled(true);
+				else{
+					Inicio.modoAutomatico = 0;
+					jButton10.setBackground(Color.pink);
+				}
+					
+				
 			}
 		});
 

@@ -25,7 +25,7 @@ public class Inicio {
 
 	protected static final String LS = System.getProperty("line.separator");
 	
-	public static String versionPrometeo = "Ver.011.t.txt";
+	public static String versionPrometeo = "Ver.013.t.txt";
 	public static String rutaRepositorioInstalacion = ":\\00_Prometeo";
 	
 	public static String rutaImagenes = "C:/Desarrollo/git/prometeo/Prometeo/Prometeo/Prometeo/Htmls/usuarios/Digitalizacion/images";
@@ -151,6 +151,8 @@ public class Inicio {
 	
 	static public ArrayList<CarpetaXedoc> carpetasXedoc = new ArrayList<CarpetaXedoc>();
 	static public boolean hiloCarpetasXedocTerminado = false;  // Para saber cuando acaba el escaneo de xedoc pendientes
+	
+	static public int modoAutomatico = 0; // 0 No; 1 Modo A; 2 Modo B
 	
 	/**
 	 * @param args
@@ -400,15 +402,18 @@ public class Inicio {
 		for(int i=0;i<datosBrutos.length;i++){
 			System.out.println(datosBrutos[i]);
 			String[] us = datosBrutos[i].split("@");
+			
 			Usuario user = new Usuario();
 			user.alias= us[0];
 			user.imagen= us[1];
+
 			if(us[2].equals("urg")){
 				user.tipoDocumentacion = 0;
 			}
 			else if(us[2].equals("doc")){
 				user.tipoDocumentacion = 1;
 			}
+
 			user.usuario = us[3];
 			if(user.usuario.equals(" ")){
 				user.usuario = "";
